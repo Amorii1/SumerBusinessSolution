@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29409.12
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SumerBusinessSolution", "SumerBusinessSolution\SumerBusinessSolution.csproj", "{9788DA4E-2727-42F6-9764-33D46841E33D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9788DA4E-2727-42F6-9764-33D46841E33D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9788DA4E-2727-42F6-9764-33D46841E33D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9788DA4E-2727-42F6-9764-33D46841E33D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9788DA4E-2727-42F6-9764-33D46841E33D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7B249A6C-11E7-4A26-8658-4CE048486327}
+	EndGlobalSection
+EndGlobal

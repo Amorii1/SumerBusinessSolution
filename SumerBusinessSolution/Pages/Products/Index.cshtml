@@ -1,0 +1,107 @@
+﻿@page
+@model SumerBusinessSolution.Pages.Products.IndexModel
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<div class="backgroundWhite">
+    <div class="row px-2 py-2">
+        <div class="col-6">
+            <h3 class="text-info">Products</h3>
+        </div>
+        <div class="col-6 text-right">
+            <a asp-page="Create" class="btn btn-info">New Product <i class="far fa-plus-square"></i></a>
+        </div>
+    </div>
+
+    <form method="get" asp-page="Index">
+
+
+        <div class="border backgroundWhite">
+            <div style="height:60px;" class="container border border-secondary">
+                <div class="row">
+                    <div class="col-11">
+                        <div class="row" style="margin-top:10px;">
+                            <div class="row">
+                                <div class="col-4">
+                                    @Html.Editor("SearchProdCode", new { htmlAttributes = new { @class = "form-control", placeholder = "Product Code...." } })
+
+                                </div>
+                                <div class="col-4">
+                                    @Html.Editor("SearchProdName", new { htmlAttributes = new { @class = "form-control", placeholder = "Product Name...." } })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-1">
+                        <div class="row" style="padding-top:10px; padding-right:15px;">
+                            <button type="submit" name="submit" value="Search" class="btn btn-info form-control">
+                                @*<i class="fas fa-search"></i>*@
+                                Search
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </form>
+
+    <div>
+        @if (Model.ProdInfo.Count() == 0)
+        {
+            <p>No Service type has been added! Create new service type</p>
+        }
+        else
+        {
+            <table class="table table-striped border-info border ">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(m => m.ProdInfo[0].ProdCode)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(m => m.ProdInfo[0].ProdName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(m => m.ProdInfo[0].RetailPrice)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(m => m.ProdInfo[0].WholePrice)
+                    </th>
+                    <th></th>
+                </tr>
+                @foreach (var item in Model.ProdInfo)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(m => item.ProdCode)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.ProdName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.RetailPrice)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.WholePrice)
+                        </td>
+                        <td style="width:150px;">
+                            <div class="btn-group " role="group">
+                                <a class="btn btn-primary " asp-page="Edit" asp-route-Id="@item.Id" title="Edit"><i class="fa fa-edit"></i>Edit</a>
+                                <a class="btn btn-success" asp-page="Details" asp-route-Id="@item.Id" title="Details"><i class="far fa-clipboard"></i>Details</a>
+                                <a class="btn btn-danger" asp-page="Delete" asp-route-Id="@item.Id" title="Delete"><i class="far fa-trash-alt"></i>Delete</a>
+
+
+
+                            </div>
+
+                        </td>
+                    </tr>
+
+                }
+            </table>
+        }
+    </div>
+</div>
+

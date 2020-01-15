@@ -1,0 +1,105 @@
+﻿@page
+@model SumerBusinessSolution.Pages.Users.IndexModel
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<form method="get" asp-page="Index">
+
+
+    <div class="border backgroundWhite">
+        <div style="height:60px;" class="container border border-secondary">
+            <div class="row">
+                <div class="col-11">
+                    <div class="row" style="margin-top:10px;">
+                        <div class="col-4">
+                            @Html.Editor("searchFirstName", new { htmlAttributes = new { @class = "form-control", placeholder = "FirstName....." } })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-1">
+                    <div class="row" style="padding-top:10px; padding-right:15px;">
+                        <button type="submit" name="submit" value="Search" class="btn btn-info form-control">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</form>
+<div class="border BackGroundWhite">
+    <div class="row">
+        <div class="col-6 ">
+            <h3 class="text-info">
+                User List
+            </h3>
+        </div>
+
+        <div class="col-6 text-right">
+            <a asp-area="Identity" asp-page="/Account/Register" class="btn btn-info">
+                @*<i class="fas fa-plus"></i>&nbsp;*@
+
+                Create New Customer
+            </a>
+        </div>
+    </div>
+    <br />
+
+    @if (Model.UsersListVM.ApplicationUserList.Count() == 0)
+    {
+        <p>No User Created.please Create New User! </p>
+    }
+    else
+    {
+        <table class="table table-striped">
+            <tr class="table-secondary">
+                <th>
+                    @Html.DisplayNameFor(m => m.ApplicationUser[0].FirstName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(m => m.ApplicationUser[0].LastName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(m => m.ApplicationUser[0].PhoneNumber)
+                </th>
+
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+
+                @foreach (var item in Model.UsersListVM.ApplicationUserList)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(m => item.FirstName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.LastName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.PhoneNumber)
+                        </td>
+
+                        <td></td>
+                        <td style="width:150px;">
+                            <div class="btn-group" role="group">
+                                <a asp-page="Edit" asp-route-Id="@item.Id" class="btn btn-p[l.primary text-white " title="Edit">
+                                    @*<i class="fas fa-edit"></i>*@
+                                </a>
+
+
+                                <a asp-page="Delete" asp-route-Id="@item.Id" class="btn btn-danger text-white" title="Delete">
+                                    @*<i class="fas fa-alt"></i>*@
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            }
+        </table>
+    }
+</div>
