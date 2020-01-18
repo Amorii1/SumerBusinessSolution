@@ -36,7 +36,7 @@ namespace SumerBusinessSolution.Areas.Identity.Pages.Account
             }
             else
             {
-                return RedirectToPage();
+                return RedirectToPage("Logout");
             }
         }
     }
