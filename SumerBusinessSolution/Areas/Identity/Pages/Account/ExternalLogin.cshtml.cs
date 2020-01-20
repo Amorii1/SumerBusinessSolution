@@ -23,17 +23,24 @@ namespace SumerBusinessSolution.Areas.Identity.Pages.Account
         private readonly UserManager<IdentityUser> _userManager;
         private readonly IEmailSender _emailSender;
         private readonly ILogger<ExternalLoginModel> _logger;
+        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly ApplicationDbContext _db;
 
         public ExternalLoginModel(
             SignInManager<IdentityUser> signInManager,
             UserManager<IdentityUser> userManager,
             ILogger<ExternalLoginModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+             RoleManager<IdentityRole> roleManager,
+            ApplicationDbContext db
+            )
         {
             _signInManager = signInManager;
             _userManager = userManager;
             _logger = logger;
             _emailSender = emailSender;
+            _roleManager = roleManager;
+            _db = db;
         }
 
         [BindProperty]
@@ -51,6 +58,9 @@ namespace SumerBusinessSolution.Areas.Identity.Pages.Account
             [Required]
             [EmailAddress]
             public string Email { get; set; }
+            public string FirstName { get; set; }
+            public string LastName { get; set; }
+
         }
 
         public IActionResult OnGetAsync()
@@ -121,7 +131,11 @@ namespace SumerBusinessSolution.Areas.Identity.Pages.Account
 
             if (ModelState.IsValid)
             {
-                var user = new IdentityUser { UserName = Input.Email, Email = Input.Email };
+                var user = new ApplicationUser
+                { UserName = Input.Email,
+                    Email = Input.Email
+
+                };
                 var result = await _userManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
