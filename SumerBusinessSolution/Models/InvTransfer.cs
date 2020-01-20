@@ -33,8 +33,16 @@ namespace SumerBusinessSolution.Models
         [Required] 
         public string CreatedById { get; set; }
 
+        public string ApprovedById { get; set; }
+        public string Note { get; set; }
+
+
+
         [ForeignKey("CreatedById")]
         public virtual ApplicationUser ApplicationUser { set; get; }
+
+        [ForeignKey("ApprovedById")]
+        public virtual ApplicationUser ApprovedApplicationUser { set; get; }
 
         [ForeignKey("ProdId")]
         public virtual ProdInfo ProdInfo { set; get; }

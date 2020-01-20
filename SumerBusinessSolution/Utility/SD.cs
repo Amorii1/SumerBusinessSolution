@@ -7,12 +7,27 @@ namespace Sumer.Utility
 {
     public static class SD
     {
-        
+            // User Roles
             public const string AdminEndUser = "Admin";
             public const string SupervisorEndUser = "Supervisor";
             public const string StoreEndUser = "Store User";
 
-        
+            // Transfer Types
+            public const string Incoming = "Incoming";
+            public const string TransferOut = "TransferOut";
+            public const string TransferIn = "TransferIn";
+            public const string Sales = "Sales";
+
+            // Approval Types 
+            public const string Pending = "Waiting for approval";
+            public const string Approved = "Approved";
+            public const string Rejected = "Rejected";
+
+
+
+
+
+
     }
 }
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -41,7 +42,6 @@ namespace SumerBusinessSolution.Pages.Products
 
         public async Task<IActionResult> OnPost()
         {
-
             _db.ProdInfo.Remove(ProdInfo);
             await _db.SaveChangesAsync();
             return RedirectToPage("Index");
