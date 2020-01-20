@@ -33,6 +33,9 @@ namespace SumerBusinessSolution.Transactions
 
         }
 
+        // This Function used when created a new product for the first time. 
+        //it checks if Product Code is used before or not "Product Code must be used once only"
+        // If used before then return False, otherwise return True
         public async Task<bool> CheckProdCodeExist(string ProdCode)
         {
             ProdInfo = await _db.ProdInfo.FirstOrDefaultAsync(prod => prod.ProdCode == ProdCode);
@@ -46,6 +49,8 @@ namespace SumerBusinessSolution.Transactions
             }
         }
 
+        // This function used for the first time a product is created. 
+        // When a product is created it will create a record of this product for each Warehouse with ZERO Qty
         public bool CreateProdInWh(int ProdId)
         {
             WarehouseList = _db.Warehouse.ToList();
@@ -65,7 +70,8 @@ namespace SumerBusinessSolution.Transactions
             return true;
         }
 
-            public async Task<bool> CreateIncomingGoods(int WhId, int ProdId, double Qty, string Note)
+        // This function used to create Incoming Goods
+        public async Task<bool> CreateIncomingGoods(int WhId, int ProdId, double Qty, string Note)
         {
             try
             {
@@ -98,6 +104,7 @@ namespace SumerBusinessSolution.Transactions
             }
         }
 
+        // This function used to create inventory Transfer. The transfer is created only For the Admin
         public async Task<bool> CreateInvTransfer(int ProdId, int FromWhId, int ToWhId, double Qty, string Note)
         {
             // Check if the warehouse has enough qty of that product
@@ -140,6 +147,8 @@ namespace SumerBusinessSolution.Transactions
             return true;
         }
 
+        // This function is called when a Store User wants to transfer from a warehouse to another. So this function
+        // Will create a request for the Admin to approve
         public async Task<bool> CreateInvTransferRequest(int ProdId, int FromWhId, int ToWhId, double Qty, string Note)
         {
             // Check if the warehouse has enough qty of that product
@@ -169,6 +178,8 @@ namespace SumerBusinessSolution.Transactions
             return true;
         }
 
+        // When a transfer request is created by the Store user. Admin will call this function to Approve his 
+        // Transfer Request
         public async Task<bool> ApproveInvTransferRequest(int ReqId)
         {
     
@@ -215,6 +226,7 @@ namespace SumerBusinessSolution.Transactions
             return true;
         }
 
+        // Admin can reject Inventory transfer request by using this funtion 
         public async Task<bool> RejectInvTransferRequest(int ReqId)
         {
 
