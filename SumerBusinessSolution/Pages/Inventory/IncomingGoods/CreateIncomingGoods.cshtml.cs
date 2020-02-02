@@ -31,8 +31,10 @@ namespace SumerBusinessSolution
 
             public IList<ProdInfo> ProdInfo { get; set; }
             public Warehouse Warehouse { get; set; }
-            public IList<Warehouse> Warehouselist { get; set; }
-            [BindProperty]
+
+        [BindProperty]
+        public IList<Warehouse> WarehouseList { get; set; }
+        [BindProperty]
             public int WhId { get; set; }
             [BindProperty]
             public int ProdId { get; set; }
@@ -46,13 +48,13 @@ namespace SumerBusinessSolution
             public string StatusMessage { get; set; }
 
 
-        public IActionResult OnGet()
+        public void OnGet()
         {
             //  Warehouse = _db.Warehouse.FirstOrDefault();
-            Warehouselist = _db.Warehouse.ToList();
+           WarehouseList = _db.Warehouse.ToList();
           //  ProdInfo = _db.ProdInfo.Where(p => p.Id == ProdId).ToList();
 
-            return Page();
+         //   return Page();
 
         }
 
@@ -69,10 +71,12 @@ namespace SumerBusinessSolution
             return new JsonResult(lstProdCode);
 
         }
-   
+
         public IActionResult OnPost()
             {
-              int ProdId = _db.ProdInfo.FirstOrDefault(pro=>pro.ProdCode==ProdCode).Id;
+            //WarehouseList = _db.Warehouse.ToList();
+
+            int ProdId = _db.ProdInfo.FirstOrDefault(pro=>pro.ProdCode==ProdCode).Id;
                 bool incomingoods = _InveTrans.CreateIncomingGoods(WhId, ProdId, Qty, Note).GetAwaiter().GetResult();
 
                 if (incomingoods == true)
@@ -85,7 +89,7 @@ namespace SumerBusinessSolution
                 }
 
 
-                return Page();
+                return RedirectToPage("/inventory/incominggoods/createincominggoods");
 
             }
         
