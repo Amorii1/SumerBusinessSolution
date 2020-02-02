@@ -16,10 +16,5 @@ namespace SumerBusinessSolution.Transactions
 
         bool CreateProdInWh(int ProdId);
 
-
-
-
-
-
     }
 }
