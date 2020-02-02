@@ -1,7 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
-@using SumerBusinessSolution.Utility;
+@*@using SumerBusinessSolution.Utility;*@
     <ul class="navbar-nav">
         @if (SignInManager.IsSignedIn(User))
         {
@@ -16,14 +16,18 @@
         }
         else
         {
-            @if (User.IsInRole(SD.AdminEndUser))
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Login</a>
+            </li>
+            @*@if (User.IsInRole(SD.AdminEndUser))
             {
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Register</a>
+            </li>
                 <li class="nav-item">
-                    <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Register</a>
-                </li>
-            }
-                <li class="nav-item">
-                    <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Login</a>
-                </li>
-            }
-        </ul>
+                <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Login</a>
+            </li>
+            }*@
+
+        }
+    </ul>

@@ -1,0 +1,44 @@
+﻿@page
+@model SumerBusinessSolution.CreateWhTypeModel
+@{
+    ViewData["Title"] = "CreateWhType";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+
+<h2 class="text-info">Add New WareHouse</h2>
+<form method="post">
+    <div class="border backgroundWhite" style="padding-left:5px;">
+        <br />
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="WhType.Type"></label>
+            </div>
+            <div class="col-5">
+                <select WhType="myList" asp-for="WhType.Type">
+                    <option value="StoreRoom">StorrRoom</option>
+                    <option value="ShowRoom">ShowRoom</option>
+                </select>
+            </div>
+            <span asp-validation-for="WhType.Type" class="text-danger"></span>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-5 offset-2">
+
+                <div class="row">
+                    <div class="col-6">
+                        <input type="submit" class="btn btn-info form-control" value="Create" />
+                    </div>
+                    <div class="col-6">
+                        <a asp-page="Index" class="btn btn-success form-control">Back to List</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

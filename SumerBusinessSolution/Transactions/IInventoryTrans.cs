@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SumerBusinessSolution.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -15,11 +16,6 @@ namespace SumerBusinessSolution.Transactions
         Task<bool> CheckProdCodeExist(string ProdCode);
 
         bool CreateProdInWh(int ProdId);
-
-
-
-
-
-
+    //    Task<IList<IncomingGood>> CreateIncomingGoods();
     }
 }
