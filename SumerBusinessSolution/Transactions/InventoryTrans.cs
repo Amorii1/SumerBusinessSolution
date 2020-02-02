@@ -20,7 +20,7 @@ namespace SumerBusinessSolution.Transactions
 
         public IncomingGood IncomingGood { get; set; }
 
-         public InvStockQty InvStockQty { get; set; }
+        public InvStockQty InvStockQty { get; set; }
         public InvTransaction InvTransaction { get; set; }
         public IList<Warehouse> WarehouseList { get; set; }
         public ProdInfo ProdInfo { get; set; }

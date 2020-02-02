@@ -1,0 +1,82 @@
+﻿@page
+@model SumerBusinessSolution.CreateWarehouseModel
+@{
+    ViewData["Title"] = "CreateWarehouse";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+<br />
+<h2 class="text-info">Add New Warehouse</h2>
+<form method="post">
+    <div class="border backgroundWhite" style="padding-left:5px;">
+        @*<input type="hidden" asp-for="Warehouse.TypeId" />*@
+        <input type="hidden" asp-for="Warehouse.CreatedById" />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <br />
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="Warehouse.WhCode"></label>
+            </div>
+            <div class="col-5">
+                <input asp-for="Warehouse.WhCode" class="form-control" />
+            </div>
+            <span asp-validation-for="Warehouse.WhCode" class="text-danger"></span>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="Warehouse.WhLocation"></label>
+            </div>
+            <div class="col-5">
+                <input asp-for="Warehouse.WhLocation" class="form-control" />
+            </div>
+            <span asp-validation-for="Warehouse.WhLocation" class="text-danger"></span>
+        </div>
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="Warehouse.WhName"></label>
+            </div>
+            <div class="col-5">
+                <input asp-for="Warehouse.WhName" class="form-control" />
+            </div>
+            <span asp-validation-for="Warehouse.WhName" class="text-danger"></span>
+        </div>
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="Warehouse.CreatedDateTime"></label>
+            </div>
+            <div class="col-5">
+                <input asp-for="Warehouse.CreatedDateTime" class="form-control" />
+            </div>
+            <span asp-validation-for="Warehouse.CreatedDateTime" class="text-danger"></span>
+        </div>
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="Warehouse.WhType.Type"></label>
+            </div>
+            <div class="col-5">
+                <select WhType="myList" asp-for="Warehouse.WhType.Type">
+                    <option value="StoreRoom">StoreRoom</option>
+                    <option value="ShowRoom">ShowRoom</option>
+                </select>
+            </div>
+            <span asp-validation-for="Warehouse.WhType.Type" class="text-danger"></span>
+        </div>
+        <div class="form-group row">
+            <div class="col-5 offset-2">
+                <div class="row">
+                    <div class="col-6">
+                        <input type="submit" class="btn btn-info form-control" value="Create" />
+                    </div>
+                    <div class="col-6">
+                        <a asp-page="Index" class="btn btn-success form-control">Back to List</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
