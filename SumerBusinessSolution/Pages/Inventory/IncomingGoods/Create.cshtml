@@ -1,5 +1,5 @@
 ﻿@page
-@model SumerBusinessSolution.CreateIncomingGoodsModel
+@model SumerBusinessSolution.Pages.Inventory.IncomingGoods.CreateModel
 @{
     ViewData["Title"] = "CreateIncomingGoods";
     Layout = "~/Pages/Shared/_Layout.cshtml";
@@ -29,9 +29,9 @@
                 <label asp-for="IncomingGood.ProdInfo.ProdCode"></label>
             </div>
             <div class="col-5">
-                <input type="text" id="ProdInfo" asp-for="ProdCode" />
+                <input type="text" id="ProdInfo" asp-for="ProdCode" formnovalidate="formnovalidate"/>
             </div>
-            <span asp-validation-for="IncomingGood.ProdInfo.ProdCode" class="text-danger"></span>
+            <span asp-validation-for="ProdCode" class="text-danger"></span>
         </div>
 
 
@@ -54,23 +54,23 @@
 
         <div class="form-group row">
             <div class="col-2">
-                <label asp-for="IncomingGood.Qty"></label>
+                <label asp-for="Qty"></label>
             </div>
             <div class="col-5">
-                <input asp-for="IncomingGood.Qty" class="form-control" />
+                <input asp-for="Qty" class="form-control" />
 
             </div>
-            <span asp-validation-for="IncomingGood.Qty" class="text-danger"></span>
+            <span asp-validation-for="Qty" class="text-danger"></span>
         </div>
 
         <div class="form-group row">
             <div class="col-2">
-                <label asp-for="IncomingGood.Note"></label>
+                <label asp-for="Note"></label>
             </div>
             <div class="col-5">
-                <textarea placeholder="Any notes....." asp-for="IncomingGood.Note" class="form-control"></textarea>
+                <textarea placeholder="Any notes....." asp-for="Note" class="form-control"></textarea>
             </div>
-            <span asp-validation-for="IncomingGood.Note" class="text-danger"></span>
+            <span asp-validation-for="Note" class="text-danger"></span>
         </div>
 
       
@@ -93,7 +93,7 @@
     <script>
          $(document).ready(function () {
     $('#ProdInfo').autocomplete({
-    source: '@Url.Page("CreateIncomingGoods", "SearchNow")'
+    source: '@Url.Page("Create", "SearchNow")'
     });
     });
     </script>

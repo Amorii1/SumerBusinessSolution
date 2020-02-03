@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using SumerBusinessSolution.Data;
 using SumerBusinessSolution.Models;
 
-namespace SumerBusinessSolution.Pages.Products
+namespace SumerBusinessSolution.Pages.Inventory.Products
 {
     public class DeleteModel : PageModel
     {

@@ -8,12 +8,12 @@ using Microsoft.EntityFrameworkCore;
 using SumerBusinessSolution.Data;
 using SumerBusinessSolution.Models;
 
-namespace SumerBusinessSolution
+namespace SumerBusinessSolution.Pages.Inventory.WhTypes
 {
-    public class CreateWhTypeModel : PageModel
+    public class Create : PageModel
     {
         private readonly ApplicationDbContext _db;
-        public CreateWhTypeModel(ApplicationDbContext db)
+        public Create(ApplicationDbContext db)
         {
             _db = db;
         }

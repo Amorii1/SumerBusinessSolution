@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -11,16 +12,16 @@ using SumerBusinessSolution.Data;
 using SumerBusinessSolution.Models;
 using SumerBusinessSolution.Transactions;
 
-namespace SumerBusinessSolution
+namespace SumerBusinessSolution.Pages.Inventory.IncomingGoods
 {
     //[Authorize]
-    public class CreateIncomingGoodsModel : PageModel
+    public class CreateModel : PageModel
     {
       
             private readonly ApplicationDbContext _db;
             private readonly IInventoryTrans _InveTrans;
 
-            public CreateIncomingGoodsModel(ApplicationDbContext db, IInventoryTrans InveTrans)
+            public CreateModel(ApplicationDbContext db, IInventoryTrans InveTrans)
             {
                 _db = db;
                 _InveTrans = InveTrans;
@@ -38,29 +39,29 @@ namespace SumerBusinessSolution
             public int WhId { get; set; }
             [BindProperty]
             public int ProdId { get; set; }
+
+            [Required]
             [BindProperty]
             public double Qty { get; set; }
             [BindProperty]
             public string Note { get; set; }
+
+        [Required]
         [BindProperty]
         public string ProdCode { get; set; }
         [TempData]
             public string StatusMessage { get; set; }
 
+ 
 
         public void OnGet()
         {
-            //  Warehouse = _db.Warehouse.FirstOrDefault();
            WarehouseList = _db.Warehouse.ToList();
-          //  ProdInfo = _db.ProdInfo.Where(p => p.Id == ProdId).ToList();
-
-         //   return Page();
-
+ 
         }
 
         public JsonResult OnGetSearchNow(string term)
         {
-            //   ProdInfo = _db.ProdInfo.Where(w => w.Id == ProdId).ToList();
             if (term == null)
             {
                 return new JsonResult("Not Found");
@@ -74,9 +75,22 @@ namespace SumerBusinessSolution
 
         public IActionResult OnPost()
             {
-            //WarehouseList = _db.Warehouse.ToList();
+            try
+            {
+                int ProdId = _db.ProdInfo.FirstOrDefault(pro => pro.ProdCode == ProdCode).Id;
+            }
+            catch
+            {
+                StatusMessage = "Product code can not be found";
+                return RedirectToPage("/inventory/incominggoods/create");
+            }
 
-            int ProdId = _db.ProdInfo.FirstOrDefault(pro=>pro.ProdCode==ProdCode).Id;
+            if(Qty == 0)
+            {
+                StatusMessage = "Qty can not be 0";
+                return RedirectToPage("/inventory/incominggoods/create");
+            }
+
                 bool incomingoods = _InveTrans.CreateIncomingGoods(WhId, ProdId, Qty, Note).GetAwaiter().GetResult();
 
                 if (incomingoods == true)
@@ -88,11 +102,14 @@ namespace SumerBusinessSolution
                     StatusMessage = "New goods havenot been added successfully.";
                 }
 
-
-                return RedirectToPage("/inventory/incominggoods/createincominggoods");
-
-            }
+                return RedirectToPage("/inventory/incominggoods/create");
+           
         
+
+
+
+        }
+
     }
 }
    

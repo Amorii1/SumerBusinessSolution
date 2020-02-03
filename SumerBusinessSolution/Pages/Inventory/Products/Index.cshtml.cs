@@ -10,7 +10,7 @@ using SumerBusinessSolution.Data;
 using SumerBusinessSolution.Models;
 using SumerBusinessSolution.Models.ViewModels;
 
-namespace SumerBusinessSolution.Pages.Products
+namespace SumerBusinessSolution.Pages.Inventory.Products
 {
     public class IndexModel : PageModel
     {

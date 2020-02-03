@@ -9,15 +9,15 @@ using SumerBusinessSolution.Data;
 using SumerBusinessSolution.Models;
 using SumerBusinessSolution.Transactions;
 
-namespace SumerBusinessSolution
+namespace SumerBusinessSolution.Pages.Inventory.Transfer
 {
- //   [Authorize]
-    public class CreateInvTransferModel : PageModel
+    //   [Authorize]
+    public class Create : PageModel
     {
         private readonly ApplicationDbContext _db;
         private readonly IInventoryTrans _InveTrans;
 
-        public CreateInvTransferModel(ApplicationDbContext db, IInventoryTrans InveTrans)
+        public Create(ApplicationDbContext db, IInventoryTrans InveTrans)
         {
             _db = db;
             _InveTrans = InveTrans;

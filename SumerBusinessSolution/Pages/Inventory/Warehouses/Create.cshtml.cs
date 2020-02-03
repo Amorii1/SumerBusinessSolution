@@ -8,12 +8,12 @@ using Microsoft.EntityFrameworkCore;
 using SumerBusinessSolution.Data;
 using SumerBusinessSolution.Models;
 
-namespace SumerBusinessSolution
+namespace SumerBusinessSolution.Pages.Inventory.Warehouses
 {
-    public class CreateWarehouseModel : PageModel
+    public class Create : PageModel
     {
         private readonly ApplicationDbContext _db;
-        public CreateWarehouseModel(ApplicationDbContext db)
+        public Create(ApplicationDbContext db)
         {
             _db = db;
 
