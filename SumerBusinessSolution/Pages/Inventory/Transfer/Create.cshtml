@@ -34,7 +34,7 @@
             <div class="col-5">
                 <select asp-for="FromWhId"
                         asp-items="@(new SelectList(Model.Warehouselist, "Id", "WhName"))"
-                        class="form-control">
+                        class="form-control" id="FromWhId">
                 </select>
             </div>
             @*<span asp-validation-for="InvTransfer.FromWarehouse.Id" class="text-danger"></span>*@
@@ -47,7 +47,7 @@
             <div class="col-5">
                 <select asp-for="ToWhId"
                         asp-items="@(new SelectList(Model.Warehouselist, "Id", "WhName"))"
-                        class="form-control">
+                        class="form-control" id="ToWhId">
                 </select>
             </div>
             @*<span asp-validation-for="InvTransfer.ToWarehouse.Id" class="text-danger"></span>*@
@@ -58,7 +58,7 @@
                 <label asp-for="Qty"></label>
             </div>
             <div class="col-5">
-                <input asp-for="Qty" class="form-control" />
+                <input asp-for="Qty" class="form-control" id="qty" />
 
             </div>
             <span asp-validation-for="Qty" class="text-danger"></span>
@@ -77,7 +77,7 @@
 
         <div class="row">
             <div class="col-7">
-                <button type="submit" class="btn btn-info">SAVE</button>
+                <button type="submit" class="btn btn-info" onclick="return ValidateInput()">SAVE</button>
             </div>
         </div>
     </div>
@@ -99,4 +99,22 @@
     });
     </script>
 
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script>
+        function ValidateInput() {
+            var qty = document.getElementById("qty").value;
+            var fromWh = document.getElementById("FromWhId").value;
+            var toWh = document.getElementById("ToWhId").value;
+
+            if (qty == 0) {
+                swal("Error!", "Quantity can not be 0", "error");
+                return false
+            }
+            if (fromWh == toWh) {
+                swal("Error!", "Warehouses can not be similar", "error");
+                return false
+            }
+        }
+
+    </script>
 }

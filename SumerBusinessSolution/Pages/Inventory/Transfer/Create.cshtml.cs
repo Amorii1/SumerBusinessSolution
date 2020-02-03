@@ -42,11 +42,8 @@ namespace SumerBusinessSolution.Pages.Inventory.Transfer
         [BindProperty]
         public string Note { get; set; }
         
-
-
         [TempData]
         public string StatusMessage { get; set; }
-
 
         public void OnGet()
         {
@@ -64,7 +61,6 @@ namespace SumerBusinessSolution.Pages.Inventory.Transfer
                                              where (P.ProdCode.Contains(term))
                                              select P.ProdCode;
             return new JsonResult(lstProdCode);
-
         }
 
         public IActionResult OnPost()
@@ -76,26 +72,21 @@ namespace SumerBusinessSolution.Pages.Inventory.Transfer
             }
             catch
             {
-                StatusMessage = "Product code can not be found";
+                StatusMessage = "Error! Product code can not be found";
                 return RedirectToPage("/inventory/transfer/create");
             }
 
-            if (Qty == 0)
-            {
-                StatusMessage = "Qty can not be 0";
-                return RedirectToPage("/inventory/transfer/create");
-            }
+     
+            StatusMessage = _InveTrans.CreateInvTransfer(ProdId, FromWhId, ToWhId, Qty, Note).GetAwaiter().GetResult();
 
-            bool invTransfer = _InveTrans.CreateInvTransfer(ProdId, FromWhId, ToWhId, Qty, Note).GetAwaiter().GetResult();
-
-            if (invTransfer == true)
-            {
-                StatusMessage = "New goods have been transfered successfully.";
-            }
-            else
-            {
-                StatusMessage = "Error! New goods have not been transfered.";
-            }
+            //if (invTransfer == true)
+            //{
+            //    StatusMessage = "New goods have been transfered successfully.";
+            //}
+            //else
+            //{
+            //    StatusMessage = "Error! New goods have not been transfered.";
+            //}
             return RedirectToPage("/inventory/transfer/create");
 
         }

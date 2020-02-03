@@ -76,7 +76,7 @@ namespace SumerBusinessSolution.Pages.Inventory.IncomingGoods
         }
 
         public IActionResult OnPost()
-            {
+        {
             try
             {
                 int ProdId = _db.ProdInfo.FirstOrDefault(pro => pro.ProdCode == ProdCode).Id;

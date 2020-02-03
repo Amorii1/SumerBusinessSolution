@@ -105,14 +105,14 @@ namespace SumerBusinessSolution.Transactions
         }
 
         // This function used to create inventory Transfer. The transfer is created only For the Admin
-        public async Task<bool> CreateInvTransfer(int ProdId, int FromWhId, int ToWhId, double Qty, string Note)
+        public async Task<string> CreateInvTransfer(int ProdId, int FromWhId, int ToWhId, double Qty, string Note)
         {
             // Check if the warehouse has enough qty of that product
             bool CheckQty = CheckQtyInWh(ProdId, FromWhId, Qty);
 
             if(CheckQty == false)
             {
-                return false;
+                return "Error! No enough quantity";
             }
 
             //Decrease Qty of From Warehouse
@@ -144,7 +144,7 @@ namespace SumerBusinessSolution.Transactions
             _db.InvTransfer.Add(InvTransfer);
             await _db.SaveChangesAsync();
 
-            return true;
+            return "Transfer created successfully";
         }
 
         // This function is called when a Store User wants to transfer from a warehouse to another. So this function
