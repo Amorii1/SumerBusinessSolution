@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -11,7 +12,7 @@ using SumerBusinessSolution.Transactions;
 
 namespace SumerBusinessSolution.Pages.Inventory.Transfer
 {
-    //   [Authorize]
+    [Authorize]
     public class Create : PageModel
     {
         private readonly ApplicationDbContext _db;
@@ -22,14 +23,12 @@ namespace SumerBusinessSolution.Pages.Inventory.Transfer
             _db = db;
             _InveTrans = InveTrans;
         }
-        [BindProperty]
-        public IncomingGood IncomingGood { get; set; }
-        public IList<IncomingGood> IncomingGoodlist { get; set; }
 
-        public InvTransfer InvTransfer { get; set; }
-        public Warehouse Warehouse { get; set; }
+        //public InvTransfer InvTransfer { get; set; }
+        //public Warehouse Warehouse { get; set; }
         public IList<Warehouse> Warehouselist { get; set; }
-        public ProdInfo ProdInfo { get; set; }
+        
+        [Required]
         [BindProperty]
         public string ProdCode { get; set; }
         [BindProperty]
@@ -37,8 +36,7 @@ namespace SumerBusinessSolution.Pages.Inventory.Transfer
         [BindProperty]
         public int ToWhId { get; set; }
 
-        [BindProperty]
-        public int ProdId { get; set; }
+        [Required]
         [BindProperty]
         public double Qty { get; set; }
         [BindProperty]
@@ -50,13 +48,9 @@ namespace SumerBusinessSolution.Pages.Inventory.Transfer
         public string StatusMessage { get; set; }
 
 
-        public IActionResult OnGet()
+        public void OnGet()
         {
-          
             Warehouselist = _db.Warehouse.ToList();
-       
-            return Page();
-
         }
 
         public JsonResult OnGetSearchNow(string term)
@@ -75,7 +69,23 @@ namespace SumerBusinessSolution.Pages.Inventory.Transfer
 
         public IActionResult OnPost()
         {
-            int ProdId = _db.ProdInfo.FirstOrDefault(pro => pro.ProdCode == ProdCode).Id;
+            int ProdId;
+            try
+            {
+                 ProdId = _db.ProdInfo.FirstOrDefault(pro => pro.ProdCode == ProdCode).Id;
+            }
+            catch
+            {
+                StatusMessage = "Product code can not be found";
+                return RedirectToPage("/inventory/transfer/create");
+            }
+
+            if (Qty == 0)
+            {
+                StatusMessage = "Qty can not be 0";
+                return RedirectToPage("/inventory/transfer/create");
+            }
+
             bool invTransfer = _InveTrans.CreateInvTransfer(ProdId, FromWhId, ToWhId, Qty, Note).GetAwaiter().GetResult();
 
             if (invTransfer == true)
@@ -84,11 +94,9 @@ namespace SumerBusinessSolution.Pages.Inventory.Transfer
             }
             else
             {
-                StatusMessage = "New goods havenot been transfered successfully.";
+                StatusMessage = "Error! New goods have not been transfered.";
             }
-
-
-            return Page();
+            return RedirectToPage("/inventory/transfer/create");
 
         }
     }
