@@ -76,7 +76,6 @@ namespace SumerBusinessSolution.Pages.Inventory.Transfer
                 return RedirectToPage("/inventory/transfer/create");
             }
 
-     
             StatusMessage = _InveTrans.CreateInvTransfer(ProdId, FromWhId, ToWhId, Qty, Note).GetAwaiter().GetResult();
 
             //if (invTransfer == true)

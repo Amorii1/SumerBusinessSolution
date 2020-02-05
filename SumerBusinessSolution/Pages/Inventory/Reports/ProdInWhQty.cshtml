@@ -1,0 +1,114 @@
+﻿@page
+@model SumerBusinessSolution.Pages.Inventory.Reports.ProdInWhQtyModel
+@{
+    ViewData["Title"] = "ProdInWhQty";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<form method="get" asp-page="Index">
+    <div class="border backgroundWhite">
+        <div style="height:60px;" class="container border border-secondary">
+            <div class="row">
+                <div class="col-11">
+                    <div class="row" style="margin-top:10px;">
+                        <div class="col-4">
+                            @Html.Editor("searchProdCode", new { htmlAttributes = new { @class = "form-control", placeholder = "Product Code....." } })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-1">
+                    <div class="row" style="padding-top:10px; padding-right:15px;">
+                        <button type="submit" name="submit" value="Search" class="btn btn-info form-control">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+        <div>
+            <table class="table table-striped border">
+                <tr class="table-secondary">
+                    <th>
+                        @Html.DisplayNameFor(m => m.InvStockQtyList[0].ProdInfo.ProdCode)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(m => m.InvStockQtyList[0].ProdInfo.ProdName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(m => m.InvStockQtyList[0].Warehouse.WhName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(m => m.InvStockQtyList[0].Qty)
+                    </th>
+
+                    <th></th>
+                    <th></th>
+                </tr>
+                @foreach (var item in Model.InvStockQtyList)
+                {
+               
+            <tr>
+                <td>
+                    @Html.DisplayFor(m => item.ProdInfo.ProdCode)
+                </td>
+                <td>
+                    @Html.DisplayFor(m => item.ProdInfo.ProdName)
+                </td>
+                <td>
+                    @Html.DisplayFor(m => item.Warehouse.WhName)
+                </td>
+                @if (item.Qty < 10)
+                {
+                    <td class="bg-danger">
+                        @Html.DisplayFor(m => item.Qty)
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        @Html.DisplayFor(m => item.Qty)
+                    </td>
+                }
+
+
+                <td>
+                    <a asp-page="../Products/Details" asp-route-ID="@item.ProdInfo.Id" style="text-decoration:none;">
+                        <img src="~/images/car.png" width="40" /> &nbsp; View
+                    </a>
+                </td>
+                <td>
+                    <a asp-page="../Transactions/ProdTrans" asp-route-ProdId="@item.ProdId" asp-route-WhId="@item.WhId" style="text-decoration:none;">
+                        <img src="~/images/car.png" width="40" /> &nbsp; Trans
+                    </a>
+                </td>
+            </tr>
+                }
+                @*<tr>
+                        <td colspan="5" class="text-right">
+                            <div page-model="@Model.UsersListVM.PagingInfo" asp-action="Index" page-class="btn border"
+                                 page-class-normal="btn btn-light" page-class-selected="btn btn-info active" class="btn-group">
+
+                            </div>
+                        </td>
+                    </tr>*@
+            </table>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <script>
+         $(document).ready(function () {
+    $('#searchProdCode').autocomplete({
+    source: '@Url.Page("ProdInWhQty", "SearchNow")'
+    });
+    });
+    </script>
+ }

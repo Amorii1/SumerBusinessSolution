@@ -75,6 +75,9 @@ namespace SumerBusinessSolution.Transactions
         {
             try
             {
+                DateTime InDateTime = DateTime.Now;
+                string sqlFormattedDate = InDateTime.ToString("yyyy-MM-dd HH:mm:ss");
+                
                 // creating new incoming goods
                 IncomingGood = new IncomingGood
                 {
@@ -83,23 +86,60 @@ namespace SumerBusinessSolution.Transactions
                     Qty = Qty,
                     Note = Note,
                     CreatedById = GetLoggedInUserId(),
-                    CreatedDateTime = DateTime.Now
+
+                    CreatedDateTime = InDateTime //DateTime.Now.GetDateTimeFormats()
 
                 };
                  _db.IncomingGood.Add(IncomingGood);
 
                 //updating Qty of InvStockQty
                 ChangeStockQty(ProdId, WhId, Qty, "In");
-
+                
+                // creating transaction 
                 CreateInvTransaction(ProdId, WhId, Qty, SD.Incoming);
-  
+
                 // Save changes
                 await _db.SaveChangesAsync();
-             
+
                 return true;
             }
-            catch(Exception)
+            catch(Exception ex)
             {
+                return false;
+            }
+        }
+
+        //This function deletes incoming Goods based on the id of the selected Incoming Goods. 
+       // Notice this function will decrease the qty of the deleted item 
+       //  also will delete Inv Transaction 
+        public async Task<bool> DeleteIncomingGoods(int IgId)
+        {
+            try
+            {
+ 
+                IncomingGood IncomingGood = _db.IncomingGood.FirstOrDefault(ig => ig.Id == IgId);
+
+                int ProdId = IncomingGood.ProdId.GetValueOrDefault();
+                int WhId = IncomingGood.WhId.GetValueOrDefault();
+                double Qty = IncomingGood.Qty;
+                DateTime TransDate = IncomingGood.CreatedDateTime;
+
+                //updating Qty of InvStockQty
+                ChangeStockQty(ProdId, WhId, Qty, "Out");
+
+                // Delete add trans ID
+               // DeleteInvTransaction(ProdId, WhId, Qty, TransDate, SD.Incoming);
+
+                _db.IncomingGood.Remove(IncomingGood);
+
+                // Save changes
+                await _db.SaveChangesAsync();
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("{0} Exception caught.", e);
                 return false;
             }
         }
@@ -121,13 +161,6 @@ namespace SumerBusinessSolution.Transactions
             // Increase Qty of To Warehouse 
             ChangeStockQty(ProdId, ToWhId, Qty, "In");
 
-
-            // Create Inv Transaction with Negative Qty of From Warehouse
-            CreateInvTransaction(ProdId, FromWhId, Qty*-1, SD.TransferOut);
-
-            // Create Inv Transaction with Positive Qty of To Warehouse
-            CreateInvTransaction(ProdId, ToWhId, Qty, SD.TransferIn);
-
             // Create Inv Transfer Record 
             InvTransfer InvTransfer = new InvTransfer
             {
@@ -142,6 +175,13 @@ namespace SumerBusinessSolution.Transactions
             };
 
             _db.InvTransfer.Add(InvTransfer);
+
+            // Create Inv Transaction with Negative Qty of From Warehouse
+            CreateInvTransaction(ProdId, FromWhId, Qty * -1, SD.TransferOut);
+
+            // Create Inv Transaction with Positive Qty of To Warehouse
+            CreateInvTransaction(ProdId, ToWhId, Qty, SD.TransferIn);
+
             await _db.SaveChangesAsync();
 
             return "Transfer created successfully";
@@ -149,14 +189,14 @@ namespace SumerBusinessSolution.Transactions
 
         // This function is called when a Store User wants to transfer from a warehouse to another. So this function
         // Will create a request for the Admin to approve
-        public async Task<bool> CreateInvTransferRequest(int ProdId, int FromWhId, int ToWhId, double Qty, string Note)
+        public async Task<string> CreateInvTransferRequest(int ProdId, int FromWhId, int ToWhId, double Qty, string Note)
         {
             // Check if the warehouse has enough qty of that product
             bool CheckQty = CheckQtyInWh(ProdId, FromWhId, Qty);
 
             if (CheckQty == false)
             {
-                return false;
+                return "Error! No enough quantity";
             }
 
             // Create Inv Transfer Record with Pending Status
@@ -175,14 +215,13 @@ namespace SumerBusinessSolution.Transactions
             _db.InvTransfer.Add(InvTransfer);
             await _db.SaveChangesAsync();
 
-            return true;
+            return "Transfer Request has been created";
         }
 
         // When a transfer request is created by the Store user. Admin will call this function to Approve his 
         // Transfer Request
         public async Task<bool> ApproveInvTransferRequest(int ReqId)
         {
-    
             // Get Inventory Object by the ID 
             InvTransfer = _db.InvTransfer.FirstOrDefault(inv => inv.Id == ReqId);
 
@@ -208,18 +247,17 @@ namespace SumerBusinessSolution.Transactions
 
             // Increase Qty of To Warehouse 
             ChangeStockQty(ProdId, ToWhId, Qty, "In");
+ 
+            // Approve Transfer Requrest
 
+            InvTransfer.TransferStatus = SD.Approved;
+            InvTransfer.ApprovedById = GetLoggedInUserId();
 
             // Create Inv Transaction with Negative Qty of From Warehouse
             CreateInvTransaction(ProdId, FromWhId, Qty * -1, SD.TransferOut);
 
             // Create Inv Transaction with Positive Qty of To Warehouse
             CreateInvTransaction(ProdId, ToWhId, Qty, SD.TransferIn);
-
-            // Approve Transfer Requrest
-
-            InvTransfer.TransferStatus = SD.Approved;
-            InvTransfer.ApprovedById = GetLoggedInUserId();
 
             await _db.SaveChangesAsync();
 
@@ -246,7 +284,7 @@ namespace SumerBusinessSolution.Transactions
             return true;
         }
 
-
+        
         // Helping Functions //
         private string GetLoggedInUserId()
         {
@@ -289,6 +327,15 @@ namespace SumerBusinessSolution.Transactions
                 CreatedDateTime = DateTime.Now
             };
             _db.InvTransaction.Add(InvTrans);
+        }
+
+        private void DeleteInvTransaction(int ProdId, int WhId, double Qty, DateTime TransDate, string TransType)
+        {
+            InvTransaction InvTrans = _db.InvTransaction.FirstOrDefault(tr => tr.ProdId == ProdId 
+            & tr.WhId == WhId & tr.Qty == Qty & tr.CreatedDateTime == TransDate & tr.TransferType == TransType);
+
+
+            _db.InvTransaction.Remove(InvTrans);
         }
 
         private bool CheckQtyInWh(int ProdId, int WhId, double Qty)

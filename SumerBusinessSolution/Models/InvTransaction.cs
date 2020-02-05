@@ -27,6 +27,7 @@ namespace SumerBusinessSolution.Models
         [Required]
         public string CreatedById { get; set; }
 
+
         [Required]
         public DateTime CreatedDateTime { get; set; }
 
