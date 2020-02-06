@@ -322,7 +322,7 @@ namespace SumerBusinessSolution.Transactions
                 ProdId = ProdId,
                 WhId = WhId,
                 Qty = Qty,
-                TransferType = TransType,
+                TransType = TransType,
                 CreatedById = GetLoggedInUserId(),
                 CreatedDateTime = DateTime.Now
             };
@@ -332,7 +332,7 @@ namespace SumerBusinessSolution.Transactions
         private void DeleteInvTransaction(int ProdId, int WhId, double Qty, DateTime TransDate, string TransType)
         {
             InvTransaction InvTrans = _db.InvTransaction.FirstOrDefault(tr => tr.ProdId == ProdId 
-            & tr.WhId == WhId & tr.Qty == Qty & tr.CreatedDateTime == TransDate & tr.TransferType == TransType);
+            & tr.WhId == WhId & tr.Qty == Qty & tr.CreatedDateTime == TransDate & tr.TransType == TransType);
 
 
             _db.InvTransaction.Remove(InvTrans);

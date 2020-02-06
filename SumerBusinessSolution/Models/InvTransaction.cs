@@ -22,7 +22,7 @@ namespace SumerBusinessSolution.Models
         public double Qty { get; set; }
 
         [Required]
-        public string TransferType { get; set; }
+        public string TransType { get; set; }
       
         [Required]
         public string CreatedById { get; set; }

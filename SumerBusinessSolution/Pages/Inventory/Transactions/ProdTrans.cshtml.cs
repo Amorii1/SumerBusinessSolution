@@ -22,10 +22,19 @@ namespace SumerBusinessSolution.Pages.Inventory.Transactions
             _db = db;
         }
 
-        public async Task<IActionResult> OnGet(int ProdId, int WhId)
+        public async Task<IActionResult> OnGet(int ProdId, int WhId , int? TransId)
         {
-            InvTransList = await _db.InvTransaction.Include(tr=> tr.ProdInfo).Include(tr=> tr.Warehouse).Include(tr=> tr.ApplicationUser)
-                .Where(tr => tr.ProdId == ProdId & tr.WhId == WhId).ToListAsync();
+            if(TransId == null) // In this case it will be used by ProdInWhQty and WhProdQty Reports
+            {
+                InvTransList = await _db.InvTransaction.Include(tr => tr.ProdInfo).Include(tr => tr.Warehouse).Include(tr => tr.ApplicationUser)
+              .Where(tr => tr.ProdId == ProdId & tr.WhId == WhId).ToListAsync();
+            }
+            else if(TransId != null) // in this case it will be used by InvTransactions Report
+            {
+                InvTransList = await _db.InvTransaction.Include(tr => tr.ProdInfo).Include(tr => tr.Warehouse).Include(tr => tr.ApplicationUser)
+            .Where(tr => tr.Id == TransId).ToListAsync();
+            }
+          
             
             return Page();
         }
