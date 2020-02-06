@@ -12,13 +12,13 @@ namespace Sumer.Utility
             public const string SupervisorEndUser = "Supervisor";
             public const string StoreEndUser = "Store User";
 
-            // Transfer Types
+            // Transactions Types
             public const string Incoming = "Incoming";
             public const string TransferOut = "TransferOut";
             public const string TransferIn = "TransferIn";
             public const string Sales = "Sales";
 
-            // Approval Types 
+            // Transfer Status Types 
             public const string Pending = "Waiting for approval";
             public const string Approved = "Approved";
             public const string Rejected = "Rejected";

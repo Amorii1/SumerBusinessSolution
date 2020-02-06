@@ -22,7 +22,7 @@ namespace SumerBusinessSolution.Pages.Inventory.Reports
         public IList<Warehouse> WarehouseList { get; set; }
 
         [BindProperty]
-        public int WhId { get; set; }
+        public int WhId{ get; set; }
 
         public InvTransactionsModel(ApplicationDbContext db)
         {
@@ -38,7 +38,7 @@ namespace SumerBusinessSolution.Pages.Inventory.Reports
             Param.Append("&searchWh=");
             Param.Append("&searchCreatedDate=");
 
-            if (WhId != null)
+            if (WhId != "null")
             {
                 Param.Append(WhId);
             }
@@ -53,7 +53,7 @@ namespace SumerBusinessSolution.Pages.Inventory.Reports
                 Param.Append(SearchCreatedDate);
             }
 
-            if (SearchProdCode == null & WhId == null & SearchCreatedDate == null)
+            if (SearchProdCode == null & WhId ==  null  & SearchCreatedDate == null)
             {
                 InvTransList = await _db.InvTransaction.Include(tr => tr.Warehouse).Include(tr => tr.ProdInfo)
                .Where(tr => tr.CreatedDateTime > DateTime.Now.AddMonths(-3)).ToListAsync();
@@ -62,7 +62,7 @@ namespace SumerBusinessSolution.Pages.Inventory.Reports
             }
 
 
-            if (SearchProdCode != null & WhId != null & SearchCreatedDate != null)
+            if (SearchProdCode != null & WhId != "null" & SearchCreatedDate != null)
             {
                 InvTransList = await _db.InvTransaction.Include(stk => stk.Warehouse).Include(stk => stk.ProdInfo)
                .Where(stk => stk.ProdInfo.ProdCode == SearchProdCode 
@@ -70,34 +70,34 @@ namespace SumerBusinessSolution.Pages.Inventory.Reports
             }
             else
             {
-                if (SearchProdCode != null & WhId != null & SearchCreatedDate == null)
+                if (SearchProdCode != null & WhId != "null" & SearchCreatedDate == null)
                 {
                     InvTransList = await _db.InvTransaction.Include(stk => stk.Warehouse).Include(stk => stk.ProdInfo)
                     .Where(stk => stk.ProdInfo.ProdCode == SearchProdCode
                     & stk.Warehouse.Id.ToString() == WhId ).ToListAsync();
                 }
-                else if(SearchProdCode != null & WhId == null & SearchCreatedDate == null)
+                else if(SearchProdCode != null & WhId == "null" & SearchCreatedDate == null)
                 {
                     InvTransList = await _db.InvTransaction.Include(stk => stk.Warehouse).Include(stk => stk.ProdInfo)
                     .Where(stk => stk.ProdInfo.ProdCode == SearchProdCode).ToListAsync();
                 }
-                else if (SearchProdCode == null & WhId != null & SearchCreatedDate != null)
+                else if (SearchProdCode == null & WhId != "null" & SearchCreatedDate != null)
                 {
                     InvTransList = await _db.InvTransaction.Include(stk => stk.Warehouse).Include(stk => stk.ProdInfo)
                     .Where(stk => stk.Warehouse.Id.ToString() == WhId & stk.CreatedDateTime.ToString().Contains(SearchCreatedDate)).ToListAsync();
                 }
-                else if (SearchProdCode == null & WhId == null & SearchCreatedDate != null)
+                else if (SearchProdCode == null & WhId == "null" & SearchCreatedDate != null)
                 {
                     InvTransList = await _db.InvTransaction.Include(stk => stk.Warehouse).Include(stk => stk.ProdInfo)
                   .Where(stk => stk.CreatedDateTime.ToString().Contains(SearchCreatedDate)).ToListAsync();
                 }
-                else if (SearchProdCode != null & WhId == null & SearchCreatedDate != null)
+                else if (SearchProdCode != null & WhId == "null" & SearchCreatedDate != null)
                 {
                     InvTransList = await _db.InvTransaction.Include(stk => stk.Warehouse).Include(stk => stk.ProdInfo)
                     .Where(stk => stk.ProdInfo.ProdCode == SearchProdCode
                     &  stk.CreatedDateTime.ToString().Contains(SearchCreatedDate)).ToListAsync();
                 }
-                else if (SearchProdCode == null & WhId != null & SearchCreatedDate == null)
+                else if (SearchProdCode == null & WhId != "null" & SearchCreatedDate == null)
                 {
                     InvTransList = await _db.InvTransaction.Include(stk => stk.Warehouse).Include(stk => stk.ProdInfo)
                     .Where(stk=> stk.Warehouse.Id.ToString() == WhId).ToListAsync();

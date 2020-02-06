@@ -284,7 +284,27 @@ namespace SumerBusinessSolution.Transactions
             return true;
         }
 
-        
+        // user can delete Inventory transfer request by using this funtion 
+        public async Task<bool> DeleteInvTransferRequest(int ReqId)
+        {
+
+            // Get Inventory Object by the ID 
+            InvTransfer = _db.InvTransfer.FirstOrDefault(inv => inv.Id == ReqId);
+
+            if (InvTransfer == null)
+            {
+                return false;
+            }
+            // Delete Transfer Requrest
+
+            _db.InvTransfer.Remove(InvTransfer);
+
+            await _db.SaveChangesAsync();
+
+            return true;
+        }
+
+
         // Helping Functions //
         private string GetLoggedInUserId()
         {
