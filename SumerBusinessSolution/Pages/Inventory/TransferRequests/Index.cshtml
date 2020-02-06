@@ -1,0 +1,115 @@
+﻿@page
+@model SumerBusinessSolution.Inventory.TransferRequests.IndexModel
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+
+
+<form method="post" >
+    <br /><br />
+    <div class="row">
+        <div class="col-6">
+            <h2 class="text-info">Inventory Transfer </h2>
+        </div>
+
+    </div>
+
+   
+    <div>
+        @if (Model.InvTransferList.Count() == 0)
+        {
+            <p>No Transaction available</p>
+
+        }
+        else
+        {
+            <table class="table table-striped border">
+                <tr class="table-secondary">
+
+
+                    <th>
+                        @Html.DisplayNameFor(m => m.InvTransferList[0].ProdInfo.ProdCode)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(m => m.InvTransferList[0].ProdInfo.ProdName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(m => m.InvTransferList[0].FromWhId)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(m => m.InvTransferList[0].ToWhId)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(m => m.InvTransferList[0].Qty)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(m => m.InvTransferList[0].Note)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(m => m.InvTransferList[0].ApplicationUser.FirstName)
+
+                    </th>
+                    <th></th>
+
+                </tr>
+                @foreach (var item in Model.InvTransferList)
+                {
+            <tr>
+
+
+                <td>
+                    @Html.DisplayFor(m => item.ProdInfo.ProdCode)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(m => item.ProdInfo.ProdName)
+                </td>
+                <td>
+                    @Html.DisplayFor(m => item.FromWhId)
+                </td>
+                <td>
+                    @Html.DisplayFor(m => item.ToWhId)
+                </td>
+                <td>
+                    @Html.DisplayFor(m => item.Qty)
+                </td>
+                <td>
+                    @Html.DisplayFor(m => item.Note)
+                </td>
+              
+                <td>
+                    @Html.DisplayFor(m => item.ApplicationUser.FirstName)
+                </td>
+                <td>
+                    <div class="btn-group" role="group">
+                        <button class="btn btn-success text-white" asp-page-handler="ApproveTransferRequests" type="submit" title="Approve" name="Accept">
+                            Accept <i class="fas fa-edit"></i>
+                        </button>
+
+
+                        <button class="btn btn-danger text-white" asp-page-handler="RejectTransferRequests" type="submit" title="Reject" name="Reject">
+                            Reject  <i class="fas fa-edit"></i>
+                        </button>
+
+
+                        <button class="btn btn-danger text-white" asp-page-handler="DeleteTransferRequests" type="submit" title="Delete" name="Delete">
+                            Delete  <i class="fas fa-edit"></i>
+                        </button>
+
+                    </div>
+                </td>
+
+               </tr>
+                }
+                
+                
+
+            </table>
+        }
+    </div>
+    
+
+</form>
+

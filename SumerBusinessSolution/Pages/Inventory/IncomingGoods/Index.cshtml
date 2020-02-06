@@ -1,0 +1,119 @@
+﻿@page
+@model SumerBusinessSolution.Inventory.IncomingGoods.IndexModel
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+
+<form method="get" asp-page="Index">
+    <br /><br />
+    <div class="row">
+        <div class="col-6">
+            <h2 class="text-info">Incoming Goods </h2>
+        </div>
+
+    </div>
+
+    <div class="border backgroundWhite">
+        <div style="height:60px;" class="container border border-secondary">
+            <div class="row">
+                <div class="col-11">
+                    <div class="row" style="margin-top:10px;">
+                        <div class="col-4">
+                            @Html.Editor("searchProdCode", new { htmlAttributes = new { @class = "form-control", placeholder = "Product Code....." } })
+                        </div>
+                        <div class="col-4">
+                            @Html.Editor("searchCreateDateTime", new { htmlAttributes = new { @class = "form-control", placeholder = "Date time....." } })
+                        </div>
+                        <div class="col-2 text-lg-right">
+
+                            <button type="submit" name="submit" value="search" class="btn btn-info form-control">
+                                <i class="fas fa-search"></i>
+                            </button>
+
+                        </div>
+                    </div>
+                    <br />
+
+
+
+
+                </div>
+            </div>
+            <br />
+            <div>
+                <table class="table table-striped border">
+                    <tr class="table-secondary">
+
+                        <th>
+                            @Html.DisplayNameFor(m => m.ProdInfo.ProdName)
+
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(m => m.ProdInfo.ProdCode)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(m => m.Warehouse.WhName)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(m => m.IncomingGoods.Qty)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(m => m.IncomingGoods.Note)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(m => m.IncomingGoods.CreatedDateTime)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(m => m.IncomingGoods.ApplicationUser.FirstName)
+                        </th>
+                        <th>
+
+                        </th>
+                        <th>
+
+                        </th>
+                    </tr>
+                    @foreach (var item in Model.IncomingGoodList)
+                    {
+                        <tr>
+
+                            <td>
+                                @Html.DisplayFor(m => item.ProdInfo.ProdName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(m => item.ProdInfo.ProdCode)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(m => item.Warehouse.WhName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(m => item.Qty)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(m => item.Note)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(m => item.CreatedDateTime)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(m => item.ApplicationUser.FirstName)
+                            </td>
+                            <td>
+                                <a asp-page="/Inventory/Products/Index" asp-route-userId="@item.ProdId" style="text-decoration:none;">
+                                    products
+                                </a>
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+                    }
+
+                </table>
+            </div>
+        </div>
+    </div>
+
+</form>
+

@@ -1,0 +1,79 @@
+﻿@page
+@model SumerBusinessSolution.Inventory.Warehouses.IndexModel
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+
+<div class="backgroundWhite">
+    <div class="row px-2 py-2">
+        <div class="col-6">
+            <h3 class="text-info">Warehouses</h3>
+        </div>
+        <div class="col-6 text-right">
+            <a asp-page="Create" class="btn btn-info">New warehouse <i class="far fa-plus-square"></i></a>
+        </div>
+    </div>
+    <form method="post">
+        <div>
+            @if (Model.Warehouse.Count() == 0)
+            {
+                <p>No Service type has been added! Create new service type</p>
+
+            }
+            else
+            {
+        <table class="table table-striped border">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(m => m.Warehouse[0].WhCode)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(m => m.Warehouse[0].WhName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(m => m.Warehouse[0].WhLocation)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(m => m.Warehouse[0].WhType.Type)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(m => m.Warehouse[0].ApplicationUser.FirstName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(m => m.Warehouse[0].CreatedDateTime)
+                </th>
+            </tr>
+            @foreach (var item in Model.Warehouse)
+            {
+                <tr>
+
+                    <td>
+                        @Html.DisplayFor(m => item.WhCode)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(m => item.WhName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(m => item.WhLocation)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(m => item.WhType.Type)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(m => item.ApplicationUser.FirstName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(m => item.CreatedDateTime)
+                    </td>
+                    
+                </tr>
+            }
+        </table>
+            }
+        </div>
+
+    </form>
+ </div>
+  
