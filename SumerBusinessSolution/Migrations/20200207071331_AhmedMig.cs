@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SumerBusinessSolution.Migrations
 {
-    public partial class CreatingNewTables02 : Migration
+    public partial class AhmedMig : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -68,7 +68,7 @@ namespace SumerBusinessSolution.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Type = table.Column<string>(nullable: true)
+                    Type = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -121,8 +121,8 @@ namespace SumerBusinessSolution.Migrations
                 name: "AspNetUserLogins",
                 columns: table => new
                 {
-                    LoginProvider = table.Column<string>(maxLength: 128, nullable: false),
-                    ProviderKey = table.Column<string>(maxLength: 128, nullable: false),
+                    LoginProvider = table.Column<string>(nullable: false),
+                    ProviderKey = table.Column<string>(nullable: false),
                     ProviderDisplayName = table.Column<string>(nullable: true),
                     UserId = table.Column<string>(nullable: false)
                 },
@@ -166,8 +166,8 @@ namespace SumerBusinessSolution.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<string>(nullable: false),
-                    LoginProvider = table.Column<string>(maxLength: 128, nullable: false),
-                    Name = table.Column<string>(maxLength: 128, nullable: false),
+                    LoginProvider = table.Column<string>(nullable: false),
+                    Name = table.Column<string>(nullable: false),
                     Value = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -332,7 +332,7 @@ namespace SumerBusinessSolution.Migrations
                     ProdId = table.Column<int>(nullable: true),
                     WhId = table.Column<int>(nullable: true),
                     Qty = table.Column<double>(nullable: false),
-                    TransferType = table.Column<string>(nullable: false),
+                    TransType = table.Column<string>(nullable: false),
                     CreatedById = table.Column<string>(nullable: false),
                     CreatedDateTime = table.Column<DateTime>(nullable: false)
                 },
@@ -372,11 +372,19 @@ namespace SumerBusinessSolution.Migrations
                     UOM = table.Column<string>(nullable: true),
                     TransferStatus = table.Column<string>(nullable: false),
                     CreatedDateTime = table.Column<DateTime>(nullable: false),
-                    CreatedById = table.Column<string>(nullable: false)
+                    CreatedById = table.Column<string>(nullable: false),
+                    ApprovedById = table.Column<string>(nullable: true),
+                    Note = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_InvTransfer", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_InvTransfer_AspNetUsers_ApprovedById",
+                        column: x => x.ApprovedById,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_InvTransfer_AspNetUsers_CreatedById",
                         column: x => x.CreatedById,
@@ -481,6 +489,11 @@ namespace SumerBusinessSolution.Migrations
                 name: "IX_InvTransaction_WhId",
                 table: "InvTransaction",
                 column: "WhId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_InvTransfer_ApprovedById",
+                table: "InvTransfer",
+                column: "ApprovedById");
 
             migrationBuilder.CreateIndex(
                 name: "IX_InvTransfer_CreatedById",

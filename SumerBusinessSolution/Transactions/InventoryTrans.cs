@@ -116,19 +116,18 @@ namespace SumerBusinessSolution.Transactions
         {
             try
             {
- 
                 IncomingGood IncomingGood = _db.IncomingGood.FirstOrDefault(ig => ig.Id == IgId);
 
                 int ProdId = IncomingGood.ProdId.GetValueOrDefault();
                 int WhId = IncomingGood.WhId.GetValueOrDefault();
                 double Qty = IncomingGood.Qty;
-                DateTime TransDate = IncomingGood.CreatedDateTime;
+               // DateTime TransDate = IncomingGood.CreatedDateTime;
 
                 //updating Qty of InvStockQty
                 ChangeStockQty(ProdId, WhId, Qty, "Out");
 
                 // Delete add trans ID
-               // DeleteInvTransaction(ProdId, WhId, Qty, TransDate, SD.Incoming);
+                DeleteInvTransaction(ProdId, WhId, Qty, SD.Incoming);
 
                 _db.IncomingGood.Remove(IncomingGood);
 
@@ -304,6 +303,27 @@ namespace SumerBusinessSolution.Transactions
             return true;
         }
 
+        //This funtion will update the stock qty of a product. By admin only
+        public async Task<bool> UpdateProdStkQty(int StkId, double Qty)
+        {
+             
+            try
+            {
+                InvStockQty InvStockQty = _db.InvStockQty.FirstOrDefault(stk => stk.Id == StkId);
+
+                InvStockQty.Qty = Qty;
+
+                // Save changes
+                await _db.SaveChangesAsync();
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("{0} Exception caught.", e);
+                return false;
+            }
+        }
 
         // Helping Functions //
         private string GetLoggedInUserId()
@@ -349,13 +369,20 @@ namespace SumerBusinessSolution.Transactions
             _db.InvTransaction.Add(InvTrans);
         }
 
-        private void DeleteInvTransaction(int ProdId, int WhId, double Qty, DateTime TransDate, string TransType)
+        private void DeleteInvTransaction(int ProdId, int WhId, double Qty, string TransType)
         {
-            InvTransaction InvTrans = _db.InvTransaction.FirstOrDefault(tr => tr.ProdId == ProdId 
-            & tr.WhId == WhId & tr.Qty == Qty & tr.CreatedDateTime == TransDate & tr.TransType == TransType);
+            try
+            {
+                InvTransaction InvTrans = _db.InvTransaction.FirstOrDefault(tr => tr.ProdId == ProdId
+                & tr.WhId == WhId & tr.Qty == Qty & tr.TransType == TransType);
 
+                _db.InvTransaction.Remove(InvTrans);
+            }
+            catch
+            {
 
-            _db.InvTransaction.Remove(InvTrans);
+            }
+        
         }
 
         private bool CheckQtyInWh(int ProdId, int WhId, double Qty)

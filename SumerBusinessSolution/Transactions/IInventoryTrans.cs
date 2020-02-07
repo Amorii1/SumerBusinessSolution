@@ -13,10 +13,9 @@ namespace SumerBusinessSolution.Transactions
         Task<string> CreateInvTransferRequest(int ProdId, int FromWhId, int ToWhId, double Qty, string Note);
         Task<bool> ApproveInvTransferRequest(int ReqId);
         Task<bool> RejectInvTransferRequest(int ReqId);
-
         Task<bool> DeleteInvTransferRequest(int ReqId);
         Task<bool> CheckProdCodeExist(string ProdCode);
-
+        Task<bool> UpdateProdStkQty(int StkId, double Qty);
         bool CreateProdInWh(int ProdId);
 
     }

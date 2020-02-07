@@ -77,7 +77,7 @@ namespace SumerBusinessSolution.Pages.Inventory.IncomingGoods
 
         }
 
-        public IActionResult OnPost()
+        public async Task<IActionResult> OnPost()
         {
             int ProdId;
             try

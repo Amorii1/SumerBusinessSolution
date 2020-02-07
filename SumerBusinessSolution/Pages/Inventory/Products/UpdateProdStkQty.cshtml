@@ -1,0 +1,76 @@
+﻿@page
+@model SumerBusinessSolution.Pages.Inventory.Products.UpdateProdStkQtyModel
+@{
+    ViewData["Title"] = "UpdateProdStkQty";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+<partial name="_StatusMessage" model="Model.StatusMessage" />
+<br />
+<form method="post" enctype="multipart/form-data">
+    <div class="border backgroundwhite">
+        <input type="hidden" asp-for=" InvStkQty.ProdInfo.Id" />
+
+
+        <div class="row form-group">
+            <div class="col-2">
+                <label asp-for="InvStkQty.ProdInfo.ProdCode"></label>
+            </div>
+            <div class="col-6">
+                <input asp-for="InvStkQty.ProdInfo.ProdCode" class="form-control" disabled />
+            </div>
+        </div>
+
+        <div class="row form-group">
+            <div class="col-2">
+                <label asp-for="InvStkQty.ProdInfo.ProdName"></label>
+
+            </div>
+            <div class="col-6">
+                <input asp-for="InvStkQty.ProdInfo.ProdName" class="form-control" disabled />
+            </div>
+        </div>
+        <div class="row form-group">
+            <div class="col-2">
+                <label asp-for="InvStkQty.Warehouse.WhName"></label>
+
+            </div>
+            <div class="col-6">
+                <input asp-for="InvStkQty.Warehouse.WhName" class="form-control" disabled />
+            </div>
+        </div>
+        <div class="row form-group">
+            <div class="col-2">
+                <label asp-for="InvStkQty.Qty"></label>
+
+            </div>
+            <div class="col-6">
+                <input asp-for="InvStkQty.Qty" class="form-control" disabled />
+            </div>
+        </div>
+        <div class="row form-group">
+            <div class="col-2">
+                <label>New Qty</label>
+            </div>
+            <div class="col-6">
+                <input asp-for="NewQty" class="form-control" />
+            </div>
+        </div>
+
+        <div class=" form-group row">
+            <div class="col-5 offset-2">
+                <div class="row">
+                    <div class="col-6">
+                        <input type="submit" class="btn btn-info form-control" value="Update" />
+                    </div>
+                    <div class="col-6">
+                        <a asp-page="Index" class="btn btn-success form-control">Back to List</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+</form>
+

@@ -10,14 +10,14 @@ using SumerBusinessSolution.Data;
 namespace SumerBusinessSolution.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200115142021_updatingTables")]
-    partial class updatingTables
+    [Migration("20200207071331_AhmedMig")]
+    partial class AhmedMig
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.0.0")
+                .HasAnnotation("ProductVersion", "3.1.1")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -311,7 +311,7 @@ namespace SumerBusinessSolution.Migrations
                     b.Property<double>("Qty")
                         .HasColumnType("float");
 
-                    b.Property<string>("TransferType")
+                    b.Property<string>("TransType")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -336,6 +336,9 @@ namespace SumerBusinessSolution.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("ApprovedById")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("CreatedById")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
@@ -345,6 +348,9 @@ namespace SumerBusinessSolution.Migrations
 
                     b.Property<int?>("FromWhId")
                         .HasColumnType("int");
+
+                    b.Property<string>("Note")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("ProdId")
                         .HasColumnType("int");
@@ -363,6 +369,8 @@ namespace SumerBusinessSolution.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ApprovedById");
 
                     b.HasIndex("CreatedById");
 
@@ -500,6 +508,7 @@ namespace SumerBusinessSolution.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Type")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -622,6 +631,10 @@ namespace SumerBusinessSolution.Migrations
 
             modelBuilder.Entity("SumerBusinessSolution.Models.InvTransfer", b =>
                 {
+                    b.HasOne("SumerBusinessSolution.Models.ApplicationUser", "ApprovedApplicationUser")
+                        .WithMany()
+                        .HasForeignKey("ApprovedById");
+
                     b.HasOne("SumerBusinessSolution.Models.ApplicationUser", "ApplicationUser")
                         .WithMany()
                         .HasForeignKey("CreatedById")
