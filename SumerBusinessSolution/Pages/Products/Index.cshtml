@@ -1,0 +1,141 @@
+﻿@page
+@model SumerBusinessSolution.Pages.Products.IndexModel
+@{
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+<div>
+
+    <div id="fh5co-main">
+        <div class="fh5co-narrow-content">
+            <h2 class="fh5co-heading animate-box" data-animate-effect="fadeInLeft">Products</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="fh5co-feature animate-box" data-animate-effect="fadeInLeft">
+                        <div class="fh5co-icon">
+                            <a class="btn-group-sm" asp-page="/Products/Create"><i class="icon-document-add"></i></a>
+                        </div>
+                        <div class="fh5co-text">
+                            <br />
+                            <h3>Add New Product</h3>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+
+
+        <div class="backgroundWhite">
+            <form method="get" asp-page="PFunctions">
+
+
+
+                <div class="container border border-secondary">
+                    <div class="row">
+                        <div class="col-md-11">
+                            <div class="row" style="margin-top:10px;">
+
+                                <div class="col-md-4">
+                                    @Html.Editor("SearchProdCode", new { htmlAttributes = new { @class = "form-control", placeholder = "Product Code...." } })
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.Editor("SearchProdName", new { htmlAttributes = new { @class = "form-control", placeholder = "Product Name...." } })
+                                </div>
+                                <div class="col-md-2 text-lg-right">
+
+                                    <button type="submit" name="submit" value="search" class=" active btn btn-info form-control">
+                                        <i class="fas fa-search"></i>
+                                    </button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </form>
+
+            <br />
+
+
+
+
+
+            <div>
+
+                <table class="table table-striped border-info border">
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(m => m.ProdInfo[0].ProdCode)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(m => m.ProdInfo[0].ProdName)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(m => m.ProdInfo[0].RetailPrice)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(m => m.ProdInfo[0].WholePrice)
+                        </th>
+                        <th></th>
+                    </tr>
+
+                    @if (Model.ProdInfo.Count() == 0)
+                    {
+
+                        <h3 class="text-danger">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*No Product has been added! Add new Product now</h3>
+
+                    }
+                    else
+                    {
+
+                        @foreach (var item in Model.ProdInfo)
+
+
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(m => item.ProdCode)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(m => item.ProdName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(m => item.RetailPrice)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(m => item.WholePrice)
+                                </td>
+                                <td>
+                                    <div class="btn-group row " role="group">
+                                        <a class="btn btn-primary " asp-route-culture="@Request.RouteValues["culture"]" asp-page="Edit" asp-route-Id="@item.Id" title="Edit"><i class="far fa-edit"></i></a>
+                                        <a class="btn  btn-success" asp-route-culture="@Request.RouteValues["culture"]" asp-page="Details" asp-route-Id="@item.Id" title="Details"><i class="fas fa-file-invoice"></i></a>
+                                        <a class="btn  btn-danger" asp-route-culture="@Request.RouteValues["culture"]" asp-page="Delete" asp-route-Id="@item.Id" title="Delete"><i class="far fa-trash-alt"></i></a>
+
+
+
+                                    </div>
+
+                                </td>
+                            </tr>
+
+                        }
+                    }
+                </table>
+
+            </div>
+        </div>
+
+
+
+        <br />
+        <br />
+        <br />
+
+    </div>
+
+
+</div>

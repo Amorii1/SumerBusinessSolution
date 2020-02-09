@@ -1,89 +1,148 @@
 ﻿@page
 @model SumerBusinessSolution.Pages.Inventory.IncomingGoods.CreateModel
 @{
-    ViewData["Title"] = "CreateIncomingGoods";
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
+
 <partial name="_StatusMessage" model="Model.StatusMessage" />
 <br />
-<h2 class="text-info">Incoming Goods</h2>
-<form method="post">
-    <div class="border backgroundWhite" style="padding-left:5px;">
+<div>
+
+    <div id="fh5co-main">
 
 
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        <br />
-        @*<div class="form-group row">
-                <div class="col-2">
-                    <label asp-for="IncomingGood.ProdInfo.ProdName"></label>
+        <div class=" fh5co-narrow-content animate-box" data-animate-effect="fadeInLeft">
+            <div class="row">
+                <div class="col-md-4">
+                    <h2>Add A New Incoming Good</h2>
                 </div>
-                <div class="col-5">
-                    <input type="text" id="Product" />
+            </div>
+
+            <form method="post" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="border backgroundWhite pt-md-3 pl-md-3">
+
+
+                    <div class="row form-group">
+                        <div class="col-md-2">
+                            <label asp-for="IncomingGood.ProdInfo.ProdCode"> </label>
+                        </div>
+                        <div class="col-md-5">
+                            <input asp-for="ProdCode" class="form-control" />
+                        </div>
+                        <span asp-validation-for="ProdCode" class="text-danger"></span>
+                    </div>
+
+
+                    <div class="row form-group">
+                        <div class="col-md-2">
+                            <label asp-for="IncomingGood.Warehouse.WhName"> </label>
+                        </div>
+                        <div class="col-md-5">
+                            <select asp-for="WhId"
+                                    asp-items="@(new SelectList(Model.WarehouseList, "Id", "WhName"))"
+                                    class="form-control">
+                            </select>
+                        </div>
+                        <span asp-validation-for="IncomingGood.Warehouse.WhName" class="text-danger"></span>
+                    </div>
+
+
+                    <div class="row form-group">
+                        <div class="col-md-2">
+                            <label asp-for="Qty"> </label>
+                        </div>
+                        <div class="col-md-5">
+                            <input asp-for="Qty" class="form-control" />
+                        </div>
+                        <span asp-validation-for="Qty" class="text-danger"></span>
+                    </div>
+
+
+                    <div class="row form-group">
+                        <div class="col-md-2">
+                            <label asp-for="Note"> </label>
+                        </div>
+                        <div class="col-5">
+                            <textarea placeholder="Any notes....." asp-for="Note" class="form-control"></textarea>
+                        </div>
+                        <span asp-validation-for="Note" class="text-danger"></span>
+                    </div>
+
+
+
+
+
+                    <div class="row form-group">
+                        <div class="col-md-2">
+                            <label asp-for="IncomingGood.ProdInfo.ProdCode"> </label>
+                        </div>
+                        <div class="col-md-5">
+                            <input asp-for="ProdCode" class="form-control" />
+                        </div>
+                        <span asp-validation-for="ProdCode" class="text-danger"></span>
+                    </div>
+
+
+                    <div class="row form-group">
+                        <div class="col-md-2">
+                            <label asp-for="IncomingGood.ProdInfo.ProdCode"> </label>
+                        </div>
+                        <div class="col-md-5">
+                            <input asp-for="ProdCode" class="form-control" />
+                        </div>
+                        <span asp-validation-for="ProdCode" class="text-danger"></span>
+                    </div>
+
+
+                    <div class="row form-group">
+                        <div class="col-md-2">
+                            <label asp-for="IncomingGood.ProdInfo.ProdCode"> </label>
+                        </div>
+                        <div class="col-md-5">
+                            <input asp-for="ProdCode" class="form-control" />
+                        </div>
+                        <span asp-validation-for="ProdCode" class="text-danger"></span>
+                    </div>
+
+
+                    @*<div class="row form-group">
+            <div class="col-2">
+                <label  asp-for="ProductInfo.CreatedBy"></label>
+            </div>
+            <div class="col-5">
+                <input asp-for="ProductInfo.CreatedBy" class="form-control" />
+            </div>
+        </div>*@
+
+
+                    <div class=" form-group row">
+                        <div class="col-md-7 offset-md-2">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <input  onclick="return ValidateInput()" type="submit" class="active btn btn-md btn-info form-control" value="Create" />
+                                </div>
+                                <div class="col-md-6">
+                                    <a asp-page="Index" class=" active  btn-mid btn-success form-control text-center text-uppercase">Back to List</a>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
                 </div>
-                <span asp-validation-for="IncomingGood.ProdInfo.ProdName" class="text-danger"></span>
-            </div>*@
 
-
-        <div class="form-group row">
-            <div class="col-2">
-                <label asp-for="IncomingGood.ProdInfo.ProdCode"></label>
-            </div>
-            <div class="col-5">
-                <input type="text" id="ProdInfo" asp-for="ProdCode"/>
-            </div>
-            <span asp-validation-for="ProdCode" class="text-danger"></span> 
+            </form>
         </div>
 
 
-        <div class="form-group row">
-            <div class="col-2">
-                <label asp-for="IncomingGood.Warehouse.WhName"></label>
-            </div>
-
-            <div class="col-5">
-                <select asp-for="WhId"
-                        asp-items="@(new SelectList(Model.WarehouseList, "Id", "WhName"))"
-                        class="form-control">
-                </select>
-            </div>
 
 
-            <span asp-validation-for="IncomingGood.Warehouse.WhName" class="text-danger"></span>
-        </div>
 
-
-        <div class="form-group row">
-            <div class="col-2">
-                <label asp-for="Qty"></label>
-            </div>
-            <div class="col-5">
-                <input asp-for="Qty" id="qty" class="form-control" />
-                <span asp-validation-for="Qty" class="text-danger"></span>
-
-            </div>
- 
-        </div>
-
-        <div class="form-group row">
-            <div class="col-2">
-                <label asp-for="Note"></label>
-            </div>
-            <div class="col-5">
-                <textarea placeholder="Any notes....." asp-for="Note" class="form-control"></textarea>
-            </div>
-            <span asp-validation-for="Note" class="text-danger"></span>
-        </div>
-
-
-        <div class="row">
-            <div class="col-7">
-                <button type="submit" class="btn btn-info"  onclick="return ValidateInput()">SAVE</button>
-                @*<button class="btn btn-success form-control" onclick="return ValidateInput()">Service Completed</button>*@
-
-            </div>
-        </div>
     </div>
-</form>
+</div>
+
+
+
 
 
 @section Scripts {
@@ -108,7 +167,7 @@
             var PId = document.getElementById("ProdInfo").value;
 
             if (qty == 0) {
-               swal("Error!", "Quantity can not be 0", "error");
+                swal("Error!", "Quantity can not be 0", "error");
 
                 return false
             }
