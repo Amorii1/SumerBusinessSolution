@@ -13,12 +13,12 @@ using SumerBusinessSolution.Transactions;
 namespace SumerBusinessSolution.Pages.Inventory.Transfer
 {
     [Authorize]
-    public class Create : PageModel
+    public class CreateModel : PageModel
     {
         private readonly ApplicationDbContext _db;
         private readonly IInventoryTrans _InveTrans;
 
-        public Create(ApplicationDbContext db, IInventoryTrans InveTrans)
+        public CreateModel(ApplicationDbContext db, IInventoryTrans InveTrans)
         {
             _db = db;
             _InveTrans = InveTrans;

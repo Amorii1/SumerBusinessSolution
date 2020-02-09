@@ -56,9 +56,9 @@
                     <li><a asp-page="/Users/UFunctions">Users</a></li>
                     <li @*class="fh5co-active"*@><a asp-page="/Inventory/IFunctions">Inventory</a></li>
                     <ul>
-                        <li><button class="btn btn-primary">Transfer Goods</button></li>
-                        <li><button class="btn btn-primary">Transfer Goods Request</button></li>
-                        <li><button type="button" asp-page="~pages/Inventory/IncomingGoods/Create" class="btn btn-primary">Add Incoming Goods</button></li>
+                        <li><button onclick="window.location.href='/Inventory/Transfer/Create';" class="btn ">Transfer Goods</button></li>
+                        <li><button onclick="window.location.href='/Inventory/TransferRequests/Create';"  class="btn ">Transfer Goods Request</button></li>
+                        <li><button onclick="window.location.href='/Inventory/IncomingGoods/Create';" class="btn ">Add Incoming Goods</button></li>
                     </ul>
                     <li><a asp-page="">Accounts</a></li>
                     <li><a asp-page="">Sales</a></li>

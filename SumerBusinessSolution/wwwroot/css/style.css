@@ -16,10 +16,8 @@ body {
     font-weight: 400;
     font-size: 16px;
     line-height: 1.6;
-    color: rgb(0, 0, 0);
+    color: #4b7681;
     background-image: url("../img/dust_scratches.png");
-   
-    
     /* Full height */
     height: 100%;
     /* Center and scale the image nicely */
@@ -173,7 +171,7 @@ figure figcaption {
     padding-right: 250px;
 }
     #fh5co-aside #fh5co-main-menu ul li a {
-        color: rgba(0, 0, 0, 0.9);
+        color: #2e4968e6;
         text-decoration: none;
         letter-spacing: .1em;
         text-transform: uppercase;
@@ -290,11 +288,12 @@ figure figcaption {
   }
 }
 #fh5co-main .fh5co-narrow-content {
-  position: relative;
-  width: 93%;
-  margin: 0 auto;
-  padding: 4em 0;
-  clear: both;
+    position: relative;
+    width: 93%;
+    margin: 0 auto;
+    /*padding: 3em 0;*/
+    padding-top: 50px;
+    clear: both;
 }
 @media screen and (max-width: 768px) {
   #fh5co-main .fh5co-narrow-content {

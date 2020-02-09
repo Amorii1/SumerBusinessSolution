@@ -4,76 +4,106 @@
     ViewData["Title"] = "Index";
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
+<div>
+
+    <div id="fh5co-main">
+        <div class="fh5co-narrow-content">
+            <h2 class="fh5co-heading animate-box" data-animate-effect="fadeInLeft">Warehouses</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="fh5co-feature animate-box" data-animate-effect="fadeInLeft">
+                        <div class="fh5co-icon">
+                            <a class="btn-group-sm" asp-page="Create"><i class="icon-document-add"></i></a>
+                        </div>
+                        <div class="fh5co-text">
+                            <br />
+                            <h3>Create New Warehouse</h3>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
 
 
-<div class="backgroundWhite">
-    <div class="row px-2 py-2">
-        <div class="col-6">
-            <h3 class="text-info">Warehouses</h3>
+
+
+        <div class="backgroundWhite">
+            <br />
+            <div>
+
+                <table class="table table-striped border-info border">
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(m => m.Warehouse[0].WhCode)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(m => m.Warehouse[0].WhName)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(m => m.Warehouse[0].WhLocation)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(m => m.Warehouse[0].WhType.Type)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(m => m.Warehouse[0].ApplicationUser.FirstName)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(m => m.Warehouse[0].CreatedDateTime)
+                        </th>
+                    </tr>
+
+
+                    @if (Model.Warehouse.Count() == 0)
+                    {
+                        <h3 class="text-danger">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*No Warehouse has been added! Add new Warehouse now</h3>
+                    }
+                    else
+                    {
+
+                        @foreach (var item in Model.Warehouse)
+
+
+                        {
+                            <tr>
+
+                                <td>
+                                    @Html.DisplayFor(m => item.WhCode)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(m => item.WhName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(m => item.WhLocation)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(m => item.WhType.Type)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(m => item.ApplicationUser.FirstName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(m => item.CreatedDateTime)
+                                </td>
+
+                            </tr>
+
+                        }
+                    }
+                </table>
+
+            </div>
         </div>
-        <div class="col-6 text-right">
-            <a asp-page="Create" class="btn btn-info">New warehouse <i class="far fa-plus-square"></i></a>
-        </div>
+
+
+
+        <br />
+        <br />
+        <br />
+
     </div>
-    <form method="post">
-        <div>
-            @if (Model.Warehouse.Count() == 0)
-            {
-                <p>No Service type has been added! Create new service type</p>
 
-            }
-            else
-            {
-        <table class="table table-striped border">
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(m => m.Warehouse[0].WhCode)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(m => m.Warehouse[0].WhName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(m => m.Warehouse[0].WhLocation)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(m => m.Warehouse[0].WhType.Type)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(m => m.Warehouse[0].ApplicationUser.FirstName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(m => m.Warehouse[0].CreatedDateTime)
-                </th>
-            </tr>
-            @foreach (var item in Model.Warehouse)
-            {
-                <tr>
 
-                    <td>
-                        @Html.DisplayFor(m => item.WhCode)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(m => item.WhName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(m => item.WhLocation)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(m => item.WhType.Type)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(m => item.ApplicationUser.FirstName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(m => item.CreatedDateTime)
-                    </td>
-                    
-                </tr>
-            }
-        </table>
-            }
-        </div>
+</div>
 
-    </form>
- </div>
-  
