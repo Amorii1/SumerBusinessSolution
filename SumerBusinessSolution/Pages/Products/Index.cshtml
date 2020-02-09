@@ -20,15 +20,48 @@
                         </div>
                     </div>
                 </div>
-               
+
             </div>
         </div>
 
 
 
 
-
         <div class="backgroundWhite">
+            <form method="get" asp-page="PFunctions">
+
+
+
+                <div class="container border border-secondary">
+                    <div class="row">
+                        <div class="col-md-11">
+                            <div class="row" style="margin-top:10px;">
+
+                                <div class="col-md-4">
+                                    @Html.Editor("SearchProdCode", new { htmlAttributes = new { @class = "form-control", placeholder = "Product Code...." } })
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.Editor("SearchProdName", new { htmlAttributes = new { @class = "form-control", placeholder = "Product Name...." } })
+                                </div>
+                                <div class="col-md-2 text-lg-right">
+
+                                    <button type="submit" name="submit" value="search" class=" active btn btn-info form-control">
+                                        <i class="fas fa-search"></i>
+                                    </button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </form>
+
+            <br />
+
+
+
 
 
             <div>
@@ -52,7 +85,9 @@
 
                     @if (Model.ProdInfo.Count() == 0)
                     {
-                        <p>No Service type has been added! Create new service type now</p>
+
+                        <h3 class="text-danger">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*No Product has been added! Add new Product now</h3>
+
                     }
                     else
                     {
@@ -76,9 +111,9 @@
                                 </td>
                                 <td>
                                     <div class="btn-group row " role="group">
-                                        <a class="btn btn-primary " asp-route-culture="@Request.RouteValues["culture"]" asp-page="Edit" asp-route-Id="@item.Id" title="Edit">Edit</a>
-                                        <a class="btn  btn-success" asp-route-culture="@Request.RouteValues["culture"]" asp-page="Details" asp-route-Id="@item.Id" title="Details">Details</a>
-                                        <a class="btn  btn-danger" asp-route-culture="@Request.RouteValues["culture"]" asp-page="Delete" asp-route-Id="@item.Id" title="Delete">Delete</a>
+                                        <a class="btn btn-primary " asp-route-culture="@Request.RouteValues["culture"]" asp-page="Edit" asp-route-Id="@item.Id" title="Edit"><i class="far fa-edit"></i></a>
+                                        <a class="btn  btn-success" asp-route-culture="@Request.RouteValues["culture"]" asp-page="Details" asp-route-Id="@item.Id" title="Details"><i class="fas fa-file-invoice"></i></a>
+                                        <a class="btn  btn-danger" asp-route-culture="@Request.RouteValues["culture"]" asp-page="Delete" asp-route-Id="@item.Id" title="Delete"><i class="far fa-trash-alt"></i></a>
 
 
 
@@ -96,8 +131,11 @@
 
 
 
-
+        <br />
+        <br />
+        <br />
 
     </div>
+
+
 </div>
-   
