@@ -5,78 +5,85 @@
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
-<table class="table table-striped border">
-    <tr class="table-secondary">
-        <th>
-            @Html.DisplayNameFor(m => m.InvTransList[0].ProdInfo.ProdCode)
-        </th>
-        <th>
-            @Html.DisplayNameFor(m => m.InvTransList[0].ProdInfo.ProdName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(m => m.InvTransList[0].Warehouse.WhName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(m => m.InvTransList[0].Qty)
-        </th>
-        <th>
-            @Html.DisplayNameFor(m => m.InvTransList[0].TransType)
-        </th>
-        <th>
-            @Html.DisplayNameFor(m => m.InvTransList[0].ApplicationUser.FirstName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(m => m.InvTransList[0].CreatedDateTime)
-        </th>
+    <div>
+        <div id="fh5co-main">
+            <div class="backgroundWhite">
 
-        @*<th></th>
-        <th></th>*@
-    </tr>
-    @foreach (var item in Model.InvTransList)
-    {
+                <table class="table table-striped border-info border col-md-12">
+                    <tr class="table-secondary">
+                        <th>
+                            @Html.DisplayNameFor(m => m.InvTransList[0].ProdInfo.ProdCode)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(m => m.InvTransList[0].ProdInfo.ProdName)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(m => m.InvTransList[0].Warehouse.WhName)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(m => m.InvTransList[0].Qty)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(m => m.InvTransList[0].TransType)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(m => m.InvTransList[0].ApplicationUser.FirstName)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(m => m.InvTransList[0].CreatedDateTime)
+                        </th>
 
-<tr>
-    <td>
-        @Html.DisplayFor(m => item.ProdInfo.ProdCode)
-    </td>
-    <td>
-        @Html.DisplayFor(m => item.ProdInfo.ProdName)
-    </td>
-    <td>
-        @Html.DisplayFor(m => item.Warehouse.WhName)
-    </td>
-    <td>
-        @Html.DisplayFor(m => item.Qty)
-    </td>
-    <td>
-        @Html.DisplayFor(m => item.TransType)
-    </td>
-    <td>
-        @Html.DisplayFor(m => item.ApplicationUser.FirstName)
-    </td>
-    <td>
-        @Html.DisplayFor(m => item.CreatedDateTime)
-    </td>
+                        @*<th></th>
+                    <th></th>*@
+                    </tr>
+                    @foreach (var item in Model.InvTransList)
+                    {
+
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(m => item.ProdInfo.ProdCode)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(m => item.ProdInfo.ProdName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(m => item.Warehouse.WhName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(m => item.Qty)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(m => item.TransType)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(m => item.ApplicationUser.FirstName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(m => item.CreatedDateTime)
+                            </td>
 
 
-    @*<td>
-            <a asp-page="../Products/Details" asp-route-ID="@item.ProdInfo.Id" style="text-decoration:none;">
-                <img src="~/images/car.png" width="40" /> &nbsp; View
-            </a>
-        </td>
-        <td>
-            <a asp-page="../Products/Details" asp-route-ID="@item.ProdInfo.Id" style="text-decoration:none;">
-                <img src="~/images/car.png" width="40" /> &nbsp; Trans
-            </a>
-        </td>*@
-</tr>
-    }
-    @*<tr>
-            <td colspan="5" class="text-right">
-                <div page-model="@Model.UsersListVM.PagingInfo" asp-action="Index" page-class="btn border"
-                     page-class-normal="btn btn-light" page-class-selected="btn btn-info active" class="btn-group">
+                            @*<td>
+                            <a asp-page="../Products/Details" asp-route-ID="@item.ProdInfo.Id" style="text-decoration:none;">
+                                <img src="~/images/car.png" width="40" /> &nbsp; View
+                            </a>
+                        </td>
+                        <td>
+                            <a asp-page="../Products/Details" asp-route-ID="@item.ProdInfo.Id" style="text-decoration:none;">
+                                <img src="~/images/car.png" width="40" /> &nbsp; Trans
+                            </a>
+                        </td>*@
+                        </tr>
+                    }
+                    @*<tr>
+                    <td colspan="5" class="text-right">
+                        <div page-model="@Model.UsersListVM.PagingInfo" asp-action="Index" page-class="btn border"
+                             page-class-normal="btn btn-light" page-class-selected="btn btn-info active" class="btn-group">
 
-                </div>
-            </td>
-        </tr>*@
-</table>
+                        </div>
+                    </td>
+                </tr>*@
+                </table>
+            </div>
+        </div>
+        </div>

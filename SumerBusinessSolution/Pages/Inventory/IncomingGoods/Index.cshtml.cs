@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using SumerBusinessSolution.Data;
 using SumerBusinessSolution.Models;
 
-namespace SumerBusinessSolution.Inventory.IncomingGoods
+namespace SumerBusinessSolution.Pages.Inventory.IncomingGoods
 {
     public class IndexModel : PageModel
     {
