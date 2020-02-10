@@ -12,23 +12,35 @@ namespace SumerBusinessSolution.Models
     {
         public int Id { get; set; }
         [Required]
+        [Display(Name = "رمز المنتج ")]
+
         public string ProdCode { get; set; }
         [Required]
+        [Display(Name = "اسم المنتج")]
+
         public string ProdName { set; get; }
+        [Display(Name = "وصف المنتج")]
+
         public string ProdDescription { get; set; }
-        [DisplayName("Product Image")]
+        [DisplayName("صوره المنتج")]
         public string ImgFile { get; set; }
+        [Display(Name = "فئه المنتج")]
+
         public string ProdCategory { get; set; }
         [Required]
+        [Display(Name = " سعر المفرد")]
+
         public double RetailPrice { get; set; }
         [Required]
+        [Display(Name = "سعر الكلي")]
+
         public double WholePrice  { get; set; }
 
         [Required]
         public string CreatedById { get; set; }
   
         [Required]
-        [DisplayName("Date")]
+        [DisplayName("تاريخ الاضافه")]
         [DataType(DataType.Date)]
         public DateTime CreatedDateTime { get; set; }
 

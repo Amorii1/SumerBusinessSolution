@@ -1,14 +1,14 @@
 ﻿@page
-@model SumerBusinessSolution.Pages.Products.EditModel
+@model SumerBusinessSolution.Pages.Inventory.Products.DetailsModel
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Details";
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
-<h2 class="text-info">تحديث معلومات المنتج</h2>
+<h2 class="text-info">تفاصيل المنتج</h2>
 <br />
 
-<form method="post" enctype="multipart/form-data">
+<form method="post">
     <div class="border backgroundwhite">
         <input type="hidden" asp-for="ProdInfo.Id" />
 
@@ -18,7 +18,7 @@
                 <label asp-for="ProdInfo.ProdCode"></label>
             </div>
             <div class="col-6">
-                <input asp-for="ProdInfo.ProdCode" class="form-control" />
+                <input asp-for="ProdInfo.ProdCode" class="form-control" disabled />
                 <span asp-validation-for="ProdInfo.ProdCode" class="text-danger"> </span>
             </div>
         </div>
@@ -30,7 +30,7 @@
 
             </div>
             <div class="col-6">
-                <input asp-for="ProdInfo.ProdName" class="form-control" />
+                <input asp-for="ProdInfo.ProdName" class="form-control" disabled />
                 <span asp-validation-for="ProdInfo.ProdName" class="text-danger"> </span>
 
             </div>
@@ -42,7 +42,7 @@
             </div>
             <div class="col-6">
 
-                <textarea asp-for="ProdInfo.ProdDescription" class="form-control"></textarea>
+                <textarea asp-for="ProdInfo.ProdDescription" class="form-control" disabled></textarea>
 
                 <span asp-validation-for="ProdInfo.ProdDescription" class="text-danger"> </span>
 
@@ -54,58 +54,50 @@
 
             </div>
             <div class="col-6">
-                <input asp-for="ProdInfo.ProdCategory" class="form-control" />
+                <input asp-for="ProdInfo.ProdCategory" class="form-control" disabled />
                 <span asp-validation-for="ProdInfo.ProdCategory" class="text-danger"> </span>
 
             </div>
         </div>
- v
+        <div class="row form-group">
+            <div class="col-2">
+                <label asp-for="ProdInfo.CreatedById"></label>
+
+            </div>
+            <div class="col-6">
+                <input asp-for="ProdInfo.CreatedById" class="form-control" disabled />
+                <span asp-validation-for="ProdInfo.CreatedById" class="text-danger"> </span>
+
+            </div>
+        </div>
         <div class="row form-group">
             <div class="col-2">
                 <label asp-for="ProdInfo.CreatedDateTime"></label>
 
             </div>
             <div class="col-6">
-                <input asp-for="ProdInfo.CreatedDateTime" class="form-control" />
+                <input asp-for="ProdInfo.CreatedDateTime" class="form-control" disabled />
                 <span asp-validation-for="ProdInfo.CreatedDateTime" class="text-danger"> </span>
 
-            </div>e
+            </div>
         </div>
-
         <div class="row form-group">
             <div class="col-2">
                 <label asp-for="ProdInfo.ImgFile"></label>
+
             </div>
             <div class="col-6">
-                <input type="file" asp-for="img" class="form-control">   <img style="height: 200px; width: 100%; display: block;" src="~/img/@Model.ProdInfo.ImgFile">
-                @*</input>*@
+                <img style="height: 200px; width: 100%; display: block;" src="~/img/@Model.ProdInfo.ImgFile">
+
             </div>
         </div>
-
-
-
-        @*<div class="row form-group">
-                <div class="col-2">
-                    <label asp-for="ProductInfo.ImgFile"></label>
-
-                </div>
-                <div class="col-6">
-                    <input asp-for="ProductInfo.ImgFile" class="form-control" />
-                    <span asp-validation-for="ProductInfo.ImgFile" class="text-danger"> </span>
-
-                </div>
-            </div>*@
-
-
-
-
         <div class="row form-group">
             <div class="col-2">
                 <label asp-for="ProdInfo.WholePrice"></label>
 
             </div>
             <div class="col-6">
-                <input asp-for="ProdInfo.WholePrice" class="form-control" />
+                <input asp-for="ProdInfo.WholePrice" class="form-control" disabled />
                 <span asp-validation-for="ProdInfo.WholePrice" class="text-danger"> </span>
 
             </div>
@@ -116,18 +108,22 @@
 
             </div>
             <div class="col-6">
-                <input asp-for="ProdInfo.RetailPrice" class="form-control" />
+                <input asp-for="ProdInfo.RetailPrice" class="form-control" disabled />
                 <span asp-validation-for="ProdInfo.RetailPrice" class="text-danger"> </span>
 
             </div>
         </div>
 
 
+
+
+
         <div class=" form-group row">
             <div class="col-5 offset-2">
                 <div class="row">
                     <div class="col-6">
-                        <input type="submit" class="btn btn-info form-control" value="تحديث" />
+
+                        <a asp-page="Edit" class="btn btn-info form-control" asp-route-Id="@Model.ProdInfo.Id">تعديل</a>
                     </div>
                     <div class="col-6">
                         <a asp-page="Index" class="btn btn-success form-control">رجوع الى القائمه</a>
@@ -140,4 +136,3 @@
     </div>
 
 </form>
-

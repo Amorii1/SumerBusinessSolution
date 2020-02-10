@@ -13,8 +13,8 @@ using SumerBusinessSolution.Models;
 
 namespace SumerBusinessSolution.Inventory.Transfer
 {
-    [Authorize(Roles = SD.AdminEndUser)]
-
+   // [Authorize(Roles = SD.AdminEndUser)]
+   [Authorize]
     public class IndexModel : PageModel
     {
         private readonly ApplicationDbContext _db;
@@ -23,17 +23,17 @@ namespace SumerBusinessSolution.Inventory.Transfer
             _db = db;
         }
         [BindProperty]
-        public IList<InvTransfer> InvTransferList { get; set; }
+        public IEnumerable<InvTransfer> InvTransferList { get; set; }
 
          public InvTransfer InvTransfers { get; set; }
         public ProdInfo ProdInfo { get; set; }
         public Warehouse Warehouse { get; set; }
 
 
-        public async Task< IActionResult> OnGet(string searchCreateDateTime = null, string searchProdCode = null)
+        public  IActionResult OnGet(string searchCreateDateTime = null, string searchProdCode = null)
         {
-            InvTransferList = await _db.InvTransfer.Include(tr => tr.ProdInfo).Include(tr=>tr.FromWarehouse).Include(tr => tr.ToWarehouse)
-               .Where(tr => tr.CreatedDateTime > DateTime.Now.AddMonths(-2)).ToListAsync();
+            InvTransferList =  _db.InvTransfer.Include(tr => tr.ProdInfo).Include(tr=>tr.FromWarehouse).Include(tr => tr.ToWarehouse)
+               .Where(tr => tr.CreatedDateTime > DateTime.Now.AddMonths(-2)).ToList().OrderBy(tr=>tr.CreatedDateTime);
 
           
 

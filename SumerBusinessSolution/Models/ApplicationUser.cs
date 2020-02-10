@@ -10,6 +10,7 @@ namespace SumerBusinessSolution.Models
     public class ApplicationUser : IdentityUser
     {
         [Required]
+        [Display(Name ="اسم الموظف")]
         public string FirstName { set; get; }
         [Required]
         public string LastName { set; get; }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +12,7 @@ using SumerBusinessSolution.Models;
 
 namespace SumerBusinessSolution.Pages.Inventory.IncomingGoods
 {
+    [Authorize]
     public class IndexModel : PageModel
     {
         private readonly ApplicationDbContext _db;
@@ -19,7 +21,7 @@ namespace SumerBusinessSolution.Pages.Inventory.IncomingGoods
             _db = db;
         }
         [BindProperty]
-        public IList<IncomingGood> IncomingGoodList { get; set; }
+        public IEnumerable<IncomingGood> IncomingGoodList { get; set; }
         public IncomingGood IncomingGoods { get; set; }
         public ProdInfo ProdInfo { get; set; }
         public Warehouse Warehouse { get; set; }
@@ -28,7 +30,7 @@ namespace SumerBusinessSolution.Pages.Inventory.IncomingGoods
         public IActionResult OnGet(string searchCreateDateTime = null, string searchProdCode = null)
         {
             IncomingGoodList =  _db.IncomingGood.Include(tr => tr.Warehouse).Include(tr => tr.ProdInfo)
-               .Where(tr => tr.CreatedDateTime > DateTime.Now.AddMonths(-2)).ToList();
+               .Where(tr => tr.CreatedDateTime > DateTime.Now.AddMonths(-2)).ToList().OrderBy(tr => tr.CreatedDateTime); ;
           
 
 

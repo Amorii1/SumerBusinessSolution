@@ -9,17 +9,17 @@
 <div class="backgroundWhite">
     <div class="row px-2 py-2">
         <div class="col-6">
-            <h3 class="text-info">Warehouses</h3>
+            <h3 class="text-info">المخازن</h3>
         </div>
         <div class="col-6 text-right">
-            <a asp-page="Create" class="btn btn-info">New warehouse <i class="far fa-plus-square"></i></a>
+            <a asp-page="Create" class="btn btn-info">  <i class="far fa-plus-square"></i></a>
         </div>
     </div>
     <form method="post">
         <div>
             @if (Model.Warehouse.Count() == 0)
             {
-                <p>No Service type has been added! Create new service type</p>
+                <p>لا يوجد </p>
 
             }
             else
