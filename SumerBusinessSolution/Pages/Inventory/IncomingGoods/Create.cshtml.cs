@@ -9,13 +9,16 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Sumer.Utility;
 using SumerBusinessSolution.Data;
 using SumerBusinessSolution.Models;
 using SumerBusinessSolution.Transactions;
 
 namespace SumerBusinessSolution.Pages.Inventory.IncomingGoods
 {
-    [Authorize]
+   // [Authorize(Roles = SD.AdminEndUser)]
+   [Authorize]
+  //  [Authorize(Roles = SD.SupervisorEndUser)]
     public class CreateModel : PageModel
     {
         private readonly ApplicationDbContext _db;
@@ -45,13 +48,18 @@ namespace SumerBusinessSolution.Pages.Inventory.IncomingGoods
 
         [Required]
         [BindProperty]
+        [Display(Name ="الكميه")]
         public double Qty { get; set; }
 
         [BindProperty]
+        [Display(Name = "الملاحظات")]
+
         public string Note { get; set; }
 
         [Required]
         [BindProperty]
+        [Display(Name = "رمز المنتج")]
+
         public string ProdCode { get; set; }
 
         [TempData]

@@ -32,7 +32,7 @@ namespace SumerBusinessSolution.Pages.Inventory.WhTypes
             }
             _db.WhType.Add(WhType);
             await _db.SaveChangesAsync();
-            return RedirectToPage("Index");
+            return Page();
         }
     }
 }

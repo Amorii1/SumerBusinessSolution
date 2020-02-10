@@ -5,7 +5,7 @@
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 <br />
-<h2 class="text-info">Add New Warehouse</h2>
+<h2 class="text-info">اضافه مخزن جديد</h2>
 <form method="post">
     <div class="border backgroundWhite" style="padding-left:5px;">
         @*<input type="hidden" asp-for="Warehouse.TypeId" />*@
@@ -55,8 +55,8 @@
             </div>
             <div class="col-5">
                 <select WhType="myList" asp-for="Warehouse.WhType.Type">
-                    <option value="StoreRoom">StoreRoom</option>
-                    <option value="ShowRoom">ShowRoom</option>
+                    <option value="StoreRoom">مخزن</option>
+                    <option value="ShowRoom">معرض</option>
                 </select>
             </div>
             <span asp-validation-for="Warehouse.WhType.Type" class="text-danger"></span>
@@ -65,10 +65,10 @@
             <div class="col-5 offset-2">
                 <div class="row">
                     <div class="col-6">
-                        <input type="submit" class="btn btn-info form-control" value="Create" />
+                        <input type="submit" class="btn btn-info form-control" value="انشاء" />
                     </div>
                     <div class="col-6">
-                        <a asp-page="Index" class="btn btn-success form-control">Back to List</a>
+                        <a asp-page="Index" class="btn btn-success form-control">الرجوع الى القائمه</a>
                     </div>
                 </div>
             </div>

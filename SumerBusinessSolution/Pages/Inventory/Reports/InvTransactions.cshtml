@@ -14,19 +14,19 @@
                         <select asp-for="WhId"
                                 asp-items="@(new SelectList(Model.WarehouseList, "Id", "WhName"))"
                                 class="form-control">
-                            <option value= "null" >Select Warehouse</option>
+                            <option value= "null" >اختار المخزن</option>
                         </select>
                     </div>
 
                 </div>
                 <div class="col-3">
                     <div class="row" style="margin-top:10px;">
-                        @Html.Editor("SearchProdCode", new { htmlAttributes = new { @class = "form-control", placeholder = "Product Code....." } })
+                        @Html.Editor("SearchProdCode", new { htmlAttributes = new { @class = "form-control", placeholder = ".....رمز المخزن" } })
                     </div>
                 </div>
                 <div class="col-3">
                     <div class="row" style="margin-top:10px;">
-                        @Html.Editor("SearchCreatedDate", new { htmlAttributes = new { @class = "form-control", placeholder = "Date....." } })
+                        @Html.Editor("SearchCreatedDate", new { htmlAttributes = new { @class = "form-control", placeholder = ".....تاريخ الاضافه" } })
                     </div>
                 </div>
                 <div class="col-1">
@@ -90,12 +90,12 @@
                 </td>
                 <td>
                     <a asp-page="../Products/Details" asp-route-ID="@item.ProdInfo.Id" style="text-decoration:none;">
-                        <img src="~/images/car.png" width="40" /> &nbsp; View
+                        <img src="~/images/car.png" width="40" /> &nbsp; تفاصيل المنتج
                     </a>
                 </td>
                 <td>
                     <a asp-page="../Transactions/ProdTrans" asp-route-TransId="@item.Id" style="text-decoration:none;">
-                        <img src="~/images/car.png" width="40" /> &nbsp; Details
+                        <img src="~/images/car.png" width="40" /> &nbsp; تفاصيل
                     </a>
                 </td>
             </tr>

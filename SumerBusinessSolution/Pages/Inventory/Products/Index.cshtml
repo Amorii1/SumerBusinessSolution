@@ -8,10 +8,10 @@
 <div class="backgroundWhite">
     <div class="row px-2 py-2">
         <div class="col-6">
-            <h3 class="text-info">Products</h3>
+            <h3 class="text-info">المنتجات</h3>
         </div>
         <div class="col-6 text-right">
-            <a asp-page="Create" class="btn btn-info">New Product <i class="far fa-plus-square"></i></a>
+            <a asp-page="Create" class="btn btn-info"> <i class="far fa-plus-square"></i></a>
         </div>
     </div>
 
@@ -25,11 +25,11 @@
                         <div class="row" style="margin-top:10px;">
                             <div class="row">
                                 <div class="col-4">
-                                    @Html.Editor("SearchProdCode", new { htmlAttributes = new { @class = "form-control", placeholder = "Product Code...." } })
+                                    @Html.Editor("SearchProdCode", new { htmlAttributes = new { @class = "form-control", placeholder = "....رمز المنتج" } })
 
                                 </div>
                                 <div class="col-4">
-                                    @Html.Editor("SearchProdName", new { htmlAttributes = new { @class = "form-control", placeholder = "Product Name...." } })
+                                    @Html.Editor("SearchProdName", new { htmlAttributes = new { @class = "form-control", placeholder = "....اسم المنتج" } })
                                 </div>
                             </div>
                         </div>
@@ -51,7 +51,7 @@
     <div>
         @if (Model.ProdInfo.Count() == 0)
         {
-            <p>No Service type has been added! Create new service type</p>
+            <p>لا يوجد مواد مضافه</p>
         }
         else
         {
@@ -88,9 +88,9 @@
                         </td>
                         <td style="width:150px;">
                             <div class="btn-group " role="group">
-                                <a class="btn btn-primary " asp-page="Edit" asp-route-Id="@item.Id" title="Edit"><i class="fa fa-edit"></i>Edit</a>
-                                <a class="btn btn-success" asp-page="Details" asp-route-Id="@item.Id" title="Details"><i class="far fa-clipboard"></i>Details</a>
-                                <a class="btn btn-danger" asp-page="Delete" asp-route-Id="@item.Id" title="Delete"><i class="far fa-trash-alt"></i>Delete</a>
+                                <a class="btn btn-primary " asp-page="Edit" asp-route-Id="@item.Id" title="Edit"><i class="fa fa-edit"></i>تعديل</a>
+                                <a class="btn btn-success" asp-page="Details" asp-route-Id="@item.Id" title="Details"><i class="far fa-clipboard"></i>تفاصيل</a>
+                                <a class="btn btn-danger" asp-page="Delete" asp-route-Id="@item.Id" title="Delete"><i class="far fa-trash-alt"></i>حذف</a>
 
 
 

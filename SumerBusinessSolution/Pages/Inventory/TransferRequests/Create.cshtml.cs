@@ -3,14 +3,18 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Sumer.Utility;
 using SumerBusinessSolution.Data;
 using SumerBusinessSolution.Models;
 using SumerBusinessSolution.Transactions;
 
 namespace SumerBusinessSolution.Pages.Inventory.TransferRequests
 {
+   // [Authorize(Roles =SD.StoreEndUser)]
+   [Authorize]
     public class CreateModel : PageModel
     {
         private readonly ApplicationDbContext _db;
@@ -29,16 +33,23 @@ namespace SumerBusinessSolution.Pages.Inventory.TransferRequests
 
         [Required]
         [BindProperty]
+        [Display(Name = "رمز المنتج")]
         public string ProdCode { get; set; }
         [BindProperty]
+        [Display(Name = "من المخزن ")]
+
         public int FromWhId { get; set; }
         [BindProperty]
+        [Display(Name = "الى المخزن ")]
+
         public int ToWhId { get; set; }
 
         [Required]
         [BindProperty]
+        [Display(Name = "الكميه")]
         public double Qty { get; set; }
         [BindProperty]
+        [Display(Name = "الملاحظات")]
         public string Note { get; set; }
 
         [TempData]

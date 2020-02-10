@@ -10,7 +10,7 @@
     <br /><br />
     <div class="row">
         <div class="col-6">
-            <h2 class="text-info">Inventory Transfer </h2>
+            <h2 class="text-info"> حركه المنتجات </h2>
         </div>
 
     </div>
@@ -21,10 +21,10 @@
                 <div class="col-11">
                     <div class="row" style="margin-top:10px;">
                         <div class="col-4">
-                            @Html.Editor("searchProdCode", new { htmlAttributes = new { @class = "form-control", placeholder = "Product Code....." } })
+                            @Html.Editor("searchProdCode", new { htmlAttributes = new { @class = "form-control", placeholder = ".....رمز المنتج" } })
                         </div>
                         <div class="col-4">
-                            @Html.Editor("searchCreateDateTime", new { htmlAttributes = new { @class = "form-control", placeholder = "Date time....." } })
+                            @Html.Editor("searchCreateDateTime", new { htmlAttributes = new { @class = "form-control", placeholder = ".....تاريخ الاضافه" } })
                         </div>
                         @*<div>
                                 start Date:<input type="datetime" name="startdate" />
@@ -52,10 +52,10 @@
                         @Html.DisplayNameFor(m => m.ProdInfo.ProdCode)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(m => m.InvTransfers.FromWhId)
+                        @Html.DisplayNameFor(m => m.InvTransfers.FromWarehouse)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(m => m.InvTransfers.ToWhId)
+                        @Html.DisplayNameFor(m => m.InvTransfers.ToWarehouse)
                     </th>
                     <th>
                         @Html.DisplayNameFor(m => m.InvTransfers.Qty)
@@ -79,10 +79,10 @@
                             @Html.DisplayFor(m => item.ProdInfo.ProdCode)
                         </td>
                         <td>
-                            @Html.DisplayFor(m => item.FromWhId)
+                            @Html.DisplayFor(m => item.FromWarehouse.WhName)
                         </td>
                         <td>
-                            @Html.DisplayFor(m => item.ToWhId)
+                            @Html.DisplayFor(m => item.ToWarehouse.WhName)
                         </td>
                         <td>
                             @Html.DisplayFor(m => item.Qty)

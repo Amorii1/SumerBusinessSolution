@@ -12,7 +12,7 @@
                 <div class="col-11">
                     <div class="row" style="margin-top:10px;">
                         <div class="col-4">
-                            @Html.Editor("searchProdCode", new { htmlAttributes = new { @class = "form-control", placeholder = "Product Code....." } })
+                            @Html.Editor("searchProdCode", new { htmlAttributes = new { @class = "form-control", placeholder = ".....رمز المنتج" } })
                         </div>
                     </div>
                 </div>
@@ -74,17 +74,17 @@
 
                 <td>
                     <a asp-page="../Products/Details" asp-route-ID="@item.ProdInfo.Id" style="text-decoration:none;">
-                        <img src="~/images/car.png" width="40" /> &nbsp; View
+                        <img src="~/images/car.png" width="40" /> &nbsp; تفاصيل المنتج
                     </a>
                 </td>
                 <td>
                     <a asp-page="../Transactions/ProdTrans" asp-route-ProdId="@item.ProdId" asp-route-WhId="@item.WhId" style="text-decoration:none;">
-                        <img src="~/images/car.png" width="40" /> &nbsp; Trans
+                        <img src="~/images/car.png" width="40" /> &nbsp; تفاصيل
                     </a>
                 </td>
                 <td>
                     <a asp-page="../Products/UpdateProdStkQty" asp-route-StkId="@item.Id" style="text-decoration:none;">
-                        <img src="~/images/car.png" width="40" /> &nbsp; Update
+                        <img src="~/images/car.png" width="40" /> &nbsp; تحديث الكميه
                     </a>
                 </td>
             </tr>

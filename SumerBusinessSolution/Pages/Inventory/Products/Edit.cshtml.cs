@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -13,6 +14,7 @@ using SumerBusinessSolution.Models;
 
 namespace SumerBusinessSolution.Pages.Products
 {
+    [Authorize]
     public class EditModel : PageModel
     {
         private readonly ApplicationDbContext _db;
