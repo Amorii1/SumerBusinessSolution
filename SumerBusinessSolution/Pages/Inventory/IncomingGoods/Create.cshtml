@@ -6,7 +6,7 @@
 }
 <partial name="_StatusMessage" model="Model.StatusMessage" />
 <br />
-<h2 class="text-info">Incoming Goods </h2>
+<h2 class="text-info">المواد الواردة </h2>
 <form method="post">
     <div class="border backgroundWhite" style="padding-left:5px;">
 
@@ -14,14 +14,14 @@
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <br />
         @*<div class="form-group row">
-                <div class="col-2">
-                    <label asp-for="IncomingGood.ProdInfo.ProdName"></label>
-                </div>
-                <div class="col-5">
-                    <input type="text" id="Product" />
-                </div>
-                <span asp-validation-for="IncomingGood.ProdInfo.ProdName" class="text-danger"></span>
-            </div>*@
+            <div class="col-2">
+                <label asp-for="IncomingGood.ProdInfo.ProdName"></label>
+            </div>
+            <div class="col-5">
+                <input type="text" id="Product" />
+            </div>
+            <span asp-validation-for="IncomingGood.ProdInfo.ProdName" class="text-danger"></span>
+        </div>*@
 
 
         <div class="form-group row">
@@ -29,9 +29,9 @@
                 <label asp-for="IncomingGood.ProdInfo.ProdCode"></label>
             </div>
             <div class="col-5">
-                <input type="text" id="ProdInfo" asp-for="ProdCode"/>
+                <input type="text" id="ProdInfo" asp-for="ProdCode" class="form-control" />
             </div>
-            <span asp-validation-for="ProdCode" class="text-danger"></span> 
+            <span asp-validation-for="ProdCode" class="text-danger"></span>
         </div>
 
 
@@ -61,7 +61,7 @@
                 <span asp-validation-for="Qty" class="text-danger"></span>
 
             </div>
- 
+
         </div>
 
         <div class="form-group row">
@@ -69,20 +69,32 @@
                 <label asp-for="Note"></label>
             </div>
             <div class="col-5">
-                <textarea placeholder="Any notes....." asp-for="Note" class="form-control"></textarea>
+                <textarea placeholder="ملاحظات" asp-for="Note" class="form-control"></textarea>
             </div>
             <span asp-validation-for="Note" class="text-danger"></span>
         </div>
 
+        <div class="form-group row">
+            <div class="col-5 offset-2">
+                <div class="row">
 
-        <div class="row">
-            <div class="col-7">
-                <button type="submit" class="btn btn-info"  onclick="return ValidateInput()">SAVE</button>
-                @*<button class="btn btn-success form-control" onclick="return ValidateInput()">Service Completed</button>*@
-
+                    <div class="col-6">
+                        <button type="submit" class="btn btn-info form-control" onclick="return ValidateInput()">تخزين</button>
+                    </div>
+                    <div class="col-6">
+                        <a asp-page="Index" class="btn btn-success form-control">رجوع</a>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
+            @*<div class="row">
+            <div class="col-7">
+                <button type="submit" class="btn btn-info"  onclick="return ValidateInput()">تخزين</button>
+                <a asp-page="Index" class="btn btn-success form-control">رجوع</a>
+
+            </div>
+        </div>*@
+        </div>
 </form>
 
 
@@ -108,7 +120,7 @@
             var PId = document.getElementById("ProdInfo").value;
 
             if (qty == 0) {
-               swal("Error!", "Quantity can not be 0", "error");
+               swal("Error!", "حدد الكمية", "error");
 
                 return false
             }

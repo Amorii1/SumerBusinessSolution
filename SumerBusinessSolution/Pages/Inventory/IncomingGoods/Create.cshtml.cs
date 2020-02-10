@@ -94,7 +94,9 @@ namespace SumerBusinessSolution.Pages.Inventory.IncomingGoods
 
             if (incomingoods == true)
             {
-                StatusMessage = "New goods have been added successfully.";
+                //StatusMessage = "New goods have been added successfully.";
+                StatusMessage = "تمت الاضافة";
+
             }
             else
             {

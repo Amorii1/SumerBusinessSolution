@@ -3,8 +3,62 @@
 @{
     ViewData["Title"] = "Home page";
 }
+<br />
+<br />
+<div class="row" style="padding-left:200px;">
+    <div class="column pl-5">
+        <a asp-page="/Inventory/Incominggoods/Index">
+            <img src="~/img/delivery-truck.png" style="width:120px;height:120px;" />
+            <p class="text-center">الواردة</p>
+        </a>
+    </div>
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <div class="column" style="padding-left:80px;">
+        <a asp-page="/inventory/transfer/index">
+            <img src="~/img/b2b.png" style="width:120px;height:120px;" />
+            <p class="text-center">التحويل</p>
+        </a>
+    </div>
+
+    <div class="column" style="padding-left:80px;">
+        <a asp-page="/inventory/transferrequests/index">
+            <img src="~/img/application.png" style="width:120px;height:120px;" />
+            <p class="text-center">طلب تحويل</p>
+        </a>
+    </div>
+
+    <div class="column" style="padding-left:80px;">
+        <a asp-page="/inventory/products/index">
+            <img src="~/img/lamp.png" style="width:120px;height:120px;" />
+            <p class="text-center">المواد</p>
+        </a>
+    </div>
+</div>
+
+<br />
+<br />
+<br />
+<br />
+<div class="row" style="padding-left:200px;">
+    <div class="column pl-5">
+        <a asp-page="/inventory/warehouses/index">
+            <img src="~/img/warehouse.png" style="width:120px;height:120px;" />
+            <p class="text-center">المخازن</p>
+        </a>
+    </div>
+
+    <div class="column" style="padding-left:80px;">
+        <a asp-page="/Inventory/reports/Index">
+            <img src="~/img/statistics.png" style="width:120px;height:120px;" />
+            <p class="text-center">التقارير</p>
+        </a>
+    </div>
+
+    <div class="column" style="padding-left:80px;">
+        <a asp-page="/users/index">
+            <img src="~/img/team.png" style="width:120px;height:120px;" />
+            <p class="text-center">المستخدمين</p>
+        </a>
+    </div>
+
 </div>

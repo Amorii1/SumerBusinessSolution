@@ -183,7 +183,7 @@ namespace SumerBusinessSolution.Transactions
 
             await _db.SaveChangesAsync();
 
-            return "Transfer created successfully";
+            return "تمت عملية التحويل";
         }
 
         // This function is called when a Store User wants to transfer from a warehouse to another. So this function
@@ -195,7 +195,7 @@ namespace SumerBusinessSolution.Transactions
 
             if (CheckQty == false)
             {
-                return "Error! No enough quantity";
+                return "Error! الكمية غير كافية للتحويل";
             }
 
             // Create Inv Transfer Record with Pending Status
@@ -214,7 +214,7 @@ namespace SumerBusinessSolution.Transactions
             _db.InvTransfer.Add(InvTransfer);
             await _db.SaveChangesAsync();
 
-            return "Transfer Request has been created";
+            return "تم ارسال طلب التحويل";
         }
 
         // When a transfer request is created by the Store user. Admin will call this function to Approve his 

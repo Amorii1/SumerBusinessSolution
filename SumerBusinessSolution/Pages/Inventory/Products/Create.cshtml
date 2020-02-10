@@ -5,7 +5,7 @@
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
-<h2 class="text-info">Create New Product</h2>
+<h2 class="text-info">اضافة مادة جديدة</h2>
 <form method="post" enctype="multipart/form-data">
     <div class="border backgroundWhite pt-3 pl-3">
 
@@ -44,14 +44,14 @@
             </div>
 
         </div>
-        <div class="row form-group">
+        @*<div class="row form-group">
             <div class="col-2">
                 <label asp-for="ProductInfo.ProdCategory"></label>
             </div>
             <div class="col-5">
                 <input asp-for="ProductInfo.ProdCategory" class="form-control" />
             </div>
-        </div>
+        </div>*@
         <div class="row form-group">
             <div class="col-2">
                 <label asp-for="ProductInfo.RetailPrice"></label>
@@ -81,10 +81,10 @@
             <div class="col-5 offset-2">
                 <div class="row">
                     <div class="col-6">
-                        <input type="submit" class="btn btn-info form-control" value="Create" />
+                        <input type="submit" class="btn btn-info form-control" value="تخزين" />
                     </div>
                     <div class="col-6">
-                        <a asp-page="Index" class="btn btn-success form-control">Back to List</a>
+                        <a asp-page="Index" class="btn btn-success form-control">الرجوع</a>
                     </div>
                 </div>
 

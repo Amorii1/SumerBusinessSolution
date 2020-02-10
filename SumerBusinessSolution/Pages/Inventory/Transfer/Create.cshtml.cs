@@ -26,8 +26,9 @@ namespace SumerBusinessSolution.Pages.Inventory.Transfer
 
         //public InvTransfer InvTransfer { get; set; }
         //public Warehouse Warehouse { get; set; }
-        public IList<Warehouse> Warehouselist { get; set; }
-        
+        public IEnumerable<Warehouse> Warehouselist { get; set; }
+        public IEnumerable<Warehouse> WarehouselistTo { get; set; }
+
         [Required]
         [BindProperty]
         public string ProdCode { get; set; }
@@ -48,6 +49,8 @@ namespace SumerBusinessSolution.Pages.Inventory.Transfer
         public void OnGet()
         {
             Warehouselist = _db.Warehouse.ToList();
+            WarehouselistTo = _db.Warehouse.ToList().OrderByDescending(wh => wh.Id);
+
         }
 
         public JsonResult OnGetSearchNow(string term)
