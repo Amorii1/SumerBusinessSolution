@@ -1,5 +1,5 @@
 ﻿@page
-@model SumerBusinessSolution.Inventory.IncomingGoods.IndexModel
+@model SumerBusinessSolution.Pages.Inventory.IncomingGoods.IndexModel
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Pages/Shared/_Layout.cshtml";
@@ -12,8 +12,8 @@
               <div class="col-6">
                   <h2 class="text-info">البضائع الوارده </h2>
               </div>
-              <div class="col-3 offset-3 text-right py-2">
-                  <a asp-page="../IncomingGoods/Create" class="btn btn-outline-info form-control">
+              <div class="col-3 offset-3 text-right">
+                  <a asp-page="../IncomingGoods/Create" class="btn btn-outline-info">
                       
                       <i class="fas fa-plus"></i>
 
@@ -35,7 +35,7 @@
                         </div>
                         <div class="col-2 text-lg-right">
 
-                            <button type="submit" name="submit" value="search" class="btn btn-info form-control text-right">
+                            <button type="submit" name="submit" value="search" class="btn btn-info form-control">
                                 <i class="fas fa-search"></i>
                             </button>
 
@@ -104,7 +104,7 @@
                                 @Html.DisplayFor(m => item.ApplicationUser.FirstName)
                             </td>
                             <td>
-                                <a asp-page="/Inventory/Products/Index" asp-route-userId="@item.ProdId" style="text-decoration:none;">
+                                <a asp-page="/Inventory/Products/details" asp-route-Id="@item.ProdInfo.Id" style="text-decoration:none;">
                                     المواد
                                 </a>
                             </td>

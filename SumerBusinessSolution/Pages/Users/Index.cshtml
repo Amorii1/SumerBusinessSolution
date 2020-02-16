@@ -34,16 +34,14 @@
     <div class="row">
         <div class="col-6 ">
             <h3 class="text-info">
-                User List
+                المستخدمين
             </h3>
         </div>
 
         <div class="col-6 text-right">
             <a asp-area="Identity" asp-page="/Account/Register" class="btn btn-info">
-                @*<i class="fas fa-plus"></i>&nbsp;*@
-
-                Create New Customer
-            </a>
+                <i class="fas fa-plus"></i>&nbsp;
+             </a>
         </div>
     </div>
     <br />
@@ -87,13 +85,13 @@
                         <td></td>
                         <td style="width:150px;">
                             <div class="btn-group" role="group">
-                                <a asp-page="Edit" asp-route-Id="@item.Id" class="btn btn-p[l.primary text-white " title="Edit">
-                                    @*<i class="fas fa-edit"></i>*@
+                                <a asp-page="Edit" asp-route-Id="@item.Id" class="btn btn-info ext-white " title="Edit">
+                                    <i class="fas fa-edit"></i>
                                 </a>
 
 
                                 <a asp-page="Delete" asp-route-Id="@item.Id" class="btn btn-danger text-white" title="Delete">
-                                    @*<i class="fas fa-alt"></i>*@
+                                    <i class="fas fa-remove"></i>
                                 </a>
                             </div>
                         </td>

@@ -35,13 +35,13 @@ namespace SumerBusinessSolution.Inventory.TransferRequests
         public string StatusMessage { get; set; }
         public async Task<IActionResult> OnGet()
         {
-            InvTransferList =await  _db.InvTransfer
-               .Where(tr => tr.TransferStatus==SD.Pending ).ToListAsync();
+            InvTransferList = await _db.InvTransfer.Include(tr => tr.ProdInfo).Include(tr => tr.FromWarehouse).Include(tr => tr.ToWarehouse).Include(tr => tr.ApplicationUser)
+               .Where(tr => tr.TransferStatus == SD.Pending).ToListAsync();
 
             return Page();
 
         }
-        public IActionResult OnPostApproveTransferRequests()
+        public IActionResult OnPostApproveTransferRequests(int ReqId)
         {
 
             bool InvTransfer = _InveTrans.ApproveInvTransferRequest(ReqId).GetAwaiter().GetResult();
@@ -56,13 +56,9 @@ namespace SumerBusinessSolution.Inventory.TransferRequests
 
             }
 
-
-
-
-
-            return Page();
+            return RedirectToPage("/Inventory/transferrequests/index");
         }
-        public IActionResult OnPostRejectTransferRequests()
+        public IActionResult OnPostRejectTransferRequests(int ReqId)
         {
 
             bool InvTransfer = _InveTrans.RejectInvTransferRequest(ReqId).GetAwaiter().GetResult();
@@ -77,9 +73,9 @@ namespace SumerBusinessSolution.Inventory.TransferRequests
 
             }
 
-            return Page();
+            return RedirectToPage("/Inventory/transferrequests/index");
         }
-        public IActionResult OnPostDeleteTransferRequests()
+        public IActionResult OnPostDeleteTransferRequests(int ReqId)
         {
 
             bool InvTransfer = _InveTrans.DeleteInvTransferRequest(ReqId).GetAwaiter().GetResult();
@@ -94,7 +90,7 @@ namespace SumerBusinessSolution.Inventory.TransferRequests
 
             }
 
-            return Page();
+            return RedirectToPage("/Inventory/transferrequests/index");
         }
     }
 }

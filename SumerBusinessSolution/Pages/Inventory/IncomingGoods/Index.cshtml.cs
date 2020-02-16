@@ -29,7 +29,7 @@ namespace SumerBusinessSolution.Pages.Inventory.IncomingGoods
 
         public IActionResult OnGet(string searchCreateDateTime = null, string searchProdCode = null)
         {
-            IncomingGoodList =  _db.IncomingGood.Include(tr => tr.Warehouse).Include(tr => tr.ProdInfo)
+            IncomingGoodList =  _db.IncomingGood.Include(tr => tr.Warehouse).Include(tr => tr.ProdInfo).Include(tr=> tr.ApplicationUser)
                .Where(tr => tr.CreatedDateTime > DateTime.Now.AddMonths(-2)).ToList().OrderBy(tr => tr.CreatedDateTime); ;
           
 

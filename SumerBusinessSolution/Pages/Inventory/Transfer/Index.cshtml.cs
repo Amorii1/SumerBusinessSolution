@@ -32,8 +32,8 @@ namespace SumerBusinessSolution.Inventory.Transfer
 
         public  IActionResult OnGet(string searchCreateDateTime = null, string searchProdCode = null)
         {
-            InvTransferList =  _db.InvTransfer.Include(tr => tr.ProdInfo).Include(tr=>tr.FromWarehouse).Include(tr => tr.ToWarehouse)
-               .Where(tr => tr.CreatedDateTime > DateTime.Now.AddMonths(-2)).ToList().OrderBy(tr=>tr.CreatedDateTime);
+            InvTransferList =  _db.InvTransfer.Include(tr => tr.ProdInfo).Include(tr=>tr.FromWarehouse).Include(tr => tr.ToWarehouse).Include(tr => tr.ApplicationUser)
+               .Where(tr => tr.CreatedDateTime > DateTime.Now.AddMonths(-2) & tr.TransferStatus == SD.Approved).ToList().OrderBy(tr=>tr.CreatedDateTime);
 
           
 
