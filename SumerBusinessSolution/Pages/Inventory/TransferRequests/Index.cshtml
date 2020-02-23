@@ -5,113 +5,136 @@
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
+    <div class=" backgroundWhite">
+        <div class="row">
+            <div class="col-md-6">
+                <h2 class="text-info"> طلبات حركه المنتجات </h2>
+            </div>
+            <div class="col-md-6 text-right">
+                <a asp-page="Create" class="btn btn-info"> <i class="fas fa-plus"></i></a>
+            </div>
+        </div>
 
+        <form method="get" asp-page="Index">
+            <div class="border backgroundWhite">
 
-<form method="post" >
-    <br /><br />
-          <div class="row">
-              <div class="col-6">
-                  <h2 class="text-info">قائمه طلبات حركه المنتجات </h2>
-              </div>
-              <div class="col-6 text-right">
-                  <a asp-page="Create" class="btn btn-info"> <i class="far fa-plus-square"></i></a>
-              </div>
-          </div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-11">
+                            <div class="row" style="margin-top:10px;">
+                                <div class="col-md-5 pb-1">
+                                    @Html.Editor("searchProdCode", new { htmlAttributes = new { @class = "form-control", placeholder = ".....رمز المنتج" } })
+                                </div>
+                                <div class="col-md-5 pb-1">
+                                    @Html.Editor("searchCreateDateTime", new { htmlAttributes = new { @class = "form-control", placeholder = ".....تاريخ الاضافه" } })
+                                </div>
+                           
+                                <div class="col-md-2 text-md-right pb-1">
 
-   
-    <div>
-        @if (Model.InvTransferList.Count() == 0)
-        {
-            <p>.....لا يوجد </p>
+                                    <button type="submit" name="submit" value="search" class="btn btn-info form-control">
+                                        <i class="fas fa-search"></i>
+                                    </button>
 
-        }
-        else
-        {
-            <table class="table table-striped border">
-                <tr class="table-secondary">
-
-
-                    <th>
-                        @Html.DisplayNameFor(m => m.InvTransferList[0].ProdInfo.ProdCode)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(m => m.InvTransferList[0].ProdInfo.ProdName)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(m => m.InvTransferList[0].FromWarehouse)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(m => m.InvTransferList[0].ToWarehouse)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(m => m.InvTransferList[0].Qty)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(m => m.InvTransferList[0].Note)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(m => m.InvTransferList[0].ApplicationUser.FirstName)
-
-                    </th>
-                    <th></th>
-
-                </tr>
-                @foreach (var item in Model.InvTransferList)
-                {
-            <tr>
-
-
-                <td>
-                    @Html.DisplayFor(m => item.ProdInfo.ProdCode)
-                </td>
-
-                <td>
-                    @Html.DisplayFor(m => item.ProdInfo.ProdName)
-                </td>
-                <td>
-                    @Html.DisplayFor(m => item.ToWarehouse.WhName)
-                </td>
-                <td>
-                    @Html.DisplayFor(m => item.FromWarehouse.WhName)
-                </td>
-                <td>
-                    @Html.DisplayFor(m => item.Qty)
-                </td>
-                <td>
-                    @Html.DisplayFor(m => item.Note)
-                </td>
-              
-                <td>
-                    @Html.DisplayFor(m => item.ApplicationUser.FirstName)
-                </td>
-                <td>
-                    <div class="btn-group" role="group">
-                        <button class="btn btn-success text-white" asp-page-handler="ApproveTransferRequests" asp-route-ReqId="@item.Id" type="submit" title="Approve" name="Accept">
-                            قبول <i class="fas fa-check"></i>
-                        </button>
-
-
-                        <button class="btn btn-danger text-white" asp-page-handler="RejectTransferRequests" asp-route-ReqId="@item.Id"  type="submit" title="Reject" name="Reject">
-                            رفض <i class="fas fa-window-close"></i>
-                        </button>
-
-
-                        <button class="btn btn-danger text-white" asp-page-handler="DeleteTransferRequests" asp-route-ReqId="@item.Id"  type="submit" title="Delete" name="Delete">
-                            حذف <i class="fas fa-trash-alt"></i>
-                        </button>
-
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </td>
+                </div>
+            </div>
+        </form>
 
-               </tr>
-                }
-                
-                
 
-            </table>
-        }
+            <div>
+
+                <table class="table table-striped border">
+                    <tr class="table-secondary">
+
+
+                        <th>
+                            @Html.DisplayNameFor(m => m.InvTransferList[0].ProdInfo.ProdCode)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(m => m.InvTransferList[0].ProdInfo.ProdName)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(m => m.InvTransferList[0].FromWarehouse)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(m => m.InvTransferList[0].ToWarehouse)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(m => m.InvTransferList[0].Qty)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(m => m.InvTransferList[0].Note)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(m => m.InvTransferList[0].ApplicationUser.FirstName)
+
+                        </th>
+                        <th></th>
+
+                    </tr>
+                    @if (Model.InvTransferList.Count() == 0)
+                    {
+                        <h2 class="text-danger text-md-center">لا يوجد طلبات حركة في المنتجات  </h2>
+                    }
+                    else
+                    {
+                        @foreach (var item in Model.InvTransferList)
+                        {
+                            <tr>
+
+
+                                <td>
+                                    @Html.DisplayFor(m => item.ProdInfo.ProdCode)
+                                </td>
+
+                                <td>
+                                    @Html.DisplayFor(m => item.ProdInfo.ProdName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(m => item.ToWarehouse.WhName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(m => item.FromWarehouse.WhName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(m => item.Qty)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(m => item.Note)
+                                </td>
+
+                                <td>
+                                    @Html.DisplayFor(m => item.ApplicationUser.FirstName)
+                                </td>
+                                <td>
+                                    <div class="btn-group" role="group">
+                                        <button class="btn btn-success text-white" asp-page-handler="ApproveTransferRequests" asp-route-ReqId="@item.Id" type="submit" title="Approve" name="Accept">
+                                            قبول <i class="fas fa-check"></i>
+                                        </button>
+
+
+                                        <button class="btn btn-danger text-white" asp-page-handler="RejectTransferRequests" asp-route-ReqId="@item.Id" type="submit" title="Reject" name="Reject">
+                                            رفض <i class="fas fa-window-close"></i>
+                                        </button>
+
+
+                                        <button class="btn btn-danger text-white" asp-page-handler="DeleteTransferRequests" asp-route-ReqId="@item.Id" type="submit" title="Delete" name="Delete">
+                                            حذف <i class="fas fa-trash-alt"></i>
+                                        </button>
+
+                                    </div>
+                                </td>
+
+                            </tr>
+                        }
+
+                    }
+
+                </table>
+
+            </div>
+
     </div>
-    
-
-</form>
-

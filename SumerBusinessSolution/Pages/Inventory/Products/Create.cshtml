@@ -4,47 +4,51 @@
     ViewData["Title"] = "Create";
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
+    <div class="  border backgroundWhite">
+        <h2 class="text-info">اضافة مادة جديدة</h2>
+        <form method="post" enctype="multipart/form-data">
 
-<h2 class="text-info">اضافة مادة جديدة</h2>
-<form method="post" enctype="multipart/form-data">
-    <div class="border backgroundWhite pt-3 pl-3">
 
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="row form-group">
+                <div class="col-md-2">
+                    <label asp-for="ProductInfo.ProdCode"> </label>
+                </div>
+                <div class="col-md-5">
+                    <input asp-for="ProductInfo.ProdCode" class="form-control" />
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-2">
+                    <label asp-for="ProductInfo.ProdName"></label>
+                </div>
+                <div class="col-md-5">
+                    <input asp-for="ProductInfo.ProdName" class="form-control" />
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-2">
+                    <label asp-for="ProductInfo.ProdDescription"></label>
+                </div>
+                <div class="col-md-5">
+                    <textarea asp-for="ProductInfo.ProdDescription" class="form-control"></textarea>
+                </div>
+            </div>
+            <div class="custom-file">
+                <div class="row form-group">
 
-        <div class="row form-group">
-            <div class="col-2">
-                <label asp-for="ProductInfo.ProdCode"> </label>
+                    <div class="col-md-2">
+                        <label asp-for="ProductInfo.ImgFile"></label>
+                    </div>
+                    <div class="col-md-5">
+                        <input  type="file" asp-for="img" class="form-control p-md-1">
+                    </div>
+                </div>
             </div>
-            <div class="col-5">
-                <input asp-for="ProductInfo.ProdCode" class="form-control" />
-            </div>
-        </div>
-        <div class="row form-group">
-            <div class="col-2">
-                <label asp-for="ProductInfo.ProdName"></label>
-            </div>
-            <div class="col-5">
-                <input asp-for="ProductInfo.ProdName" class="form-control" />
-            </div>
-        </div>
-        <div class="row form-group">
-            <div class="col-2">
-                <label asp-for="ProductInfo.ProdDescription"></label>
-            </div>
-            <div class="col-5">
-                <textarea asp-for="ProductInfo.ProdDescription" class="form-control"></textarea>
-            </div>
-        </div>
-        <div class="row form-group">
-            <div class="col-2">
-                <label asp-for="ProductInfo.ImgFile"></label>
-            </div>
-            <div class="col-5">
-                <input type="file" asp-for="img" class="form-control" />
-
-            </div>
-
-        </div>
-        @*<div class="row form-group">
+            <br />
+            <br />
+            
+            @*<div class="row form-group">
             <div class="col-2">
                 <label asp-for="ProductInfo.ProdCategory"></label>
             </div>
@@ -52,51 +56,51 @@
                 <input asp-for="ProductInfo.ProdCategory" class="form-control" />
             </div>
         </div>*@
-        <div class="row form-group">
+            <div class="row form-group">
+                <div class="col-md-2">
+                    <label asp-for="ProductInfo.RetailPrice"></label>
+                </div>
+                <div class="col-md-5">
+                    <input asp-for="ProductInfo.RetailPrice" class="form-control" />
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-2">
+                    <label asp-for="ProductInfo.WholePrice"></label>
+                </div>
+                <div class="col-md-5">
+                    <input asp-for="ProductInfo.WholePrice" class="form-control" />
+                </div>
+            </div>
+            @*<div class="row form-group">
             <div class="col-2">
-                <label asp-for="ProductInfo.RetailPrice"></label>
+                <label asp-for="ProductInfo.CreatedBy"></label>
             </div>
             <div class="col-5">
-                <input asp-for="ProductInfo.RetailPrice" class="form-control" />
+                <input asp-for="ProductInfo.CreatedBy" class="form-control" />
             </div>
-        </div>
-        <div class="row form-group">
-            <div class="col-2">
-                <label asp-for="ProductInfo.WholePrice"></label>
-            </div>
-            <div class="col-5">
-                <input asp-for="ProductInfo.WholePrice" class="form-control" />
-            </div>
-        </div>
-        @*<div class="row form-group">
-                <div class="col-2">
-                    <label asp-for="ProductInfo.CreatedBy"></label>
-                </div>
-                <div class="col-5">
-                    <input asp-for="ProductInfo.CreatedBy" class="form-control" />
-                </div>
-            </div>*@
+        </div>*@
 
-        <div class=" form-group row">
-            <div class="col-5 offset-2">
-                <div class="row">
-                    <div class="col-6">
-                        <input type="submit" class="btn btn-info form-control" value="تخزين" />
+            <div class=" form-group row">
+                <div class="col-md-5 offset-md-2">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <input type="submit" class="btn btn-info form-control" value="تخزين" />
+                        </div>
+                        <div class="col-md-6">
+                            <a asp-page="Index" class="btn btn-success form-control">الرجوع</a>
+                        </div>
                     </div>
-                    <div class="col-6">
-                        <a asp-page="Index" class="btn btn-success form-control">الرجوع</a>
-                    </div>
-                </div>
 
+                </div>
             </div>
-        </div>
+
+
+        </form>
     </div>
-
-</form>
-
-@*@section Script{
-    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");
-            }
+        @*@section Script{
+        @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");
+                }
 
 
-    }*@
+        }*@

@@ -5,96 +5,97 @@
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
-<partial name="_StatusMessage" model="Model.StatusMessage" />
-<br />
-<h2 class="text-info">طلب حركة المواد</h2>
-<form method="post">
-    <div class="border backgroundWhite" style="padding-left:5px;">
-        @*<input type="hidden" asp-for="InvTransfer.CreatedById" />*@
+    <div class="border backgroundWhite">
+        <partial name="_StatusMessage" model="Model.StatusMessage" />
+        <h2 class="text-info">طلب حركة المواد</h2>
+        <form method="post">
 
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        <br />
+            @*<input type="hidden" asp-for="InvTransfer.CreatedById" />*@
+
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <br />
 
 
-        <div class="form-group row">
-            <div class="col-2">
-                <label asp-for="ProdCode"></label>
+            <div class="form-group row">
+                <div class="col-md-2">
+                    <label asp-for="ProdCode"></label>
+                </div>
+                <div class="col-md-5">
+                    <input type="text" id="ProdInfo" asp-for="ProdCode" class="form-control" />
+                </div>
+                <span asp-validation-for="ProdCode" class="text-danger"></span>
             </div>
-            <div class="col-5">
-                <input type="text" id="ProdInfo" asp-for="ProdCode" class="form-control" />
-            </div>
-            <span asp-validation-for="ProdCode" class="text-danger"></span>
-        </div>
 
 
-        <div class="form-group row">
-            <div class="col-2">
-                <label asp-for="FromWhId"></label>
+            <div class="form-group row">
+                <div class="col-md-2">
+                    <label asp-for="FromWhId"></label>
+                </div>
+                <div class="col-md-5">
+                    <select asp-for="FromWhId"
+                            asp-items="@(new SelectList(Model.Warehouselist, "Id", "WhName"))"
+                            class="form-control" id="FromWhId">
+                    </select>
+                </div>
+                @*<span asp-validation-for="InvTransfer.FromWarehouse.Id" class="text-danger"></span>*@
             </div>
-            <div class="col-5">
-                <select asp-for="FromWhId"
-                        asp-items="@(new SelectList(Model.Warehouselist, "Id", "WhName"))"
-                        class="form-control" id="FromWhId">
-                </select>
-            </div>
-            @*<span asp-validation-for="InvTransfer.FromWarehouse.Id" class="text-danger"></span>*@
-        </div>
 
-        <div class="form-group row">
-            <div class="col-2">
-                <label asp-for="ToWhId"></label>
+            <div class="form-group row">
+                <div class="col-md-2">
+                    <label asp-for="ToWhId"></label>
+                </div>
+                <div class="col-md-5">
+                    <select asp-for="ToWhId"
+                            asp-items="@(new SelectList(Model.WarehouselistTo, "Id", "WhName"))"
+                            class="form-control" id="ToWhId">
+                    </select>
+                </div>
+                @*<span asp-validation-for="InvTransfer.ToWarehouse.Id" class="text-danger"></span>*@
             </div>
-            <div class="col-5">
-                <select asp-for="ToWhId"
-                        asp-items="@(new SelectList(Model.WarehouselistTo, "Id", "WhName"))"
-                        class="form-control" id="ToWhId">
-                </select>
-            </div>
-            @*<span asp-validation-for="InvTransfer.ToWarehouse.Id" class="text-danger"></span>*@
-        </div>
 
-        <div class="form-group row">
-            <div class="col-2">
-                <label asp-for="Qty"></label>
-            </div>
-            <div class="col-5">
-                <input asp-for="Qty" class="form-control" id="qty" />
+            <div class="form-group row">
+                <div class="col-md-2">
+                    <label asp-for="Qty"></label>
+                </div>
+                <div class="col-md-5">
+                    <input asp-for="Qty" class="form-control" id="qty" />
 
+                </div>
+                <span asp-validation-for="Qty" class="text-danger"></span>
             </div>
-            <span asp-validation-for="Qty" class="text-danger"></span>
-        </div>
 
-        <div class="form-group row">
-            <div class="col-2">
-                <label asp-for="Note"></label>
+            <div class="form-group row">
+                <div class="col-md-2">
+                    <label asp-for="Note"></label>
+                </div>
+                <div class="col-md-5">
+                    <textarea placeholder="ملاحظات" asp-for="Note" class="form-control"></textarea>
+                </div>
+                <span asp-validation-for="Note" class="text-danger"></span>
             </div>
-            <div class="col-5">
-                <textarea placeholder="ملاحظات" asp-for="Note" class="form-control"></textarea>
-            </div>
-            <span asp-validation-for="Note" class="text-danger"></span>
-        </div>
 
-        <div class="form-group row">
-            <div class="col-5 offset-2">
-                <div class="row">
+            <div class="form-group row">
+                <div class="col-md-5 offset-md-2">
+                    <div class="row">
 
-                    <div class="col-6">
-                        <button type="submit" class="btn btn-info form-control" onclick="return ValidateInput()">تخزين</button>
-                    </div>
-                    <div class="col-6">
-                        <a asp-page="Index" class="btn btn-success form-control">رجوع</a>
+                        <div class="col-md-6">
+                            <button type="submit" class="btn btn-info form-control" onclick="return ValidateInput()">تخزين</button>
+                        </div>
+                        <div class="col-md-6">
+                            <a asp-page="Index" class="btn btn-success form-control">رجوع</a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        @*<div class="row">
-            <div class="col-7">
-                <button type="submit" class="btn btn-info" onclick="return ValidateInput()">SAVE</button>
-            </div>
-        </div>*@
+            @*<div class="row">
+                <div class="col-7">
+                    <button type="submit" class="btn btn-info" onclick="return ValidateInput()">SAVE</button>
+                </div>
+            </div>*@
+
+        </form>
     </div>
-</form>
 
 
 @section Scripts {
