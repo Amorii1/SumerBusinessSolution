@@ -6,7 +6,9 @@
 }
 
     <div class="border backgroundWhite">
-        <h2 class="text-info">اضافة مخزن جديد</h2>
+        @*<h2 class="text-info">اضافة مخزن جديد</h2>*@
+        <h2 class="text-info">Add new Warehouse</h2>
+
         <form method="post">
 
             @*<input type="hidden" asp-for="Warehouse.TypeId" />*@
@@ -48,8 +50,10 @@
                 </div>
                 <div class="col-md-5">
                     <select WhType="myList" asp-for="Warehouse.WhType.Type" class="form-control">
-                        <option value="StoreRoom">مخزن رئيسي</option>
-                        <option value="ShowRoom">معرض</option>
+                        @*<option value="StoreRoom">مخزن رئيسي</option>
+        <option value="ShowRoom">معرض</option>*@
+                        <option value="StoreRoom">Store Room</option>
+        <option value="ShowRoom">Show Room</option>
                     </select>
                 </div>
                 <span asp-validation-for="Warehouse.WhType.Type" class="text-danger"></span>
@@ -59,10 +63,13 @@
                     <div class="row">
 
                         <div class="col-md-6">
-                            <input type="submit" class="btn btn-info form-control" value="تخزين" />
+                            @*<input type="submit" class="btn btn-info form-control" value="حفظ" />*@
+                            <input type="submit" class="btn btn-info form-control" value="Save" />
+
                         </div>
                         <div class="col-md-6">
-                            <a asp-page="Index" class="btn btn-success form-control ">رجوع</a>
+                            @*<a asp-page="Index" class="btn btn-success form-control ">رجوع</a>*@
+                            <a asp-page="Index" class="btn btn-success form-control ">Back</a>
                         </div>
                     </div>
                 </div>

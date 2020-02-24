@@ -8,7 +8,9 @@
     <div class=" backgroundWhite">
         <div class="row">
             <div class="col-md-6">
-                <h2 class="text-info">تقارير العمليات التجارية  </h2>
+                @*<h2 class="text-info">تقارير العمليات التجارية  </h2>*@
+                <h2 class="text-info">Transactions Report</h2>
+
             </div>
 
         </div>
@@ -24,14 +26,20 @@
                                     <select asp-for="WhId"
                                             asp-items="@(new SelectList(Model.WarehouseList, "Id", "WhName"))"
                                             class="form-control">
-                                        <option value="null">اختار المخزن</option>
+                                        @*<option value="null">اختار المخزن</option>*@
+                                        <option value="null">Select Warehouse</option>
+
                                     </select>
                                 </div>
                                 <div class="col-md-4 pb-1">
-                                    @Html.Editor("searchProdCode", new { htmlAttributes = new { @class = "form-control", placeholder = ".....رمز المنتج " } })
+                                    @*@Html.Editor("searchProdCode", new { htmlAttributes = new { @class = "form-control", placeholder = ".....رمز المنتج " } })*@
+                                    @Html.Editor("searchProdCode", new { htmlAttributes = new { @class = "form-control", placeholder = "Product Code...." } })
+
                                 </div>
                                 <div class="col-md-4 pb-1">
-                                    @Html.Editor("searchCreateDateTime", new { htmlAttributes = new { @class = "form-control", placeholder = "..... تاريخ الاضافه " } })
+                                    @*@Html.Editor("searchCreateDateTime", new { htmlAttributes = new { @class = "form-control", placeholder = "..... تاريخ الاضافه " } })*@
+                                    @Html.Editor("searchCreateDateTime", new { htmlAttributes = new { @class = "form-control", placeholder = "Date Created....." } })
+
                                 </div>
                                 <div class="col-md-1 text-md-right pb-1">
 
@@ -78,7 +86,9 @@
 
                 @if (Model.InvTransList.Count() == 0)
                 {
-                    <h2 class="text-danger text-md-center">لا يوجد تقرير للعمليات التجارية</h2>
+                    @*<h2 class="text-danger text-md-center">لا يوجد تقرير للعمليات التجارية</h2>*@
+                    <h2 class="text-danger text-md-center">No Reports Found</h2>
+
                 }
                 else
                 {
@@ -111,27 +121,33 @@
                                 @Html.DisplayFor(m => item.TransType)
                             </td>
                             <td>
+                                @*<a asp-page="../Products/Details" asp-route-ID="@item.ProdInfo.Id" style="text-decoration:none;">
+            <img src="~/images/car.png" width="40" /> &nbsp; تفاصيل المنتج
+        </a>*@
                                 <a asp-page="../Products/Details" asp-route-ID="@item.ProdInfo.Id" style="text-decoration:none;">
-                                    <img src="~/images/car.png" width="40" /> &nbsp; تفاصيل المنتج
+                                    <img src="~/images/car.png" width="40" /> &nbsp; Product Details
                                 </a>
                             </td>
                             <td>
-                                <a asp-page="../Transactions/ProdTrans" asp-route-TransId="@item.Id" style="text-decoration:none;">
+                                @*<a asp-page="../Transactions/ProdTrans" asp-route-TransId="@item.Id" style="text-decoration:none;">
                                     <img src="~/images/car.png" width="40" /> &nbsp; تفاصيل
+                                </a>*@
+                                <a asp-page="../Transactions/ProdTrans" asp-route-TransId="@item.Id" style="text-decoration:none;">
+                                    <img src="~/images/car.png" width="40" /> &nbsp; Details
                                 </a>
                             </td>
                         </tr>
                     }
                 }
-                    @*<tr>
-                <td colspan="5" class="text-right">
-                    <div page-model="@Model.UsersListVM.PagingInfo" asp-action="Index" page-class="btn border"
-                         page-class-normal="btn btn-light" page-class-selected="btn btn-info active" class="btn-group">
+                @*<tr>
+            <td colspan="5" class="text-right">
+                <div page-model="@Model.UsersListVM.PagingInfo" asp-action="Index" page-class="btn border"
+                     page-class-normal="btn btn-light" page-class-selected="btn btn-info active" class="btn-group">
 
-                    </div>
-                </td>
-            </tr>*@
-                </table>
+                </div>
+            </td>
+        </tr>*@
+            </table>
         </div>
     </div>
 

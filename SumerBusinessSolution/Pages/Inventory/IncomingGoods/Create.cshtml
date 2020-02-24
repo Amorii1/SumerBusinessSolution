@@ -7,7 +7,9 @@
 <partial name="_StatusMessage" model="Model.StatusMessage" />
 <br />
 <div class="border backgroundWhite">
-    <h2 class="text-info">المواد الواردة </h2>
+    @*<h2 class="text-info">المواد الواردة </h2>*@
+    <h2 class="text-info">Incoming Goods</h2>
+
     <form method="post">
 
 
@@ -70,7 +72,9 @@
                 <label asp-for="Note"></label>
             </div>
             <div class="col-md-5">
-                <textarea placeholder="ملاحظات" asp-for="Note" class="form-control"></textarea>
+                @*<textarea placeholder="ملاحظات" asp-for="Note" class="form-control"></textarea>*@
+                <textarea placeholder="Notes" asp-for="Note" class="form-control"></textarea>
+
             </div>
             <span asp-validation-for="Note" class="text-danger"></span>
         </div>
@@ -80,10 +84,14 @@
                 <div class="row">
 
                     <div class="col-md-6">
-                        <button type="submit" class="btn btn-info form-control" onclick="return ValidateInput()">تخزين</button>
+                        @*<button type="submit" class="btn btn-info form-control" onclick="return ValidateInput()">حفظ</button>*@
+                        <button type="submit" class="btn btn-info form-control" onclick="return ValidateInput()">Save</button>
+
                     </div>
                     <div class="col-md-6">
-                        <a asp-page="Index" class="btn btn-success form-control">رجوع</a>
+                        @*<a asp-page="Index" class="btn btn-success form-control">رجوع</a>*@
+                        <a asp-page="Index" class="btn btn-success form-control">Back</a>
+
                     </div>
                 </div>
             </div>
@@ -122,8 +130,8 @@
             var PId = document.getElementById("ProdInfo").value;
 
             if (qty == 0) {
-                swal("Error!", "حدد الكمية", "error");
-
+                //swal("Error!", "حدد الكمية", "error");
+                swal("Error!", "No quantity Entered", "error");
                 return false
             }
 

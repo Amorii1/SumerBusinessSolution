@@ -5,7 +5,9 @@
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
     <div class=" border backgroundWhite">
-        <h2 class="text-info">حذف المنتج</h2>
+        @*<h2 class="text-info">حذف المنتج</h2>*@
+        <h2 class="text-info">Delete Product</h2>
+
         <form method="post">
 
             <input type="hidden" asp-for="ProdInfo.Id" />
@@ -87,10 +89,14 @@
                 <div class="col-md-5 offset-md-2">
                     <div class="row">
                         <div class="col-md-6">
-                            <btn data-toggle="modal" data-target="#Ask" class="btn btn-danger form-control">حذف</btn>
+                            @*<btn data-toggle="modal" data-target="#Ask" class="btn btn-danger form-control">حذف</btn>*@
+                            <btn data-toggle="modal" data-target="#Ask" class="btn btn-danger form-control">Delete</btn>
+
                         </div>
                         <div class="col-md-6">
-                            <a asp-page="Index" class="btn btn-success form-control">رجوع الى القائمه</a>
+                            @*<a asp-page="Index" class="btn btn-success form-control">رجوع</a>*@
+                            <a asp-page="Index" class="btn btn-success form-control">Back</a>
+
                         </div>
                     </div>
                 </div>
@@ -112,11 +118,6 @@
 
                 </div>
             </div>
-
-
-
-
-
         </form>
 
     </div>

@@ -51,7 +51,9 @@
         </div>
         <div class="row form-group">
             <div class="col-md-2">
-                <label>الكميه الجديده</label>
+                @*<label>الكميه الجديده</label>*@
+                <label>New Qty</label>
+
             </div>
             <div class="col-md-5">
                 <input asp-for="NewQty" class="form-control" />
@@ -62,10 +64,14 @@
             <div class="col-md-5 offset-md-2">
                 <div class="row">
                     <div class="col-md-6">
-                        <input type="submit" class="btn btn-info form-control" value="تحديث" />
+                        @*<input type="submit" class="btn btn-info form-control" value="تحديث" />*@
+                        <input type="submit" class="btn btn-info form-control" value="Update" />
+
                     </div>
                     <div class="col-md-6">
-                        <a asp-page="Index" class="btn btn-success form-control"> رجوع الى القائمه </a>
+                        @*<a asp-page="Index" class="btn btn-success form-control"> رجوع </a>*@
+                        <a asp-page="Index" class="btn btn-success form-control"> Back </a>
+
                     </div>
                 </div>
 

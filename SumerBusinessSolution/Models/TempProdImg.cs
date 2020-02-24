@@ -9,7 +9,7 @@ namespace SumerBusinessSolution.Models
     public class TempProdImg
     {
         public int Id { get; set; }
-        [Display(Name = "ملف الصوره")]
+      //  [Display(Name = "ملف الصوره")]
 
         public string ImgFile { get; set; }
     }

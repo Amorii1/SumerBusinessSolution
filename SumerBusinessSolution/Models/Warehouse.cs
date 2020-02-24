@@ -13,15 +13,15 @@ namespace SumerBusinessSolution.Models
         public int Id { get; set; }
 
         [Required]
-        [Display(Name = "رمز المخزن")]
+      //  [Display(Name = "رمز المخزن")]
 
         public string WhCode { get; set; }
 
         [Required]
-        [Display(Name = "اسم المخزن")]
+     //   [Display(Name = "اسم المخزن")]
 
         public string WhName { get; set; }
-        [Display(Name = "عنوان المخزن")]
+     //   [Display(Name = "عنوان المخزن")]
 
         public string WhLocation { get; set; }
 
@@ -32,7 +32,7 @@ namespace SumerBusinessSolution.Models
         public string CreatedById { get; set; }
  
         [Required]
-        [Display(Name = "تاريخ الاضافه")]
+      //  [Display(Name = "تاريخ الاضافه")]
 
         public DateTime CreatedDateTime { get; set; }
 

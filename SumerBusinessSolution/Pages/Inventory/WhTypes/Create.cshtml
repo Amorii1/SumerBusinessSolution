@@ -6,7 +6,9 @@
 }
 
     <div class="border backgroundWhite">
-        <h2 class="text-info">أضافة  نوع مخزن جديد</h2>
+        @*<h2 class="text-info">أضافة  نوع مخزن جديد</h2>*@
+        <h2 class="text-info">Add New Warehouse Type</h2>
+
         <form method="post">
             <div class="form-group row">
                 <div class="col-md-2">
@@ -15,7 +17,7 @@
                 <div class="col-md-5">
                     <input asp-for="WhType.Type" class="form-control" />
                     @*<select WhType="myList" asp-for="WhType.Type" class="form-control">
-                      
+
                         <option value="StoreRoom">مخزن</option>
                         <option value="ShowRoom">معرض</option>
                     </select>*@
@@ -31,10 +33,14 @@
 
                     <div class="row">
                         <div class="col-md-6">
-                            <input type="submit" class="btn btn-info form-control" value="انشاء" />
+                            @*<input type="submit" class="btn btn-info form-control" value="حفظ" />*@
+                            <input type="submit" class="btn btn-info form-control" value="Save" />
+
                         </div>
                         <div class="col-md-6">
-                            <a asp-page="../Warehouses/Index" class="btn btn-success form-control">رجوع </a>
+                            @*<a asp-page="../Warehouses/Index" class="btn btn-success form-control">رجوع </a>*@
+                            <a asp-page="../Warehouses/Index" class="btn btn-success form-control">Back </a>
+
                         </div>
                     </div>
                 </div>

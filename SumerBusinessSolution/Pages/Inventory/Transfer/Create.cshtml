@@ -7,7 +7,9 @@
 
     <div class="border backgroundWhite">
         <partial name="_StatusMessage" model="Model.StatusMessage" />
-        <h2 class="text-info">حركة المواد</h2>
+        @*<h2 class="text-info">حركة المواد</h2>*@
+        <h2 class="text-info">Transfer</h2>
+
         <form method="post">
 
             @*<input type="hidden" asp-for="InvTransfer.CreatedById" />*@
@@ -69,7 +71,9 @@
                     <label asp-for="Note"></label>
                 </div>
                 <div class="col-md-5">
-                    <textarea placeholder="ملاحظات" asp-for="Note" class="form-control"></textarea>
+                    @*<textarea placeholder="ملاحظات" asp-for="Note" class="form-control"></textarea>*@
+                    <textarea placeholder="Notes" asp-for="Note" class="form-control"></textarea>
+
                 </div>
                 <span asp-validation-for="Note" class="text-danger"></span>
             </div>
@@ -79,10 +83,14 @@
                     <div class="row">
 
                         <div class="col-md-6">
-                            <button type="submit" class="btn btn-info form-control" onclick="return ValidateInput()">تخزين</button>
+                            @*<button type="submit" class="btn btn-info form-control" onclick="return ValidateInput()">حفظ</button>*@
+                            <button type="submit" class="btn btn-info form-control" onclick="return ValidateInput()">Save</button>
+
                         </div>
                         <div class="col-md-6">
-                            <a asp-page="Index" class="btn btn-success form-control">رجوع</a>
+                            @*<a asp-page="Index" class="btn btn-success form-control">رجوع</a>*@
+                            <a asp-page="Index" class="btn btn-success form-control">Back</a>
+
                         </div>
                     </div>
                 </div>
@@ -120,11 +128,15 @@
             var toWh = document.getElementById("ToWhId").value;
 
             if (qty == 0) {
-                swal("Error!", "الكمية غير محددة", "error");
+                //swal("Error!", "الكمية غير محددة", "error");
+                 swal("Error!", "No Qty entered", "error");
+
                 return false
             }
             if (fromWh == toWh) {
-                swal("Error!", "اختار المخزن الصحيح", "error");
+                //swal("Error!", "اختار المخزن الصحيح", "error");
+                swal("Error!", "Warehouses can not be similar", "error");
+
                 return false
             }
         }

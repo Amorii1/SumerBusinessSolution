@@ -11,7 +11,7 @@ namespace SumerBusinessSolution.Models
     {
             public int Id { get; set; }
             [Required]
-        [Display(Name = "ملف الصوره")]
+            //[Display(Name = "ملف الصوره")]
 
         public string ImgFile { get; set; }
        

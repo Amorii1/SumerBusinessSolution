@@ -18,18 +18,18 @@ namespace SumerBusinessSolution.Models
         public int? ProdId { get; set; }
     
         [Required]
-        [Display(Name = "الكميه")]
+       // [Display(Name = "الكميه")]
 
         public double Qty { get; set; }
-        [Display(Name = "وحده القياس ")]
+       // [Display(Name = "وحده القياس ")]
 
         public string UOM { get; set; }
-        [Display(Name = "الملاحظات")]
+       // [Display(Name = "الملاحظات")]
 
         public string Note { get; set; }
 
         [Required]
-        [Display(Name = "تاريخ الاضافه")]
+       // [Display(Name = "تاريخ الاضافه")]
 
         public DateTime CreatedDateTime { get; set; }
         [Required]

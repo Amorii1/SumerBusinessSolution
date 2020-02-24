@@ -5,7 +5,9 @@
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
     <div class="border backgroundWhite">
-        <h2 class="text-info">تحديث معلومات المنتج</h2>
+        @*<h2 class="text-info">تحديث معلومات المنتج</h2>*@
+        <h2 class="text-info">Product Update</h2>
+
         <form method="post" enctype="multipart/form-data">
 
             <input type="hidden" asp-for="ProdInfo.Id" />
@@ -75,7 +77,7 @@
                 </div>
                 <div class="col-md-6">
                     <input type="file" asp-for="img" class="form-control p-md-1">   <img style="height: 200px; width: 100%; display: block;" src="~/img/@Model.ProdInfo.ImgFile">
-                  
+
                 </div>
             </div>
 
@@ -124,10 +126,14 @@
                 <div class="col-md-5 offset-md-2">
                     <div class="row">
                         <div class="col-md-6">
-                            <input type="submit" class="btn btn-info form-control" value="تحديث" />
+                            @*<input type="submit" class="btn btn-info form-control" value="تحديث" />*@
+                            <input type="submit" class="btn btn-info form-control" value="Update" />
+
                         </div>
                         <div class="col-md-6">
-                            <a asp-page="Index" class="btn btn-success form-control">رجوع الى القائمه</a>
+                            @*<a asp-page="Index" class="btn btn-success form-control">رجوع</a>*@
+                            <a asp-page="Index" class="btn btn-success form-control">Back</a>
+
                         </div>
                     </div>
 

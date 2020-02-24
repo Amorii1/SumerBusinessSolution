@@ -12,27 +12,27 @@ namespace SumerBusinessSolution.Models
     {
         public int Id { get; set; }
         [Required]
-        [Display(Name = "رمز المنتج ")]
+       // [Display(Name = "رمز المنتج ")]
 
         public string ProdCode { get; set; }
         [Required]
-        [Display(Name = "اسم المنتج")]
+       // [Display(Name = "اسم المنتج")]
 
         public string ProdName { set; get; }
-        [Display(Name = "وصف المنتج")]
+      //  [Display(Name = "وصف المنتج")]
 
         public string ProdDescription { get; set; }
-        [DisplayName("صوره المنتج")]
+       // [DisplayName("صوره المنتج")]
         public string ImgFile { get; set; }
-        [Display(Name = "فئه المنتج")]
+      //  [Display(Name = "فئه المنتج")]
 
         public string ProdCategory { get; set; }
         [Required]
-        [Display(Name = " سعر المفرد")]
+     //   [Display(Name = " سعر المفرد")]
 
         public double RetailPrice { get; set; }
         [Required]
-        [Display(Name = "سعر الكلي")]
+     //   [Display(Name = "سعر الكلي")]
 
         public double WholePrice  { get; set; }
 
@@ -40,7 +40,7 @@ namespace SumerBusinessSolution.Models
         public string CreatedById { get; set; }
   
         [Required]
-        [DisplayName("تاريخ الاضافه")]
+     //   [DisplayName("تاريخ الاضافه")]
         [DataType(DataType.Date)]
         public DateTime CreatedDateTime { get; set; }
 
