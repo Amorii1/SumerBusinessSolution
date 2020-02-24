@@ -48,17 +48,17 @@ namespace SumerBusinessSolution.Pages.Inventory.IncomingGoods
 
         [Required]
         [BindProperty]
-        [Display(Name ="الكميه")]
+      //  [Display(Name ="الكميه")]
         public double Qty { get; set; }
 
         [BindProperty]
-        [Display(Name = "الملاحظات")]
+       // [Display(Name = "الملاحظات")]
 
         public string Note { get; set; }
 
         [Required]
         [BindProperty]
-        [Display(Name = "رمز المنتج")]
+      //  [Display(Name = "رمز المنتج")]
 
         public string ProdCode { get; set; }
 
@@ -102,8 +102,8 @@ namespace SumerBusinessSolution.Pages.Inventory.IncomingGoods
 
             if (incomingoods == true)
             {
-                //StatusMessage = "New goods have been added successfully.";
-                StatusMessage = "تمت الاضافة";
+                StatusMessage = "New goods have been added successfully.";
+                //StatusMessage = "تمت الاضافة";
 
             }
             else

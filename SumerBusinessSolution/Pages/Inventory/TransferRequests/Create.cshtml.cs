@@ -34,23 +34,23 @@ namespace SumerBusinessSolution.Pages.Inventory.TransferRequests
 
         [Required]
         [BindProperty]
-        [Display(Name = "رمز المنتج")]
+       //  [Display(Name = "رمز المنتج")]
         public string ProdCode { get; set; }
         [BindProperty]
-        [Display(Name = "من المخزن ")]
+       // [Display(Name = "من المخزن ")]
 
         public int FromWhId { get; set; }
         [BindProperty]
-        [Display(Name = "الى المخزن ")]
+       // [Display(Name = "الى المخزن ")]
 
         public int ToWhId { get; set; }
 
         [Required]
         [BindProperty]
-        [Display(Name = "الكميه")]
+       // [Display(Name = "الكميه")]
         public double Qty { get; set; }
         [BindProperty]
-        [Display(Name = "الملاحظات")]
+      //  [Display(Name = "الملاحظات")]
         public string Note { get; set; }
 
         [TempData]

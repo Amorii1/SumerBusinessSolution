@@ -71,7 +71,9 @@
                     <label asp-for="Note"></label>
                 </div>
                 <div class="col-md-5">
-                    <textarea placeholder="ملاحظات" asp-for="Note" class="form-control"></textarea>
+                    @*<textarea placeholder="ملاحظات" asp-for="Note" class="form-control"></textarea>*@
+                    <textarea placeholder="Notes" asp-for="Note" class="form-control"></textarea>
+
                 </div>
                 <span asp-validation-for="Note" class="text-danger"></span>
             </div>
