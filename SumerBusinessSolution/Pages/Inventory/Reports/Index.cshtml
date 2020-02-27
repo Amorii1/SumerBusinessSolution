@@ -1,5 +1,6 @@
 ﻿@page
 @model SumerBusinessSolution.Pages.Inventory.Reports.IndexModel
+@using Sumer.Utility
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Pages/Shared/_Layout.cshtml";
@@ -8,7 +9,7 @@
 <br />
 <br />
 <div class="row" style="padding-left:150px;">
-   
+
     <div class="column" style="padding-left:80px;">
         <a asp-page="/inventory/reports/ProdInWhQty">
 
@@ -26,14 +27,16 @@
             <p class="text-center">Warehouses</p>
         </a>
     </div>
+    @if (User.IsInRole(SD.AdminEndUser))
+    {
+        <div class="column" style="padding-left:80px;">
+            <a asp-page="/inventory/reports/InvTransactions">
+                <img src="~/img/lamp.png" style="width:120px;height:120px;" />
+                @*<p class="text-center">العمليات تجارية</p>*@
+                <p class="text-center">Transactions</p>
 
-    <div class="column" style="padding-left:80px;">
-        <a asp-page="/inventory/reports/InvTransactions">
-            <img src="~/img/lamp.png" style="width:120px;height:120px;" />
-            @*<p class="text-center">العمليات تجارية</p>*@
-            <p class="text-center">Transactions</p>
-
-        </a>
-    </div>
+            </a>
+        </div>
+    }
 </div>
 
