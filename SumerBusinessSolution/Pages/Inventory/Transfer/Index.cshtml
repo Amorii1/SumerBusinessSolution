@@ -1,5 +1,6 @@
 ﻿@page
 @model SumerBusinessSolution.Inventory.Transfer.IndexModel
+@using Sumer.Utility
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Pages/Shared/_Layout.cshtml";
@@ -12,9 +13,12 @@
                 <h2 class="text-info"> Transfer </h2>
 
             </div>
-            <div class="col-md-6 text-right">
-                <a asp-page="Create" class="btn btn-info"> <i class="fas fa-plus"></i></a>
-            </div>
+            @if (User.IsInRole(SD.AdminEndUser))
+            {
+                <div class="col-md-6 text-right">
+                    <a asp-page="Create" class="btn btn-info"> <i class="fas fa-plus"></i></a>
+                </div>
+            }
         </div>
 
         <form method="get" asp-page="Index">

@@ -1,5 +1,6 @@
 ﻿@page
 @model SumerBusinessSolution.Pages.Inventory.Products.IndexModel
+@using Sumer.Utility
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Pages/Shared/_Layout.cshtml";
@@ -12,9 +13,12 @@
                 <h2 class="text-info">Products</h2>
 
             </div>
-            <div class="col-md-3 offset-md-3 text-right">
-                <a asp-page="Create" class="btn btn-info"> <i class="fas fa-plus"></i></a>
-            </div>
+            @if (User.IsInRole(SD.AdminEndUser))
+            {
+                <div class="col-md-3 offset-md-3 text-right">
+                    <a asp-page="Create" class="btn btn-info"> <i class="fas fa-plus"></i></a>
+                </div>
+            }
         </div>
 
         <form method="get" asp-page="Index">
@@ -78,33 +82,41 @@
                 {
                     @foreach (var item in Model.ProdInfo)
                     {
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(m => item.ProdCode)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(m => item.ProdName)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(m => item.RetailPrice)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(m => item.WholePrice)
-                            </td>
-                            <td style="width:150px;">
-                                <div class="btn-group " role="group">
-                                    @*<a class="btn btn-primary " asp-page="Edit" asp-route-Id="@item.Id" title="Edit"><i class="fa fa-edit"></i>تعديل</a>
-                                    <a class="btn btn-success" asp-page="Details" asp-route-Id="@item.Id" title="Details"><i class="far fa-clipboard"></i>تفاصيل</a>
-                                    <a class="btn btn-danger" asp-page="Delete" asp-route-Id="@item.Id" title="Delete"><i class="far fa-trash-alt"></i>حذف</a>*@
+            <tr>
+                <td>
+                    @Html.DisplayFor(m => item.ProdCode)
+                </td>
+                <td>
+                    @Html.DisplayFor(m => item.ProdName)
+                </td>
+                <td>
+                    @Html.DisplayFor(m => item.RetailPrice)
+                </td>
+                <td>
+                    @Html.DisplayFor(m => item.WholePrice)
+                </td>
+                @if (User.IsInRole(SD.AdminEndUser))
+                {
+                    <td style="width:150px;">
+                        <div class="btn-group " role="group">
+                            @*<a class="btn btn-primary " asp-page="Edit" asp-route-Id="@item.Id" title="Edit"><i class="fa fa-edit"></i>تعديل</a>
+                    <a class="btn btn-success" asp-page="Details" asp-route-Id="@item.Id" title="Details"><i class="far fa-clipboard"></i>تفاصيل</a>
+                    <a class="btn btn-danger" asp-page="Delete" asp-route-Id="@item.Id" title="Delete"><i class="far fa-trash-alt"></i>حذف</a>*@
 
-                                    <a class="btn btn-primary " asp-page="Edit" asp-route-Id="@item.Id" title="Edit"><i class="fa fa-edit"></i>Update</a>
-                                    <a class="btn btn-success" asp-page="Details" asp-route-Id="@item.Id" title="Details"><i class="far fa-clipboard"></i>Details</a>
-                                    <a class="btn btn-danger" asp-page="Delete" asp-route-Id="@item.Id" title="Delete"><i class="far fa-trash-alt"></i>Delete</a>
-                                </div>
+                            <a class="btn btn-primary " asp-page="Edit" asp-route-Id="@item.Id" title="Edit"><i class="fa fa-edit"></i>Update</a>
+                            @*<a class="btn btn-success" asp-page="Details" asp-route-Id="@item.Id" title="Details"><i class="far fa-clipboard"></i>Details</a>*@
+                            <a class="btn btn-danger" asp-page="Delete" asp-route-Id="@item.Id" title="Delete"><i class="far fa-trash-alt"></i>Delete</a>
+                        </div>
 
-                            </td>
-                        </tr>
-
+                    </td>
+                }
+                <td style="width:150px;">
+                    <div class="btn-group " role="group">
+                        <a class="btn btn-success" asp-page="Details" asp-route-Id="@item.Id" title="Details"><i class="far fa-clipboard"></i>Details</a>
+                        </div>
+                    </td>
+</tr>
+                        
                     }
                 }
             </table>

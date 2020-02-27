@@ -1,5 +1,6 @@
 ﻿@page
 @model RegisterModel
+@using Sumer.Utility
 @{
     ViewData["Title"] = "Register";
 }
@@ -32,29 +33,31 @@
                 <input asp-for="Input.PhoneNumber" class="form-control" />
                 <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Input.IsAdmin"></label>
-                <input asp-for="Input.IsAdmin" class="form-control" />
-                <span asp-validation-for="Input.IsAdmin" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Input.IsSupervisor"></label>
-                <input asp-for="Input.IsSupervisor" class="form-control" />
-                <span asp-validation-for="Input.IsSupervisor" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="Input.Password"></label>
-                <input asp-for="Input.Password" class="form-control" />
-                <span asp-validation-for="Input.Password" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Input.ConfirmPassword"></label>
-                <input asp-for="Input.ConfirmPassword" class="form-control" />
-                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
-            </div>
-            <button type="submit" class="btn btn-primary">Register</button>
-        </form>
+            @if (User.IsInRole(SD.AdminEndUser))
+            {
+                <div class="form-group">
+                    <label asp-for="Input.IsAdmin"></label>
+                    <input asp-for="Input.IsAdmin" class="form-control" />
+                    <span asp-validation-for="Input.IsAdmin" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Input.IsSupervisor"></label>
+                    <input asp-for="Input.IsSupervisor" class="form-control" />
+                    <span asp-validation-for="Input.IsSupervisor" class="text-danger"></span>
+                </div>
+            }
+                <div class="form-group">
+                    <label asp-for="Input.Password"></label>
+                    <input asp-for="Input.Password" class="form-control" />
+                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Input.ConfirmPassword"></label>
+                    <input asp-for="Input.ConfirmPassword" class="form-control" />
+                    <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                </div>
+                <button type="submit" class="btn btn-primary">Register</button>
+            </form>
     </div>
 </div>
 

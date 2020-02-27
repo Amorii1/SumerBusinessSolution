@@ -1,39 +1,47 @@
 ﻿@page
 @model SumerBusinessSolution.Pages.Users.IndexModel
+@using Sumer.Utility
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
+
     <div class="backgroundWhite">
         <div class="row">
-            <div class="col-md-6">
-                <h2 class="text-info">المستخدمين</h2>
+            @if (User.IsInRole(SD.AdminEndUser))
+            {
+                <div class="col-md-6">
+                    <h2 class="text-info">المستخدمين</h2>
+                </div>
+                <div class="col-md-3 offset-md-3 text-right">
+                    <a asp-area="Identity" asp-page="/Account/Register" class="btn btn-info"> <i class="fas fa-plus"></i></a>
+                </div>
+            }
             </div>
-            <div class="col-md-3 offset-md-3 text-right">
-                <a asp-area="Identity" asp-page="/Account/Register" class="btn btn-info"> <i class="fas fa-plus"></i></a>
-            </div>
-        </div>
-
+       
         <form method="get" asp-page="Index">
+
             <div class="border backgroundWhite">
                 <div class="container ">
                     <div class="row">
                         <div class="col-md-11">
-                            <div class="row" style="margin-top:10px;">
-                                <div class="col-md-5 pb-1">
-                                    @Html.Editor("SearchFirstName", new { htmlAttributes = new { @class = "form-control", placeholder = "....ألاسم الاول " } })
-                                </div>
-                                <div class="col-md-2 text-md-right pb-1">
+                            @if (User.IsInRole(SD.AdminEndUser))
+                            {
+                                <div class="row" style="margin-top:10px;">
+                                    <div class="col-md-5 pb-1">
+                                        @Html.Editor("SearchFirstName", new { htmlAttributes = new { @class = "form-control", placeholder = "....ألاسم الاول " } })
+                                    </div>
+                                    <div class="col-md-2 text-md-right pb-1">
 
-                                    <button type="submit" name="submit" value="search" class="btn btn-info form-control">
-                                        <i class="fas fa-search"></i>
-                                    </button>
+                                        <button type="submit" name="submit" value="search" class="btn btn-info form-control">
+                                            <i class="fas fa-search"></i>
+                                        </button>
 
+                                    </div>
                                 </div>
+                            }
                             </div>
-
-                        </div>
                     </div>
                 </div>
             </div>
@@ -50,8 +58,8 @@
                     @Html.DisplayNameFor(m => m.ApplicationUser[0].LastName)
                 </th>
                 <th>
-                   رقم الهاتف
-                     @*@Html.DisplayNameFor(m => m.ApplicationUser[0].PhoneNumber)*@
+                    رقم الهاتف
+                    @*@Html.DisplayNameFor(m => m.ApplicationUser[0].PhoneNumber)*@
                 </th>
 
                 <th></th>
@@ -64,9 +72,11 @@
             }
             else
             {
+
                 @foreach (var item in Model.UsersListVM.ApplicationUserList)
                 {
                     <tr>
+
                         <td>
                             @Html.DisplayFor(m => item.FirstName)
                         </td>
@@ -78,20 +88,23 @@
                         </td>
 
                         <td></td>
-                        <td style="width:150px;">
-                            <div class="btn-group" role="group">
-                                <a asp-page="Edit" asp-route-Id="@item.Id" class="btn btn-info ext-white " title="Edit">
-                                    <i class="fas fa-edit"></i>
-                                </a>
+                        @if (User.IsInRole(SD.AdminEndUser))
+                        {
+                            <td style="width:150px;">
+                                <div class="btn-group" role="group">
+                                    <a asp-page="Edit" asp-route-Id="@item.Id" class="btn btn-info ext-white " title="Edit">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
 
 
-                                <a asp-page="Delete" asp-route-Id="@item.Id" class="btn btn-danger text-white" title="Delete">
-                                    <i class="fas fa-user-minus"></i>
-                                </a>
-                            </div>
-                        </td>
+                                    <a asp-page="Delete" asp-route-Id="@item.Id" class="btn btn-danger text-white" title="Delete">
+                                        <i class="fas fa-user-minus"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        }
                     </tr>
                 }
             }
-            </table>
+        </table>
     </div>
