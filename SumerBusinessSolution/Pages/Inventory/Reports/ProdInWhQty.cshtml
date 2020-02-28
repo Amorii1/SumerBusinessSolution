@@ -1,5 +1,6 @@
 ﻿@page
 @model SumerBusinessSolution.Pages.Inventory.Reports.ProdInWhQtyModel
+@using Sumer.Utility
 @{
     ViewData["Title"] = "ProdInWhQty";
     Layout = "~/Pages/Shared/_Layout.cshtml";
@@ -115,13 +116,19 @@
                         </a>
                     </td>
                     <td>
-                        @*<a asp-page="../Products/UpdateProdStkQty" asp-route-StkId="@item.Id" style="text-decoration:none;">
-            <img src="~/images/car.png" width="40" /> &nbsp; تحديث الكميه
-        </a>*@
-                        <a asp-page="../Products/UpdateProdStkQty" asp-route-StkId="@item.Id" style="text-decoration:none;">
-                            <img src="~/images/car.png" width="40" /> &nbsp; Update Qty
-                        </a>
-                    </td>
+
+                        @if (User.IsInRole(SD.AdminEndUser))
+                        {
+                            @*<a asp-page="../Products/UpdateProdStkQty" asp-route-StkId="@item.Id" style="text-decoration:none;">
+                <img src="~/images/car.png" width="40" /> &nbsp; تحديث الكميه
+            </a>*@
+
+                            <a asp-page="../Products/UpdateProdStkQty" asp-route-StkId="@item.Id" style="text-decoration:none;">
+                                <img src="~/images/car.png" width="40" /> &nbsp; Update Qty
+                            </a>
+                        }
+                        </td>
+                        
                     </tr>
                 }
             }

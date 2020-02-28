@@ -1,5 +1,6 @@
 ﻿@page
 @model SumerBusinessSolution.Pages.Inventory.IncomingGoods.IndexModel
+@using Sumer.Utility
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Pages/Shared/_Layout.cshtml";
@@ -13,6 +14,8 @@
                 <h2 class="text-info">Incoming Goods</h2>
 
             </div>
+@if (User.IsInRole(SD.AdminEndUser))
+{
             <div class="col-md-3 offset-md-3 text-right">
                 <a asp-page="../IncomingGoods/Create" class="btn btn-info">
 
@@ -20,6 +23,7 @@
 
                 </a>
             </div>
+}
         </div>
 
 

@@ -1,5 +1,6 @@
 ﻿@page
 @model SumerBusinessSolution.Inventory.TransferRequests.IndexModel
+@using Sumer.Utility
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Pages/Shared/_Layout.cshtml";
@@ -134,22 +135,25 @@
 
         </div>*@
                                     <div class="btn-group" role="group">
-                                        <button class="btn btn-success text-white" asp-page-handler="ApproveTransferRequests" asp-route-ReqId="@item.Id" type="submit" title="Approve" name="Accept">
-                                            Accept <i class="fas fa-check"></i>
-                                        </button>
+
+                                        @if (User.IsInRole(SD.AdminEndUser))
+                                        {
+                                            <button class="btn btn-success text-white" asp-page-handler="ApproveTransferRequests" asp-route-ReqId="@item.Id" type="submit" title="Approve" name="Accept">
+                                                Accept <i class="fas fa-check"></i>
+                                            </button>
 
 
-                                        <button class="btn btn-danger text-white" asp-page-handler="RejectTransferRequests" asp-route-ReqId="@item.Id" type="submit" title="Reject" name="Reject">
-                                            Reject <i class="fas fa-window-close"></i>
-                                        </button>
+                                            <button class="btn btn-danger text-white" asp-page-handler="RejectTransferRequests" asp-route-ReqId="@item.Id" type="submit" title="Reject" name="Reject">
+                                                Reject <i class="fas fa-window-close"></i>
+                                            </button>
+                                        }
 
+                                            <button class="btn btn-danger text-white" asp-page-handler="DeleteTransferRequests" asp-route-ReqId="@item.Id" type="submit" title="Delete" name="Delete">
+                                                Delete <i class="fas fa-trash-alt"></i>
+                                            </button>
 
-                                        <button class="btn btn-danger text-white" asp-page-handler="DeleteTransferRequests" asp-route-ReqId="@item.Id" type="submit" title="Delete" name="Delete">
-                                            Delete <i class="fas fa-trash-alt"></i>
-                                        </button>
-
-                                    </div>
-                                </td>
+                                        </div>
+                                    </td>
 
                             </tr>
                         }

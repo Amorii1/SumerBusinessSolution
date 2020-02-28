@@ -11,9 +11,7 @@ using Sumer.Utility;
 
 namespace SumerBusinessSolution.Inventory.Warehouses
 {
-    [Authorize]
-
-    [Authorize(Roles = SD.AdminEndUser)]
+  
 
     public class IndexModel : PageModel
     {

@@ -12,7 +12,6 @@ using SumerBusinessSolution.Models;
 
 namespace SumerBusinessSolution.Pages.Inventory.IncomingGoods
 {
-    [Authorize]
     public class IndexModel : PageModel
     {
         private readonly ApplicationDbContext _db;
