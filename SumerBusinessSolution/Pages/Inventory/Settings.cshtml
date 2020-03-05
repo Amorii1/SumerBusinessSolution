@@ -1,0 +1,26 @@
+﻿@page
+@model SumerBusinessSolution.SettingsModel
+@{
+    ViewData["Title"] = "Settings";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<br />
+<br />
+<div class="row" style="padding-left:320px; padding-right:100px;">
+    <div class="column" style="padding-left:80px;">
+        <a asp-page="/Users/Index">
+            <img src="~/img/team.png" style="width:120px;height:120px;" />
+            <p class="text-center">Users</p>
+
+        </a>
+    </div>
+
+        <div class="column" style="padding-left:80px;">
+            <a asp-page="/inventory/Warehouses/Index">
+                <img src="~/img/warehouse.png" style="width:120px;height:120px;" />
+                <p class="text-center">Warehouses</p>
+
+            </a>
+        </div>
+</div>

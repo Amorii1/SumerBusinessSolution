@@ -1,11 +1,12 @@
 ﻿@page
+@using Sumer.Utility
 @model IndexModel
 @{
     ViewData["Title"] = "Home page";
 }
 <br />
 <br />
-<div class="row" style="padding-left:200px;">
+<div class="row" style="padding-left:120px;">
     <div class="column pl-5">
         <a asp-page="/Inventory/IncomingGoods/Index">
             <img src="~/img/delivery-truck.png" style="width:120px;height:120px;" />
@@ -14,16 +15,17 @@
 
         </a>
     </div>
+    @if (User.IsInRole(SD.AdminEndUser))
+    {
+        <div class="column" style="padding-left:80px;">
+            <a asp-page="/inventory/transfer/index">
+                <img src="~/img/b2b.png" style="width:120px;height:120px;" />
+                @*<p class="text-center">التحويل</p>*@
+                <p class="text-center">Transfer</p>
 
-    <div class="column" style="padding-left:80px;">
-        <a asp-page="/inventory/transfer/index">
-            <img src="~/img/b2b.png" style="width:120px;height:120px;" />
-            @*<p class="text-center">التحويل</p>*@
-            <p class="text-center">Transfer</p>
-
-        </a>
-    </div>
-
+            </a>
+        </div>
+    }
     <div class="column" style="padding-left:80px;">
         <a asp-page="/inventory/transferrequests/index">
             <img src="~/img/application.png" style="width:120px;height:120px;" />
@@ -46,11 +48,11 @@
 <br />
 <br />
 <br />
-<div class="row" style="padding-left:200px;">
+<div class="row" style="padding-left:120px;">
     <div class="column pl-5">
         <a asp-page="/inventory/warehouses/index">
             <img src="~/img/warehouse.png" style="width:120px;height:120px;" />
-            @*<p class="text-center">المخازن</p>*@            
+            @*<p class="text-center">المخازن</p>*@
             <p class="text-center">Warehouses</p>
 
         </a>

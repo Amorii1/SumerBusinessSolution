@@ -8,7 +8,7 @@
     <div class="border backgroundWhite">
         <partial name="_StatusMessage" model="Model.StatusMessage" />
         @*<h2 class="text-info">طلب حركة المواد</h2>*@
-        <h2 class="text-info">Transfer Request</h2>
+        <h2 class="text-info text-md-right">Transfer Request</h2>
 
         <form method="post">
 
@@ -19,77 +19,83 @@
 
 
             <div class="form-group row">
+
+                <div class="col-md-5 offset-md-5">
+                    <input type="text" id="ProdInfo" asp-for="ProdCode" class="form-control text-md-right" />
+                </div>
                 <div class="col-md-2">
                     <label asp-for="ProdCode"></label>
-                </div>
-                <div class="col-md-5">
-                    <input type="text" id="ProdInfo" asp-for="ProdCode" class="form-control" />
                 </div>
                 <span asp-validation-for="ProdCode" class="text-danger"></span>
             </div>
 
 
             <div class="form-group row">
-                <div class="col-md-2">
-                    <label asp-for="FromWhId"></label>
-                </div>
-                <div class="col-md-5">
+
+                <div class="col-md-5 offset-md-5">
                     <select asp-for="FromWhId"
                             asp-items="@(new SelectList(Model.Warehouselist, "Id", "WhName"))"
                             class="form-control" id="FromWhId">
                     </select>
                 </div>
+                <div class="col-md-2">
+                    <label asp-for="FromWhId"></label>
+                </div>
                 @*<span asp-validation-for="InvTransfer.FromWarehouse.Id" class="text-danger"></span>*@
             </div>
 
             <div class="form-group row">
-                <div class="col-md-2">
-                    <label asp-for="ToWhId"></label>
-                </div>
-                <div class="col-md-5">
+
+                <div class="col-md-5 offset-md-5">
                     <select asp-for="ToWhId"
                             asp-items="@(new SelectList(Model.WarehouselistTo, "Id", "WhName"))"
                             class="form-control" id="ToWhId">
                     </select>
                 </div>
+                <div class="col-md-2">
+                    <label asp-for="ToWhId"></label>
+                </div>
                 @*<span asp-validation-for="InvTransfer.ToWarehouse.Id" class="text-danger"></span>*@
             </div>
 
             <div class="form-group row">
+
+                <div class="col-md-5 offset-md-5">
+                    <input asp-for="Qty" class="form-control text-md-right" id="qty" />
+
+                </div>
                 <div class="col-md-2">
                     <label asp-for="Qty"></label>
-                </div>
-                <div class="col-md-5">
-                    <input asp-for="Qty" class="form-control" id="qty" />
-
                 </div>
                 <span asp-validation-for="Qty" class="text-danger"></span>
             </div>
 
             <div class="form-group row">
+
+                <div class="col-md-5 offset-md-5">
+                    @*<textarea placeholder="ملاحظات" asp-for="Note" class="form-control"></textarea>*@
+                    <textarea placeholder="Notes" asp-for="Note" class="form-control text-md-right"></textarea>
+
+                </div>
                 <div class="col-md-2">
                     <label asp-for="Note"></label>
-                </div>
-                <div class="col-md-5">
-                    @*<textarea placeholder="ملاحظات" asp-for="Note" class="form-control"></textarea>*@
-                    <textarea placeholder="Notes" asp-for="Note" class="form-control"></textarea>
-
                 </div>
                 <span asp-validation-for="Note" class="text-danger"></span>
             </div>
 
             <div class="form-group row">
-                <div class="col-md-5 offset-md-2">
+                <div class="col-md-5 offset-md-5">
                     <div class="row">
 
-                        <div class="col-md-6">
-                            @*<button type="submit" class="btn btn-info form-control" onclick="return ValidateInput()">حفظ</button>*@
-                            <button type="submit" class="btn btn-info form-control" onclick="return ValidateInput()">Save</button>
 
-                        </div>
                         <div class="col-md-6">
                             @*<a asp-page="Index" class="btn btn-success form-control">رجوع</a>*@
                             <a asp-page="Index" class="btn btn-success form-control">Back</a>
+
+                        </div>
+                        <div class="col-md-6">
+                            @*<button type="submit" class="btn btn-info form-control" onclick="return ValidateInput()">حفظ</button>*@
+                            <button type="submit" class="btn btn-info form-control" onclick="return ValidateInput()">Save</button>
 
                         </div>
                     </div>

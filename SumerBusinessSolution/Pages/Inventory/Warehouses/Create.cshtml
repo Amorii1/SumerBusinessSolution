@@ -7,7 +7,7 @@
 
     <div class="border backgroundWhite">
         @*<h2 class="text-info">اضافة مخزن جديد</h2>*@
-        <h2 class="text-info">Add new Warehouse</h2>
+        <h2 class="text-info text-md-right">Add new Warehouse</h2>
 
         <form method="post">
 
@@ -16,60 +16,65 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <br />
             <div class="form-group row">
+
+                <div class="col-md-5 offset-md-5">
+                    <input asp-for="Warehouse.WhCode" class="form-control text-md-right" />
+                </div>
                 <div class="col-md-2">
                     <label asp-for="Warehouse.WhCode"></label>
-                </div>
-                <div class="col-md-5">
-                    <input asp-for="Warehouse.WhCode" class="form-control" />
                 </div>
                 <span asp-validation-for="Warehouse.WhCode" class="text-danger"></span>
             </div>
 
             <div class="form-group row">
+
+                <div class="col-md-5 offset-md-5">
+                    <input asp-for="Warehouse.WhLocation" class="form-control text-md-right" />
+                </div>
                 <div class="col-md-2">
                     <label asp-for="Warehouse.WhLocation"></label>
-                </div>
-                <div class="col-md-5">
-                    <input asp-for="Warehouse.WhLocation" class="form-control" />
                 </div>
                 <span asp-validation-for="Warehouse.WhLocation" class="text-danger"></span>
             </div>
             <div class="form-group row">
+
+                <div class="col-md-5 offset-md-5">
+                    <input asp-for="Warehouse.WhName" class="form-control text-md-right" />
+                </div>
                 <div class="col-md-2">
                     <label asp-for="Warehouse.WhName"></label>
-                </div>
-                <div class="col-md-5">
-                    <input asp-for="Warehouse.WhName" class="form-control" />
                 </div>
                 <span asp-validation-for="Warehouse.WhName" class="text-danger"></span>
             </div>
 
             <div class="form-group row">
+
+                <div class="col-md-5 offset-md-5">
+                    <select WhType="myList" asp-for="Warehouse.WhType.Type" class="form-control text-md-right">
+                        @*<option value="StoreRoom">مخزن رئيسي</option>
+                <option value="ShowRoom">معرض</option>*@
+                        <option value="StoreRoom">Store Room</option>
+                        <option value="ShowRoom">Show Room</option>
+                    </select>
+                </div>
                 <div class="col-md-2">
                     <label asp-for="Warehouse.WhType.Type"></label>
-                </div>
-                <div class="col-md-5">
-                    <select WhType="myList" asp-for="Warehouse.WhType.Type" class="form-control">
-                        @*<option value="StoreRoom">مخزن رئيسي</option>
-        <option value="ShowRoom">معرض</option>*@
-                        <option value="StoreRoom">Store Room</option>
-        <option value="ShowRoom">Show Room</option>
-                    </select>
                 </div>
                 <span asp-validation-for="Warehouse.WhType.Type" class="text-danger"></span>
             </div>
             <div class="form-group row">
-                <div class="col-md-5 offset-md-2">
+                <div class="col-md-5 offset-md-5">
                     <div class="row">
 
+
+                        <div class="col-md-6">
+                            @*<a asp-page="Index" class="btn btn-success form-control ">رجوع</a>*@
+                            <a asp-page="Index" class="btn btn-success form-control ">Back</a>
+                        </div>
                         <div class="col-md-6">
                             @*<input type="submit" class="btn btn-info form-control" value="حفظ" />*@
                             <input type="submit" class="btn btn-info form-control" value="Save" />
 
-                        </div>
-                        <div class="col-md-6">
-                            @*<a asp-page="Index" class="btn btn-success form-control ">رجوع</a>*@
-                            <a asp-page="Index" class="btn btn-success form-control ">Back</a>
                         </div>
                     </div>
                 </div>

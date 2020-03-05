@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using Sumer.Utility
+<!DOCTYPE html>
 
 <html lang="en">
 <head>
@@ -52,27 +53,36 @@
 
     <div class="wrapper">
         <div class="sidebar">
-            <h2>SUMER</h2>
+            <a asp-page="/Index"><h2>SUMER</h2></a>
             <ul>
-                <li> <a class="nav-link text-dark" asp-area="" asp-page="/inventory/incominggoods/index"><i class="fas fa-home"></i>Incoming Goods</a></li>
-                <li><a class="nav-link text-dark" asp-area="" asp-page="/inventory/transfer/index"><i class="fas fa-user"></i>Transfer</a></li>
-                <li> <a class="nav-link text-dark" asp-area="" asp-page="/inventory/transferrequests/index"><i class="fas fa-address-card"></i>Transfer Request</a></li>
-                <li> <a class="nav-link text-dark" asp-area="" asp-page="/inventory/products/index"><i class="fas fa-project-diagram"></i>Products</a></li>
-                <li> <a class="nav-link text-dark" asp-area="" asp-page="/inventory/warehouses/index"><i class="fas fa-blog"></i>Warehouses</a></li>
-                <li> <a class="nav-link text-dark" asp-area="" asp-page="/inventory/reports/index"><i class="fas fa-address-book"></i>Reports</a></li>
-                <li> <a class="nav-link text-dark" asp-area="" asp-page="/users/index"><i class="fas fa-map-pin"></i>Users</a></li>
+                <li> <a class="nav-link  text-md-right text-dark" asp-area="" asp-page="/Index"> الصفحة الرئيسية <i class="fas fa-home"></i></a></li>
+                <li> <a class="nav-link  text-md-right text-dark" asp-area="" asp-page="/inventory/incominggoods/index"> المواد الواردة <i class="fas fa-truck-loading"></i></a></li>
+                @if (User.IsInRole(SD.AdminEndUser))
+                {
+                    <li><a class="nav-link  text-md-right text-dark" asp-area="" asp-page="/inventory/transfer/index"> تحويل <i class="fas fa-exchange-alt"></i></a></li>
+                }
+                @if (User.IsInRole(SD.SupervisorEndUser) || User.IsInRole(SD.StoreEndUser))
+                {
+                    <li> <a class="nav-link text-md-right text-dark" asp-area="" asp-page="/inventory/transferrequests/index"> طلب تحويل<i class="fas fa-exchange-alt"></i></a></li>
+                }
+                <li> <a class="nav-link  text-md-right  text-md-right text-dark" asp-area="" asp-page="/inventory/products/index"> المنتجات<i class="fas fa-boxes"></i></a></li>
+                <li> <a class="nav-link  text-md-right text-dark" asp-area="" asp-page="/inventory/reports/index"> التقارير<i class="fas fa-file-alt"></i></a></li>
+                <li> <a class="nav-link  text-md-right text-dark" asp-area="" asp-page="/inventory/settings"> الاعدادات<i class="fas fa-users"></i> </a></li>
+
+                @*<li> <a class="nav-link  text-md-right text-dark" asp-area="" asp-page="/inventory/warehouses/index"> المخازن<i class="fas fa-warehouse"></i></a></li>
+                <li> <a class="nav-link  text-md-right text-dark" asp-area="" asp-page="/users/index"> الاعضاء<i class="fas fa-users"></i> </a></li>*@
             </ul>
             @*<div class="social_media">
-                <a href="#"><i class="fab fa-facebook-f"></i></a>
-                <a href="#"><i class="fab fa-twitter"></i></a>
-                <a href="#"><i class="fab fa-instagram"></i></a>
-            </div>*@
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+        </div>*@
         </div>
-       
+
 
 
         <div class="container">
-            
+
             <main role="main" class="pb-3">
                 <div class="main_content">
 
@@ -83,10 +93,10 @@
         </div>
     </div>
     @*<footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2020 - SumerBusinessSolution - <a asp-area="" asp-page="/Privacy">Privacy</a>
-        </div>
-    </footer>*@
+            <div class="container">
+                &copy; 2020 - SumerBusinessSolution - <a asp-area="" asp-page="/Privacy">Privacy</a>
+            </div>
+        </footer>*@
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

@@ -5,44 +5,44 @@
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
+    <div class=" border backgroundWhite">
+        <h2 class="text-info text-md-right">Delete User Account</h2>
+        <form method="post">
+            <input asp-for="ApplicationUser.Id" hidden />
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-5 offset-md-5">
+                        <input asp-for="ApplicationUser.FirstName" disabled class="form-control text-md-right" />
+                    </div>
+                    <div class="col-md-2">
+                        <label asp-for="ApplicationUser.FirstName" class="text-info"></label>
+                    </div>
 
-<br />
-<h2 class="text-info">Delete Customer</h2>
-<br />
-<form method="post" class="pt-3">
-    <input asp-for="ApplicationUser.Id" hidden />
-    <div class=" border  backgroundWhite pt-3 pl-2">
-        <div class="form-group">
-            <div class="row">
-                <div class="col-sm-2">
-                    <label asp-for="ApplicationUser.FirstName" class="text-info"></label>
-                </div>
-                <div class="col-sm-5">
-                    <input asp-for="ApplicationUser.FirstName" disabled class="form-control" />
                 </div>
             </div>
-        </div>
-        <div class="form-group">
-            <div class="row">
-                <div class="col-sm-2">
-                    <label asp-for="ApplicationUser.Email" class="text-info"></label>
-                </div>
-                <div class="col-sm-5">
-                    <input asp-for="ApplicationUser.Email" disabled class="form-control" />
-                </div>
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="row">
-                <div class="col-sm-2">
-                    <label asp-for="ApplicationUser.PhoneNumber" class="text-info"></label>
-                </div>
-                <div class="col-sm-5">
-                    <input asp-for="ApplicationUser.PhoneNumber" disabled class="form-control" />
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-5 offset-md-5">
+                        <input asp-for="ApplicationUser.Email" disabled class="form-control text-md-right" />
+                    </div>
+                    <div class="col-md-2">
+                        <label asp-for="ApplicationUser.Email" class="text-info"></label>
+                    </div>
+
                 </div>
             </div>
-        </div>
-        @*<div class="form-group">
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-5 offset-md-5">
+                        <input asp-for="ApplicationUser.PhoneNumber" disabled class="form-control text-md-right" />
+                    </div>
+                    <div class="col-md-2">
+                        <label asp-for="ApplicationUser.PhoneNumber" class="text-info"></label>
+                    </div>
+
+                </div>
+            </div>
+            @*<div class="form-group">
             <div class="row">
                 <div class="col-sm-2">
                     <label asp-for="ApplicationUser.Address" class="text-info"></label>
@@ -73,11 +73,38 @@
             </div>
         </div>*@
 
-        <div class="form-group row">
-            <div class="col-5 offset-2">
-                <partial name="_DeleteAndBackToListButton" />
+        <div class="row form-group">
+            <div class="col-md-5 offset-md-5">
+                <div class="row">
+                    <div class="col-md-6">
+                        @*<a asp-page="Index" class="btn btn-success form-control">رجوع</a>*@
+                        <a asp-page="Index" class="btn btn-success form-control">Back</a>
+
+                    </div>
+                    <div class="col-md-6">
+                        @*<btn data-toggle="modal" data-target="#Ask" class="btn btn-danger form-control">حذف</btn>*@
+                        <btn data-toggle="modal" data-target="#Ask" class="btn btn-danger form-control">Delete</btn>
+
+                    </div>
+
+                </div>
             </div>
         </div>
-    </div>
-</form>
+            <div class="modal fade" id="Ask" role="dialog" method="post">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button class="close" data-dismiss="modal">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <p class="alert alert-danger">Are you sure?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <input type="submit" class="btn btn-success" value="Yes" />
+                        </div>
+                    </div>
 
+                </div>
+            </div>
+        </form>
+    </div>

@@ -19,18 +19,16 @@ body {
   position: relative;
 }
 
-/*.sidebar {
-    right: 0;
-}*/
 
-    .wrapper .sidebar {
-        width: 200px;
-        height: 100%;
-        background: #17a2b8 !important;
-        padding: 30px 0px;
-        position: fixed;
-        overflow: auto;
-    }
+.wrapper .sidebar {
+    width: 250px;
+    height: 100%;
+    background: #17a2b8 !important;
+    padding: 30px 0px;
+    position: fixed;
+    overflow: auto;
+    right: 0;
+}
 
 .wrapper .sidebar h2{
   color: #fff;
@@ -90,7 +88,7 @@ body {
 
 .wrapper .main_content{
   width: 100%;
-  margin-left: 100px;
+  margin-left: -125px;
   margin-top: 100px;
 }
 

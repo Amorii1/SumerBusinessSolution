@@ -8,17 +8,18 @@
 
     <div class=" backgroundWhite">
         <div class="row">
-            <div class="col-md-6">
+
+            @if (User.IsInRole(SD.AdminEndUser))
+            {
+                <div class="col-md-6">
+                    <a asp-page="Create" class="btn btn-info"> <i class="fas fa-plus"></i></a>
+                </div>
+            }
+            <div class="col-md-6 text-md-right">
                 @*<h2 class="text-info"> حركه المنتجات </h2>*@
                 <h2 class="text-info"> Transfer </h2>
 
             </div>
-            @if (User.IsInRole(SD.AdminEndUser))
-            {
-                <div class="col-md-6 text-right">
-                    <a asp-page="Create" class="btn btn-info"> <i class="fas fa-plus"></i></a>
-                </div>
-            }
         </div>
 
         <form method="get" asp-page="Index">
@@ -26,27 +27,26 @@
 
                 <div class="container">
                     <div class="row">
-                        <div class="col-md-11">
+                        <div class="col-md-12">
                             <div class="row" style="margin-top:10px;">
+                                <div class="col-md-2 text-md-right pb-1">
+                                    <button type="submit" name="submit" value="search" class="btn btn-info form-control">
+                                        <i class="fas fa-search"></i>
+                                    </button>
+                                </div>
                                 <div class="col-md-5 pb-1">
                                     @*@Html.Editor("searchProdCode", new { htmlAttributes = new { @class = "form-control", placeholder = ".....رمز المنتج" } })*@
-                                    @Html.Editor("searchProdCode", new { htmlAttributes = new { @class = "form-control", placeholder = "Product Code..... " } })
+                                    @Html.Editor("searchProdCode", new { htmlAttributes = new { @class = "form-control text-md-right", placeholder = "Product Code..... " } })
 
                                 </div>
                                 <div class="col-md-5 pb-1">
-                                    @Html.Editor("searchCreateDateTime", new { htmlAttributes = new { @class = "form-control", placeholder = "Date Created....." } })
+                                    @Html.Editor("searchCreateDateTime", new { htmlAttributes = new { @class = "form-control text-md-right", placeholder = "Date Created....." } })
                                 </div>
                                 @*<div>
             start Date:<input type="datetime" name="startdate" />
             End Date:<input type="datetime" name="enddate" />
         </div>*@
-                                <div class="col-md-2 text-md-right pb-1">
 
-                                    <button type="submit" name="submit" value="search" class="btn btn-info form-control">
-                                        <i class="fas fa-search"></i>
-                                    </button>
-
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -59,7 +59,7 @@
         <div>
 
           
-            <table class="table table-striped border">
+            <table class="table table-striped border table-responsive-md table-responsive-lg">
                 <tr class="table-secondary">
 
 

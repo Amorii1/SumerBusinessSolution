@@ -7,39 +7,41 @@
 
     <div class="border backgroundWhite">
         @*<h2 class="text-info">أضافة  نوع مخزن جديد</h2>*@
-        <h2 class="text-info">Add New Warehouse Type</h2>
+        <h2 class="text-info text-md-right">Add New Warehouse Type</h2>
 
         <form method="post">
             <div class="form-group row">
-                <div class="col-md-2">
-                    <label asp-for="WhType.Type"></label>
-                </div>
-                <div class="col-md-5">
-                    <input asp-for="WhType.Type" class="form-control" />
+
+                <div class="col-md-5 offset-md-5">
+                    <input asp-for="WhType.Type" class="form-control text-md-right" />
                     @*<select WhType="myList" asp-for="WhType.Type" class="form-control">
 
-                        <option value="StoreRoom">مخزن</option>
-                        <option value="ShowRoom">معرض</option>
-                    </select>*@
+                <option value="StoreRoom">مخزن</option>
+                <option value="ShowRoom">معرض</option>
+            </select>*@
 
 
 
+                </div>
+                <div class="col-md-2">
+                    <label asp-for="WhType.Type"></label>
                 </div>
                 <span asp-validation-for="WhType.Type" class="text-danger"></span>
             </div>
 
             <div class="form-group row">
-                <div class="col-md-5 offset-md-2">
+                <div class="col-md-5 offset-md-5">
 
                     <div class="row">
-                        <div class="col-md-6">
-                            @*<input type="submit" class="btn btn-info form-control" value="حفظ" />*@
-                            <input type="submit" class="btn btn-info form-control" value="Save" />
 
-                        </div>
                         <div class="col-md-6">
                             @*<a asp-page="../Warehouses/Index" class="btn btn-success form-control">رجوع </a>*@
                             <a asp-page="../Warehouses/Index" class="btn btn-success form-control">Back </a>
+
+                        </div>
+                        <div class="col-md-6">
+                            @*<input type="submit" class="btn btn-info form-control" value="حفظ" />*@
+                            <input type="submit" class="btn btn-info form-control" value="Save" />
 
                         </div>
                     </div>

@@ -9,21 +9,22 @@
 
     <div class=" backgroundWhite">
         <div class="row">
-            <div class="col-md-6">
-                @*<h2 class="text-info"> المخازن </h2>*@
-                <h2 class="text-info"> Warehouses </h2>
 
-            </div>
             @if (User.IsInRole(SD.AdminEndUser))
             {
-                <div class="col-md-6 text-right ">
+                <div class="col-md-6">
                     <div class="btn-group">
                         <a asp-page="Create" class="btn btn-info"> <i class="fas fa-plus"></i></a>
                         <a asp-page="../Whtypes/Create" class="btn btn-primary"> <i class="fas fa-plus"></i></a>
                     </div>
                 </div>
             }
+            <div class="col-md-6 text-md-right">
+                @*<h2 class="text-info"> المخازن </h2>*@
+                <h2 class="text-info"> Warehouses </h2>
+
             </div>
+        </div>
 
 
         <form method="get" asp-page="Index">
@@ -31,27 +32,25 @@
 
                 <div class="container">
                     <div class="row">
-                        <div class="col-md-11">
+                        <div class="col-md-12">
                             <div class="row" style="margin-top:10px;">
+                                <div class="col-md-2 text-md-right pb-1">
+                                    <button type="submit" name="submit" value="search" class="btn btn-info form-control">
+                                        <i class="fas fa-search"></i>
+                                    </button>
+                                </div>
                                 <div class="col-md-5 pb-1">
 
                                     @*@Html.Editor("searchWhCode", new { htmlAttributes = new { @class = "form-control", placeholder = ".....رمز المخزن" } })*@
-                                    @Html.Editor("searchWhCode", new { htmlAttributes = new { @class = "form-control", placeholder = "Warehouse Code...." } })
+                                    @Html.Editor("searchWhCode", new { htmlAttributes = new { @class = "form-control text-md-right", placeholder = "Warehouse Code...." } })
 
                                 </div>
                                 <div class="col-md-5 pb-1">
                                     @*@Html.Editor("searchWhName", new { htmlAttributes = new { @class = "form-control", placeholder = ".....اسم المخزن" } })*@
-                                    @Html.Editor("searchWhName", new { htmlAttributes = new { @class = "form-control", placeholder = "Warehouse Name...." } })
+                                    @Html.Editor("searchWhName", new { htmlAttributes = new { @class = "form-control text-md-right", placeholder = "Warehouse Name...." } })
 
                                 </div>
 
-                                <div class="col-md-2 text-md-right pb-1">
-
-                                    <button type="submit" name="submit" value="search" class="btn btn-info form-control">
-                                        <i class="fas fa-search"></i>
-                                    </button>
-
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -61,7 +60,7 @@
 
 
         <div>
-            <table class="table table-striped border">
+            <table class="table table-striped border table-responsive-md table-responsive-lg">
                 <tr class="table-secondary">
                     <th>
                         @Html.DisplayNameFor(m => m.Warehouse[0].WhCode)
