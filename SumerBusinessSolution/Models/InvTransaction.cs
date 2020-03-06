@@ -19,21 +19,22 @@ namespace SumerBusinessSolution.Models
         public int? WhId { get; set; }
 
         [Required]
-      //  [Display(Name = "الكميه")]
+       [Display(Name = "الكمية")]
 
         public double Qty { get; set; }
 
         [Required]
-      //  [Display(Name = " نوع التنقل")]
+      [Display(Name = "نوع العملية")]
 
         public string TransType { get; set; }
       
         [Required]
+        [Display(Name = "معرف المنشئ")]
         public string CreatedById { get; set; }
 
 
         [Required]
-     //   [Display(Name = "تاريخ الاضافه")]
+      [Display(Name = "تاريخ العملية")]
 
         public DateTime CreatedDateTime { get; set; }
 

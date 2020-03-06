@@ -1,6 +1,14 @@
 ﻿@page
 @model SumerBusinessSolution.Pages.Inventory.Reports.ProdInWhQtyModel
 @using Sumer.Utility
+@using Microsoft.AspNetCore.Localization
+@using System.ComponentModel.DataAnnotations;
+@*@inject IHtmlLocalizer<IndexModel> htmlLocalizer*@ @*for html lozcalization*@
+@*@inject IStringLocalizer<IndexModel> localizer*@
+@*First Method*@
+@inject Services.CommonLocalizationService localizer
+@*Second and the easier Method*@
+
 @{
     ViewData["Title"] = "ProdInWhQty";
     Layout = "~/Pages/Shared/_Layout.cshtml";
@@ -10,7 +18,7 @@
     <div class="row">
         <div class="col-md-12 text-md-right">
             @*<h2 class="text-info">تقارير كمية المواد </h2>*@
-            <h2 class="text-info">Product Qty Report</h2>
+            <h2 class="text-info">@localizer.Get("تقارير كميات المواد")</h2>
 
         </div>
 
@@ -24,13 +32,13 @@
                     <div class="col-md-12">
                         <div class="row" style="margin-top:10px;">
                             <div class="col-md-2 text-md-right pb-1">
-                                <button type="submit" name="submit" value="search" class="btn btn-info form-control">
+                                <button asp-route-culture="@Request.RouteValues["culture"]" type="submit" name="submit" value="search" class="btn btn-info form-control">
                                     <i class="fas fa-search"></i>
                                 </button>
                             </div>
                             <div class="col-md-10 pb-1">
                                 @*@Html.Editor("searchProdCode", new { htmlAttributes = new { @class = "form-control", placeholder = ".....رمز المنتج " } })*@
-                                @Html.Editor("searchProdCode", new { htmlAttributes = new { @class = "form-control text-md-right", placeholder = "Product Code....." } })
+                                @Html.Editor("searchProdCode", new { htmlAttributes = new { @class = "form-control text-md-right", placeholder = @localizer.Get("رمز المنتج....") } })
 
                             </div>
                         </div>
@@ -65,7 +73,7 @@
             @if (Model.InvStockQtyList.Count() == 0)
             {
                 @*<h2 class="text-danger text-md-center">لا يوجد تقرير لكمية المواد</h2>*@
-                <h2 class="text-danger text-md-center">No Report Found</h2>
+        <h2 class="text-danger text-md-center">@localizer.Get("لا يوجد تقارير")</h2>
 
             }
             else
@@ -97,47 +105,47 @@
                         }
 
 
-                    <td>
-                        @*<a asp-page="../Products/Details" asp-route-ID="@item.ProdInfo.Id" style="text-decoration:none;">
-            <img src="~/images/car.png" width="40" /> &nbsp; تفاصيل المنتج
-        </a>*@
-                        <a asp-page="../Products/Details" asp-route-ID="@item.ProdInfo.Id" style="text-decoration:none;">
-                            <img src="~/images/car.png" width="40" /> &nbsp; Product Details
-                        </a>
-                    </td>
-                    <td>
-                        @*<a asp-page="../Transactions/ProdTrans" asp-route-ProdId="@item.ProdId" asp-route-WhId="@item.WhId" style="text-decoration:none;">
-            <img src="~/images/car.png" width="40" /> &nbsp; تفاصيل
-        </a>*@
-                        <a asp-page="../Transactions/ProdTrans" asp-route-ProdId="@item.ProdId" asp-route-WhId="@item.WhId" style="text-decoration:none;">
-                            <img src="~/images/car.png" width="40" /> &nbsp; Details
-                        </a>
-                    </td>
-                    <td>
-
-                        @if (User.IsInRole(SD.AdminEndUser))
-                        {
-                            @*<a asp-page="../Products/UpdateProdStkQty" asp-route-StkId="@item.Id" style="text-decoration:none;">
-                <img src="~/images/car.png" width="40" /> &nbsp; تحديث الكميه
-            </a>*@
-
-                            <a asp-page="../Products/UpdateProdStkQty" asp-route-StkId="@item.Id" style="text-decoration:none;">
-                                <img src="~/images/car.png" width="40" /> &nbsp; Update Qty
+                        <td>
+                            @*<a asp-page="../Products/Details" asp-route-ID="@item.ProdInfo.Id" style="text-decoration:none;">
+                                    <img src="~/images/car.png" width="40" /> &nbsp; تفاصيل المنتج
+                                </a>*@
+                            <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="../Products/Details" asp-route-ID="@item.ProdInfo.Id" style="text-decoration:none;">
+                                &nbsp;@localizer.Get("تفاصيل المنتج")
                             </a>
-                        }
                         </td>
-                        
+                        <td>
+                            @*<a asp-page="../Transactions/ProdTrans" asp-route-ProdId="@item.ProdId" asp-route-WhId="@item.WhId" style="text-decoration:none;">
+                                    <img src="~/images/car.png" width="40" /> &nbsp; تفاصيل
+                                </a>*@
+                            <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="../Transactions/ProdTrans" asp-route-ProdId="@item.ProdId" asp-route-WhId="@item.WhId" style="text-decoration:none;">
+                                &nbsp; @localizer.Get("تفاصيل العمليات التجارية")
+                            </a>
+                        </td>
+                        <td>
+
+                            @if (User.IsInRole(SD.AdminEndUser))
+                            {
+                                @*<a asp-page="../Products/UpdateProdStkQty" asp-route-StkId="@item.Id" style="text-decoration:none;">
+                                        <img src="~/images/car.png" width="40" /> &nbsp; تحديث الكميه
+                                    </a>*@
+
+                            <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="../Products/UpdateProdStkQty" asp-route-StkId="@item.Id" style="text-decoration:none;">
+                                &nbsp;@localizer.Get("تحديث الكمية")
+                            </a>
+                            }
+                        </td>
+
                     </tr>
                 }
             }
             @*<tr>
-            <td colspan="5" class="text-right">
-                <div page-model="@Model.UsersListVM.PagingInfo" asp-action="Index" page-class="btn border"
-                     page-class-normal="btn btn-light" page-class-selected="btn btn-info active" class="btn-group">
+                    <td colspan="5" class="text-right">
+                        <div page-model="@Model.UsersListVM.PagingInfo" asp-action="Index" page-class="btn border"
+                             page-class-normal="btn btn-light" page-class-selected="btn btn-info active" class="btn-group">
 
-                </div>
-            </td>
-        </tr>*@
+                        </div>
+                    </td>
+                </tr>*@
         </table>
     </div>
 </div>

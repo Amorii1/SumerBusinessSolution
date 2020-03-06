@@ -1,85 +1,94 @@
 ﻿@page
 @model SumerBusinessSolution.Pages.Inventory.Warehouses.Create
+@using Sumer.Utility
+@using Microsoft.AspNetCore.Localization
+@using System.ComponentModel.DataAnnotations;
+@*@inject IHtmlLocalizer<IndexModel> htmlLocalizer*@ @*for html lozcalization*@
+@*@inject IStringLocalizer<IndexModel> localizer*@
+@*First Method*@
+@inject Services.CommonLocalizationService localizer
+@*Second and the easier Method*@
+
 @{
     ViewData["Title"] = "CreateWarehouse";
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
-    <div class="border backgroundWhite">
-        @*<h2 class="text-info">اضافة مخزن جديد</h2>*@
-        <h2 class="text-info text-md-right">Add new Warehouse</h2>
+<div class="border backgroundWhite">
+    @*<h2 class="text-info">اضافة مخزن جديد</h2>*@
+    <h2 class="text-info text-md-right">@localizer.Get("اضافة مخزن جديد")</h2>
 
-        <form method="post">
+    <form method="post">
 
-            @*<input type="hidden" asp-for="Warehouse.TypeId" />*@
-            @*<input type="hidden" asp-for="Warehouse.CreatedById" />*@
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <br />
-            <div class="form-group row">
+        @*<input type="hidden" asp-for="Warehouse.TypeId" />*@
+        @*<input type="hidden" asp-for="Warehouse.CreatedById" />*@
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <br />
+        <div class="form-group row">
 
-                <div class="col-md-5 offset-md-5">
-                    <input asp-for="Warehouse.WhCode" class="form-control text-md-right" />
-                </div>
-                <div class="col-md-2">
-                    <label asp-for="Warehouse.WhCode"></label>
-                </div>
-                <span asp-validation-for="Warehouse.WhCode" class="text-danger"></span>
+            <div class="col-md-5 offset-md-5">
+                <input asp-for="Warehouse.WhCode" class="form-control text-md-right" />
             </div>
-
-            <div class="form-group row">
-
-                <div class="col-md-5 offset-md-5">
-                    <input asp-for="Warehouse.WhLocation" class="form-control text-md-right" />
-                </div>
-                <div class="col-md-2">
-                    <label asp-for="Warehouse.WhLocation"></label>
-                </div>
-                <span asp-validation-for="Warehouse.WhLocation" class="text-danger"></span>
+            <div class="col-md-2">
+                <label asp-for="Warehouse.WhCode"></label>
             </div>
-            <div class="form-group row">
+            <span asp-validation-for="Warehouse.WhCode" class="text-danger"></span>
+        </div>
 
-                <div class="col-md-5 offset-md-5">
-                    <input asp-for="Warehouse.WhName" class="form-control text-md-right" />
-                </div>
-                <div class="col-md-2">
-                    <label asp-for="Warehouse.WhName"></label>
-                </div>
-                <span asp-validation-for="Warehouse.WhName" class="text-danger"></span>
+        <div class="form-group row">
+
+            <div class="col-md-5 offset-md-5">
+                <input asp-for="Warehouse.WhLocation" class="form-control text-md-right" />
             </div>
-
-            <div class="form-group row">
-
-                <div class="col-md-5 offset-md-5">
-                    <select WhType="myList" asp-for="Warehouse.WhType.Type" class="form-control text-md-right">
-                        @*<option value="StoreRoom">مخزن رئيسي</option>
-                <option value="ShowRoom">معرض</option>*@
-                        <option value="StoreRoom">Store Room</option>
-                        <option value="ShowRoom">Show Room</option>
-                    </select>
-                </div>
-                <div class="col-md-2">
-                    <label asp-for="Warehouse.WhType.Type"></label>
-                </div>
-                <span asp-validation-for="Warehouse.WhType.Type" class="text-danger"></span>
+            <div class="col-md-2">
+                <label asp-for="Warehouse.WhLocation"></label>
             </div>
-            <div class="form-group row">
-                <div class="col-md-5 offset-md-5">
-                    <div class="row">
+            <span asp-validation-for="Warehouse.WhLocation" class="text-danger"></span>
+        </div>
+        <div class="form-group row">
+
+            <div class="col-md-5 offset-md-5">
+                <input asp-for="Warehouse.WhName" class="form-control text-md-right" />
+            </div>
+            <div class="col-md-2">
+                <label asp-for="Warehouse.WhName"></label>
+            </div>
+            <span asp-validation-for="Warehouse.WhName" class="text-danger"></span>
+        </div>
+
+        <div class="form-group row">
+
+            <div class="col-md-5 offset-md-5">
+                <select WhType="myList" asp-for="Warehouse.WhType.Type" class="form-control text-md-right">
+                    @*<option value="StoreRoom">مخزن رئيسي</option>
+                        <option value="ShowRoom">معرض</option>*@
+                    <option value="StoreRoom">@localizer.Get("مخزن رئيسي")</option>
+                    <option value="ShowRoom">@localizer.Get("معرض")</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <label asp-for="Warehouse.WhType.Type"></label>
+            </div>
+            <span asp-validation-for="Warehouse.WhType.Type" class="text-danger"></span>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-5 offset-md-5">
+                <div class="row">
 
 
-                        <div class="col-md-6">
-                            @*<a asp-page="Index" class="btn btn-success form-control ">رجوع</a>*@
-                            <a asp-page="Index" class="btn btn-success form-control ">Back</a>
-                        </div>
-                        <div class="col-md-6">
-                            @*<input type="submit" class="btn btn-info form-control" value="حفظ" />*@
-                            <input type="submit" class="btn btn-info form-control" value="Save" />
+                    <div class="col-md-6">
+                        @*<a asp-page="Index" class="btn btn-success form-control ">رجوع</a>*@
+                        <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="Index" class="btn btn-success form-control ">@localizer.Get("رجوع")</a>
+                    </div>
+                    <div class="col-md-6">
+                        @*<input type="submit" class="btn btn-info form-control" value="حفظ" />*@
+                        <input asp-route-culture="@Request.RouteValues["culture"]" type="submit" class="btn btn-info form-control" value="@localizer.Get("حفظ")" />
 
-                        </div>
                     </div>
                 </div>
             </div>
-            @*<div class="form-group row">
+        </div>
+        @*<div class="form-group row">
                 <div class="col-5 offset-2">
                     <div class="row">
                         <div class="col-6">
@@ -92,8 +101,8 @@
                 </div>
             </div>*@
 
-        </form>
-    </div>
+    </form>
+</div>
 @section Scripts {
     @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

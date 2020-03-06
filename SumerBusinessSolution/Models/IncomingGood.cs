@@ -5,6 +5,16 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
+
+
+using Microsoft.AspNetCore.Localization;
+using System.ComponentModel.DataAnnotations;
+//inject IStringLocalizer<IndexModel> localizer
+// First Method
+//inject Services.CommonLocalizationService localizer
+//Second and the easier Method
+
+
 namespace SumerBusinessSolution.Models
 {
     public class IncomingGood
@@ -15,24 +25,25 @@ namespace SumerBusinessSolution.Models
         public int? WhId { get; set; }
 
        // [Required]
+
         public int? ProdId { get; set; }
     
         [Required]
-       // [Display(Name = "الكميه")]
-
+       [Display(Name = "الكميه")]
         public double Qty { get; set; }
-       // [Display(Name = "وحده القياس ")]
+       [Display(Name = "وحده القياس")]
 
         public string UOM { get; set; }
-       // [Display(Name = "الملاحظات")]
+       [Display(Name = "الملاحظات")]
 
         public string Note { get; set; }
 
         [Required]
-       // [Display(Name = "تاريخ الاضافه")]
+      [Display(Name = "تاريخ الاضافه")]
 
         public DateTime CreatedDateTime { get; set; }
         [Required]
+        [Display(Name = "معرف المنشئ")]
         public string CreatedById { get; set; }
 
         [ForeignKey("WhId")]

@@ -18,10 +18,36 @@ body {
   display: flex;
   position: relative;
 }
+* {
+    padding: 0;
+    margin: 0;
+}
 
+body {
+    font-family: Verdana, Geneva, sans-serif;
+    font-size: 18px;
+    background-color: #CCC;
+}
+
+.float {
+    position: fixed;
+    width: 50px;
+    height: 50px;
+    top: 30px;
+    left: 30px;
+    background-color: #6f42c1;
+    color: #FFF;
+    border-radius: 50px;
+    text-align: center;
+    box-shadow: 2px 2px 3px #999;
+}
+
+.my-float {
+    margin-top: 17px;
+}
 
 .wrapper .sidebar {
-    width: 250px;
+    width: 230px;
     height: 100%;
     background: #17a2b8 !important;
     padding: 30px 0px;
@@ -86,10 +112,10 @@ body {
   border-top-right-radius: 5px;
 }
 
-.wrapper .main_content{
-  width: 100%;
-  margin-left: -125px;
-  margin-top: 100px;
+.wrapper .main_content {
+    width: 100%;
+    margin-left: -112px;
+    margin-top: 100px;
 }
 
 .wrapper .main_content .header{

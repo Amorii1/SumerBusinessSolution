@@ -1,6 +1,13 @@
 ﻿@page
 @model SumerBusinessSolution.Pages.Inventory.Reports.IndexModel
 @using Sumer.Utility
+@using Microsoft.AspNetCore.Localization
+@using System.ComponentModel.DataAnnotations;
+@*@inject IHtmlLocalizer<IndexModel> htmlLocalizer*@ @*for html lozcalization*@
+@*@inject IStringLocalizer<IndexModel> localizer*@
+@*First Method*@
+@inject Services.CommonLocalizationService localizer
+@*Second and the easier Method*@
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Pages/Shared/_Layout.cshtml";
@@ -11,29 +18,29 @@
 <div class="row" style="padding-left:200px;">
 
     <div class="column" style="padding-left:80px;">
-        <a asp-page="/inventory/reports/ProdInWhQty">
+        <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="/inventory/reports/ProdInWhQty">
 
             <img src="~/img/quantity.png" style="width:120px;height:120px;" />
             @*<p class="text-center">كمية المواد</p>*@
-            <p class="text-center">Product Qty</p>
+        <p class="text-center">@localizer.Get("كمية المنتجات")</p>
 
         </a>
     </div>
 
     <div class="column" style="padding-left:80px;">
-        <a asp-page="/inventory/reports/WhProdQty">
+        <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="/inventory/reports/WhProdQty">
             <img src="~/img/stock.png" style="width:120px;height:120px;" />
             @*<p class="text-center">المخازن</p>*@
-            <p class="text-center">Warehouses</p>
+        <p class="text-center">@localizer.Get("المخازن")</p>
         </a>
     </div>
     @if (User.IsInRole(SD.AdminEndUser))
     {
         <div class="column" style="padding-left:80px;">
-            <a asp-page="/inventory/reports/InvTransactions">
+            <a  asp-route-culture="@Request.RouteValues["culture"]" asp-page="/inventory/reports/InvTransactions">
                 <img src="~/img/lamp.png" style="width:120px;height:120px;" />
                 @*<p class="text-center">العمليات تجارية</p>*@
-                <p class="text-center">Transactions</p>
+            <p class="text-center">@localizer.Get("العمليات التجارية")</p>
 
             </a>
         </div>

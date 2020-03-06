@@ -1,110 +1,121 @@
 ﻿@page
 @model SumerBusinessSolution.Pages.Users.DeleteModel
+@using Sumer.Utility
+@using Microsoft.AspNetCore.Localization
+@using System.ComponentModel.DataAnnotations;
+@*@inject IHtmlLocalizer<IndexModel> htmlLocalizer*@ @*for html lozcalization*@
+@*@inject IStringLocalizer<IndexModel> localizer*@
+@*First Method*@
+@inject Services.CommonLocalizationService localizer
+@*Second and the easier Method*@
+
 @{
     ViewData["Title"] = "Delete";
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
-    <div class=" border backgroundWhite">
-        <h2 class="text-info text-md-right">Delete User Account</h2>
-        <form method="post">
-            <input asp-for="ApplicationUser.Id" hidden />
-            <div class="form-group">
-                <div class="row">
-                    <div class="col-md-5 offset-md-5">
-                        <input asp-for="ApplicationUser.FirstName" disabled class="form-control text-md-right" />
-                    </div>
-                    <div class="col-md-2">
-                        <label asp-for="ApplicationUser.FirstName" class="text-info"></label>
-                    </div>
-
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="row">
-                    <div class="col-md-5 offset-md-5">
-                        <input asp-for="ApplicationUser.Email" disabled class="form-control text-md-right" />
-                    </div>
-                    <div class="col-md-2">
-                        <label asp-for="ApplicationUser.Email" class="text-info"></label>
-                    </div>
-
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="row">
-                    <div class="col-md-5 offset-md-5">
-                        <input asp-for="ApplicationUser.PhoneNumber" disabled class="form-control text-md-right" />
-                    </div>
-                    <div class="col-md-2">
-                        <label asp-for="ApplicationUser.PhoneNumber" class="text-info"></label>
-                    </div>
-
-                </div>
-            </div>
-            @*<div class="form-group">
+<div class=" border backgroundWhite">
+    <h2 class="text-info text-md-right">@localizer.Get("حذف حساب المستخدم")</h2>
+    <form method="post">
+        <input asp-for="ApplicationUser.Id" hidden />
+        <div class="form-group">
             <div class="row">
-                <div class="col-sm-2">
-                    <label asp-for="ApplicationUser.Address" class="text-info"></label>
+                <div class="col-md-5 offset-md-5">
+                    <input asp-for="ApplicationUser.FirstName" disabled class="form-control text-md-right" />
                 </div>
-                <div class="col-sm-5">
-                    <input asp-for="ApplicationUser.Address" disabled class="form-control" />
+                <div class="col-md-2">
+                    <label asp-for="ApplicationUser.FirstName" class="text-info"></label>
                 </div>
+
             </div>
         </div>
         <div class="form-group">
             <div class="row">
-                <div class="col-sm-2">
-                    <label asp-for="ApplicationUser.City" class="text-info"></label>
+                <div class="col-md-5 offset-md-5">
+                    <input asp-for="ApplicationUser.Email" disabled class="form-control text-md-right" />
                 </div>
-                <div class="col-sm-5">
-                    <input asp-for="ApplicationUser.City" disabled class="form-control" />
+                <div class="col-md-2">
+                    @*<label asp-for="ApplicationUser.Email" class="text-info"></label>*@
+                    <label  class="text-info">@localizer.Get("البريد الالكتروني")</label>
                 </div>
+
             </div>
         </div>
         <div class="form-group">
             <div class="row">
-                <div class="col-sm-2">
-                    <label asp-for="ApplicationUser.PostalCode" class="text-info"></label>
+                <div class="col-md-5 offset-md-5">
+                    <input asp-for="ApplicationUser.PhoneNumber" disabled class="form-control text-md-right" />
                 </div>
-                <div class="col-sm-5">
-                    <input asp-for="ApplicationUser.PostalCode" disabled class="form-control" />
+                <div class="col-md-2">
+                    @*<label asp-for="ApplicationUser.PhoneNumber" class="text-info"></label>*@
+                    <label  class="text-info">@localizer.Get("رقم الهاتف")</label>
+                </div>
+
+            </div>
+        </div>
+        @*<div class="form-group">
+                <div class="row">
+                    <div class="col-sm-2">
+                        <label asp-for="ApplicationUser.Address" class="text-info"></label>
+                    </div>
+                    <div class="col-sm-5">
+                        <input asp-for="ApplicationUser.Address" disabled class="form-control" />
+                    </div>
                 </div>
             </div>
-        </div>*@
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-sm-2">
+                        <label asp-for="ApplicationUser.City" class="text-info"></label>
+                    </div>
+                    <div class="col-sm-5">
+                        <input asp-for="ApplicationUser.City" disabled class="form-control" />
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-sm-2">
+                        <label asp-for="ApplicationUser.PostalCode" class="text-info"></label>
+                    </div>
+                    <div class="col-sm-5">
+                        <input asp-for="ApplicationUser.PostalCode" disabled class="form-control" />
+                    </div>
+                </div>
+            </div>*@
 
         <div class="row form-group">
             <div class="col-md-5 offset-md-5">
                 <div class="row">
                     <div class="col-md-6">
                         @*<a asp-page="Index" class="btn btn-success form-control">رجوع</a>*@
-                        <a asp-page="Index" class="btn btn-success form-control">Back</a>
+                        <a asp-page="Index" asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-success form-control">@localizer.Get("رجوع")</a>
 
                     </div>
                     <div class="col-md-6">
                         @*<btn data-toggle="modal" data-target="#Ask" class="btn btn-danger form-control">حذف</btn>*@
-                        <btn data-toggle="modal" data-target="#Ask" class="btn btn-danger form-control">Delete</btn>
+                        <btn asp-route-culture="@Request.RouteValues["culture"]" data-toggle="modal" data-target="#Ask" class="btn btn-danger form-control">@localizer.Get("حذف")</btn>
 
                     </div>
 
                 </div>
             </div>
         </div>
-            <div class="modal fade" id="Ask" role="dialog" method="post">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button class="close" data-dismiss="modal">&times;</button>
-                        </div>
-                        <div class="modal-body">
-                            <p class="alert alert-danger">Are you sure?</p>
-                        </div>
-                        <div class="modal-footer">
-                            <input type="submit" class="btn btn-success" value="Yes" />
-                        </div>
+        <div class="modal fade" id="Ask" role="dialog" method="post">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button class="close" data-dismiss="modal">&times;</button>
                     </div>
-
+                    <div class="modal-body">
+                        <p class="alert alert-danger">@localizer.Get("هل انت متأكد؟")</p>
+                    </div>
+                    <div class="modal-footer">
+                        <input asp-route-culture="@Request.RouteValues["culture"]" type="submit" class="btn btn-success" value="@localizer.Get("نعم")" />
+                    </div>
                 </div>
+
             </div>
-        </form>
-    </div>
+        </div>
+    </form>
+</div>

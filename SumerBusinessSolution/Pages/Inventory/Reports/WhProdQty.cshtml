@@ -1,152 +1,161 @@
 ﻿@page
 @model SumerBusinessSolution.Pages.Inventory.Reports.WhProdQtyModel
+@using Sumer.Utility
+@using Microsoft.AspNetCore.Localization
+@using System.ComponentModel.DataAnnotations;
+@*@inject IHtmlLocalizer<IndexModel> htmlLocalizer*@ @*for html lozcalization*@
+@*@inject IStringLocalizer<IndexModel> localizer*@
+@*First Method*@
+@inject Services.CommonLocalizationService localizer
+@*Second and the easier Method*@
+
 @{
     ViewData["Title"] = "WhProdQty";
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
-    <div class="backgroundWhite">
+<div class="backgroundWhite">
 
-        <div class="row">
-            <div class="col-md-12 text-md-right">
-                @*<h2 class="text-info">تقارير كمية المواد في المخزن </h2>*@
-                <h2 class="text-info">Product Qty in Warehouse Report</h2>
-            </div>
-
+    <div class="row">
+        <div class="col-md-12 text-md-right">
+            @*<h2 class="text-info">تقارير كمية المواد في المخزن </h2>*@
+            <h2 class="text-info">@localizer.Get("تقارير كمية المادة في المخزن ")</h2>
         </div>
 
-        <form method="get" asp-page="WhProdQty">
-            <div class="border backgroundWhite">
-                <div @*style="height:60px;"*@ class="container ">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="row" style="margin-top:10px;">
-                                <div class="col-md-2 text-md-right pb-1">
-                                    <button type="submit" name="submit" value="search" class="btn btn-info form-control">
-                                        <i class="fas fa-search"></i>
-                                    </button>
-                                </div>
-                                <div class="col-md-5 pb-1">
-                                    <select asp-for="WhId"
-                                            asp-items="@(new SelectList(Model.WarehouseList, "Id", "WhName"))"
-                                            class="form-control text-md-right">
-                                        @*<option value="" disabled selected>اختار المخزن</option>*@
-                                        <option value="" disabled selected>Select Warehouse</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-5 pb-1">
-                                    @*@Html.Editor("searchProdCode", new { htmlAttributes = new { @class = "form-control", placeholder = ".....رمز المنتج " } })*@
-                                    @Html.Editor("searchProdCode", new { htmlAttributes = new { @class = "form-control text-md-right", placeholder = "Product Code...." } })
+    </div>
 
-                                </div>
+    <form method="get" asp-page="WhProdQty">
+        <div class="border backgroundWhite">
+            <div @*style="height:60px;"*@ class="container ">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row" style="margin-top:10px;">
+                            <div class="col-md-2 text-md-right pb-1">
+                                <button asp-route-culture="@Request.RouteValues["culture"]" type="submit" name="submit" value="search" class="btn btn-info form-control">
+                                    <i class="fas fa-search"></i>
+                                </button>
                             </div>
+                            <div class="col-md-5 pb-1">
+                                <select asp-for="WhId"
+                                        asp-items="@(new SelectList(Model.WarehouseList, "Id", "WhName"))"
+                                        class="form-control text-md-right">
+                                    @*<option value="" disabled selected>اختار المخزن</option>*@
+                                    <option value="" disabled selected>@localizer.Get("اختر المخزن")</option>
+                                </select>
+                            </div>
+                            <div class="col-md-5 pb-1">
+                                @*@Html.Editor("searchProdCode", new { htmlAttributes = new { @class = "form-control", placeholder = ".....رمز المنتج " } })*@
+                                @Html.Editor("searchProdCode", new { htmlAttributes = new { @class = "form-control text-md-right", placeholder = @localizer.Get("رمز المنتج....") } })
 
+                            </div>
                         </div>
+
                     </div>
                 </div>
             </div>
-        </form>
+        </div>
+    </form>
 
 
 
 
 
-        <div>
-            <table class="table table-striped border table-responsive-md table-responsive-lg">
-                <tr class="table-secondary">
-                    <th>
-                        @Html.DisplayNameFor(m => m.InvStockQtyList[0].ProdInfo.ProdCode)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(m => m.InvStockQtyList[0].ProdInfo.ProdName)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(m => m.InvStockQtyList[0].Qty)
-                    </th>
+    <div>
+        <table class="table table-striped border table-responsive-md table-responsive-lg">
+            <tr class="table-secondary">
+                <th>
+                    @Html.DisplayNameFor(m => m.InvStockQtyList[0].ProdInfo.ProdCode)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(m => m.InvStockQtyList[0].ProdInfo.ProdName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(m => m.InvStockQtyList[0].Qty)
+                </th>
 
-                    <th></th>
-                    <th></th>
-                </tr>
-                @if (Model.InvStockQtyList.Count() == 0)
+                <th></th>
+                <th></th>
+            </tr>
+            @if (Model.InvStockQtyList.Count() == 0)
+            {
+                @*<h2 class="text-danger text-md-center">لا يوجد تقرير لكمية المواد في المخزن</h2>*@
+        <h2 class="text-danger text-md-center">@localizer.Get("لا يوجد تقارير")</h2>
+
+            }
+            else
+            {
+                @foreach (var item in Model.InvStockQtyList)
                 {
-                    @*<h2 class="text-danger text-md-center">لا يوجد تقرير لكمية المواد في المخزن</h2>*@
-                    <h2 class="text-danger text-md-center">No Report Found</h2>
 
-                }
-                else
-                {
-                    @foreach (var item in Model.InvStockQtyList)
-                    {
-
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(m => item.ProdInfo.ProdCode)
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(m => item.ProdInfo.ProdCode)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.ProdInfo.ProdName)
+                        </td>
+                        @if (item.Qty < 10)
+                        {
+                            <td class="bg-danger">
+                                @Html.DisplayFor(m => item.Qty)
                             </td>
+                        }
+                        else
+                        {
                             <td>
-                                @Html.DisplayFor(m => item.ProdInfo.ProdName)
+                                @Html.DisplayFor(m => item.Qty)
                             </td>
-                            @if (item.Qty < 10)
-                            {
-                                <td class="bg-danger">
-                                    @Html.DisplayFor(m => item.Qty)
-                                </td>
-                            }
-                            else
-                            {
-                                <td>
-                                    @Html.DisplayFor(m => item.Qty)
-                                </td>
-                            }
+                        }
 
 
                         <td>
                             @*<a asp-page="../Products/Details" asp-route-ID="@item.ProdInfo.Id" style="text-decoration:none;">
-            <img src="~/images/car.png" width="40" /> &nbsp; تفاصيل المنتج
-        </a>*@
-                            <a asp-page="../Products/Details" asp-route-ID="@item.ProdInfo.Id" style="text-decoration:none;">
-                                <img src="~/images/car.png" width="40" /> &nbsp; Product Details
+                                    <img src="~/images/car.png" width="40" /> &nbsp; تفاصيل المنتج
+                                </a>*@
+                            <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="../Products/Details" asp-route-ID="@item.ProdInfo.Id" style="text-decoration:none;">
+                                &nbsp;@localizer.Get("تفاصيل المنتج")
                             </a>
                         </td>
                         <td>
                             @*<a asp-page="../Transactions/ProdTrans" asp-route-ProdId="@item.ProdId" asp-route-WhId="@item.WhId" style="text-decoration:none;">
-            <img src="~/images/car.png" width="40" /> &nbsp; تفاصيل
-        </a>*@
-                            <a asp-page="../Transactions/ProdTrans" asp-route-ProdId="@item.ProdId" asp-route-WhId="@item.WhId" style="text-decoration:none;">
-                                <img src="~/images/car.png" width="40" /> &nbsp; Details
+                                    <img src="~/images/car.png" width="40" /> &nbsp; تفاصيل
+                                </a>*@
+                            <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="../Transactions/ProdTrans" asp-route-ProdId="@item.ProdId" asp-route-WhId="@item.WhId" style="text-decoration:none;">
+                                &nbsp; @localizer.Get("تفاصيل العمليات التجارية")
                             </a>
                         </td>
-                        </tr>
-                    }
+                    </tr>
                 }
-                @*<tr>
-            <td colspan="5" class="text-right">
-                <div page-model="@Model.UsersListVM.PagingInfo" asp-action="Index" page-class="btn border"
-                     page-class-normal="btn btn-light" page-class-selected="btn btn-info active" class="btn-group">
+            }
+            @*<tr>
+                    <td colspan="5" class="text-right">
+                        <div page-model="@Model.UsersListVM.PagingInfo" asp-action="Index" page-class="btn border"
+                             page-class-normal="btn btn-light" page-class-selected="btn btn-info active" class="btn-group">
 
-                </div>
-            </td>
-        </tr>*@
-            </table>
-        </div>
+                        </div>
+                    </td>
+                </tr>*@
+        </table>
     </div>
-    
+</div>
 
 
 
 
-        @section Scripts {
-            @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
-            <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-            <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-            <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
-            <script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <script>
          $(document).ready(function () {
     $('#searchProdCode').autocomplete({
     source: '@Url.Page("WhProdQty", "SearchNow")'
     });
     });
-            </script>
-        }
+    </script>
+}
 

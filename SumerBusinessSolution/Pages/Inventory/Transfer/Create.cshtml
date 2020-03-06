@@ -1,115 +1,124 @@
 ﻿@page
 @model SumerBusinessSolution.Pages.Inventory.Transfer.Create
+@using Sumer.Utility
+@using Microsoft.AspNetCore.Localization
+@using System.ComponentModel.DataAnnotations;
+@*@inject IHtmlLocalizer<IndexModel> htmlLocalizer*@ @*for html lozcalization*@
+@*@inject IStringLocalizer<IndexModel> localizer*@
+@*First Method*@
+@inject Services.CommonLocalizationService localizer
+@*Second and the easier Method*@
+
 @{
     ViewData["Title"] = "CreateInvTransfer";
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
-    <div class="border backgroundWhite">
-        <partial name="_StatusMessage" model="Model.StatusMessage" />
-        @*<h2 class="text-info">حركة المواد</h2>*@
-        <h2 class="text-info text-md-right">Transfer</h2>
+<div class="border backgroundWhite">
+    <partial name="_StatusMessage" model="Model.StatusMessage" />
+    @*<h2 class="text-info">حركة المواد</h2>*@
+<h2 class="text-info text-md-right">@localizer.Get("تحريك المنتج")</h2>
 
-        <form method="post">
+    <form method="post">
 
-            @*<input type="hidden" asp-for="InvTransfer.CreatedById" />*@
+        @*<input type="hidden" asp-for="InvTransfer.CreatedById" />*@
 
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <br />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <br />
 
 
-            <div class="form-group row">
+        <div class="form-group row">
 
-                <div class="col-md-5 offset-md-5">
-                    <input type="text" id="ProdInfo" asp-for="ProdCode" class="form-control text-md-right" />
-                </div>
-                <div class="col-md-2">
-                    <label asp-for="ProdCode"></label>
-                </div>
-                <span asp-validation-for="ProdCode" class="text-danger"></span>
+            <div class="col-md-5 offset-md-5">
+                <input type="text" id="ProdInfo" asp-for="ProdCode" class="form-control text-md-right" />
             </div>
-
-
-            <div class="form-group row">
-
-                <div class="col-md-5 offset-md-5">
-                    <select asp-for="FromWhId"
-                            asp-items="@(new SelectList(Model.Warehouselist, "Id", "WhName"))"
-                            class="form-control" id="FromWhId">
-                    </select>
-                </div>
-                <div class="col-md-2">
-                    <label asp-for="FromWhId"></label>
-                </div>
-                @*<span asp-validation-for="InvTransfer.FromWarehouse.Id" class="text-danger"></span>*@
+            <div class="col-md-2">
+                <label asp-for="ProdCode"></label>
             </div>
+            <span asp-validation-for="ProdCode" class="text-danger"></span>
+        </div>
 
-            <div class="form-group row">
 
-                <div class="col-md-5 offset-md-5">
-                    <select asp-for="ToWhId"
-                            asp-items="@(new SelectList(Model.WarehouselistTo, "Id", "WhName"))"
-                            class="form-control" id="ToWhId">
-                    </select>
-                </div>
-                <div class="col-md-2">
-                    <label asp-for="ToWhId"></label>
-                </div>
-                @*<span asp-validation-for="InvTransfer.ToWarehouse.Id" class="text-danger"></span>*@
+        <div class="form-group row">
+
+            <div class="col-md-5 offset-md-5">
+                <select asp-for="FromWhId"
+                        asp-items="@(new SelectList(Model.Warehouselist, "Id", "WhName"))"
+                        class="form-control" id="FromWhId">
+                </select>
             </div>
-
-            <div class="form-group row">
-
-                <div class="col-md-5 offset-md-5">
-                    <input asp-for="Qty" class="form-control text-md-right" id="qty" />
-
-                </div>
-                <div class="col-md-2">
-                    <label asp-for="Qty"></label>
-                </div>
-                <span asp-validation-for="Qty" class="text-danger"></span>
+            <div class="col-md-2">
+                <label asp-for="FromWhId"></label>
             </div>
+            @*<span asp-validation-for="InvTransfer.FromWarehouse.Id" class="text-danger"></span>*@
+        </div>
 
-            <div class="form-group row">
+        <div class="form-group row">
 
-                <div class="col-md-5  offset-md-5">
-                    @*<textarea placeholder="ملاحظات" asp-for="Note" class="form-control"></textarea>*@
-                    <textarea placeholder="Notes" asp-for="Note" class="form-control text-md-right"></textarea>
-
-                </div>
-                <div class="col-md-2">
-                    <label asp-for="Note"></label>
-                </div>
-                <span asp-validation-for="Note" class="text-danger"></span>
+            <div class="col-md-5 offset-md-5">
+                <select asp-for="ToWhId"
+                        asp-items="@(new SelectList(Model.WarehouselistTo, "Id", "WhName"))"
+                        class="form-control" id="ToWhId">
+                </select>
             </div>
+            <div class="col-md-2">
+                <label asp-for="ToWhId"></label>
+            </div>
+            @*<span asp-validation-for="InvTransfer.ToWarehouse.Id" class="text-danger"></span>*@
+        </div>
 
-            <div class="form-group row">
-                <div class="col-md-5 offset-md-5">
-                    <div class="row">
+        <div class="form-group row">
+
+            <div class="col-md-5 offset-md-5">
+                <input asp-for="Qty" class="form-control text-md-right" id="qty" />
+
+            </div>
+            <div class="col-md-2">
+                <label asp-for="Qty"></label>
+            </div>
+            <span asp-validation-for="Qty" class="text-danger"></span>
+        </div>
+
+        <div class="form-group row">
+
+            <div class="col-md-5  offset-md-5">
+                @*<textarea placeholder="ملاحظات" asp-for="Note" class="form-control"></textarea>*@
+                <textarea placeholder=" @localizer.Get("الملاحظات")" asp-for="Note" class="form-control text-md-right"></textarea>
+
+            </div>
+            <div class="col-md-2">
+                <label asp-for="Note"></label>
+            </div>
+            <span asp-validation-for="Note" class="text-danger"></span>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-md-5 offset-md-5">
+                <div class="row">
 
 
-                        <div class="col-md-6">
-                            @*<a asp-page="Index" class="btn btn-success form-control">رجوع</a>*@
-                            <a asp-page="Index" class="btn btn-success form-control">Back</a>
+                    <div class="col-md-6">
+                        @*<a asp-page="Index" class="btn btn-success form-control">رجوع</a>*@
+                        <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="Index" class="btn btn-success form-control"> @localizer.Get("رجوع")</a>
 
-                        </div>
-                        <div class="col-md-6">
-                            @*<button type="submit" class="btn btn-info form-control" onclick="return ValidateInput()">حفظ</button>*@
-                            <button type="submit" class="btn btn-info form-control" onclick="return ValidateInput()">Save</button>
+                    </div>
+                    <div class="col-md-6">
+                        @*<button type="submit" class="btn btn-info form-control" onclick="return ValidateInput()">حفظ</button>*@
+                        <button asp-route-culture="@Request.RouteValues["culture"]" type="submit" class="btn btn-info form-control" onclick="return ValidateInput()"> @localizer.Get("تحريك")</button>
 
-                        </div>
                     </div>
                 </div>
             </div>
+        </div>
 
-            @*<div class="row">
+        @*<div class="row">
                 <div class="col-7">
                     <button type="submit" class="btn btn-info" onclick="return ValidateInput()">SAVE</button>
                 </div>
             </div>*@
 
-        </form>
-    </div>
+    </form>
+</div>
 
 @section Scripts {
     @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
@@ -135,7 +144,7 @@
 
             if (qty == 0) {
                 //swal("Error!", "الكمية غير محددة", "error");
-                 swal("Error!", "No Qty entered", "error");
+                swal("Error!", "No Qty entered", "error");
 
                 return false
             }

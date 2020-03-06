@@ -1,44 +1,52 @@
 ﻿@page
-@using Sumer.Utility
 @model IndexModel
+@using Sumer.Utility
+@using Microsoft.AspNetCore.Localization
+@using System.ComponentModel.DataAnnotations;
+@*@inject IHtmlLocalizer<IndexModel> htmlLocalizer*@ @*for html lozcalization*@
+@*@inject IStringLocalizer<IndexModel> localizer*@
+@*First Method*@
+@inject Services.CommonLocalizationService localizer
+@*Second and the easier Method*@
+
 @{
     ViewData["Title"] = "Home page";
 }
 <br />
 <br />
-<div class="row" style="padding-left:120px;">
-    <div class="column pl-5">
-        <a asp-page="/Inventory/IncomingGoods/Index">
+<div class="row" style="padding-left:120px; padding-right:100px;">
+    <div class="column" style="padding-left:80px;">
+        <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="/Inventory/IncomingGoods/Index">
             <img src="~/img/delivery-truck.png" style="width:120px;height:120px;" />
             @*<p class="text-center">الواردة</p>*@
-            <p class="text-center">Incoming Goods</p>
+        <p class="text-center">@localizer.Get("البضائع الواردة")</p>
 
         </a>
     </div>
     @if (User.IsInRole(SD.AdminEndUser))
     {
         <div class="column" style="padding-left:80px;">
-            <a asp-page="/inventory/transfer/index">
+            <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="/inventory/transfer/index">
                 <img src="~/img/b2b.png" style="width:120px;height:120px;" />
                 @*<p class="text-center">التحويل</p>*@
-                <p class="text-center">Transfer</p>
+            <p class="text-center">@localizer.Get("حركة المنتجات")</p>
 
             </a>
         </div>
     }
-    <div class="column" style="padding-left:80px;">
-        <a asp-page="/inventory/transferrequests/index">
+    <div class="column" style="padding-left: 80px;">
+        <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="/inventory/transferrequests/index">
             <img src="~/img/application.png" style="width:120px;height:120px;" />
             @*<p class="text-center">طلب تحويل</p>*@
-            <p class="text-center">Transfer Request</p>
+        <p class="text-center">@localizer.Get("طلبات حركة المنتجات")</p>
         </a>
     </div>
 
     <div class="column" style="padding-left:80px;">
-        <a asp-page="/inventory/products/index">
+        <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="/inventory/products/index">
             <img src="~/img/lamp.png" style="width:120px;height:120px;" />
             @*<p class="text-center">المواد</p>*@
-            <p class="text-center">Products</p>
+        <p class="text-center">@localizer.Get("المنتجات")</p>
 
         </a>
     </div>
@@ -48,32 +56,29 @@
 <br />
 <br />
 <br />
-<div class="row" style="padding-left:120px;">
-    <div class="column pl-5">
-        <a asp-page="/inventory/warehouses/index">
-            <img src="~/img/warehouse.png" style="width:120px;height:120px;" />
-            @*<p class="text-center">المخازن</p>*@
-            <p class="text-center">Warehouses</p>
+<div class="row" style="padding-left:120px; padding-right:100px;">
 
-        </a>
-    </div>
+
 
     <div class="column" style="padding-left:80px;">
-        <a asp-page="/Inventory/reports/Index">
+        <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="/Inventory/reports/Index">
             <img src="~/img/statistics.png" style="width:120px;height:120px;" />
             @*<p class="text-center">التقارير</p>*@
-            <p class="text-center">Reports</p>
+            <p class="text-center">@localizer.Get("التقارير")</p>
 
         </a>
     </div>
 
     <div class="column" style="padding-left:80px;">
-        <a asp-page="/users/index">
-            <img src="~/img/team.png" style="width:120px;height:120px;" />
-            @*<p class="text-center">المستخدمين</p>*@
-            <p class="text-center">Users</p>
+        <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="settings">
+            <img src="~/img/settings.png" style="width:180px;height:120px;" />
+            @*<p class="text-center">المخازن</p>*@
+            <p class="text-center">@localizer.Get("الاعدادات")</p>
 
         </a>
     </div>
 
+
 </div>
+
+<div class="float-md-right">  <vc:culture-switcher /> </div>

@@ -1,11 +1,19 @@
 ﻿@using Sumer.Utility
+@using Microsoft.AspNetCore.Localization
+@using System.ComponentModel.DataAnnotations;
+@*@inject IHtmlLocalizer<IndexModel> htmlLocalizer*@ @*for html lozcalization*@
+@*@inject IStringLocalizer<IndexModel> localizer*@
+@*First Method*@
+@inject Services.CommonLocalizationService localizer
+@*Second and the easier Method*@
+
 <!DOCTYPE html>
 
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - SumerBusinessSolution</title>
+    <title>@ViewData["Title"] SumerBusinessSolution</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/lib/font-awesome/css/all.css" />
     <link rel="stylesheet" href="~/css/LayoutStyle.css">
@@ -65,18 +73,20 @@
                 {
                     <li> <a class="nav-link text-md-right text-dark" asp-area="" asp-page="/inventory/transferrequests/index"> طلب تحويل<i class="fas fa-exchange-alt"></i></a></li>
                 }
-                <li> <a class="nav-link  text-md-right  text-md-right text-dark" asp-area="" asp-page="/inventory/products/index"> المنتجات<i class="fas fa-boxes"></i></a></li>
+                <li> <a class="nav-link  text-md-right  text-md-right text-dark" asp-area="" asp-page="/inventory/products/index"> المنتجات <i class="fas fa-boxes"></i></a></li>
                 <li> <a class="nav-link  text-md-right text-dark" asp-area="" asp-page="/inventory/reports/index"> التقارير<i class="fas fa-file-alt"></i></a></li>
-                <li> <a class="nav-link  text-md-right text-dark" asp-area="" asp-page="/inventory/settings"> الاعدادات<i class="fas fa-users"></i> </a></li>
+                <li> <a class="nav-link  text-md-right text-dark" asp-area="" asp-page="/settings"> الاعدادات <i class="fas fa-cogs"></i> </a></li>
 
                 @*<li> <a class="nav-link  text-md-right text-dark" asp-area="" asp-page="/inventory/warehouses/index"> المخازن<i class="fas fa-warehouse"></i></a></li>
-                <li> <a class="nav-link  text-md-right text-dark" asp-area="" asp-page="/users/index"> الاعضاء<i class="fas fa-users"></i> </a></li>*@
+        <li> <a class="nav-link  text-md-right text-dark" asp-area="" asp-page="/users/index"> الاعضاء<i class="fas fa-users"></i> </a></li>*@
+
+
             </ul>
             @*<div class="social_media">
-            <a href="#"><i class="fab fa-facebook-f"></i></a>
-            <a href="#"><i class="fab fa-twitter"></i></a>
-            <a href="#"><i class="fab fa-instagram"></i></a>
-        </div>*@
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>*@
         </div>
 
 
@@ -86,7 +96,14 @@
             <main role="main" class="pb-3">
                 <div class="main_content">
 
+
+
+
                     @RenderBody()
+                    <a href="#" class="float" onclick="history.back()">
+                        <i class="fas fa-chevron-circle-left my-float"></i>
+                    </a>
+
                 </div>
             </main>
 
