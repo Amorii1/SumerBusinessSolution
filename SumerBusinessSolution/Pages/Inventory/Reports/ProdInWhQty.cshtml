@@ -54,21 +54,23 @@
     <div>
         <table class="table table-striped border table-responsive-md table-responsive-lg">
             <tr class="table-secondary">
+
+
+                <th></th>
+                <th></th>
+                <th></th>
                 <th>
-                    @Html.DisplayNameFor(m => m.InvStockQtyList[0].ProdInfo.ProdCode)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(m => m.InvStockQtyList[0].ProdInfo.ProdName)
+                    @Html.DisplayNameFor(m => m.InvStockQtyList[0].Qty)
                 </th>
                 <th>
                     @Html.DisplayNameFor(m => m.InvStockQtyList[0].Warehouse.WhName)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(m => m.InvStockQtyList[0].Qty)
+                    @Html.DisplayNameFor(m => m.InvStockQtyList[0].ProdInfo.ProdName)
                 </th>
-
-                <th></th>
-                <th></th>
+                <th>
+                    @Html.DisplayNameFor(m => m.InvStockQtyList[0].ProdInfo.ProdCode)
+                </th>
             </tr>
             @if (Model.InvStockQtyList.Count() == 0)
             {
@@ -81,71 +83,63 @@
                 @foreach (var item in Model.InvStockQtyList)
                 {
 
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(m => item.ProdInfo.ProdCode)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(m => item.ProdInfo.ProdName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(m => item.Warehouse.WhName)
-                        </td>
-                        @if (item.Qty < 10)
-                        {
-                            <td class="bg-danger">
-                                @Html.DisplayFor(m => item.Qty)
-                            </td>
-                        }
-                        else
-                        {
-                            <td>
-                                @Html.DisplayFor(m => item.Qty)
-                            </td>
-                        }
+        <tr>
 
+            <td>
 
-                        <td>
-                            @*<a asp-page="../Products/Details" asp-route-ID="@item.ProdInfo.Id" style="text-decoration:none;">
-                                    <img src="~/images/car.png" width="40" /> &nbsp; تفاصيل المنتج
-                                </a>*@
-                            <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="../Products/Details" asp-route-ID="@item.ProdInfo.Id" style="text-decoration:none;">
-                                &nbsp;@localizer.Get("تفاصيل المنتج")
-                            </a>
-                        </td>
-                        <td>
-                            @*<a asp-page="../Transactions/ProdTrans" asp-route-ProdId="@item.ProdId" asp-route-WhId="@item.WhId" style="text-decoration:none;">
-                                    <img src="~/images/car.png" width="40" /> &nbsp; تفاصيل
-                                </a>*@
-                            <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="../Transactions/ProdTrans" asp-route-ProdId="@item.ProdId" asp-route-WhId="@item.WhId" style="text-decoration:none;">
-                                &nbsp; @localizer.Get("تفاصيل العمليات التجارية")
-                            </a>
-                        </td>
-                        <td>
+                @if (User.IsInRole(SD.AdminEndUser))
+                {
+                    @*<a asp-page="../Products/UpdateProdStkQty" asp-route-StkId="@item.Id" style="text-decoration:none;">
+                    <img src="~/images/car.png" width="40" /> &nbsp; تحديث الكميه
+                </a>*@
 
-                            @if (User.IsInRole(SD.AdminEndUser))
-                            {
-                                @*<a asp-page="../Products/UpdateProdStkQty" asp-route-StkId="@item.Id" style="text-decoration:none;">
-                                        <img src="~/images/car.png" width="40" /> &nbsp; تحديث الكميه
-                                    </a>*@
+                    <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="../Products/UpdateProdStkQty" asp-route-StkId="@item.Id" style="text-decoration:none;">
+                        &nbsp;@localizer.Get("تحديث الكمية")
+                    </a>
+                }
+            </td>
+            <td>
+                @*<a asp-page="../Transactions/ProdTrans" asp-route-ProdId="@item.ProdId" asp-route-WhId="@item.WhId" style="text-decoration:none;">
+                <img src="~/images/car.png" width="40" /> &nbsp; تفاصيل
+            </a>*@
+                <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="../Transactions/ProdTrans" asp-route-ProdId="@item.ProdId" asp-route-WhId="@item.WhId" style="text-decoration:none;">
+                    &nbsp; @localizer.Get("تفاصيل العمليات التجارية")
+                </a>
+            </td>
+            <td>
+                @*<a asp-page="../Products/Details" asp-route-ID="@item.ProdInfo.Id" style="text-decoration:none;">
+                <img src="~/images/car.png" width="40" /> &nbsp; تفاصيل المنتج
+            </a>*@
+                <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="../Products/Details" asp-route-ID="@item.ProdInfo.Id" style="text-decoration:none;">
+                    &nbsp;@localizer.Get("تفاصيل المنتج")
+                </a>
+            </td>
 
-                            <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="../Products/UpdateProdStkQty" asp-route-StkId="@item.Id" style="text-decoration:none;">
-                                &nbsp;@localizer.Get("تحديث الكمية")
-                            </a>
-                            }
-                        </td>
+            @if (item.Qty < 10)
+            {
+                <td class="bg-danger">
+                    @Html.DisplayFor(m => item.Qty)
+                </td>
+            }
+            else
+            {
+                <td>
+                    @Html.DisplayFor(m => item.Qty)
+                </td>
+            }
 
-                    </tr>
+            <td>
+                @Html.DisplayFor(m => item.Warehouse.WhName)
+            </td>
+            <td>
+                @Html.DisplayFor(m => item.ProdInfo.ProdName)
+            </td>
+            <td>
+                @Html.DisplayFor(m => item.ProdInfo.ProdCode)
+            </td>
+        </tr>
                 }
             }
-            @*<tr>
-                    <td colspan="5" class="text-right">
-                        <div page-model="@Model.UsersListVM.PagingInfo" asp-action="Index" page-class="btn border"
-                             page-class-normal="btn btn-light" page-class-selected="btn btn-info active" class="btn-group">
-
-                        </div>
-                    </td>
-                </tr>*@
         </table>
     </div>
 </div>

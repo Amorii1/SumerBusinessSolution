@@ -76,33 +76,29 @@
         <table class="table table-striped border table-responsive-md table-responsive-lg">
             <tr class="table-secondary">
 
+           
+                <th>  </th>
+                <th>
+                    @Html.DisplayNameFor(m => m.IncomingGoods.ApplicationUser.FirstName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(m => m.IncomingGoods.CreatedDateTime)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(m => m.IncomingGoods.Note)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(m => m.IncomingGoods.Qty)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(m => m.Warehouse.WhName)
+                </th>
                 <th>
                     @Html.DisplayNameFor(m => m.ProdInfo.ProdName)
 
                 </th>
                 <th>
                     @Html.DisplayNameFor(m => m.ProdInfo.ProdCode)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(m => m.Warehouse.WhName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(m => m.IncomingGoods.Qty)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(m => m.IncomingGoods.Note)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(m => m.IncomingGoods.CreatedDateTime)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(m => m.IncomingGoods.ApplicationUser.FirstName)
-                </th>
-                <th>
-
-                </th>
-                <th>
-
                 </th>
             </tr>
             @if (Model.IncomingGoodList.Count() == 0)
@@ -115,40 +111,36 @@
             {
                 @foreach (var item in Model.IncomingGoodList)
                 {
-                    <tr>
+        <tr>
+            <td>
+                <a asp-page="/Inventory/Products/details" asp-route-culture="@Request.RouteValues["culture"]" asp-route-Id="@item.ProdInfo.Id" style="text-decoration:none;">
+                    @localizer.Get("تفاصيل المنتج")
+                </a>
+         
+            </td>
+            <td>
+                @Html.DisplayFor(m => item.ApplicationUser.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(m => item.CreatedDateTime)
+            </td>
+            <td>
+                @Html.DisplayFor(m => item.Note)
+            </td>
+            <td>
+                @Html.DisplayFor(m => item.Qty)
+            </td>
+            <td>
+                @Html.DisplayFor(m => item.Warehouse.WhName)
+            </td>
+            <td>
+                @Html.DisplayFor(m => item.ProdInfo.ProdName)
+            </td>
 
-                        <td>
-                            @Html.DisplayFor(m => item.ProdInfo.ProdName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(m => item.ProdInfo.ProdCode)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(m => item.Warehouse.WhName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(m => item.Qty)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(m => item.Note)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(m => item.CreatedDateTime)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(m => item.ApplicationUser.FirstName)
-                        </td>
-                        <td>
-                            @*<a asp-page="/Inventory/Products/details" asp-route-Id="@item.ProdInfo.Id" style="text-decoration:none;">
-                                    المواد
-                                </a>*@
-                            <a asp-page="/Inventory/Products/details" asp-route-culture="@Request.RouteValues["culture"]" asp-route-Id="@item.ProdInfo.Id" style="text-decoration:none;">
-                                @localizer.Get("تفاصيل المنتج")
-                            </a>
-                        </td>
-                        <td>
-                        </td>
-                    </tr>
+            <td>
+                @Html.DisplayFor(m => item.ProdInfo.ProdCode)
+            </td>
+        </tr>
                 }
             }
         </table>

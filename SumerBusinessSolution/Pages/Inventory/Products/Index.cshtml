@@ -67,19 +67,22 @@
 
         <table class="table table-striped border table-responsive-md table-responsive-lg">
             <tr class="table-secondary">
+
+
+                <th></th>
                 <th>
-                    @Html.DisplayNameFor(m => m.ProdInfo[0].ProdCode)
+                    @Html.DisplayNameFor(m => m.ProdInfo[0].WholePrice)
+                </th>
+
+                <th>
+                    @Html.DisplayNameFor(m => m.ProdInfo[0].RetailPrice)
                 </th>
                 <th>
                     @Html.DisplayNameFor(m => m.ProdInfo[0].ProdName)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(m => m.ProdInfo[0].RetailPrice)
+                    @Html.DisplayNameFor(m => m.ProdInfo[0].ProdCode)
                 </th>
-                <th>
-                    @Html.DisplayNameFor(m => m.ProdInfo[0].WholePrice)
-                </th>
-                <th></th>
             </tr>
             @if (Model.ProdInfo.Count() == 0)
             {
@@ -91,31 +94,33 @@
             {
                 @foreach (var item in Model.ProdInfo)
                 {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(m => item.ProdCode)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(m => item.ProdName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(m => item.RetailPrice)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(m => item.WholePrice)
-                        </td>
-                        <td style="width:150px;">
-                            <div class="btn-group " role="group">
-                                @if (User.IsInRole(SD.AdminEndUser))
-                                {
+        <tr>
 
-                                <a class="btn btn-primary" asp-route-culture="@Request.RouteValues["culture"]" asp-page="Edit" asp-route-Id="@item.Id" title="Edit"><i class="fa fa-edit"></i>@localizer.Get("تعديل")</a>
-                                <a class="btn btn-danger" asp-route-culture="@Request.RouteValues["culture"]" asp-page="Delete" asp-route-Id="@item.Id" title="Delete"><i class="far fa-trash-alt"></i>@localizer.Get("حذف")</a>
-                                }
-                            <a class="btn btn-success" asp-route-culture="@Request.RouteValues["culture"]" asp-page="Details" asp-route-Id="@item.Id" title="Details"><i class="far fa-clipboard"></i>@localizer.Get("التفاصيل")</a>
-                            </div>
-                        </td>
-                    </tr>
+            <td style="width:150px;">
+                <div class="btn-group " role="group">
+                    @if (User.IsInRole(SD.AdminEndUser))
+                    {
+
+                        <a class="btn btn-primary" asp-route-culture="@Request.RouteValues["culture"]" asp-page="Edit" asp-route-Id="@item.Id" title="Edit"><i class="fa fa-edit"></i>@localizer.Get("تعديل")</a>
+                        <a class="btn btn-danger" asp-route-culture="@Request.RouteValues["culture"]" asp-page="Delete" asp-route-Id="@item.Id" title="Delete"><i class="far fa-trash-alt"></i>@localizer.Get("حذف")</a>
+                    }
+                    <a class="btn btn-success" asp-route-culture="@Request.RouteValues["culture"]" asp-page="Details" asp-route-Id="@item.Id" title="Details"><i class="far fa-clipboard"></i>@localizer.Get("التفاصيل")</a>
+                </div>
+            </td>
+
+            <td>
+                @Html.DisplayFor(m => item.WholePrice)
+            </td>
+            <td>
+                @Html.DisplayFor(m => item.RetailPrice)
+            </td>
+            <td>
+                @Html.DisplayFor(m => item.ProdName)
+            </td>
+            <td>
+                @Html.DisplayFor(m => item.ProdCode)
+            </td>
+        </tr>
 
                 }
             }

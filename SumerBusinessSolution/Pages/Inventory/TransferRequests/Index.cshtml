@@ -67,31 +67,29 @@
         <table class="table table-striped border table-responsive-md table-responsive-lg">
             <tr class="table-secondary">
 
+                <th></th>
+                <th>
+                    @Html.DisplayNameFor(m => m.InvTransferList[0].ApplicationUser.FirstName)
 
-                <th>
-                    @Html.DisplayNameFor(m => m.InvTransferList[0].ProdInfo.ProdCode)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(m => m.InvTransferList[0].ProdInfo.ProdName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(m => m.InvTransferList[0].FromWarehouse)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(m => m.InvTransferList[0].ToWarehouse)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(m => m.InvTransferList[0].Qty)
                 </th>
                 <th>
                     @Html.DisplayNameFor(m => m.InvTransferList[0].Note)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(m => m.InvTransferList[0].ApplicationUser.FirstName)
-
+                    @Html.DisplayNameFor(m => m.InvTransferList[0].Qty)
                 </th>
-                <th></th>
-
+                <th>
+                    @Html.DisplayNameFor(m => m.InvTransferList[0].ToWarehouse)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(m => m.InvTransferList[0].FromWarehouse)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(m => m.InvTransferList[0].ProdInfo.ProdName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(m => m.InvTransferList[0].ProdInfo.ProdCode)
+                </th>
             </tr>
             @if (Model.InvTransferList.Count() == 0)
             {
@@ -103,71 +101,52 @@
             {
                 @foreach (var item in Model.InvTransferList)
                 {
-                    <tr>
+        <tr>
+
+            <td>
+                <div class="btn-group" role="group">
+
+                    @if (User.IsInRole(SD.AdminEndUser))
+                    {
+                        <button asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-success text-white" asp-page-handler="ApproveTransferRequests" asp-route-ReqId="@item.Id" type="submit" title="Approve" name="Accept">
+                            @localizer.Get("قبول") <i class="fas fa-check"></i>
+                        </button>
 
 
-                        <td>
-                            @Html.DisplayFor(m => item.ProdInfo.ProdCode)
-                        </td>
+                        <button asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-danger text-white" asp-page-handler="RejectTransferRequests" asp-route-ReqId="@item.Id" type="submit" title="Reject" name="Reject">
+                            @localizer.Get("رفض") <i class="fas fa-window-close"></i>
+                        </button>
+                    }
 
-                        <td>
-                            @Html.DisplayFor(m => item.ProdInfo.ProdName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(m => item.ToWarehouse.WhName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(m => item.FromWarehouse.WhName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(m => item.Qty)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(m => item.Note)
-                        </td>
+                    <button asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-danger text-white" asp-page-handler="DeleteTransferRequests" asp-route-ReqId="@item.Id" type="submit" title="Delete" name="Delete">
+                        @localizer.Get("حذف") <i class="fas fa-trash-alt"></i>
+                    </button>
 
-                        <td>
-                            @Html.DisplayFor(m => item.ApplicationUser.FirstName)
-                        </td>
-                        <td>
-                            @*<div class="btn-group" role="group">
-                                    <button class="btn btn-success text-white" asp-page-handler="ApproveTransferRequests" asp-route-ReqId="@item.Id" type="submit" title="Approve" name="Accept">
-                                        قبول <i class="fas fa-check"></i>
-                                    </button>
+                </div>
+            </td>
+            <td>
+                @Html.DisplayFor(m => item.ApplicationUser.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(m => item.Note)
+            </td>
+            <td>
+                @Html.DisplayFor(m => item.Qty)
+            </td>
 
-
-                                    <button class="btn btn-danger text-white" asp-page-handler="RejectTransferRequests" asp-route-ReqId="@item.Id" type="submit" title="Reject" name="Reject">
-                                        رفض <i class="fas fa-window-close"></i>
-                                    </button>
-
-
-                                    <button class="btn btn-danger text-white" asp-page-handler="DeleteTransferRequests" asp-route-ReqId="@item.Id" type="submit" title="Delete" name="Delete">
-                                        حذف <i class="fas fa-trash-alt"></i>
-                                    </button>
-
-                                </div>*@
-                            <div class="btn-group" role="group">
-
-                                @if (User.IsInRole(SD.AdminEndUser))
-                                {
-                                <button asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-success text-white" asp-page-handler="ApproveTransferRequests" asp-route-ReqId="@item.Id" type="submit" title="Approve" name="Accept">
-                                    @localizer.Get("قبول") <i class="fas fa-check"></i>
-                                </button>
-
-
-                                <button asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-danger text-white" asp-page-handler="RejectTransferRequests" asp-route-ReqId="@item.Id" type="submit" title="Reject" name="Reject">
-                                    @localizer.Get("رفض") <i class="fas fa-window-close"></i>
-                                </button>
-                                }
-
-                            <button asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-danger text-white" asp-page-handler="DeleteTransferRequests" asp-route-ReqId="@item.Id" type="submit" title="Delete" name="Delete">
-                                @localizer.Get("حذف") <i class="fas fa-trash-alt"></i>
-                            </button>
-
-                            </div>
-                        </td>
-
-                    </tr>
+            <td>
+                @Html.DisplayFor(m => item.ToWarehouse.WhName)
+            </td>
+            <td>
+                @Html.DisplayFor(m => item.FromWarehouse.WhName)
+            </td>
+            <td>
+                @Html.DisplayFor(m => item.ProdInfo.ProdName)
+            </td>
+            <td>
+                @Html.DisplayFor(m => item.ProdInfo.ProdCode)
+            </td>
+        </tr>
                 }
 
             }

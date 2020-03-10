@@ -20,7 +20,7 @@
     <div class="column" style="padding-left:80px;">
         <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="Users/Index">
             <img src="~/img/team.png" style="width:120px;height:120px;" />
-            <p class="text-center"> @localizer.Get("المستخدمين")</p>
+            <h4 class="text-center"> @localizer.Get("المستخدمين")</h4>
 
         </a>
     </div>
@@ -28,7 +28,7 @@
     <div class="column" style="padding-left:80px;">
         <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="Inventory/Warehouses/Index">
             <img src="~/img/warehouse.png" style="width:120px;height:120px;" />
-            <p class="text-center"> @localizer.Get("المخازن")</p>
+            <h4 class="text-center"> @localizer.Get("المخازن")</h4>
 
         </a>
     </div>

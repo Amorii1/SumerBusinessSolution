@@ -19,7 +19,7 @@
         <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="/Inventory/IncomingGoods/Index">
             <img src="~/img/delivery-truck.png" style="width:120px;height:120px;" />
             @*<p class="text-center">الواردة</p>*@
-        <p class="text-center">@localizer.Get("البضائع الواردة")</p>
+        <h4 class="text-center">@localizer.Get("البضائع الواردة")</h4>
 
         </a>
     </div>
@@ -29,7 +29,7 @@
             <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="/inventory/transfer/index">
                 <img src="~/img/b2b.png" style="width:120px;height:120px;" />
                 @*<p class="text-center">التحويل</p>*@
-            <p class="text-center">@localizer.Get("حركة المنتجات")</p>
+            <h4 class="text-center">@localizer.Get("حركة المنتجات")</h4>
 
             </a>
         </div>
@@ -38,7 +38,7 @@
         <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="/inventory/transferrequests/index">
             <img src="~/img/application.png" style="width:120px;height:120px;" />
             @*<p class="text-center">طلب تحويل</p>*@
-        <p class="text-center">@localizer.Get("طلبات حركة المنتجات")</p>
+        <h4 class="text-center">@localizer.Get("طلبات حركة المنتجات")</h4>
         </a>
     </div>
 
@@ -46,7 +46,7 @@
         <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="/inventory/products/index">
             <img src="~/img/lamp.png" style="width:120px;height:120px;" />
             @*<p class="text-center">المواد</p>*@
-        <p class="text-center">@localizer.Get("المنتجات")</p>
+        <h4 class="text-center">@localizer.Get("المنتجات")</h4>
 
         </a>
     </div>
@@ -64,7 +64,7 @@
         <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="/Inventory/reports/Index">
             <img src="~/img/statistics.png" style="width:120px;height:120px;" />
             @*<p class="text-center">التقارير</p>*@
-            <p class="text-center">@localizer.Get("التقارير")</p>
+            <h4 class="text-center">@localizer.Get("التقارير")</h4>
 
         </a>
     </div>
@@ -73,7 +73,7 @@
         <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="settings">
             <img src="~/img/settings.png" style="width:180px;height:120px;" />
             @*<p class="text-center">المخازن</p>*@
-            <p class="text-center">@localizer.Get("الاعدادات")</p>
+            <h4 class="text-center">@localizer.Get("الاعدادات")</h4>
 
         </a>
     </div>
@@ -81,4 +81,4 @@
 
 </div>
 
-<div class="float-md-right">  <vc:culture-switcher /> </div>
+@*<div class="float-md-right">  <vc:culture-switcher /> </div>*@

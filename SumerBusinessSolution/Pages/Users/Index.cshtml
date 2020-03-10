@@ -58,52 +58,57 @@
 
     <table class="table table-striped border table-responsive-md table-responsive-lg">
         <tr class="table-secondary">
+           
+            <th></th>
+            <th></th>
             <th>
-                @Html.DisplayNameFor(m => m.ApplicationUser[0].FirstName)
+                @localizer.Get("رقم الهاتف")
             </th>
             <th>
                 @Html.DisplayNameFor(m => m.ApplicationUser[0].LastName)
             </th>
+
             <th>
-                @localizer.Get("رقم الهاتف")
+                @Html.DisplayNameFor(m => m.ApplicationUser[0].FirstName)
             </th>
 
-            <th></th>
-            <th></th>
-            <th></th>
         </tr>
 
         @foreach (var item in Model.UsersListVM.ApplicationUserList)
         {
-            <tr>
-
-                <td>
-                    @Html.DisplayFor(m => item.FirstName)
-                </td>
-                <td>
-                    @Html.DisplayFor(m => item.LastName)
-                </td>
-                <td>
-                    @Html.DisplayFor(m => item.PhoneNumber)
-                </td>
-
-                <td></td>
-                @if (User.IsInRole(SD.AdminEndUser))
-                {
-                    <td style="width:150px;">
-                        <div class="btn-group" role="group">
-                            <a asp-page="Edit" asp-route-Id="@item.Id" asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-info ext-white " title="@localizer.Get("تعديل")">
-                                <i class="fas fa-edit"></i>
-                            </a>
+    <tr>
 
 
-                            <a asp-page="Delete" asp-route-Id="@item.Id" asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-danger text-white" title="@localizer.Get("حذف")">
-                                <i class="fas fa-user-minus"></i>
-                            </a>
-                        </div>
-                    </td>
-                }
-            </tr>
+
+
+        <td></td>
+        @if (User.IsInRole(SD.AdminEndUser))
+        {
+            <td style="width:150px;">
+                <div class="btn-group" role="group">
+                    <a asp-page="Edit" asp-route-Id="@item.Id" asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-info ext-white " title="@localizer.Get("تعديل")">
+                        <i class="fas fa-edit"></i>
+                    </a>
+
+
+                    <a asp-page="Delete" asp-route-Id="@item.Id" asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-danger text-white" title="@localizer.Get("حذف")">
+                        <i class="fas fa-user-minus"></i>
+                    </a>
+                </div>
+            </td>
+        }
+
+        <td>
+            @Html.DisplayFor(m => item.PhoneNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(m => item.LastName)
+        </td>
+        <td>
+            @Html.DisplayFor(m => item.FirstName)
+        </td>
+
+    </tr>
         }
     </table>
 </div>

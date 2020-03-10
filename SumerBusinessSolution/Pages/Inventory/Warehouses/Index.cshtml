@@ -70,23 +70,24 @@
     <div>
         <table class="table table-striped border table-responsive-md table-responsive-lg">
             <tr class="table-secondary">
+                
                 <th>
-                    @Html.DisplayNameFor(m => m.Warehouse[0].WhCode)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(m => m.Warehouse[0].WhName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(m => m.Warehouse[0].WhLocation)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(m => m.Warehouse[0].WhType.Type)
+                    @Html.DisplayNameFor(m => m.Warehouse[0].CreatedDateTime)
                 </th>
                 <th>
                     @Html.DisplayNameFor(m => m.Warehouse[0].ApplicationUser.FirstName)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(m => m.Warehouse[0].CreatedDateTime)
+                    @Html.DisplayNameFor(m => m.Warehouse[0].WhType.Type)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(m => m.Warehouse[0].WhLocation)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(m => m.Warehouse[0].WhName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(m => m.Warehouse[0].WhCode)
                 </th>
             </tr>
             @if (Model.Warehouse.Count() == 0)
@@ -99,28 +100,33 @@
             {
                 @foreach (var item in Model.Warehouse)
                 {
-                    <tr>
+        <tr>
 
-                        <td>
-                            @Html.DisplayFor(m => item.WhCode)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(m => item.WhName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(m => item.WhLocation)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(m => item.WhType.Type)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(m => item.ApplicationUser.FirstName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(m => item.CreatedDateTime)
-                        </td>
 
-                    </tr>
+
+
+
+
+            <td>
+                @Html.DisplayFor(m => item.CreatedDateTime)
+            </td>
+            <td>
+                @Html.DisplayFor(m => item.ApplicationUser.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(m => item.WhType.Type)
+            </td>
+            <td>
+                @Html.DisplayFor(m => item.WhLocation)
+            </td>
+            <td>
+                @Html.DisplayFor(m => item.WhName)
+            </td>
+            <td>
+                @Html.DisplayFor(m => item.WhCode)
+            </td>
+
+        </tr>
                 }
             }
         </table>
