@@ -2,7 +2,7 @@
 
 namespace SumerBusinessSolution.Migrations
 {
-    public partial class Bshb : Migration
+    public partial class omgomg : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
