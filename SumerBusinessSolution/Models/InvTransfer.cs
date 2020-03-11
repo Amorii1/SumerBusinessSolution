@@ -22,18 +22,29 @@ namespace SumerBusinessSolution.Models
         public int? ToWhId { get; set; }
 
         [Required]
+       [Display(Name = "الكمية")]
+
         public double Qty { get; set; }
+       [Display(Name = "وحدة القياس")]
+
         public string UOM { get; set; }
         [Required]
+        [Display(Name = "حالة الحركة")]
+
         public string TransferStatus { get; set; }
 
         [Required]
+        [Display(Name = "تاريخ الحركة ")]
+
         public DateTime CreatedDateTime { get; set; }
 
-        [Required] 
+        [Required]
+        [Display(Name = "معرف المنشئ")]
         public string CreatedById { get; set; }
 
         public string ApprovedById { get; set; }
+        [Display(Name = "الملاحظات")]
+
         public string Note { get; set; }
 
 
@@ -48,10 +59,13 @@ namespace SumerBusinessSolution.Models
         public virtual ProdInfo ProdInfo { set; get; }
 
         [ForeignKey("ToWhId")]
+       [Display(Name ="من المخزن")]
         
         public virtual Warehouse FromWarehouse { set; get; }
 
         [ForeignKey("FromWhId")]
+       [Display(Name = "الى المخزن")]
+
         public virtual Warehouse ToWarehouse { set; get; }
 
 

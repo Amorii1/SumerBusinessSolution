@@ -3,14 +3,18 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Sumer.Utility;
 using SumerBusinessSolution.Data;
 using SumerBusinessSolution.Models;
 using SumerBusinessSolution.Transactions;
 
 namespace SumerBusinessSolution.Pages.Inventory.TransferRequests
 {
+   // [Authorize(Roles =SD.StoreEndUser)]
+   [Authorize]
     public class CreateModel : PageModel
     {
         private readonly ApplicationDbContext _db;
@@ -21,24 +25,32 @@ namespace SumerBusinessSolution.Pages.Inventory.TransferRequests
             _db = db;
             _InveTrans = InveTrans;
         }
-        
+
 
         //public InvTransfer InvTransfer { get; set; }
         //public Warehouse Warehouse { get; set; }
-        public IList<Warehouse> Warehouselist { get; set; }
+        public IEnumerable<Warehouse> Warehouselist { get; set; }
+        public IEnumerable<Warehouse> WarehouselistTo { get; set; }
 
         [Required]
         [BindProperty]
+         [Display(Name = "رمز المنتج")]
         public string ProdCode { get; set; }
         [BindProperty]
+       [Display(Name = "من المخزن ")]
+
         public int FromWhId { get; set; }
         [BindProperty]
+        [Display(Name = "الى المخزن ")]
+
         public int ToWhId { get; set; }
 
         [Required]
         [BindProperty]
+       [Display(Name = "الكمية")]
         public double Qty { get; set; }
         [BindProperty]
+       [Display(Name = "الملاحظات")]
         public string Note { get; set; }
 
         [TempData]
@@ -47,6 +59,7 @@ namespace SumerBusinessSolution.Pages.Inventory.TransferRequests
         public void OnGet()
         {
             Warehouselist = _db.Warehouse.ToList();
+            WarehouselistTo = _db.Warehouse.ToList().OrderByDescending(wh => wh.Id);
         }
 
         public JsonResult OnGetSearchNow(string term)
@@ -71,7 +84,8 @@ namespace SumerBusinessSolution.Pages.Inventory.TransferRequests
             }
             catch
             {
-                StatusMessage = "Error! Product code can not be found";
+                //StatusMessage = "Error! Product code can not be found";
+                StatusMessage = "عذرا! رمز المنتج غير موجود";
                 return RedirectToPage("/inventory/transferrequests/create");
             }
 

@@ -1,115 +1,158 @@
 ﻿@page
 @model SumerBusinessSolution.Inventory.TransferRequests.IndexModel
+@using Sumer.Utility
+@using Microsoft.AspNetCore.Localization
+@using System.ComponentModel.DataAnnotations;
+@*@inject IHtmlLocalizer<IndexModel> htmlLocalizer*@ @*for html lozcalization*@
+@*@inject IStringLocalizer<IndexModel> localizer*@
+@*First Method*@
+@inject Services.CommonLocalizationService localizer
+@*Second and the easier Method*@
+
+@using Sumer.Utility
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
-
-
-<form method="post" >
-    <br /><br />
+<div class=" backgroundWhite">
     <div class="row">
-        <div class="col-6">
-            <h2 class="text-info">Inventory Transfer </h2>
+
+        <div class="col-md-6 ">
+            <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="Create" class="btn btn-info"> <i class="fas fa-plus"></i></a>
+        </div>
+
+        <div class="col-md-6 text-right">
+            @*<h2 class="text-info"> طلبات حركه المنتجات </h2>*@
+            <h2 class="text-info"> @localizer.Get("طلبات حركة المنتجات")</h2>
+
         </div>
 
     </div>
 
-   
+    <form method="get" asp-page="Index">
+        <div class="border backgroundWhite">
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row" style="margin-top:10px;">
+                            <div class="col-md-2 text-md-right pb-1">
+
+                                <button asp-route-culture="@Request.RouteValues["culture"]" type="submit" name="submit" value="search" class="btn btn-info form-control">
+                                    <i class="fas fa-search"></i>
+                                </button>
+
+                            </div>
+                            <div class="col-md-5 pb-1">
+                                @*@Html.Editor("searchProdCode", new { htmlAttributes = new { @class = "form-control", placeholder = ".....رمز المنتج" } })*@
+                                @Html.Editor("searchProdCode", new { htmlAttributes = new { @class = "form-control text-md-right", placeholder =  @localizer.Get("رمز المنتج....") } })
+
+                            </div>
+                            <div class="col-md-5 pb-1">
+                                @Html.Editor("searchCreateDateTime", new { htmlAttributes = new { @class = "form-control text-md-right", placeholder =  @localizer.Get("تاريخ الطلب....") } })
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+
     <div>
-        @if (Model.InvTransferList.Count() == 0)
-        {
-            <p>No Transaction available</p>
 
-        }
-        else
-        {
-            <table class="table table-striped border">
-                <tr class="table-secondary">
+        <table class="table table-striped border table-responsive-md table-responsive-lg">
+            <tr class="table-secondary">
 
+                <th></th>
+                <th>
+                    @Html.DisplayNameFor(m => m.InvTransferList[0].ApplicationUser.FirstName)
 
-                    <th>
-                        @Html.DisplayNameFor(m => m.InvTransferList[0].ProdInfo.ProdCode)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(m => m.InvTransferList[0].ProdInfo.ProdName)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(m => m.InvTransferList[0].FromWhId)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(m => m.InvTransferList[0].ToWhId)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(m => m.InvTransferList[0].Qty)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(m => m.InvTransferList[0].Note)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(m => m.InvTransferList[0].ApplicationUser.FirstName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(m => m.InvTransferList[0].Note)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(m => m.InvTransferList[0].Qty)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(m => m.InvTransferList[0].ToWarehouse)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(m => m.InvTransferList[0].FromWarehouse)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(m => m.InvTransferList[0].ProdInfo.ProdName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(m => m.InvTransferList[0].ProdInfo.ProdCode)
+                </th>
+            </tr>
+            @if (Model.InvTransferList.Count() == 0)
+            {
+                @*<h2 class="text-danger text-md-center">لا يوجد طلبات حركة في المنتجات  </h2>*@
+        <h2 class="text-danger text-md-center"> @localizer.Get("لا يوجد طلبات")</h2>
 
-                    </th>
-                    <th></th>
-
-                </tr>
+            }
+            else
+            {
                 @foreach (var item in Model.InvTransferList)
                 {
-            <tr>
+        <tr>
 
+            <td>
+                <div class="btn-group" role="group">
 
-                <td>
-                    @Html.DisplayFor(m => item.ProdInfo.ProdCode)
-                </td>
-
-                <td>
-                    @Html.DisplayFor(m => item.ProdInfo.ProdName)
-                </td>
-                <td>
-                    @Html.DisplayFor(m => item.FromWhId)
-                </td>
-                <td>
-                    @Html.DisplayFor(m => item.ToWhId)
-                </td>
-                <td>
-                    @Html.DisplayFor(m => item.Qty)
-                </td>
-                <td>
-                    @Html.DisplayFor(m => item.Note)
-                </td>
-              
-                <td>
-                    @Html.DisplayFor(m => item.ApplicationUser.FirstName)
-                </td>
-                <td>
-                    <div class="btn-group" role="group">
-                        <button class="btn btn-success text-white" asp-page-handler="ApproveTransferRequests" type="submit" title="Approve" name="Accept">
-                            Accept <i class="fas fa-edit"></i>
+                    @if (User.IsInRole(SD.AdminEndUser))
+                    {
+                        <button asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-success text-white" asp-page-handler="ApproveTransferRequests" asp-route-ReqId="@item.Id" type="submit" title="Approve" name="Accept">
+                            @localizer.Get("قبول") <i class="fas fa-check"></i>
                         </button>
 
 
-                        <button class="btn btn-danger text-white" asp-page-handler="RejectTransferRequests" type="submit" title="Reject" name="Reject">
-                            Reject  <i class="fas fa-edit"></i>
+                        <button asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-danger text-white" asp-page-handler="RejectTransferRequests" asp-route-ReqId="@item.Id" type="submit" title="Reject" name="Reject">
+                            @localizer.Get("رفض") <i class="fas fa-window-close"></i>
                         </button>
+                    }
 
+                    <button asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-danger text-white" asp-page-handler="DeleteTransferRequests" asp-route-ReqId="@item.Id" type="submit" title="Delete" name="Delete">
+                        @localizer.Get("حذف") <i class="fas fa-trash-alt"></i>
+                    </button>
 
-                        <button class="btn btn-danger text-white" asp-page-handler="DeleteTransferRequests" type="submit" title="Delete" name="Delete">
-                            Delete  <i class="fas fa-edit"></i>
-                        </button>
+                </div>
+            </td>
+            <td>
+                @Html.DisplayFor(m => item.ApplicationUser.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(m => item.Note)
+            </td>
+            <td>
+                @Html.DisplayFor(m => item.Qty)
+            </td>
 
-                    </div>
-                </td>
-
-               </tr>
+            <td>
+                @Html.DisplayFor(m => item.ToWarehouse.WhName)
+            </td>
+            <td>
+                @Html.DisplayFor(m => item.FromWarehouse.WhName)
+            </td>
+            <td>
+                @Html.DisplayFor(m => item.ProdInfo.ProdName)
+            </td>
+            <td>
+                @Html.DisplayFor(m => item.ProdInfo.ProdCode)
+            </td>
+        </tr>
                 }
-                
-                
 
-            </table>
-        }
+            }
+
+        </table>
+
     </div>
-    
 
-</form>
-
+</div>

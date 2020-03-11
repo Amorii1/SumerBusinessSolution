@@ -13,19 +13,28 @@ namespace SumerBusinessSolution.Models
         public int Id { get; set; }
 
         [Required]
+       [Display(Name = "رمز المخزن")]
+
         public string WhCode { get; set; }
 
         [Required]
+       [Display(Name = "اسم المخزن")]
+
         public string WhName { get; set; }
+       [Display(Name = "عنوان المخزن")]
+
         public string WhLocation { get; set; }
 
         [Required]
+        [Display(Name = "نوع المخزن")]
         public int TypeId { get; set; }
  
         [Required]
         public string CreatedById { get; set; }
  
         [Required]
+        [Display(Name = "تاريخ الاضافة")]
+
         public DateTime CreatedDateTime { get; set; }
 
         [ForeignKey("TypeId")]

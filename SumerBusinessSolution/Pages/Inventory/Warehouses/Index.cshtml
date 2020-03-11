@@ -1,79 +1,137 @@
 ﻿@page
 @model SumerBusinessSolution.Inventory.Warehouses.IndexModel
+@using Sumer.Utility
+@using Microsoft.AspNetCore.Localization
+@using System.ComponentModel.DataAnnotations;
+@*@inject IHtmlLocalizer<IndexModel> htmlLocalizer*@ @*for html lozcalization*@
+@*@inject IStringLocalizer<IndexModel> localizer*@
+@*First Method*@
+@inject Services.CommonLocalizationService localizer
+@*Second and the easier Method*@
+
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
 
-<div class="backgroundWhite">
-    <div class="row px-2 py-2">
-        <div class="col-6">
-            <h3 class="text-info">Warehouses</h3>
-        </div>
-        <div class="col-6 text-right">
-            <a asp-page="Create" class="btn btn-info">New warehouse <i class="far fa-plus-square"></i></a>
+<div class=" backgroundWhite">
+    <div class="row">
+
+        @if (User.IsInRole(SD.AdminEndUser))
+        {
+            <div class="col-md-6">
+                <div class="btn-group">
+                    <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="Create" class="btn btn-info"> <i class="fas fa-plus"></i>@localizer.Get("مخزن")</a>
+                    <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="../Whtypes/Create" class="btn btn-primary"> <i class="fas fa-plus"></i>@localizer.Get("نوع مخزن")</a>
+                </div>
+            </div>
+        }
+        <div class="col-md-6 text-md-right">
+            @*<h2 class="text-info"> المخازن </h2>*@
+            <h2 class="text-info"> @localizer.Get("المخازن") </h2>
+
         </div>
     </div>
-    <form method="post">
-        <div>
-            @if (Model.Warehouse.Count() == 0)
-            {
-                <p>No Service type has been added! Create new service type</p>
 
-            }
-            else
-            {
-        <table class="table table-striped border">
-            <tr>
+
+    <form method="get" asp-page="Index">
+        <div class="border backgroundWhite">
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row" style="margin-top:10px;">
+                            <div class="col-md-2 text-md-right pb-1">
+                                <button asp-route-culture="@Request.RouteValues["culture"]" type="submit" name="submit" value="search" class="btn btn-info form-control">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                            <div class="col-md-5 pb-1">
+
+                                @*@Html.Editor("searchWhCode", new { htmlAttributes = new { @class = "form-control", placeholder = ".....رمز المخزن" } })*@
+                                @Html.Editor("searchWhCode", new { htmlAttributes = new { @class = "form-control text-md-right", placeholder = @localizer.Get("رمز المخزن....") } })
+
+                            </div>
+                            <div class="col-md-5 pb-1">
+                                @*@Html.Editor("searchWhName", new { htmlAttributes = new { @class = "form-control", placeholder = ".....اسم المخزن" } })*@
+                                @Html.Editor("searchWhName", new { htmlAttributes = new { @class = "form-control text-md-right", placeholder = "اسم المخزن...." } })
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+
+    <div>
+        <table class="table table-striped border table-responsive-md table-responsive-lg">
+            <tr class="table-secondary">
+                
                 <th>
-                    @Html.DisplayNameFor(m => m.Warehouse[0].WhCode)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(m => m.Warehouse[0].WhName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(m => m.Warehouse[0].WhLocation)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(m => m.Warehouse[0].WhType.Type)
+                    @Html.DisplayNameFor(m => m.Warehouse[0].CreatedDateTime)
                 </th>
                 <th>
                     @Html.DisplayNameFor(m => m.Warehouse[0].ApplicationUser.FirstName)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(m => m.Warehouse[0].CreatedDateTime)
+                    @Html.DisplayNameFor(m => m.Warehouse[0].WhType.Type)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(m => m.Warehouse[0].WhLocation)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(m => m.Warehouse[0].WhName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(m => m.Warehouse[0].WhCode)
                 </th>
             </tr>
-            @foreach (var item in Model.Warehouse)
+            @if (Model.Warehouse.Count() == 0)
             {
-                <tr>
+                @*<h2 class="text-danger text-md-center">لا يوجد مخازن مضافة     </h2>*@
+        <h2 class="text-danger text-md-center">@localizer.Get("لا يوجد مخازن مضافة")</h2>
 
-                    <td>
-                        @Html.DisplayFor(m => item.WhCode)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(m => item.WhName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(m => item.WhLocation)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(m => item.WhType.Type)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(m => item.ApplicationUser.FirstName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(m => item.CreatedDateTime)
-                    </td>
-                    
-                </tr>
+            }
+            else
+            {
+                @foreach (var item in Model.Warehouse)
+                {
+        <tr>
+
+
+
+
+
+
+            <td>
+                @Html.DisplayFor(m => item.CreatedDateTime)
+            </td>
+            <td>
+                @Html.DisplayFor(m => item.ApplicationUser.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(m => item.WhType.Type)
+            </td>
+            <td>
+                @Html.DisplayFor(m => item.WhLocation)
+            </td>
+            <td>
+                @Html.DisplayFor(m => item.WhName)
+            </td>
+            <td>
+                @Html.DisplayFor(m => item.WhCode)
+            </td>
+
+        </tr>
+                }
             }
         </table>
-            }
-        </div>
 
-    </form>
- </div>
-  
+    </div>
+
+</div>
+

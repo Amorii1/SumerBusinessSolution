@@ -1,0 +1,128 @@
+﻿@page
+@model SumerBusinessSolution.Pages.Inventory.Products.CreateModel
+@using Sumer.Utility
+@using Microsoft.AspNetCore.Localization
+@using System.ComponentModel.DataAnnotations;
+@*@inject IHtmlLocalizer<IndexModel> htmlLocalizer*@ @*for html lozcalization*@
+@*@inject IStringLocalizer<IndexModel> localizer*@
+@*First Method*@
+@inject Services.CommonLocalizationService localizer
+@*Second and the easier Method*@
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+<div class="  border backgroundWhite">
+    @*<h2 class="text-info">اضافة مادة جديدة</h2>*@
+    <h2 class="text-info  text-md-right">@localizer.Get("اضافة منتج جديد")</h2>
+
+    <form method="post" enctype="multipart/form-data">
+
+
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="row form-group">
+
+            <div class="col-md-5 offset-md-5">
+                <input asp-for="ProductInfo.ProdCode" class="form-control  text-md-right" />
+            </div>
+            <div class="col-md-2">
+                <label asp-for="ProductInfo.ProdCode"> </label>
+            </div>
+        </div>
+        <div class="row form-group">
+
+            <div class="col-md-5  offset-md-5">
+                <input asp-for="ProductInfo.ProdName" class="form-control  text-md-right" />
+            </div>
+            <div class="col-md-2">
+                <label asp-for="ProductInfo.ProdName"></label>
+            </div>
+        </div>
+        <div class="row form-group">
+
+            <div class="col-md-5  offset-md-5">
+                <textarea asp-for="ProductInfo.ProdDescription" class="form-control  text-md-right"></textarea>
+            </div>
+            <div class="col-md-2">
+                <label asp-for="ProductInfo.ProdDescription"></label>
+            </div>
+        </div>
+        <div class="custom-file">
+            <div class="row form-group">
+
+
+                <div class="col-md-5  offset-md-5">
+                    <input type="file" asp-for="img" class="form-control p-md-1 ">
+                </div>
+                <div class="col-md-2">
+                    <label asp-for="ProductInfo.ImgFile"></label>
+                </div>
+            </div>
+        </div>
+        <br />
+        <br />
+
+        @*<div class="row form-group">
+                <div class="col-2">
+                    <label asp-for="ProductInfo.ProdCategory"></label>
+                </div>
+                <div class="col-5">
+                    <input asp-for="ProductInfo.ProdCategory" class="form-control" />
+                </div>
+            </div>*@
+        <div class="row form-group">
+
+            <div class="col-md-5  offset-md-5">
+                <input asp-for="ProductInfo.RetailPrice" class="form-control  text-md-right" />
+            </div>
+            <div class="col-md-2">
+                <label asp-for="ProductInfo.RetailPrice"></label>
+            </div>
+        </div>
+        <div class="row form-group">
+
+            <div class="col-md-5  offset-md-5">
+                <input asp-for="ProductInfo.WholePrice" class="form-control  text-md-right" />
+            </div>
+            <div class="col-md-2">
+                <label asp-for="ProductInfo.WholePrice"></label>
+            </div>
+        </div>
+        @*<div class="row form-group">
+                <div class="col-2">
+                    <label asp-for="ProductInfo.CreatedBy"></label>
+                </div>
+                <div class="col-5">
+                    <input asp-for="ProductInfo.CreatedBy" class="form-control" />
+                </div>
+            </div>*@
+
+        <div class=" form-group row">
+            <div class="col-md-5 offset-md-5">
+                <div class="row">
+
+                    <div class="col-md-6">
+                        @*<a asp-page="Index" class="btn btn-success form-control">الرجوع</a>*@
+                        <a asp-page="Index" asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-success form-control">@localizer.Get("الغاء")</a>
+
+                    </div>
+                    <div class="col-md-6">
+                        @*<input type="submit" class="btn btn-info form-control" value="حفظ" />*@
+                        <input  asp-route-culture="@Request.RouteValues["culture"]" type="submit" class="btn btn-info form-control" value="@localizer.Get("اضافة")" />
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+    </form>
+</div>
+@*@section Script{
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");
+            }
+
+
+    }*@

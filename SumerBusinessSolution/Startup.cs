@@ -13,6 +13,14 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SumerBusinessSolution.Transactions;
+using System.Globalization;
+using Microsoft.AspNetCore.Localization;
+using Microsoft.Extensions.Options;
+using SumerBusinessSolution.Services;
+using System.Reflection;
+using SumerBusinessSolution.Resources;
+using SumerBusinessSolution.RouteModelConventions;
+using Microsoft.AspNetCore.Localization.Routing;
 
 namespace SumerBusinessSolution
 {
@@ -28,19 +36,57 @@ namespace SumerBusinessSolution
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
-             //   .AddDefaultTokenProviders()
+                //   .AddDefaultTokenProviders()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddRazorPages();
 
+            services.AddLocalization(options => options.ResourcesPath = "Resources");
+            services.Configure<RequestLocalizationOptions>(options =>
+            {
+                var supportedCultures = new[]
+                 {
+        new CultureInfo("ar"),
+        new CultureInfo("en"),
+        //new CultureInfo("fr"),
+        //new CultureInfo("es")
+    };
+                options.DefaultRequestCulture = new RequestCulture("ar");
+                options.SupportedCultures = supportedCultures;
+                options.SupportedUICultures = supportedCultures;
+                options.RequestCultureProviders.Insert(0, new RouteDataRequestCultureProvider { Options = options });
+            });
+            services.AddSingleton<CommonLocalizationService>();
+            services.AddMvc().AddViewLocalization();
 
+            services.AddRazorPages(options => {
+                options.Conventions.Add(new CultureTemplatePageRouteModelConvention());
+            });
+
+            services.AddMvcCore().AddViewLocalization();
             services.AddTransient<IInventoryTrans, InventoryTrans>();
             services.AddTransient(typeof(IInventoryTrans), typeof(InventoryTrans));
             services.AddHttpContextAccessor();
 
+            services.AddMvc().AddViewLocalization().AddDataAnnotationsLocalization(options =>
+            {
+                options.DataAnnotationLocalizerProvider = (type, factory) =>
+                {
+                    var assemblyName = new AssemblyName(typeof(CommonResources).GetTypeInfo().Assembly.FullName);
+                    return factory.Create(nameof(CommonResources), assemblyName.Name);
+                };
+            });
+
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = "/Identity/Account/Login";
+                options.LogoutPath = "/Identity/Account/Logout";
+                options.AccessDeniedPath = "/Identity/Account/AccessDenied";
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -57,11 +103,15 @@ namespace SumerBusinessSolution
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
- 
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
             app.UseRouting();
+
+            var localizationOptions = app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>().Value;
+            app.UseRequestLocalization(localizationOptions);
+
+
 
             app.UseAuthentication();
             app.UseAuthorization();

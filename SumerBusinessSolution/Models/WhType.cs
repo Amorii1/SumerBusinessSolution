@@ -11,6 +11,8 @@ namespace SumerBusinessSolution.Models
         [Required]
         public int Id { get; set; }
         [Required]
+       [Display(Name = "نوع المخزن")]
+
         public string Type { get; set; }
     }
 }

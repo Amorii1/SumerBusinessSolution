@@ -18,7 +18,11 @@ namespace SumerBusinessSolution.Models
         public int ProdId { get; set; }
      
         [Required]
+      [Display(Name = "الكمية")]
+
         public double Qty { get; set; }
+      [Display(Name = "وحدة القياس")]
+
         public string UOM { get; set; }
 
 

@@ -26,20 +26,29 @@ namespace SumerBusinessSolution.Pages.Inventory.Transfer
 
         //public InvTransfer InvTransfer { get; set; }
         //public Warehouse Warehouse { get; set; }
-        public IList<Warehouse> Warehouselist { get; set; }
-        
+        public IEnumerable<Warehouse> Warehouselist { get; set; }
+        public IEnumerable<Warehouse> WarehouselistTo { get; set; }
+
         [Required]
         [BindProperty]
+     [Display(Name ="رمز المنتج")]
         public string ProdCode { get; set; }
         [BindProperty]
+      [Display(Name = "من المخزن ")]
+
         public int FromWhId { get; set; }
         [BindProperty]
+        [Display(Name = "الى المخزن ")]
+
         public int ToWhId { get; set; }
 
         [Required]
         [BindProperty]
+
+       [Display(Name = "الكمية ")]
         public double Qty { get; set; }
         [BindProperty]
+       [Display(Name = "الملاحظات")]
         public string Note { get; set; }
         
         [TempData]
@@ -48,6 +57,8 @@ namespace SumerBusinessSolution.Pages.Inventory.Transfer
         public void OnGet()
         {
             Warehouselist = _db.Warehouse.ToList();
+            WarehouselistTo = _db.Warehouse.ToList().OrderByDescending(wh => wh.Id);
+
         }
 
         public JsonResult OnGetSearchNow(string term)
@@ -72,7 +83,8 @@ namespace SumerBusinessSolution.Pages.Inventory.Transfer
             }
             catch
             {
-                StatusMessage = "Error! Product code can not be found";
+                //StatusMessage = "Error! Product code can not be found";
+                StatusMessage = "عذراً! رمز المنتج غير موجود";
                 return RedirectToPage("/inventory/transfer/create");
             }
 
