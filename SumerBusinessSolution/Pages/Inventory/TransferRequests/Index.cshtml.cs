@@ -27,68 +27,51 @@ namespace SumerBusinessSolution.Inventory.TransferRequests
             _db = db;
             _InveTrans = InveTrans;
         }
+
+        public ProdInfo ProdInfo { get; set; }
+
         [BindProperty]
-        public IList<InvTransfer> InvTransferList { get; set; }
+        public IEnumerable<InvTransferHeader> InvTransferHeaderList { get; set; }
+
+         public InvTransferHeader InvTransferHeader { get; set; }
+
+ 
         [BindProperty]
         public int ReqId { get; set; }
         [TempData]
         public string StatusMessage { get; set; }
         public async Task<IActionResult> OnGet()
         {
-            InvTransferList = await _db.InvTransfer.Include(tr => tr.ProdInfo).Include(tr => tr.FromWarehouse).Include(tr => tr.ToWarehouse).Include(tr => tr.ApplicationUser)
-               .Where(tr => tr.TransferStatus == SD.Pending).ToListAsync();
+ 
+            InvTransferHeaderList = _db.InvTransferHeader
+                .Include(tr => tr.FromWarehouse).Include(tr => tr.ToWarehouse)
+               .Include(tr => tr.ApplicationUser)
+              .Where(tr => tr.TransferStatus == SD.Pending).ToList().OrderBy(tr => tr.CreatedDateTime);
+
+
 
             return Page();
 
         }
-        public IActionResult OnPostApproveTransferRequests(int ReqId)
+        public  IActionResult  OnPostApproveTransferRequests(int ReqId)
         {
 
-            bool InvTransfer = _InveTrans.ApproveInvTransferRequest(ReqId).GetAwaiter().GetResult();
-            if (InvTransfer == true)
-            {
-                StatusMessage = "New goods have been Transfered successfully.";
-
-            }
-            else
-            {
-                StatusMessage = "New goods have not been transfered successfully.";
-
-            }
+            StatusMessage = _InveTrans.ApproveInvTransferRequest(ReqId).GetAwaiter().GetResult();
 
             return RedirectToPage("/Inventory/transferrequests/index");
         }
+ 
         public IActionResult OnPostRejectTransferRequests(int ReqId)
         {
 
-            bool InvTransfer = _InveTrans.RejectInvTransferRequest(ReqId).GetAwaiter().GetResult();
-            if (InvTransfer == true)
-            {
-                StatusMessage = "New goods have not been Transfered successfully.";
-
-            }
-            else
-            {
-                StatusMessage = "New goods have been transfered successfully.";
-
-            }
-
+            StatusMessage = _InveTrans.RejectInvTransferRequest(ReqId).GetAwaiter().GetResult();
+ 
             return RedirectToPage("/Inventory/transferrequests/index");
         }
-        public IActionResult OnPostDeleteTransferRequests(int ReqId)
+        public IActionResult OnPostDeleteTransferRequests(int ReqId) 
         {
 
-            bool InvTransfer = _InveTrans.DeleteInvTransferRequest(ReqId).GetAwaiter().GetResult();
-            if (InvTransfer == true)
-            {
-                StatusMessage = "New goods have  been deleted successfully.";
-
-            }
-            else
-            {
-                StatusMessage = "New goods have been deleted successfully.";
-
-            }
+            StatusMessage = _InveTrans.DeleteInvTransferRequestHeader(ReqId).GetAwaiter().GetResult();       
 
             return RedirectToPage("/Inventory/transferrequests/index");
         }

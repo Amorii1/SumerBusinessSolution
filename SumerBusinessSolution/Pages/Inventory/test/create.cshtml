@@ -1,0 +1,142 @@
+﻿@page
+@model SumerBusinessSolution.createModel
+@{
+    ViewData["Title"] = "create";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<head>
+
+</head>
+<body style="margin-left:150px;">
+
+
+    <style>
+        th {
+            text-align: left;
+        }
+
+        td {
+            padding: 5px;
+        }
+    </style>
+    <div style="width:700px; padding:5px; background-color:white;">
+        @using (Html.BeginForm("BulkData", "Save", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+
+            @*if (ViewBag.Message != null)
+                {
+                    <div style="border:solid 1px green">
+                        @ViewBag.Message
+                    </div>
+                }*@
+
+            <div><a href="#" id="addNew">Add New</a></div>
+            <table id="dataTable" border="0" cellpadding="0" cellspacing="0">
+                <tr>
+                    <th>Product Code</th>
+                    <th>Qty</th>
+                    <th>Warehouse</th>
+
+                    <th></th>
+                </tr>
+                @if (Model.ci != null && Model.ci.Count > 0)
+                {
+                    int j = 0;
+
+                    foreach (var i in Model.ci)
+                    {
+                        <tr style="border:1px solid black">
+                            @*float a= (float)((ArrayList)paredes[i])[0];*@
+                            @*<td>@Html.TextBoxFor(a => a[j].ContactName)</td>*@
+                            @*<td> <input type="text" id="ProdInfo" class="form-control text-md-right" asp-for="@Model.ci[j].ProdId" /></td>*@
+                            <td>@Html.TextBoxFor(a => Model.ci[j].ProdInfo.ProdCode, new { @id = "ProdInfo" }) </td>
+                            <td>@Html.TextBoxFor(a => Model.ci[j].Qty)</td>
+                            <td>@Html.TextBoxFor(a => Model.ci[j].WhId)</td>
+
+                            <td>
+                                @if (j > 0)
+                                {
+                                    // <input type="button" value="Delete" onclick="deleteRow(this)">
+                                    <a href="#" id="removeThis" class="remove">Remove</a>
+
+                                }
+                            </td>
+                        </tr>
+                        j++;
+                    }
+                }
+            </table>
+            <input type="submit" value="Save Bulk Data" />
+        }
+    </div>
+
+    <script>
+        function RemoveRow(r) {
+
+            var i = r.parentNode.parentNode.rowIndex;
+            document.getElementById("dataTable").deleteRow(i);
+        }
+
+    </script>
+
+    @* Here I will add Jquery Code for validation / dynamically add new rows / Remove rows etc *@
+
+    @section Scripts{
+        <script language="javascript">
+            $(document).ready(function () {
+
+                //1. Add new row
+                $("#addNew").click(function (e) {
+                    e.preventDefault();
+                    var $tableBody = $("#dataTable");
+                    var $trLast = $tableBody.find("tr:last");
+
+                    var $trNew = $trLast.clone();
+                    $trNew.find(':text').val('');
+                
+                    var suffix = $trNew.find(':input:first').attr('name').match(/\d+/);
+                    $trNew.find("td:last").html('<a href="#" id="removeThis" onclick="return RemoveRow(this)" class="remove">Remove</a>');
+
+
+                    $.each($trNew.find(':input'), function (i, val) {
+                        // Replaced Name
+                        var oldN = $(this).attr('name');
+                        var newN = oldN.replace('[' + suffix + ']', '[' + (parseInt(suffix) + 1) + ']');
+                        $(this).attr('name', newN);
+                        //Replaced value
+                        var type = $(this).attr('type');
+                        if (type.toLowerCase() == "text") {
+                            $(this).attr('value', '');
+                        }
+
+                        // If you have another Type then replace with default value
+                        $(this).removeClass("input-validation-error");
+
+                    });
+                    $trLast.after($trNew);
+
+                });
+
+
+
+            });
+        </script>
+        <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+        <script>
+         $(document).ready(function () {
+    $('#ProdInfo').autocomplete({
+    source: '@Url.Page("create", "SearchNow")'
+    });
+    });
+        </script>
+    }
+</body>
+
+ 
+

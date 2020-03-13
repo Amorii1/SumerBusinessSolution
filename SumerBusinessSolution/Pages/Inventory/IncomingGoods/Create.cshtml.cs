@@ -98,7 +98,7 @@ namespace SumerBusinessSolution.Pages.Inventory.IncomingGoods
                 return RedirectToPage("/inventory/incominggoods/create");
             }
 
-            bool incomingoods = _InveTrans.CreateIncomingGoods(WhId, ProdId, Qty, Note).GetAwaiter().GetResult();
+            bool incomingoods = true; //_InveTrans.CreateIncomingGoods(WhId, ProdId, Qty, Note).GetAwaiter().GetResult();
 
             if (incomingoods == true)
             {

@@ -17,108 +17,168 @@
 <div class="border backgroundWhite">
     <partial name="_StatusMessage" model="Model.StatusMessage" />
     @*<h2 class="text-info">طلب حركة المواد</h2>*@
-<h2 class="text-info text-md-right"> @localizer.Get("طلب حركة للمنتج")</h2>
+    <h2 class="text-info text-md-right"> @localizer.Get("طلب حركة للمنتج")</h2>
 
-    <form method="post">
-
-        @*<input type="hidden" asp-for="InvTransfer.CreatedById" />*@
-
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        <br />
+    @using (Html.BeginForm("BulkData", "Save", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
 
 
-        <div class="form-group row">
+        <table id="dataTable" border="0" cellpadding="0" cellspacing="0">
+            <tr>
+                <td>
+                    <select asp-for="a => @Model.FromWhId"
+                            asp-items="@(new SelectList(Model.Warehouselist, "Id", "WhName"))"
+                            class="form-control ">
+                    </select>
+                </td>
+                <td>
+                    <select asp-for="a => @Model.ToWhId"
+                            asp-items="@(new SelectList(Model.WarehouselistTo, "Id", "WhName"))"
+                            class="form-control ">
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <th>Product Code</th>
+                <th>Qty</th>
+                <th>Note</th>
 
-            <div class="col-md-5 offset-md-5">
-                <input type="text" id="ProdInfo" asp-for="ProdCode" class="form-control text-md-right" />
+                <th></th>
+            </tr>
+            @if (Model.InvT != null && Model.InvT.Count > 0)
+            {
+
+                <tr style="border:1px solid black">
+                    <td><input type="text" id="ProdInfo0" asp-for="a => @Model.InvT[0].ProdInfo.ProdCode" class="form-control text-md-right" /></td>
+                    <td><input type="text" asp-for="a => @Model.InvT[0].Qty" class="form-control text-md-right" /></td>
+                    <td><input type="text" asp-for="a => @Model.InvT[0].Note" class="form-control text-md-right" /></td>
+
+                    <td></td>
+
+                </tr>
+                <tr style="border:1px solid black">
+                    <td><input type="text" id="ProdInfo1" asp-for="a => @Model.InvT[1].ProdInfo.ProdCode" class="form-control text-md-right" /></td>
+                    <td><input type="text" asp-for="a => @Model.InvT[1].Qty" class="form-control text-md-right" /></td>
+                    <td><input type="text" asp-for="a => @Model.InvT[1].Note" class="form-control text-md-right" /></td>
+
+                    <td></td>
+
+                </tr>
+                <tr style="border:1px solid black">
+                    <td><input type="text" id="ProdInfo2" asp-for="a => @Model.InvT[2].ProdInfo.ProdCode" class="form-control text-md-right" /></td>
+                    <td><input type="text" asp-for="a => @Model.InvT[2].Qty" class="form-control text-md-right" /></td>
+                    <td><input type="text" asp-for="a => @Model.InvT[2].Note" class="form-control text-md-right" /></td>
+
+                    <td></td>
+                </tr>
+                <tr><br /></tr>
+                <tr>
+                    <td>Note</td>
+                    <td><input type="text" asp-for="@Model.Note" class="form-control text-md-right" /></td>
+                </tr>
+
+            }
+        </table>
+        <input type="submit" value="Save" />
+    }
+
+
+    @*<form method="post">
+
+
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <br />
+
+
+            <div class="form-group row">
+
+                <div class="col-md-5 offset-md-5">
+                    <input type="text" id="ProdInfo" asp-for="ProdCode" class="form-control text-md-right" />
+                </div>
+                <div class="col-md-2">
+                    <label asp-for="ProdCode"></label>
+                </div>
+                <span asp-validation-for="ProdCode" class="text-danger"></span>
             </div>
-            <div class="col-md-2">
-                <label asp-for="ProdCode"></label>
-            </div>
-            <span asp-validation-for="ProdCode" class="text-danger"></span>
-        </div>
 
 
-        <div class="form-group row">
+            <div class="form-group row">
 
-            <div class="col-md-5 offset-md-5">
-                <select asp-for="FromWhId"
-                        asp-items="@(new SelectList(Model.Warehouselist, "Id", "WhName"))"
-                        class="form-control" id="FromWhId">
-                </select>
-            </div>
-            <div class="col-md-2">
-                <label asp-for="FromWhId"></label>
-            </div>
-            @*<span asp-validation-for="InvTransfer.FromWarehouse.Id" class="text-danger"></span>*@
-        </div>
-
-        <div class="form-group row">
-
-            <div class="col-md-5 offset-md-5">
-                <select asp-for="ToWhId"
-                        asp-items="@(new SelectList(Model.WarehouselistTo, "Id", "WhName"))"
-                        class="form-control" id="ToWhId">
-                </select>
-            </div>
-            <div class="col-md-2">
-                <label asp-for="ToWhId"></label>
-            </div>
-            @*<span asp-validation-for="InvTransfer.ToWarehouse.Id" class="text-danger"></span>*@
-        </div>
-
-        <div class="form-group row">
-
-            <div class="col-md-5 offset-md-5">
-                <input asp-for="Qty" class="form-control text-md-right" id="qty" />
+                <div class="col-md-5 offset-md-5">
+                    <select asp-for="FromWhId"
+                            asp-items="@(new SelectList(Model.Warehouselist, "Id", "WhName"))"
+                            class="form-control" id="FromWhId">
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label asp-for="FromWhId"></label>
+                </div>
 
             </div>
-            <div class="col-md-2">
-                <label asp-for="Qty"></label>
+
+            <div class="form-group row">
+
+                <div class="col-md-5 offset-md-5">
+                    <select asp-for="ToWhId"
+                            asp-items="@(new SelectList(Model.WarehouselistTo, "Id", "WhName"))"
+                            class="form-control" id="ToWhId">
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label asp-for="ToWhId"></label>
+                </div>
+
             </div>
-            <span asp-validation-for="Qty" class="text-danger"></span>
-        </div>
 
-        <div class="form-group row">
+            <div class="form-group row">
 
-            <div class="col-md-5 offset-md-5">
-                @*<textarea placeholder="ملاحظات" asp-for="Note" class="form-control"></textarea>*@
-                <textarea placeholder=" @localizer.Get("الملاحظات")" asp-for="Note" class="form-control text-md-right"></textarea>
+                <div class="col-md-5 offset-md-5">
+                    <input asp-for="Qty" class="form-control text-md-right" id="qty" />
 
+                </div>
+                <div class="col-md-2">
+                    <label asp-for="Qty"></label>
+                </div>
+                <span asp-validation-for="Qty" class="text-danger"></span>
             </div>
-            <div class="col-md-2">
-                <label asp-for="Note"></label>
+
+            <div class="form-group row">
+
+                <div class="col-md-5 offset-md-5">
+
+                    <textarea placeholder=" @localizer.Get("الملاحظات")" asp-for="Note" class="form-control text-md-right"></textarea>
+
+                </div>
+                <div class="col-md-2">
+                    <label asp-for="Note"></label>
+                </div>
+                <span asp-validation-for="Note" class="text-danger"></span>
             </div>
-            <span asp-validation-for="Note" class="text-danger"></span>
-        </div>
 
-        <div class="form-group row">
-            <div class="col-md-5 offset-md-5">
-                <div class="row">
+            <div class="form-group row">
+                <div class="col-md-5 offset-md-5">
+                    <div class="row">
 
 
-                    <div class="col-md-6">
-                        @*<a asp-page="Index" class="btn btn-success form-control">رجوع</a>*@
-                        <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="Index" class="btn btn-success form-control"> @localizer.Get("الغاء")</a>
+                        <div class="col-md-6">
 
-                    </div>
-                    <div class="col-md-6">
-                        @*<button type="submit" class="btn btn-info form-control" onclick="return ValidateInput()">حفظ</button>*@
-                        <button asp-route-culture="@Request.RouteValues["culture"]" type="submit" class="btn btn-info form-control" onclick="return ValidateInput()"> @localizer.Get("ارسال الطلب")</button>
+                            <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="Index" class="btn btn-success form-control"> @localizer.Get("الغاء")</a>
 
+                        </div>
+                        <div class="col-md-6">
+                             <button asp-route-culture="@Request.RouteValues["culture"]" type="submit" class="btn btn-info form-control" onclick="return ValidateInput()"> @localizer.Get("ارسال الطلب")</button>
+
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        @*<div class="row">
-                <div class="col-7">
-                    <button type="submit" class="btn btn-info" onclick="return ValidateInput()">SAVE</button>
-                </div>
-            </div>*@
 
-    </form>
+        </form>*@
 </div>
+
 
 
 @section Scripts {
@@ -130,11 +190,18 @@
 
     <script>
          $(document).ready(function () {
-    $('#ProdInfo').autocomplete({
+    $('#ProdInfo0').autocomplete({
+    source: '@Url.Page("Create", "SearchNow")'
+    });
+             $('#ProdInfo1').autocomplete({
+    source: '@Url.Page("Create", "SearchNow")'
+             });
+             $('#ProdInfo2').autocomplete({
     source: '@Url.Page("Create", "SearchNow")'
     });
     });
     </script>
+
 
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script>

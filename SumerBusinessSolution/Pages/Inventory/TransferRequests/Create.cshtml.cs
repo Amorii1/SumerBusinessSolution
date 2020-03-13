@@ -56,8 +56,22 @@ namespace SumerBusinessSolution.Pages.Inventory.TransferRequests
         [TempData]
         public string StatusMessage { get; set; }
 
+        [BindProperty]
+        public List<InvTransfer> InvT { get; set; }
+
         public void OnGet()
         {
+            var InvT1 = new InvTransfer { ProdId = 0, Qty = 0, Note = "" };
+            var InvT2 = new InvTransfer { ProdId = 0, Qty = 0, Note = "" };
+            var InvT3 = new InvTransfer { ProdId = 0, Qty = 0, Note = "" };
+
+            InvT = new List<InvTransfer> { new InvTransfer { ProdId = 0, Qty = 0, Note = "" } };
+
+            InvT.Add(InvT1);
+            InvT.Add(InvT2);
+            InvT.Add(InvT3);
+
+
             Warehouselist = _db.Warehouse.ToList();
             WarehouselistTo = _db.Warehouse.ToList().OrderByDescending(wh => wh.Id);
         }
@@ -77,19 +91,20 @@ namespace SumerBusinessSolution.Pages.Inventory.TransferRequests
 
         public IActionResult OnPost()
         {
-            int ProdId;
-            try
-            {
-                ProdId = _db.ProdInfo.FirstOrDefault(pro => pro.ProdCode == ProdCode).Id;
-            }
-            catch
-            {
-                //StatusMessage = "Error! Product code can not be found";
-                StatusMessage = "عذرا! رمز المنتج غير موجود";
-                return RedirectToPage("/inventory/transferrequests/create");
-            }
+            //int ProdId;
+            //try
+            //{
+            //    ProdId = _db.ProdInfo.FirstOrDefault(pro => pro.ProdCode == ProdCode).Id;
+            //}
+            //catch
+            //{
+            //    //StatusMessage = "Error! Product code can not be found";
+            //    StatusMessage = "عذرا! رمز المنتج غير موجود";
+            //    return RedirectToPage("/inventory/transferrequests/create");
+            //}
+            StatusMessage = _InveTrans.CreateInvTransferRequest(FromWhId, ToWhId, Note, InvT).GetAwaiter().GetResult();
 
-            StatusMessage = _InveTrans.CreateInvTransferRequest(ProdId, FromWhId, ToWhId, Qty, Note).GetAwaiter().GetResult();
+           // StatusMessage = _InveTrans.CreateInvTransferRequest(ProdId, FromWhId, ToWhId, Qty, Note).GetAwaiter().GetResult();
 
             //if (invTransfer == true)
             //{

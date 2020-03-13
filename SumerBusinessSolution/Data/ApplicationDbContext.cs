@@ -14,9 +14,13 @@ namespace SumerBusinessSolution.Data
         {
         }
 
+        // Inventory Model
         public DbSet<ApplicationUser> ApplicationUser { get; set; }
         public DbSet<InvStockQty> InvStockQty { get; set; }
         public DbSet<InvTransaction> InvTransaction { get; set; }
+
+        public DbSet<InvTransferHeader> InvTransferHeader { get; set; }
+
         public DbSet<InvTransfer> InvTransfer { get; set; }
         public DbSet<ProdInfo> ProdInfo { get; set; }
         public DbSet<Warehouse> Warehouse { get; set; }
@@ -24,5 +28,10 @@ namespace SumerBusinessSolution.Data
         public DbSet<IncomingGood> IncomingGood { get; set; }
         public DbSet<TempProdImg> TempProdImg { get; set; }
         public DbSet<ProdImg> ProdImg { get; set; }
+
+        // Customer Model
+        public DbSet<Customer> Customer { get; set; }
+        public DbSet<CustAcc> CustAcc { get; set; }
+
     }
 }

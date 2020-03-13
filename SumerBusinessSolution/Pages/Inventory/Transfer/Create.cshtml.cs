@@ -54,10 +54,81 @@ namespace SumerBusinessSolution.Pages.Inventory.Transfer
         [TempData]
         public string StatusMessage { get; set; }
 
+
+        [BindProperty]
+        public List<InvTransfer> InvT { get; set; }
+
         public void OnGet()
         {
+            var InvT1 = new InvTransfer { ProdId = 0, Qty = 0, Note = "" };
+            var InvT2 = new InvTransfer { ProdId = 0, Qty = 0, Note = "" };
+            var InvT3 = new InvTransfer { ProdId = 0, Qty = 0, Note = "" };
+
+            InvT = new List<InvTransfer> { new InvTransfer { ProdId = 0, Qty = 0, Note = "" } };
+
+            InvT.Add(InvT1);  
+            InvT.Add(InvT2);
+            InvT.Add(InvT3);
+
+
             Warehouselist = _db.Warehouse.ToList();
             WarehouselistTo = _db.Warehouse.ToList().OrderByDescending(wh => wh.Id);
+
+        }
+
+ 
+        public IActionResult OnPost()
+        {
+ 
+                // int ProdId;
+
+                // if (ModelState.IsValid)
+                //  {
+                //using (_db dc = new MyDatabaseEntities())
+                //{
+                //foreach (var i in ci)
+                //{
+                //    if(i == null)
+                //    {
+                //        break;
+                //    }
+                //    ProdId = _db.ProdInfo.FirstOrDefault(pro => pro.ProdCode == i.ProdInfo.ProdCode).Id;
+                //    // _db.IncomingGood.Add(i);
+
+                //}
+                 StatusMessage = _InveTrans.CreateInvTransfer(FromWhId, ToWhId, InvT).GetAwaiter().GetResult();
+                //_db.SaveChanges();
+             //   StatusMessage = StatusMessage;
+              //  ModelState.Clear();
+
+                // }
+                // }
+          
+        
+
+            //int ProdId;
+            //try
+            //{
+            //     ProdId = _db.ProdInfo.FirstOrDefault(pro => pro.ProdCode == ProdCode).Id;
+            //}
+            //catch
+            //{
+            //    //StatusMessage = "Error! Product code can not be found";
+            //    StatusMessage = "عذراً! رمز المنتج غير موجود";
+            //    return RedirectToPage("/inventory/transfer/create");
+            //}
+
+            // StatusMessage = _InveTrans.CreateInvTransfer(ProdId, FromWhId, ToWhId, Qty, Note).GetAwaiter().GetResult();
+
+            //if (invTransfer == true)
+            //{
+            //    StatusMessage = "New goods have been transfered successfully.";
+            //}
+            //else
+            //{
+            //    StatusMessage = "Error! New goods have not been transfered.";
+            //}
+            return RedirectToPage("/inventory/transfer/create");
 
         }
 
@@ -74,32 +145,6 @@ namespace SumerBusinessSolution.Pages.Inventory.Transfer
             return new JsonResult(lstProdCode);
         }
 
-        public IActionResult OnPost()
-        {
-            int ProdId;
-            try
-            {
-                 ProdId = _db.ProdInfo.FirstOrDefault(pro => pro.ProdCode == ProdCode).Id;
-            }
-            catch
-            {
-                //StatusMessage = "Error! Product code can not be found";
-                StatusMessage = "عذراً! رمز المنتج غير موجود";
-                return RedirectToPage("/inventory/transfer/create");
-            }
-
-            StatusMessage = _InveTrans.CreateInvTransfer(ProdId, FromWhId, ToWhId, Qty, Note).GetAwaiter().GetResult();
-
-            //if (invTransfer == true)
-            //{
-            //    StatusMessage = "New goods have been transfered successfully.";
-            //}
-            //else
-            //{
-            //    StatusMessage = "Error! New goods have not been transfered.";
-            //}
-            return RedirectToPage("/inventory/transfer/create");
-
-        }
+      
     }
 }

@@ -23,6 +23,9 @@ namespace Sumer.Utility
             public const string Approved = "Approved";
             public const string Rejected = "Rejected";
 
+            // Customers Status Types 
+            public const string ActiveCustomer = "Active";
+            public const string InactiveCustomer = "Inactive";
 
 
 
@@ -31,21 +34,4 @@ namespace Sumer.Utility
     }
 }
 
-//        public static class TransferStatus
-//        {
-//            public const string Pending = "Pending";
-//            public const string Approved = "Approved";
-//            public const string Rejected = "Rejected";
-
-//        }
-
-//        public static class TransactionType
-//        {
-//            public const string Incoming = "Incoming";
-//            public const string TransferIn = "Transfer In";
-//            public const string TransferOut = "Transfer Out";
-//            public const string Sales = "Sales";
-
-//        }
-//    }
-//}
+ 

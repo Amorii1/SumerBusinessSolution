@@ -26,16 +26,19 @@ namespace SumerBusinessSolution.Inventory.Transfer
         public IEnumerable<InvTransfer> InvTransferList { get; set; }
 
          public InvTransfer InvTransfers { get; set; }
+
+        public InvTransferHeader InvTransferHeader { get; set; }
+
         public ProdInfo ProdInfo { get; set; }
         public Warehouse Warehouse { get; set; }
 
 
         public  IActionResult OnGet(string searchCreateDateTime = null, string searchProdCode = null)
         {
-            InvTransferList =  _db.InvTransfer.Include(tr => tr.ProdInfo).Include(tr=>tr.FromWarehouse).Include(tr => tr.ToWarehouse).Include(tr => tr.ApplicationUser)
-               .Where(tr => tr.CreatedDateTime > DateTime.Now.AddMonths(-2) & tr.TransferStatus == SD.Approved).ToList().OrderBy(tr=>tr.CreatedDateTime);
-
-          
+            InvTransferList = _db.InvTransfer.Include(tr => tr.ProdInfo).Include(tr => tr.InvTransferHeader)
+                .Include(tr=> tr.InvTransferHeader.FromWarehouse).Include(tr=> tr.InvTransferHeader.ToWarehouse)
+                .Include(tr=> tr.InvTransferHeader.ApplicationUser)
+               .Where(tr => tr.InvTransferHeader.CreatedDateTime > DateTime.Now.AddMonths(-1) & tr.InvTransferHeader.TransferStatus == SD.Approved).ToList().OrderBy(tr => tr.InvTransferHeader.CreatedDateTime);
 
             StringBuilder Param = new StringBuilder();
 
@@ -63,12 +66,25 @@ namespace SumerBusinessSolution.Inventory.Transfer
                 if (searchCreateDateTime != null)
                 {
 
-                    InvTransferList = _db.InvTransfer.Where(u => u.CreatedDateTime.ToString().Contains(searchCreateDateTime)).ToList();
+                 //   InvTransferList = _db.InvTransfer.Where(u => u.CreatedDateTime.ToString().Contains(searchCreateDateTime)).ToList();
 
                 }
 
             }
             return Page();
+        }
+
+        public JsonResult OnGetSearchNow(string term)
+        {
+            if (term == null)
+            {
+                return new JsonResult("Not Found");
+            }
+            IQueryable<string> lstProdCode = from P in _db.ProdInfo
+                                             where (P.ProdCode.Contains(term))
+                                             select P.ProdCode;
+            return new JsonResult(lstProdCode);
+
         }
     }
 }

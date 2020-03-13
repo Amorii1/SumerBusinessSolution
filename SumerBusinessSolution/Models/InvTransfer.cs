@@ -12,61 +12,27 @@ namespace SumerBusinessSolution.Models
     {
         public int Id { get; set; }
 
-        //[Required]
+        public int HeaderId { get; set; }
+
         public int? ProdId { get; set; }
-
-        //[Required]
-        public int? FromWhId { get; set; }
-     
-        //[Required]
-        public int? ToWhId { get; set; }
-
-        [Required]
+  
+       [Required]
        [Display(Name = "الكمية")]
-
         public double Qty { get; set; }
+
        [Display(Name = "وحدة القياس")]
-
         public string UOM { get; set; }
-        [Required]
-        [Display(Name = "حالة الحركة")]
 
-        public string TransferStatus { get; set; }
-
-        [Required]
-        [Display(Name = "تاريخ الحركة ")]
-
-        public DateTime CreatedDateTime { get; set; }
-
-        [Required]
-        [Display(Name = "معرف المنشئ")]
-        public string CreatedById { get; set; }
-
-        public string ApprovedById { get; set; }
-        [Display(Name = "الملاحظات")]
-
+        
         public string Note { get; set; }
 
-
-
-        [ForeignKey("CreatedById")]
-        public virtual ApplicationUser ApplicationUser { set; get; }
-
-        [ForeignKey("ApprovedById")]
-        public virtual ApplicationUser ApprovedApplicationUser { set; get; }
 
         [ForeignKey("ProdId")]
         public virtual ProdInfo ProdInfo { set; get; }
 
-        [ForeignKey("ToWhId")]
-       [Display(Name ="من المخزن")]
-        
-        public virtual Warehouse FromWarehouse { set; get; }
+        [ForeignKey("HeaderId")]
+        public virtual InvTransferHeader InvTransferHeader { set; get; }
 
-        [ForeignKey("FromWhId")]
-       [Display(Name = "الى المخزن")]
-
-        public virtual Warehouse ToWarehouse { set; get; }
 
 
 

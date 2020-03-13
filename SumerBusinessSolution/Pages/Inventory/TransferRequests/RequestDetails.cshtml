@@ -1,0 +1,101 @@
+﻿@page
+@model SumerBusinessSolution.RequestDetailsModel
+@inject Services.CommonLocalizationService localizer
+@using Sumer.Utility
+@{
+    ViewData["Title"] = "RequestDetails";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<div class=" backgroundWhite">
+    <div class="row">
+ 
+
+        <div class="col-md-6 text-right">
+            @*<h2 class="text-info"> طلبات حركه المنتجات </h2>*@
+            <h2 class="text-info"> @localizer.Get("طلبات حركة المنتجات")</h2>
+
+        </div>
+
+    </div>
+
+    <form method="get" asp-page="Index">
+        <div class="border backgroundWhite">
+
+     
+        </div>
+    </form>
+
+
+    <div>
+
+        <table class="table table-striped border table-responsive-md table-responsive-lg">
+            <tr class="table-secondary">
+
+                <th></th>
+                <th>
+                    @Html.DisplayNameFor(m => m.InvTransfer.ProdInfo.ProdCode)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(m => m.InvTransfer.ProdInfo.ProdName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(m => m.InvTransfer.Qty)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(m => m.InvTransfer.Note)
+                </th>
+            </tr>
+
+            @if (Model.InvTransferList.Count() == 0)
+            {
+                <h2 class="text-danger text-md-center"> @localizer.Get("لا يوجد طلبات")</h2>
+
+            }
+            else
+            {
+                @foreach (var item in Model.InvTransferList)
+                {
+                    <tr>
+
+                        <td>
+                            <div class="btn-group" role="group">
+
+                                @if (User.IsInRole(SD.AdminEndUser))
+                                {
+                                    <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-danger text-white" asp-page-handler="DeleteTransferRequests" asp-route-ReqId="@item.Id" type="submit" title="Delete" name="Delete">
+                                        @localizer.Get("") <i class="fas fa-trash-alt"></i>
+                                    </a>
+                                }
+                            </div>
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(m => item.ProdInfo.ProdCode)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.ProdInfo.ProdName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.Qty)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.Note)
+                        </td>
+                    </tr>
+
+                }
+
+            }
+
+        </table>
+        <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-success text-white" asp-page-handler="DeleteTransferRequests" asp-route-ReqId="Id" type="submit" title="Approve" name="Approve">
+            @localizer.Get("") <i class="fas fa-thumbs-up"></i>
+        </a>
+        <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-danger text-white" asp-page-handler="DeleteTransferRequests" asp-route-ReqId="Id" type="submit" title="Reject" name="Reject">
+            @localizer.Get("") <i class="fas fa-thumbs-down"></i>
+        </a>
+    </div>
+
+</div>
+

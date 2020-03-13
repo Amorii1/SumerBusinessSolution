@@ -26,6 +26,10 @@ namespace SumerBusinessSolution.Transactions
         public ProdInfo ProdInfo { get; set; }
 
         public InvTransfer InvTransfer { get; set; }
+        public InvTransferHeader InvTransferHeader { get; set; }
+        public List<InvTransfer> InvTransferList { get; set; }
+
+
         public InventoryTrans(ApplicationDbContext db, IHttpContextAccessor httpContextAccessor)
         {
             _db = db;
@@ -71,47 +75,90 @@ namespace SumerBusinessSolution.Transactions
         }
 
         // This function used to create Incoming Goods
-        public async Task<bool> CreateIncomingGoods(int WhId, int ProdId, double Qty, string Note)
+        //public async Task<bool> CreateIncomingGoods(int WhId, int ProdId, double Qty, string Note)
+        //{
+        //    try
+        //    {
+        //        DateTime InDateTime = DateTime.Now;
+        //        string sqlFormattedDate = InDateTime.ToString("yyyy-MM-dd HH:mm:ss");
+                
+        //        // creating new incoming goods
+        //        IncomingGood = new IncomingGood
+        //        {
+        //            ProdId = ProdId,
+        //            WhId = WhId,
+        //            Qty = Qty,
+        //            Note = Note,
+        //            CreatedById = GetLoggedInUserId(),
+
+        //            CreatedDateTime = InDateTime //DateTime.Now.GetDateTimeFormats()
+
+        //        };
+        //         _db.IncomingGood.Add(IncomingGood);
+
+        //        //updating Qty of InvStockQty
+        //        ChangeStockQty(ProdId, WhId, Qty, "In");
+                
+        //        // creating transaction 
+        //        CreateInvTransaction(ProdId, WhId, Qty, SD.Incoming);
+
+        //        // Save changes
+        //        await _db.SaveChangesAsync();
+
+        //        return true;
+        //    }
+        //    catch(Exception ex)
+        //    {
+        //        return false;
+        //    }
+        //}
+
+        public async Task<bool> CreateIncomingGoods(List<IncomingGood> IG)
         {
             try
             {
                 DateTime InDateTime = DateTime.Now;
                 string sqlFormattedDate = InDateTime.ToString("yyyy-MM-dd HH:mm:ss");
-                
-                // creating new incoming goods
-                IncomingGood = new IncomingGood
+                int ProdId;
+
+                foreach (var income in IG)
                 {
-                    ProdId = ProdId,
-                    WhId = WhId,
-                    Qty = Qty,
-                    Note = Note,
-                    CreatedById = GetLoggedInUserId(),
+                    ProdId = _db.ProdInfo.FirstOrDefault(pro => pro.ProdCode == income.ProdInfo.ProdCode).Id;
+                    IncomingGood = new IncomingGood
+                    {
+                        ProdId = ProdId,
+                        WhId = income.WhId,
+                        Qty = income.Qty,
+                        Note = income.Note,
+                        CreatedById = GetLoggedInUserId(),
 
-                    CreatedDateTime = InDateTime //DateTime.Now.GetDateTimeFormats()
+                        CreatedDateTime = InDateTime
+                    };
 
-                };
-                 _db.IncomingGood.Add(IncomingGood);
+                    //adding new incoming goods to the list
+                    _db.IncomingGood.Add(IncomingGood);
 
-                //updating Qty of InvStockQty
-                ChangeStockQty(ProdId, WhId, Qty, "In");
-                
-                // creating transaction 
-                CreateInvTransaction(ProdId, WhId, Qty, SD.Incoming);
+                    //updating Qty of InvStockQty
+                    ChangeStockQty(ProdId, income.WhId??0, income.Qty, "In");
 
+                    // creating transaction 
+                    CreateInvTransaction(ProdId, income.WhId ?? 0, income.Qty, SD.Incoming);
+                }
+ 
                 // Save changes
                 await _db.SaveChangesAsync();
 
                 return true;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return false;
             }
         }
 
         //This function deletes incoming Goods based on the id of the selected Incoming Goods. 
-       // Notice this function will decrease the qty of the deleted item 
-       //  also will delete Inv Transaction 
+        // Notice this function will decrease the qty of the deleted item 
+        //  also will delete Inv Transaction 
         public async Task<bool> DeleteIncomingGoods(int IgId)
         {
             try
@@ -144,42 +191,112 @@ namespace SumerBusinessSolution.Transactions
         }
 
         // This function used to create inventory Transfer. The transfer is created only For the Admin
-        public async Task<string> CreateInvTransfer(int ProdId, int FromWhId, int ToWhId, double Qty, string Note)
+        //public async Task<string> CreateInvTransfer(int ProdId, int FromWhId, int ToWhId, double Qty, string Note)
+        //{
+        //    // Check if the warehouse has enough qty of that product
+        //    bool CheckQty = CheckQtyInWh(ProdId, FromWhId, Qty);
+
+        //    if(CheckQty == false)
+        //    {
+        //        return "Error! No enough quantity";
+        //    }
+
+        //    //Decrease Qty of From Warehouse
+        //    ChangeStockQty(ProdId, FromWhId, Qty, "Out");
+
+        //    // Increase Qty of To Warehouse 
+        //    ChangeStockQty(ProdId, ToWhId, Qty, "In");
+
+        //    // Create Inv Transfer Record 
+        //    InvTransfer InvTransfer = new InvTransfer
+        //    {
+        //        ProdId = ProdId,
+        //        FromWhId = FromWhId,
+        //        ToWhId = ToWhId,
+        //        Qty = Qty,
+        //        TransferStatus = SD.Approved,
+        //        CreatedById = GetLoggedInUserId(),
+        //        CreatedDateTime = DateTime.Now, 
+        //        Note = Note
+        //    };
+
+        //    _db.InvTransfer.Add(InvTransfer);
+
+        //    // Create Inv Transaction with Negative Qty of From Warehouse
+        //    CreateInvTransaction(ProdId, FromWhId, Qty * -1, SD.TransferOut);
+
+        //    // Create Inv Transaction with Positive Qty of To Warehouse
+        //    CreateInvTransaction(ProdId, ToWhId, Qty, SD.TransferIn);
+
+        //    await _db.SaveChangesAsync();
+
+        //    //return "تمت عملية التحويل";
+        //    return "Transfer Added Successfully";
+
+        //}
+
+        public async Task<string> CreateInvTransfer(int? FromWhId, int? ToWhId, List<InvTransfer> InvTrans)
         {
+
+            // come back to qty check ////
             // Check if the warehouse has enough qty of that product
-            bool CheckQty = CheckQtyInWh(ProdId, FromWhId, Qty);
+            //bool CheckQty = CheckQtyInWh(ProdId, FromWhId, Qty);
 
-            if(CheckQty == false)
+            //if (CheckQty == false)
+            //{
+            //    return "Error! No enough quantity";
+            //}
+
+            // Create Transfer Header
+
+            InvTransferHeader NewHeader = new InvTransferHeader
             {
-                return "Error! No enough quantity";
-            }
-
-            //Decrease Qty of From Warehouse
-            ChangeStockQty(ProdId, FromWhId, Qty, "Out");
-
-            // Increase Qty of To Warehouse 
-            ChangeStockQty(ProdId, ToWhId, Qty, "In");
-
-            // Create Inv Transfer Record 
-            InvTransfer InvTransfer = new InvTransfer
-            {
-                ProdId = ProdId,
                 FromWhId = FromWhId,
                 ToWhId = ToWhId,
-                Qty = Qty,
                 TransferStatus = SD.Approved,
                 CreatedById = GetLoggedInUserId(),
-                CreatedDateTime = DateTime.Now, 
-                Note = Note
+                CreatedDateTime = DateTime.Now
+
             };
+            _db.InvTransferHeader.Add(NewHeader);
+            await _db.SaveChangesAsync();
 
-            _db.InvTransfer.Add(InvTransfer);
+            int ProdId;
+            foreach(var InvTr in InvTrans)
+            {
+                ProdId = _db.ProdInfo.FirstOrDefault(pro => pro.ProdCode == InvTr.ProdInfo.ProdCode).Id;
 
-            // Create Inv Transaction with Negative Qty of From Warehouse
-            CreateInvTransaction(ProdId, FromWhId, Qty * -1, SD.TransferOut);
+                // Check if the warehouse has enough qty of that product
+                bool CheckQty = CheckQtyInWh(ProdId, FromWhId??0, InvTr.Qty);
+                if (CheckQty == false)
+                {
+                     _db.InvTransferHeader.Remove(NewHeader);
+                    await _db.SaveChangesAsync();
+                    return "Error! No enough quantity: " + InvTr.ProdInfo.ProdCode;
+                }
 
-            // Create Inv Transaction with Positive Qty of To Warehouse
-            CreateInvTransaction(ProdId, ToWhId, Qty, SD.TransferIn);
+
+                InvTransfer InvTransfer = new InvTransfer
+                {
+                    HeaderId = NewHeader.Id,
+                    ProdId = ProdId,
+                    Qty = InvTr.Qty,
+                    Note = InvTr.Note
+                };
+
+                //Decrease Qty of From Warehouse
+                ChangeStockQty(ProdId, FromWhId??0, InvTr.Qty, "Out");
+
+                // Increase Qty of To Warehouse 
+                ChangeStockQty(ProdId, ToWhId??0, InvTr.Qty, "In");
+                _db.InvTransfer.Add(InvTransfer);
+
+                // Create Inv Transaction with Negative Qty of From Warehouse
+                CreateInvTransaction(ProdId, FromWhId??0, InvTr.Qty * -1, SD.TransferOut);
+
+                // Create Inv Transaction with Positive Qty of To Warehouse
+                CreateInvTransaction(ProdId, ToWhId??0, InvTr.Qty, SD.TransferIn);
+            }
 
             await _db.SaveChangesAsync();
 
@@ -190,124 +307,198 @@ namespace SumerBusinessSolution.Transactions
 
         // This function is called when a Store User wants to transfer from a warehouse to another. So this function
         // Will create a request for the Admin to approve
-        public async Task<string> CreateInvTransferRequest(int ProdId, int FromWhId, int ToWhId, double Qty, string Note)
+
+        public async Task<string> CreateInvTransferRequest(int? FromWhId, int? ToWhId, string Note, List<InvTransfer> InvTrans)
         {
-            // Check if the warehouse has enough qty of that product
-            bool CheckQty = CheckQtyInWh(ProdId, FromWhId, Qty);
+            // Create Transfer Header
 
-            if (CheckQty == false)
+            InvTransferHeader NewHeader = new InvTransferHeader
             {
-                //return "Error! الكمية غير كافية للتحويل";
-                return "Error! No enough Qty";
-
-            }
-
-            // Create Inv Transfer Record with Pending Status
-            InvTransfer InvTransfer = new InvTransfer
-            {
-                ProdId = ProdId,
                 FromWhId = FromWhId,
                 ToWhId = ToWhId,
-                Qty = Qty,
                 TransferStatus = SD.Pending,
                 CreatedById = GetLoggedInUserId(),
                 CreatedDateTime = DateTime.Now,
                 Note = Note
-            };
 
-            _db.InvTransfer.Add(InvTransfer);
+            };
+            _db.InvTransferHeader.Add(NewHeader);
             await _db.SaveChangesAsync();
 
-            //return "تم ارسال طلب التحويل";
-            return "Request Added Successfully";
+            int ProdId;
+            foreach (var InvTr in InvTrans)
+            {
+                ProdId = _db.ProdInfo.FirstOrDefault(pro => pro.ProdCode == InvTr.ProdInfo.ProdCode).Id;
+
+                // Check if the warehouse has enough qty of that product
+                bool CheckQty = CheckQtyInWh(ProdId, FromWhId ?? 0, InvTr.Qty);
+                if (CheckQty == false)
+                {
+                    _db.InvTransferHeader.Remove(NewHeader);
+                    await _db.SaveChangesAsync();
+                    return "Error! لايوجد كمية كافية للمادة: " + InvTr.ProdInfo.ProdCode;
+                }
+
+
+                InvTransfer InvTransfer = new InvTransfer
+                {
+                    HeaderId = NewHeader.Id,
+                    ProdId = ProdId,
+                    Qty = InvTr.Qty,
+                    Note = InvTr.Note
+                };
+                _db.InvTransfer.Add(InvTransfer);
+            }
+
+            await _db.SaveChangesAsync();
+
+            return "تم ارسال طلب التحويل";
+            //return "Request Added Successfully";
 
         }
+
+        //public async Task<string> CreateInvTransferRequest(int ProdId, int FromWhId, int ToWhId, double Qty, string Note)
+        //{
+        //    // Check if the warehouse has enough qty of that product
+        //    bool CheckQty = CheckQtyInWh(ProdId, FromWhId, Qty);
+
+        //    if (CheckQty == false)
+        //    {
+        //        //return "Error! الكمية غير كافية للتحويل";
+        //        return "Error! No enough Qty";
+
+        //    }
+
+        //    // Create Inv Transfer Record with Pending Status
+        //    InvTransfer InvTransfer = new InvTransfer
+        //    {
+        //        ProdId = ProdId,
+        //        FromWhId = FromWhId,
+        //        ToWhId = ToWhId,
+        //        Qty = Qty,
+        //        TransferStatus = SD.Pending,
+        //        CreatedById = GetLoggedInUserId(),
+        //        CreatedDateTime = DateTime.Now,
+        //        Note = Note
+        //    };
+
+        //    _db.InvTransfer.Add(InvTransfer);
+        //    await _db.SaveChangesAsync();
+
+        //    //return "تم ارسال طلب التحويل";
+        //    return "Request Added Successfully";
+
+        //}
 
         // When a transfer request is created by the Store user. Admin will call this function to Approve his 
         // Transfer Request
-        public async Task<bool> ApproveInvTransferRequest(int ReqId)
+        public async Task<string> ApproveInvTransferRequest(int ReqId)
         {
             // Get Inventory Object by the ID 
-            InvTransfer = _db.InvTransfer.FirstOrDefault(inv => inv.Id == ReqId);
+            InvTransferHeader = _db.InvTransferHeader.FirstOrDefault(H => H.Id == ReqId);
 
-            if(InvTransfer == null)
+            if (InvTransferHeader == null)
             {
-                return false;
+                return "هذا الطلب غير موجود";
             }
 
-            int ProdId = InvTransfer.ProdId ?? 0;
-            int FromWhId = InvTransfer.FromWhId ?? 0;
-            int ToWhId = InvTransfer.ToWhId ?? 0;
-            double Qty = InvTransfer.Qty;
+            InvTransferList = _db.InvTransfer.Where(inv => inv.HeaderId == ReqId).ToList();
 
-            bool CheckQty = CheckQtyInWh(ProdId, FromWhId, Qty);
-
-            if (CheckQty == false)
+            foreach(InvTransfer Inv in InvTransferList)
             {
-                return false;
+                int ProdId = Inv.ProdId ?? 0;
+                int FromWhId = InvTransferHeader.FromWhId ?? 0;
+                int ToWhId = InvTransferHeader.ToWhId ?? 0;
+                double Qty = Inv.Qty;
+
+                bool CheckQty = CheckQtyInWh(ProdId, FromWhId, Qty);
+
+                if (CheckQty == false)
+                {
+                    return "Error! لايوجد كمية كافية للمادة: " + Inv.ProdInfo.ProdCode;
+                }
+
+                //Decrease Qty of From Warehouse
+                ChangeStockQty(ProdId, FromWhId, Qty, "Out");
+
+                // Increase Qty of To Warehouse 
+                ChangeStockQty(ProdId, ToWhId, Qty, "In");
+
+                // Create Inv Transaction with Negative Qty of From Warehouse
+                CreateInvTransaction(ProdId, FromWhId, Qty * -1, SD.TransferOut);
+
+                // Create Inv Transaction with Positive Qty of To Warehouse
+                CreateInvTransaction(ProdId, ToWhId, Qty, SD.TransferIn);
             }
 
-            //Decrease Qty of From Warehouse
-            ChangeStockQty(ProdId, FromWhId, Qty, "Out");
-
-            // Increase Qty of To Warehouse 
-            ChangeStockQty(ProdId, ToWhId, Qty, "In");
- 
             // Approve Transfer Requrest
 
-            InvTransfer.TransferStatus = SD.Approved;
-            InvTransfer.ApprovedById = GetLoggedInUserId();
-
-            // Create Inv Transaction with Negative Qty of From Warehouse
-            CreateInvTransaction(ProdId, FromWhId, Qty * -1, SD.TransferOut);
-
-            // Create Inv Transaction with Positive Qty of To Warehouse
-            CreateInvTransaction(ProdId, ToWhId, Qty, SD.TransferIn);
+            InvTransferHeader.TransferStatus = SD.Approved;
+            InvTransferHeader.ApprovedById = GetLoggedInUserId();
 
             await _db.SaveChangesAsync();
 
-            return true;
+            return "تمت الموافقة على الطلب بنجاح";
         }
 
         // Admin can reject Inventory transfer request by using this funtion 
-        public async Task<bool> RejectInvTransferRequest(int ReqId)
+        public async Task<string> RejectInvTransferRequest(int ReqId)
         {
 
             // Get Inventory Object by the ID 
-            InvTransfer = _db.InvTransfer.FirstOrDefault(inv => inv.Id == ReqId);
+            InvTransferHeader = _db.InvTransferHeader.FirstOrDefault(H => H.Id == ReqId);
 
-            if (InvTransfer == null)
+            if (InvTransferHeader == null)
             {
-                return false;
+                return "هذا الطلب غير موجود";
             }
             // Reject Transfer Requrest
 
-            InvTransfer.TransferStatus = SD.Rejected;
+            InvTransferHeader.TransferStatus = SD.Rejected;
 
             await _db.SaveChangesAsync();
 
-            return true;
+            return "تم الرفض على الطلب ";
         }
 
-        // user can delete Inventory transfer request by using this funtion 
-        public async Task<bool> DeleteInvTransferRequest(int ReqId)
+        // user can delete Inventory transfer request Header by using this funtion 
+        public async Task<string> DeleteInvTransferRequestHeader(int ReqId)
         {
-
             // Get Inventory Object by the ID 
-            InvTransfer = _db.InvTransfer.FirstOrDefault(inv => inv.Id == ReqId);
+            InvTransferHeader = _db.InvTransferHeader.FirstOrDefault(H => H.Id == ReqId);
+
+            if (InvTransferHeader == null)
+            {
+                return "هذا الطلب غير موجود";
+            }
+            // Delete Transfer Requrest Header
+
+            _db.InvTransferHeader.Remove(InvTransferHeader);
+
+            await _db.SaveChangesAsync();
+
+            return "تم مسح الطلب ";
+        }
+
+        // user can delete Inventory transfer request Line by using this funtion 
+        public async Task<string> DeleteInvTransferRequestLine(int LineId)
+        {
+            // Get Inventory Object by the ID 
+            InvTransfer = _db.InvTransfer.FirstOrDefault(Inv => Inv.Id == LineId);
 
             if (InvTransfer == null)
             {
-                return false;
+                return "هذه المادة غير موجود";
             }
-            // Delete Transfer Requrest
+            // Delete Transfer Requrest Line
 
             _db.InvTransfer.Remove(InvTransfer);
 
             await _db.SaveChangesAsync();
 
-            return true;
+            return "تم مسح المادة ";
         }
+
 
         //This funtion will update the stock qty of a product. By admin only
         public async Task<bool> UpdateProdStkQty(int StkId, double Qty)
