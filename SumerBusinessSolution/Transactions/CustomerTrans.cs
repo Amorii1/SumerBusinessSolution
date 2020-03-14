@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Sumer.Utility;
 using SumerBusinessSolution.Data;
 using SumerBusinessSolution.Models;
@@ -22,21 +23,16 @@ namespace SumerBusinessSolution.Transactions
 
         }
 
+        public Customer Customer { get; set; }
+
         // This function will create a new customer and a new record of Customer Account
-        public async Task<string> CreateCustomer(string ComName, string ContactName, string Address, string PhoneNo) 
+        public async Task<string> CreateCustomer(Customer NewCust)
         {
             try
             {
-                Customer NewCust = new Customer
-                {
-                    CompanyName = ComName,
-                    ContactName = ContactName,
-                    Address = Address,
-                    PhoneNo = PhoneNo,
-                    Status = SD.ActiveCustomer,
-                    CreatedBy = GetLoggedInUserId(),
-                    CreatedDateTime = DateTime.Now
-                };
+                NewCust.Status = SD.ActiveCustomer;
+                NewCust.CreatedById = GetLoggedInUserId();
+                NewCust.CreatedDateTime = DateTime.Now;
 
                 _db.Customer.Add(NewCust);
                 await _db.SaveChangesAsync();
@@ -50,6 +46,17 @@ namespace SumerBusinessSolution.Transactions
                 return "لم تتم علمية الاضافة";
             }
     
+        }
+        // this function Deactivates a customer
+        public async Task<string> CreateCustomer(int CustId)
+        {
+              Customer = await _db.Customer.FirstOrDefaultAsync(cu => cu.Id == CustId);
+
+            Customer.Status = SD.InactiveCustomer;
+
+            await _db.SaveChangesAsync();
+
+            return "تمت العملية بنجاح";
         }
 
         // Helper functions //

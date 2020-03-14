@@ -70,6 +70,9 @@ namespace SumerBusinessSolution
             services.AddMvcCore().AddViewLocalization();
             services.AddTransient<IInventoryTrans, InventoryTrans>();
             services.AddTransient(typeof(IInventoryTrans), typeof(InventoryTrans));
+
+            services.AddTransient<ICustomerTrans, CustomerTrans>();
+            services.AddTransient(typeof(ICustomerTrans), typeof(CustomerTrans));
             services.AddHttpContextAccessor();
 
             services.AddMvc().AddViewLocalization().AddDataAnnotationsLocalization(options =>
@@ -90,7 +93,7 @@ namespace SumerBusinessSolution
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IInventoryTrans InvTrans)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IInventoryTrans InvTrans, ICustomerTrans CustTrans)
         {
             if (env.IsDevelopment())
             {

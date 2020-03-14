@@ -7,32 +7,32 @@ using System.Threading.Tasks;
 
 namespace SumerBusinessSolution.Models
 {
-    public class Customer
+    public class BillHeader
     {
         public int Id { get; set; }
-
+        
         [Required]
-        public string  CompanyName { get; set; }
-
-        [Required]
-        public string ContactName { get; set; }
-
-        public string Address { get; set; }
-        public string PhoneNo { get; set; }
+        public int CustId { get; set; }
 
         [Required]
         public string Status { get; set; }
 
-        [Required]
-        public string CreatedById { get; set; }
+        public double TotalAmt { get; set; }
+        public double Discount { get; set; }
+        public double TotalNetAmt { get; set; }
+        public double PaidAmt { get; set; }
 
         [Required]
-        public DateTime CreatedDateTime { get; set; }
+        public DateTime CraetedDataTime { get; set; }
+        [Required]
+        public string CreatedById { get; set; }
+        public string Note { get; set; }
 
         [ForeignKey("CreatedById")]
         public virtual ApplicationUser ApplicationUser { get; set; }
 
-
+        [ForeignKey("CustId")]
+        public virtual Customer Customer { get; set; }
 
     }
 }
