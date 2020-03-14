@@ -11,10 +11,8 @@ namespace SumerBusinessSolution.Models
     {
         public int Id { get; set; }
 
-        [Required]
         public int HeaderId { get; set; }
 
-        [Required]
         public int ProdId { get; set; }
 
         [Required]

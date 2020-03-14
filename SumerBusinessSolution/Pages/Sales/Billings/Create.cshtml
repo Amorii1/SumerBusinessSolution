@@ -1,0 +1,108 @@
+﻿@page
+@model SumerBusinessSolution.Pages.Sales.Billings.CreateModel
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<head>
+
+</head>
+<body style="margin-left:150px;">
+
+
+    <style>
+        th {
+            text-align: left;
+        }
+
+        td {
+            padding: 5px;
+        }
+    </style>
+    <div style="width:700px; padding:5px; background-color:white;">
+        @using (Html.BeginForm("BulkData", "Save", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+
+            @*if (ViewBag.Message != null)
+                {
+                    <div style="border:solid 1px green">
+                        @ViewBag.Message
+                    </div>
+                }*@
+
+
+            <table id="dataTable" border="0" cellpadding="0" cellspacing="0">
+                <tr>
+                    <th>Product Code</th>
+                    <th>Qty</th>
+                    <th>Unit Price</th>
+                    <th>Total Amt</th>
+                    <th>Note</th>
+                    <th></th>
+                </tr>
+                @if (Model.Bi != null && Model.Bi.Count > 0)
+                {
+
+
+                    @*@foreach (var i in Model.ci)
+                        {*@
+                    <tr style="border:1px solid black">
+                        <td><input type="text" id="ProdInfo0" asp-for="a => @Model.Bi[0].ProdInfo.ProdCode" class="form-control text-md-right" /></td>
+                        <td><input type="text" id="qty" asp-for="a => @Model.Bi[0].Qty" class="form-control text-md-right" /></td>
+                        <td><input type="text" id="UnitPrice" asp-for="a => @Model.Bi[0].UnitPrice" class="form-control text-md-right" /></td>
+                        <td><input type="text" asp-for="a => @Model.Bi[0].TotalAmt" class="form-control text-md-right" /></td>
+                        <td><input type="text" asp-for="a => @Model.Bi[0].Note" class="form-control text-md-right" /></td>
+
+                        <td></td>
+                        @*<td>@Html.TextBoxFor(a => Model.ci[j].WhId)</td>*@
+
+                    </tr>
+
+                }
+            </table>
+            <input type="submit" value="Save" />
+        }
+    </div>
+</body>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <script>
+    $(document).ready(function () {
+        $('#ProdInfo0').autocomplete({
+            source: '@Url.Page("Create", "SearchNow")'
+        });
+
+
+   @*$('#ProdInfo0').on('change', function(event){
+    $('#UnitPrice').autocomplete({
+            source: '@Url.Page("Create", "ProdUnitPrice")'
+        });
+   });*@
+
+         });
+    </script>
+
+<script>
+      $(document).ready(function () {
+        $( "#qty" ).focus(function() {
+        $('#ProdInfo0').autocomplete({
+            source: '@Url.Page("Create", "ProdUnitPrice")'
+        });
+            });
+             });
+</script>
+
+
+
+}
+
+

@@ -11,7 +11,7 @@ namespace SumerBusinessSolution.Models
     {
         public int Id { get; set; }
         
-        [Required]
+
         public int CustId { get; set; }
 
         [Required]
