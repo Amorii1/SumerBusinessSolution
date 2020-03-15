@@ -29,8 +29,9 @@ namespace SumerBusinessSolution.Pages.Sales.Billings
         [BindProperty]
         public BillHeader BillHeader { get; set; }
 
-        [BindProperty]
-        public IList<BillItems> Bi { get; set; }
+        //[BindProperty]
+        public IList<BillItems> Bi = new List<BillItems> { new BillItems { ProdId = 0, Qty = 0, UnitPrice = 0, TotalAmt = 0, Note = "" }
+};
 
         [BindProperty]
         public string ProdCode { get; set; }
@@ -38,23 +39,32 @@ namespace SumerBusinessSolution.Pages.Sales.Billings
         [BindProperty]
         public IList<Warehouse> WarehouseList { get; set; }
 
+        [BindProperty]
+        public IList<Customer> Customer { get; set; }
+
+
+
         public ActionResult OnGet()
         {
+            var Bi0 = new BillItems { ProdId = 0, Qty = 0, UnitPrice = 0, TotalAmt = 0, Note = "" };
             var Bi1 = new BillItems { ProdId = 0, Qty = 0, UnitPrice = 0, TotalAmt = 0, Note = "" };
-            //var ci2 = new IncomingGood { ProdId = 0, Qty = 0, WhId = 0, Note = "" };
-            //var ci3 = new IncomingGood { ProdId = 0, Qty = 0, WhId = 0, Note = "" };
+            var Bi2 = new BillItems { ProdId = 0, Qty = 0, UnitPrice = 0, TotalAmt = 0, Note = "" };
 
-            Bi = new List<BillItems> { new BillItems { ProdId = 0, Qty = 0, UnitPrice = 0, TotalAmt = 0, Note = "" } };
-
+            Bi.Add(Bi0);
             Bi.Add(Bi1);
-            //ci.Add(ci2);
-            //ci.Add(ci3);
+            Bi.Add(Bi2);
+            // Bi = new List<BillItems> { new BillItems { ProdId = 0, Qty = 0, UnitPrice = 0, TotalAmt = 0, Note = "" } };
+
+
 
             WarehouseList = _db.Warehouse.ToList();
+            Customer = _db.Customer.ToList();
+
             return Page();
         }
-        public ActionResult OnPost(List<IncomingGood> ci)
+        public ActionResult OnPost(List<BillItems> Bi)
         {
+          
             // int ProdId;
 
             // if (ModelState.IsValid)
@@ -72,15 +82,16 @@ namespace SumerBusinessSolution.Pages.Sales.Billings
 
             //}
 
+            StatusMessage = _SalesTrans.CreateBill(BillHeader, Bi).GetAwaiter().GetResult();
 
-            // bool incomingoods = _InveTrans.CreateIncomingGoods(ci).GetAwaiter().GetResult();
+
             //_db.SaveChanges();
-            StatusMessage = "Data successfully saved!";
+    
             ModelState.Clear();
 
             // }
             // }
-            return RedirectToPage("/Inventory/test/tnew");
+            return RedirectToPage("/Sales/Billings/Create");
         }
 
         public JsonResult OnGetSearchNow(string term)
@@ -92,6 +103,11 @@ namespace SumerBusinessSolution.Pages.Sales.Billings
             IQueryable<string> lstProdCode = from P in _db.ProdInfo
                                              where (P.ProdCode.Contains(term))
                                              select P.ProdCode;
+
+            int x = Bi.Count();
+        
+            Bi[0].UnitPrice =  500;
+          
             return new JsonResult(lstProdCode);
 
         }

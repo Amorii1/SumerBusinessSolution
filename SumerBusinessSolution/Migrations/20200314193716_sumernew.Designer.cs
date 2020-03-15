@@ -10,8 +10,8 @@ using SumerBusinessSolution.Data;
 namespace SumerBusinessSolution.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200229081931_omgomg")]
-    partial class omgomg
+    [Migration("20200314193716_sumernew")]
+    partial class sumernew
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -223,6 +223,147 @@ namespace SumerBusinessSolution.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("SumerBusinessSolution.Models.BillHeader", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CraetedDataTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedById")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int?>("CustId")
+                        .HasColumnType("int");
+
+                    b.Property<double>("Discount")
+                        .HasColumnType("float");
+
+                    b.Property<string>("Note")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("PaidAmt")
+                        .HasColumnType("float");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("TotalAmt")
+                        .HasColumnType("float");
+
+                    b.Property<double>("TotalNetAmt")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedById");
+
+                    b.HasIndex("CustId");
+
+                    b.ToTable("BillHeader");
+                });
+
+            modelBuilder.Entity("SumerBusinessSolution.Models.BillItems", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("HeaderId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Note")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("ProdId")
+                        .HasColumnType("int");
+
+                    b.Property<double>("Qty")
+                        .HasColumnType("float");
+
+                    b.Property<double>("TotalAmt")
+                        .HasColumnType("float");
+
+                    b.Property<double>("UnitPrice")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("HeaderId");
+
+                    b.HasIndex("ProdId");
+
+                    b.ToTable("BillItems");
+                });
+
+            modelBuilder.Entity("SumerBusinessSolution.Models.CustAcc", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CustId")
+                        .HasColumnType("int");
+
+                    b.Property<double>("Debt")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Paid")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CustId");
+
+                    b.ToTable("CustAcc");
+                });
+
+            modelBuilder.Entity("SumerBusinessSolution.Models.Customer", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CompanyName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ContactName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CreatedById")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("PhoneNo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedById");
+
+                    b.ToTable("Customer");
+                });
+
             modelBuilder.Entity("SumerBusinessSolution.Models.IncomingGood", b =>
                 {
                     b.Property<int>("Id")
@@ -336,6 +477,37 @@ namespace SumerBusinessSolution.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("HeaderId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Note")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("ProdId")
+                        .HasColumnType("int");
+
+                    b.Property<double>("Qty")
+                        .HasColumnType("float");
+
+                    b.Property<string>("UOM")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("HeaderId");
+
+                    b.HasIndex("ProdId");
+
+                    b.ToTable("InvTransfer");
+                });
+
+            modelBuilder.Entity("SumerBusinessSolution.Models.InvTransferHeader", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
                     b.Property<string>("ApprovedById")
                         .HasColumnType("nvarchar(450)");
 
@@ -352,20 +524,11 @@ namespace SumerBusinessSolution.Migrations
                     b.Property<string>("Note")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ProdId")
-                        .HasColumnType("int");
-
-                    b.Property<double>("Qty")
-                        .HasColumnType("float");
-
                     b.Property<int?>("ToWhId")
                         .HasColumnType("int");
 
                     b.Property<string>("TransferStatus")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UOM")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -376,11 +539,9 @@ namespace SumerBusinessSolution.Migrations
 
                     b.HasIndex("FromWhId");
 
-                    b.HasIndex("ProdId");
-
                     b.HasIndex("ToWhId");
 
-                    b.ToTable("InvTransfer");
+                    b.ToTable("InvTransferHeader");
                 });
 
             modelBuilder.Entity("SumerBusinessSolution.Models.ProdImg", b =>
@@ -582,6 +743,50 @@ namespace SumerBusinessSolution.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("SumerBusinessSolution.Models.BillHeader", b =>
+                {
+                    b.HasOne("SumerBusinessSolution.Models.ApplicationUser", "ApplicationUser")
+                        .WithMany()
+                        .HasForeignKey("CreatedById")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SumerBusinessSolution.Models.Customer", "Customer")
+                        .WithMany()
+                        .HasForeignKey("CustId");
+                });
+
+            modelBuilder.Entity("SumerBusinessSolution.Models.BillItems", b =>
+                {
+                    b.HasOne("SumerBusinessSolution.Models.BillHeader", "BillHeader")
+                        .WithMany()
+                        .HasForeignKey("HeaderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SumerBusinessSolution.Models.ProdInfo", "ProdInfo")
+                        .WithMany()
+                        .HasForeignKey("ProdId");
+                });
+
+            modelBuilder.Entity("SumerBusinessSolution.Models.CustAcc", b =>
+                {
+                    b.HasOne("SumerBusinessSolution.Models.Customer", "Customer")
+                        .WithMany()
+                        .HasForeignKey("CustId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SumerBusinessSolution.Models.Customer", b =>
+                {
+                    b.HasOne("SumerBusinessSolution.Models.ApplicationUser", "ApplicationUser")
+                        .WithMany()
+                        .HasForeignKey("CreatedById")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("SumerBusinessSolution.Models.IncomingGood", b =>
                 {
                     b.HasOne("SumerBusinessSolution.Models.ApplicationUser", "ApplicationUser")
@@ -631,6 +836,19 @@ namespace SumerBusinessSolution.Migrations
 
             modelBuilder.Entity("SumerBusinessSolution.Models.InvTransfer", b =>
                 {
+                    b.HasOne("SumerBusinessSolution.Models.InvTransferHeader", "InvTransferHeader")
+                        .WithMany()
+                        .HasForeignKey("HeaderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SumerBusinessSolution.Models.ProdInfo", "ProdInfo")
+                        .WithMany()
+                        .HasForeignKey("ProdId");
+                });
+
+            modelBuilder.Entity("SumerBusinessSolution.Models.InvTransferHeader", b =>
+                {
                     b.HasOne("SumerBusinessSolution.Models.ApplicationUser", "ApprovedApplicationUser")
                         .WithMany()
                         .HasForeignKey("ApprovedById");
@@ -644,10 +862,6 @@ namespace SumerBusinessSolution.Migrations
                     b.HasOne("SumerBusinessSolution.Models.Warehouse", "ToWarehouse")
                         .WithMany()
                         .HasForeignKey("FromWhId");
-
-                    b.HasOne("SumerBusinessSolution.Models.ProdInfo", "ProdInfo")
-                        .WithMany()
-                        .HasForeignKey("ProdId");
 
                     b.HasOne("SumerBusinessSolution.Models.Warehouse", "FromWarehouse")
                         .WithMany()

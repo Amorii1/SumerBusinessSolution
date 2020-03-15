@@ -13,12 +13,14 @@ namespace SumerBusinessSolution.Models
 
         public int HeaderId { get; set; }
 
-        public int ProdId { get; set; }
+        public int? ProdId { get; set; }
 
         [Required]
         public double Qty { get; set; }
 
         public double UnitPrice { get; set; }
+
+        [Required]
         public double TotalAmt { get; set; }
         public string Note { get; set; }
 

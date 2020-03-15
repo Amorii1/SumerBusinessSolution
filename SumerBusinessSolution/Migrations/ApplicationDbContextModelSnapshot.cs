@@ -235,7 +235,7 @@ namespace SumerBusinessSolution.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("CustId")
+                    b.Property<int?>("CustId")
                         .HasColumnType("int");
 
                     b.Property<double>("Discount")
@@ -279,7 +279,7 @@ namespace SumerBusinessSolution.Migrations
                     b.Property<string>("Note")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ProdId")
+                    b.Property<int?>("ProdId")
                         .HasColumnType("int");
 
                     b.Property<double>("Qty")
@@ -751,9 +751,7 @@ namespace SumerBusinessSolution.Migrations
 
                     b.HasOne("SumerBusinessSolution.Models.Customer", "Customer")
                         .WithMany()
-                        .HasForeignKey("CustId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CustId");
                 });
 
             modelBuilder.Entity("SumerBusinessSolution.Models.BillItems", b =>
@@ -766,9 +764,7 @@ namespace SumerBusinessSolution.Migrations
 
                     b.HasOne("SumerBusinessSolution.Models.ProdInfo", "ProdInfo")
                         .WithMany()
-                        .HasForeignKey("ProdId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ProdId");
                 });
 
             modelBuilder.Entity("SumerBusinessSolution.Models.CustAcc", b =>

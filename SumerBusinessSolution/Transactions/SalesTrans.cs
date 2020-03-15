@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Sumer.Utility;
 using SumerBusinessSolution.Data;
 using SumerBusinessSolution.Models;
 using System;
@@ -33,8 +34,7 @@ namespace SumerBusinessSolution.Transactions
                 // getting the unit price of each item in the bill items 
                 foreach (BillItems item in BillItems)
                 {
-                    TotalAmt += item.ProdInfo.RetailPrice;
-
+                    TotalAmt += item.UnitPrice;
                 }
 
                 // price before discount
@@ -44,19 +44,34 @@ namespace SumerBusinessSolution.Transactions
                 TotalAmt = TotalAmt - Header.Discount;
                 Header.TotalNetAmt = TotalAmt;
 
+                if(TotalAmt == Header.PaidAmt)
+                {
+                    Header.Status = SD.Completed;
+                }
+                else
+                {
+                    Header.Status = SD.OpenBill;
+                }
+                
+
                 _db.BillHeader.Add(Header);
                 await _db.SaveChangesAsync();
 
                 // Creating Bill items
                 foreach (BillItems item in BillItems)
                 {
-                    item.HeaderId = Header.Id;
-                    item.UnitPrice = item.ProdInfo.RetailPrice;
-                    item.TotalAmt = item.ProdInfo.RetailPrice * item.Qty;
-
-                    _db.BillItems.Add(item);
+                    BillItems Bill = new BillItems
+                    {
+                        HeaderId = Header.Id,
+                        ProdId = item.ProdInfo.Id,
+                        Qty = item.Qty,
+                        UnitPrice = item.UnitPrice,
+                        TotalAmt = item.UnitPrice * item.Qty,
+                        Note = item.Note
+                    };
+                    _db.BillItems.Add(Bill);
                 }
-
+ 
                 await _db.SaveChangesAsync();
 
 

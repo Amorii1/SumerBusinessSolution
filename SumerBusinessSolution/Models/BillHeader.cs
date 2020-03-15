@@ -11,8 +11,7 @@ namespace SumerBusinessSolution.Models
     {
         public int Id { get; set; }
         
-
-        public int CustId { get; set; }
+        public int? CustId { get; set; }
 
         [Required]
         public string Status { get; set; }
@@ -20,6 +19,8 @@ namespace SumerBusinessSolution.Models
         public double TotalAmt { get; set; }
         public double Discount { get; set; }
         public double TotalNetAmt { get; set; }
+        
+ 
         public double PaidAmt { get; set; }
 
         [Required]
