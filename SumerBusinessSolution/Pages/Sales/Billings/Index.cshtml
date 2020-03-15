@@ -1,0 +1,141 @@
+﻿@page
+@model SumerBusinessSolution.IndexModel
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+@inject Services.CommonLocalizationService localizer
+@using Sumer.Utility
+<div class=" backgroundWhite">
+    <div class="row">
+
+        <div class="col-md-6 ">
+            <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="Create" class="btn btn-info"> <i class="fas fa-plus"></i></a>
+        </div>
+
+        <div class="col-md-6 text-right">
+            @*<h2 class="text-info"> طلبات حركه المنتجات </h2>*@
+            <h2 class="text-info"> @localizer.Get("طلبات حركة المنتجات")</h2>
+
+        </div>
+
+    </div>
+
+    <form method="get" asp-page="Index">
+        <div class="border backgroundWhite">
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row" style="margin-top:10px;">
+                            <div class="col-md-2 text-md-right pb-1">
+
+                                <button asp-route-culture="@Request.RouteValues["culture"]" type="submit" name="submit" value="search" class="btn btn-info form-control">
+                                    <i class="fas fa-search"></i>
+                                </button>
+
+                            </div>
+                            <div class="col-md-5 pb-1">
+                                @*@Html.Editor("searchProdCode", new { htmlAttributes = new { @class = "form-control text-md-right", placeholder = @localizer.Get("رمز المنتج....") } })*@
+
+                            </div>
+                            <div class="col-md-5 pb-1">
+                                @*@Html.Editor("searchCreateDateTime", new { htmlAttributes = new { @class = "form-control text-md-right", placeholder = @localizer.Get("تاريخ الطلب....") } })*@
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+
+    <div>
+
+        <table class="table table-striped border table-responsive-md table-responsive-lg">
+            <tr class="table-secondary">
+
+                <th></th>
+                <th>
+                    @Html.DisplayNameFor(m => m.BillHeader.Customer.CompanyName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(m => m.BillHeader.TotalNetAmt)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(m => m.BillHeader.PaidAmt)
+                </th>
+
+                <th>
+                    @Html.DisplayNameFor(m => m.BillHeader.Status)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(m => m.BillHeader.CreatedDataTime)
+                </th>
+
+                <th></th>
+            </tr>
+
+            @if (Model.BillHeaderList.Count() == 0)
+            {
+                <h2 class="text-danger text-md-center"> @localizer.Get("لا يوجد طلبات")</h2>
+
+            }
+            else
+            {
+                @foreach (var item in Model.BillHeaderList)
+                {
+                    <tr>
+
+                        <td>
+                            <div class="btn-group" role="group">
+                                <form method="post">
+
+
+                                    @if (User.IsInRole(SD.AdminEndUser))
+                                    {
+                                        <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-success text-white" asp-page="MakePayment" asp-route-BhId="@item.Id" type="submit" title="تسديد" name="Accept">
+                                            @localizer.Get("") <i class="fas fa-check"></i>
+                                        </a>
+
+
+                                        @*<button asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-warning text-white" asp-page-handler="RejectTransferRequests" asp-route-ReqId="@item.Id" type="submit" title="Reject" name="Reject">
+                                            @localizer.Get("") <i class="fas fa-window-close"></i>
+                                        </button>*@
+                                    }
+ 
+                                </form>
+                            </div>
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(m => item.Customer.CompanyName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.TotalNetAmt)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.PaidAmt)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.Status)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.CreatedDataTime)
+                        </td>
+                    </tr>
+
+                }
+
+            }
+
+        </table>
+
+    </div>
+
+</div>
+
+

@@ -1,8 +1,7 @@
-﻿@page
-@model SumerBusinessSolution.Pages.Sales.Billings.CreateModel
-@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+﻿@*@page
+@model SumerBusinessSolution.NewCreateModel
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "NewCreate";
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
@@ -23,11 +22,10 @@
         }
     </style>
     <div style="width:700px; padding:5px; background-color:white;">
-        @*@using (Html.BeginForm("BulkData", "Save", FormMethod.Post))
-            {*@
-        @Html.AntiForgeryToken()
-        @Html.ValidationSummary(true)
-        <form method="post">
+        @using (Html.BeginForm("BulkData", "Save", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
 
             <table id="dataTable" border="0" cellpadding="0" cellspacing="0">
                 <tr>
@@ -71,14 +69,15 @@
                 }
             </table>
             <input type="submit" value="Save" />
-        </form>
-        @*}*@
+        }
         <button onclick="addToTable()"> Add table</button>
     </div>
 </body>
 
+
+
 @section Scripts {
-    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+ 
 
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
@@ -97,13 +96,13 @@
             const tableLineNumber = tableList
 
             const dataTable = $('#dataTable')
-        dataTable.append(`
+            dataTable.append(`
                 <tr style="border:1px solid black">
-                    <td><input type="text" name="Id" id="ProdInfo${tableLineNumber}" asp-for="Bi[${tableLineNumber}].ProdInfo.Id" class="form-control text-md-right" /></td>
-                    <td><input type="text" name="qty" id="qty${tableLineNumber}" asp-for="Bi[${tableLineNumber}].Qty" class="form-control text-md-right" /></td>
-                    <td><input type="text" name="UnitPrice" id="UnitPrice${tableLineNumber}" asp-for="Bi[${tableLineNumber}].UnitPrice" class="form-control text-md-right" /></td>
-                    <td><input type="text" name="TotalAmt" id="TotalAmt${tableLineNumber}" asp-for="Bi[${tableLineNumber}].TotalAmt" class="form-control text-md-right" /></td>
-                    <td><input type="text" name="Note" asp-for="Bi[${tableLineNumber}].Note" class="form-control text-md-right" /></td>
+                    <td><input type="text" id="ProdInfo${tableLineNumber}" asp-for="a => @Model.Bi[${tableLineNumber}].ProdInfo.Id" class="form-control text-md-right" /></td>
+                    <td><input type="text" id="qty${tableLineNumber}" asp-for="a => @Model.Bi[${tableLineNumber}].Qty" class="form-control text-md-right" /></td>
+                    <td><input type="text" id="UnitPrice${tableLineNumber}" asp-for="a => @Model.Bi[${tableLineNumber}].UnitPrice" class="form-control text-md-right" /></td>
+                    <td><input type="text" id="TotalAmt${tableLineNumber}" asp-for="a => @Model.Bi[${tableLineNumber}].TotalAmt" class="form-control text-md-right" /></td>
+                    <td><input type="text" asp-for="a => @Model.Bi[${tableLineNumber}].Note" class="form-control text-md-right" /></td>
                     <td></td>
                 </tr>
             `)
@@ -127,10 +126,7 @@
         }
 
 
-
-
-
     </script>
-}
+    }*@
 
 

@@ -9,5 +9,6 @@ namespace SumerBusinessSolution.Transactions
     public interface ISalesTrans
     {
         Task<string> CreateBill(BillHeader Header, List<BillItems> BillItems);
+        Task<string> MakePaymentOnBill(int HeaderId, double NewPaymentAmt);
     }
 }

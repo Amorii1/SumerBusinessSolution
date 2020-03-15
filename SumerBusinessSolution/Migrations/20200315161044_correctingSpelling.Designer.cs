@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SumerBusinessSolution.Data;
 
 namespace SumerBusinessSolution.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200315161044_correctingSpelling")]
+    partial class correctingSpelling
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -298,40 +300,6 @@ namespace SumerBusinessSolution.Migrations
                     b.HasIndex("ProdId");
 
                     b.ToTable("BillItems");
-                });
-
-            modelBuilder.Entity("SumerBusinessSolution.Models.BillPayment", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("BillHeaderId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("CreatedById")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedDateTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("CustId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Note")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("PaidAmt")
-                        .HasColumnType("float");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BillHeaderId");
-
-                    b.HasIndex("CustId");
-
-                    b.ToTable("BillPayment");
                 });
 
             modelBuilder.Entity("SumerBusinessSolution.Models.CustAcc", b =>
@@ -799,19 +767,6 @@ namespace SumerBusinessSolution.Migrations
                     b.HasOne("SumerBusinessSolution.Models.ProdInfo", "ProdInfo")
                         .WithMany()
                         .HasForeignKey("ProdId");
-                });
-
-            modelBuilder.Entity("SumerBusinessSolution.Models.BillPayment", b =>
-                {
-                    b.HasOne("SumerBusinessSolution.Models.BillHeader", "BillHeader")
-                        .WithMany()
-                        .HasForeignKey("BillHeaderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("SumerBusinessSolution.Models.Customer", "Customer")
-                        .WithMany()
-                        .HasForeignKey("CustId");
                 });
 
             modelBuilder.Entity("SumerBusinessSolution.Models.CustAcc", b =>
