@@ -10,5 +10,6 @@ namespace SumerBusinessSolution.Transactions
     {
         Task<string> CreateBill(BillHeader Header, List<BillItems> BillItems);
         Task<string> MakePaymentOnBill(int HeaderId, double NewPaymentAmt);
+        Task<string> CloseBillManually(int HeaderId);
     }
 }

@@ -143,6 +143,24 @@ namespace SumerBusinessSolution.Transactions
             }
         }
 
+        // this function will close a bill manually 
+        public async Task<string> CloseBillManually(int HeaderId)
+        {
+            try
+            {
+                BillHeader Header = _db.BillHeader.FirstOrDefault(h => h.Id == HeaderId);
+                Header.Status = SD.Completed;
+                await _db.SaveChangesAsync();
+
+                return "تم اغلاق الفاتورة بنجاح";
+            }
+           catch
+            {
+                return "حصل خطأ لم يتم اغلاق الفاتورة";
+            }
+
+        }
+
             // Helping functions // 
             private string GetLoggedInUserId()
         {

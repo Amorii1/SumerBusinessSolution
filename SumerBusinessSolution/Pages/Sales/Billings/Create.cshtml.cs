@@ -46,13 +46,12 @@ namespace SumerBusinessSolution.Pages.Sales.Billings
 
         //public List<BillItems> Bi { get; set; }
 
-        [BindProperty(SupportsGet = true)]
-        public  List<BillItems> Bi { get; set; } = new List<BillItems>(15);
+        [BindProperty]
+        public  List<BillItems> Bi { get; set; }
 
         public ActionResult OnGet()
-    {
-
-            //  public IList<BillItems> Bi = new List<BillItems> { new BillItems { ProdId = 0, Qty = 0, UnitPrice = 0, TotalAmt = 0, Note = "" };
+        {
+             Bi = new List<BillItems> { new BillItems { ProdId = 0, Qty = 0, UnitPrice = 0, TotalAmt = 0, Note = "" } };
            
             
             // Bi = new List<BillItems> { new BillItems { ProdId = 0, Qty = 0, UnitPrice = 0, TotalAmt = 0, Note = "" } };

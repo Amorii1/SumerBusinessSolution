@@ -42,28 +42,16 @@ namespace SumerBusinessSolution
                 CustomerList = _db.Customer.ToList();
                 BillHeaderList = _db.BillHeader.Where(header => header.Status == SD.OpenBill).ToList();
             }
-            //public IActionResult OnPostApproveTransferRequests(int ReqId)
-            //{
 
-            //    StatusMessage = _InveTrans.ApproveInvTransferRequest(ReqId).GetAwaiter().GetResult();
+        public IActionResult OnPostCloseBillManually(int HeaderId)
+        {
 
-            //    return RedirectToPage("/Inventory/transferrequests/index");
-            //}
+            StatusMessage = _SalesTrans.CloseBillManually(HeaderId).GetAwaiter().GetResult();
 
-            //public IActionResult OnPostRejectTransferRequests(int ReqId)
-            //{
+            return RedirectToPage("/Sales/Billings/Index");
+        }
 
-            //    StatusMessage = _InveTrans.RejectInvTransferRequest(ReqId).GetAwaiter().GetResult();
-
-            //    return RedirectToPage("/Inventory/transferrequests/index");
-            //}
-            //public IActionResult OnPostDeleteTransferRequests(int ReqId)
-            //{
-
-            //    StatusMessage = _InveTrans.DeleteInvTransferRequestHeader(ReqId).GetAwaiter().GetResult();
-
-            //    return RedirectToPage("/Inventory/transferrequests/index");
-            //}
+     
     }
 }
  
