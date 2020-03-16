@@ -6,12 +6,14 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Sumer.Utility;
 using SumerBusinessSolution.Data;
 using SumerBusinessSolution.Models;
 using SumerBusinessSolution.Transactions;
 
 namespace SumerBusinessSolution.Pages.Inventory.Transfer
 {
+    [Authorize(Roles = SD.AdminEndUser)]
     [Authorize]
     public class Create : PageModel
     {

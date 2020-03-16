@@ -18,7 +18,7 @@
 
     <div class="row">
 
-        @if (User.IsInRole(SD.AdminEndUser))
+        @if (User.IsInRole(SD.AdminEndUser)||User.IsInRole(SD.SupervisorEndUser))
         {
             <div class="col-md-3  ">
                 <a asp-page="../IncomingGoods/Create" asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-info">

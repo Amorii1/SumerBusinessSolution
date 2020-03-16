@@ -114,11 +114,12 @@
                                         <button asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-warning text-white" asp-page-handler="RejectTransferRequests" asp-route-ReqId="@item.Id" type="submit" title="Reject" name="Reject">
                                             @localizer.Get("") <i class="fas fa-window-close"></i>
                                         </button>
-                                    }
+                                   
 
                                     <button asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-danger text-white" asp-page-handler="DeleteTransferRequests" asp-route-ReqId="@item.Id" type="submit" title="Delete" name="Delete">
                                         @localizer.Get("") <i class="fas fa-trash-alt"></i>
                                     </button>
+                                     }
                                     <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-danger text-white" asp-page="RequestDetails" asp-route-HeaderId="@item.Id" type="submit" title="Details" name="Details">
                                         @localizer.Get("") <i class="fas fa-info"></i>
                                     </a>

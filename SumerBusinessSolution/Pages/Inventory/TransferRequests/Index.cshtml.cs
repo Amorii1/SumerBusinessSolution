@@ -14,7 +14,7 @@ using SumerBusinessSolution.Transactions;
 
 namespace SumerBusinessSolution.Inventory.TransferRequests
 {
- //   [Authorize(Roles =SD.AdminEndUser)]
+  //[Authorize(Roles =SD.AdminEndUser)]
    // [Authorize(Roles = SD.SupervisorEndUser)]
    [Authorize]
     public class IndexModel : PageModel

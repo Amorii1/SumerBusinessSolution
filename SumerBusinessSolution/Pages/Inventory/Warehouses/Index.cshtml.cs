@@ -12,7 +12,7 @@ using Sumer.Utility;
 namespace SumerBusinessSolution.Inventory.Warehouses
 {
   
-
+    [Authorize]
     public class IndexModel : PageModel
     {
         private readonly ApplicationDbContext _db;

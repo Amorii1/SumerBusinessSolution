@@ -16,9 +16,9 @@ using SumerBusinessSolution.Transactions;
 
 namespace SumerBusinessSolution.Pages.Inventory.IncomingGoods
 {
-   // [Authorize(Roles = SD.AdminEndUser)]
-   [Authorize]
-  //  [Authorize(Roles = SD.SupervisorEndUser)]
+   [Authorize(Roles = SD.AdminEndUser)]
+
+   [Authorize(Roles = SD.SupervisorEndUser)]
     public class CreateModel : PageModel
     {
         private readonly ApplicationDbContext _db;

@@ -3,14 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using Sumer.Utility;
 using SumerBusinessSolution.Data;
 using SumerBusinessSolution.Models;
 
 namespace SumerBusinessSolution.Pages.Inventory.Reports
 {
+    [Authorize]
+    [Authorize(Roles = SD.AdminEndUser)]
     public class InvTransactionsModel : PageModel
     {
         private readonly ApplicationDbContext _db;
