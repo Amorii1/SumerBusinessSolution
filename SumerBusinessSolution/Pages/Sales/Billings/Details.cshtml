@@ -40,7 +40,39 @@
                 <label asp-for="BillHeader.Customer.CompanyName"></label>
             </div>
         </div>
+        <div class="form-group row">
+            <div class="col-md-5 offset-md-5">
+                @*<textarea placeholder="ملاحظات" asp-for="Note" class="form-control"></textarea>*@
+                <input asp-for="BillHeader.TotalAmt" class="form-control  text-md-right"></input>
 
+            </div>
+
+            <div class="col-md-2">
+                <label asp-for="BillHeader.TotalAmt"></label>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-5 offset-md-5">
+                @*<textarea placeholder="ملاحظات" asp-for="Note" class="form-control"></textarea>*@
+                <input asp-for="BillHeader.Discount" class="form-control  text-md-right"></input>
+
+            </div>
+
+            <div class="col-md-2">
+                <label asp-for="BillHeader.Discount"></label>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-5 offset-md-5">
+                @*<textarea placeholder="ملاحظات" asp-for="Note" class="form-control"></textarea>*@
+                <input asp-for="BillHeader.TotalNetAmt" class="form-control  text-md-right"></input>
+
+            </div>
+
+            <div class="col-md-2">
+                <label asp-for="BillHeader.TotalNetAmt"></label>
+            </div>
+        </div>
         <div class="form-group row">
 
             <div class="col-md-5 offset-md-5">
@@ -56,7 +88,6 @@
         <div class="form-group row">
 
             <div class="col-md-5 offset-md-5">
-                @*<textarea placeholder="ملاحظات" asp-for="Note" class="form-control"></textarea>*@
                 <input asp-for="BillHeader.CreatedDataTime" class="form-control  text-md-right"></input>
 
             </div>
@@ -68,7 +99,6 @@
         <div class="form-group row">
 
             <div class="col-md-5 offset-md-5">
-                @*<textarea placeholder="ملاحظات" asp-for="Note" class="form-control"></textarea>*@
                 <input asp-for="BillHeader.Status" class="form-control  text-md-right"></input>
 
             </div>
@@ -80,7 +110,6 @@
         <div class="form-group row">
 
             <div class="col-md-5 offset-md-5">
-                @*<textarea placeholder="ملاحظات" asp-for="Note" class="form-control"></textarea>*@
                 <input asp-for="BillHeader.ApplicationUser.FirstName" class="form-control  text-md-right"></input>
 
             </div>
@@ -93,7 +122,7 @@
         <table class="table table-striped border table-responsive-md table-responsive-lg">
             <tr class="table-secondary">
 
-                <th></th>
+      
                 <th>
                     @Html.DisplayNameFor(m => m.BillItems.ProdInfo.ProdCode)
                 </th>
@@ -113,30 +142,30 @@
 
                 <th></th>
             </tr>
- 
-                @foreach (var item in Model.BillItemsList)
-                {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(m => item.ProdInfo.ProdCode)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(m => item.Qty)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(m => item.UnitPrice)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(m => item.TotalAmt)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(m => item.Note)
-                        </td>
-                    </tr>
 
-                }
+            @foreach (var item in Model.BillItemsList)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(m => item.ProdInfo.ProdCode)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(m => item.Qty)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(m => item.UnitPrice)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(m => item.TotalAmt)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(m => item.Note)
+                    </td>
+                </tr>
 
-        
+            }
+
+
 
         </table>
 
@@ -145,12 +174,12 @@
             <div class="col-md-5 offset-md-5">
                 <div class="row">
                     <div class="col-md-6">
-      
+
                         <a asp-page="Index" class="btn btn-success form-control" asp-route-culture="@Request.RouteValues["culture"]">  @localizer.Get("الغاء")</a>
 
                     </div>
                     <div class="col-md-6">
-                        
+
                         <button asp-route-culture="@Request.RouteValues["culture"]" type="submit" class="btn btn-info form-control" onclick="return ValidateInput()">  @localizer.Get("اضافة")</button>
 
                     </div>

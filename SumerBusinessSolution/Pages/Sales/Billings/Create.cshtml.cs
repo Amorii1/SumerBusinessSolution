@@ -5,6 +5,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
+using Sumer.Utility;
 using SumerBusinessSolution.Data;
 using SumerBusinessSolution.Models;
 using SumerBusinessSolution.Transactions;
@@ -26,13 +28,8 @@ namespace SumerBusinessSolution.Pages.Sales.Billings
         [TempData]
         public string StatusMessage { get; set; }
 
-
         [BindProperty]
         public BillHeader BillHeader { get; set; }
-
-        //[BindProperty]
-
-
 
         [BindProperty]
         public string ProdCode { get; set; }
@@ -43,28 +40,29 @@ namespace SumerBusinessSolution.Pages.Sales.Billings
         [BindProperty]
         public IList<Customer> Customer { get; set; }
 
+        public List<BillItems> Bi { get; set; }
 
-        //public List<BillItems> Bi { get; set; }
-
-        [BindProperty]
-        //public List<BillItems> Bi { get; set; }
-        public List<BillItems> Bi { get; set; } = new List<BillItems>();
+        public InvStockQty InvStockQty { get; set; }
         public ActionResult OnGet()
         {
+            Bi = new List<BillItems> { new BillItems { ProdId = 0, Qty = 0, UnitPrice = 0, TotalAmt = 0, Note = "" } };
 
             WarehouseList = _db.Warehouse.ToList();
-            Customer = _db.Customer.ToList();
-
+            Customer = _db.Customer.Where(cus => cus.Status == SD.ActiveCustomer).ToList();
             return Page();
         }
-        public ActionResult OnPost()
+        public ActionResult OnPost(List<BillItems> Bi)
         {
-            Console.Write(Bi.Count);
+
             StatusMessage = _SalesTrans.CreateBill(BillHeader, Bi).GetAwaiter().GetResult();
 
 
+            //_db.SaveChanges();
+
             ModelState.Clear();
 
+            // }
+            // }
             return RedirectToPage("/Sales/Billings/Create");
         }
 
@@ -99,18 +97,35 @@ namespace SumerBusinessSolution.Pages.Sales.Billings
 
         }
 
-        public JsonResult OnGetSaveRequest(int num, int prodID, int qty, int unitPrice, int totalAmt, string note)
+        public JsonResult OnGetCheckQty(string term)
         {
-            Bi.Add(new BillItems { ProdId = prodID, Qty = qty, UnitPrice = unitPrice, TotalAmt = totalAmt, Note = note });
-            return new JsonResult("");
+            if (term == null)
+            {
+                return new JsonResult("Not Found");
+            }
+            bool qtyCheck = CheckQtyInWh(term, 5);
+
+            return new JsonResult(qtyCheck);
+
         }
 
-        public JsonResult OnGetApplyRequest()
+        // leave it for later
+        private bool CheckQtyInWh(string ProdCode, double Qty)
         {
-            StatusMessage = _SalesTrans.CreateBill(BillHeader, Bi).GetAwaiter().GetResult();
-            return new JsonResult("");
+            InvStockQty = _db.InvStockQty.FirstOrDefaultAsync(inv => inv.ProdInfo.ProdCode == ProdCode & inv.Warehouse.WhType.Type == "StoreRoom").GetAwaiter().GetResult();
+
+            double StockQty = InvStockQty.Qty;
+
+            if (StockQty >= Qty)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
-
-
     }
+
 }
+ 

@@ -42,7 +42,7 @@ namespace SumerBusinessSolution.Transactions
                 {
                     item.ProdId = _db.ProdInfo.FirstOrDefault(pr => pr.ProdCode == item.ProdInfo.ProdCode).Id;
                     // first check if qty enough in the store room before proceeding
-                    bool CheckQty = CheckQtyInWh(item.ProdId??0, StoreRoom.Id, item.Qty);
+                    bool CheckQty = CheckQtyInWh(item.ProdId, StoreRoom.Id, item.Qty);
 
                     if(CheckQty == false)
                     {
@@ -87,7 +87,7 @@ namespace SumerBusinessSolution.Transactions
                     BillItems Bill = new BillItems
                     {
                         HeaderId = Header.Id,
-                        ProdId = item.ProdId,
+                        ProdId = item.ProdInfo.Id,
                         Qty = item.Qty,
                         UnitPrice = item.UnitPrice,
                         TotalAmt = item.UnitPrice * item.Qty,

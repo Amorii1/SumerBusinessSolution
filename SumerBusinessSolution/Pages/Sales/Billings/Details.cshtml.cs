@@ -10,7 +10,7 @@ using SumerBusinessSolution.Models;
 using SumerBusinessSolution.Transactions;
 
 namespace SumerBusinessSolution
-{
+{ 
     public class DetailsModel : PageModel
     {
 
@@ -43,11 +43,15 @@ namespace SumerBusinessSolution
 
         public async Task<ActionResult> OnGet(int BhId)
         {
-             BillHeader = await _db.BillHeader.Include(h => h.Customer)
-                .FirstOrDefaultAsync(h => h.Id == BhId);
-           
-            BillItemsList = await _db.BillItems.Where(bill => bill.HeaderId == BhId).ToListAsync();
+            //BillHeader = await _db.BillHeader.Include(h => h.Customer)
+            //   .FirstOrDefaultAsync(h => h.Id == BhId);
 
+            BillItemsList = await _db.BillItems.Include(bill=> bill.BillHeader).Include(bill=> bill.BillHeader.Customer).Include(bill=> bill.ProdInfo).Include(bill=> bill.BillHeader.ApplicationUser).Where(bill => bill.HeaderId == BhId).ToListAsync();
+           
+            if(BillItemsList.Count() > 0)
+            {
+                BillHeader = BillItemsList[0].BillHeader;
+            }
             return Page();
         }
         public void OnPost()

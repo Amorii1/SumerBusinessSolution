@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 using Sumer.Utility;
 using SumerBusinessSolution.Data;
 using SumerBusinessSolution.Models;
@@ -45,6 +46,7 @@ namespace SumerBusinessSolution
 
         public List<BillItems> Bi { get; set; }
 
+        public InvStockQty InvStockQty { get; set; }
         public ActionResult OnGet()
         {
 
@@ -111,6 +113,35 @@ namespace SumerBusinessSolution
                                            select P.RetailPrice;
             return new JsonResult(unitPrice);
 
+        }
+
+        public JsonResult OnGetCheckQty(string term)
+        {
+            if (term == null)
+            {
+                return new JsonResult("Not Found");
+            }
+            bool qtyCheck = CheckQtyInWh(term, 5);
+
+            return new JsonResult(qtyCheck);
+
+        }
+
+        // leave it for later
+        private bool CheckQtyInWh(string ProdCode, double Qty)
+        {
+            InvStockQty = _db.InvStockQty.FirstOrDefaultAsync(inv => inv.ProdInfo.ProdCode == ProdCode & inv.Warehouse.WhType.Type == "StoreRoom").GetAwaiter().GetResult();
+
+            double StockQty = InvStockQty.Qty;
+
+            if (StockQty >= Qty)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }
