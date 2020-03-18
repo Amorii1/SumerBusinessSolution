@@ -11,7 +11,7 @@ using SumerBusinessSolution.Transactions;
 
 namespace SumerBusinessSolution
 {
-    public class MakePaymentModel : PageModel
+    public class MakePaymentModel : PageModel 
     {
 
         private readonly ApplicationDbContext _db;

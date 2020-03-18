@@ -1,11 +1,9 @@
 ﻿@page
 @model SumerBusinessSolution.Pages.Sales.Billings.CreateModel
-@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @{
     ViewData["Title"] = "Create";
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
-
 
 <head>
 
@@ -23,56 +21,50 @@
         }
     </style>
     <div style="width:700px; padding:5px; background-color:white;">
-        @*@using (Html.BeginForm("BulkData", "Save", FormMethod.Post))
-            {*@
-        @Html.AntiForgeryToken()
-        @Html.ValidationSummary(true)
-        <form method="post">
-
-            <table id="dataTable" border="0" cellpadding="0" cellspacing="0">
+        <table id="dataTable" border="0" cellpadding="0" cellspacing="0">
+            <tr>
+                <th>Product Code</th>
+                <th>Qty</th>
+                <th>Unit Price</th>
+                <th>Total Amt</th>
+                <th>Note</th>
+                <th></th>
+            </tr>
+            @if (Model.Bi != null && Model.Bi.Count > 0)
+            {
                 <tr>
-                    <th>Product Code</th>
-                    <th>Qty</th>
-                    <th>Unit Price</th>
-                    <th>Total Amt</th>
-                    <th>Note</th>
-                    <th></th>
+                    <td>
+                        <select asp-for="a => @Model.BillHeader.CustId"
+                                asp-items="@(new SelectList(Model.Customer, "Id", "CompanyName"))"
+                                class="form-control ">
+                        </select>
+                    </td>
+
                 </tr>
-                @if (Model.Bi != null && Model.Bi.Count > 0)
-                {
-                    <tr>
-                        <td>
-                            <select asp-for="a => @Model.BillHeader.CustId"
-                                    asp-items="@(new SelectList(Model.Customer, "Id", "CompanyName"))"
-                                    class="form-control ">
-                            </select>
-                        </td>
 
-                    </tr>
-
-                    <tr>
-                        <td>Note</td>
-                        <td>
-                            <input type="text" asp-for="a => @Model.BillHeader.Note" class="form-control text-md-right" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Paid Amt</td>
-                        <td>
-                            <input type="text" asp-for="a => @Model.BillHeader.PaidAmt" class="form-control text-md-right" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Discount</td>
-                        <td>
-                            <input type="text" asp-for="a => @Model.BillHeader.Discount" class="form-control text-md-right" />
-                        </td>
-                    </tr>
-                }
-            </table>
-            <input type="submit" value="Save" />
-        </form>
-        @*}*@
+                <tr>
+                    <td>???????</td>
+                    <td>
+                        <input type="text" asp-for="a => @Model.BillHeader.Note" class="form-control text-md-right" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>?????? ??????</td>
+                    <td>
+                        <input type="text" asp-for="a => @Model.BillHeader.PaidAmt" class="form-control text-md-right" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>?????</td>
+                    <td>
+                        <input type="text" asp-for="a => @Model.BillHeader.Discount" class="form-control text-md-right" />
+                    </td>
+                </tr>
+            }
+        </table>
+        <button onclick="sendToServer()">
+            Save
+        </button>
         <button onclick="addToTable()"> Add table</button>
     </div>
 </body>
@@ -90,24 +82,26 @@
         });
 
         let tableList = 0
+
         function addToTable() {
             if(tableList >= 15) {
                 return
             }
             const tableLineNumber = tableList
-            
-            const dataTable = $('#dataTable')
-        dataTable.append(`
-                @*<tr style="border:1px solid black">
-                    <td><input type="text" name="Id" id="ProdInfo${tableLineNumber}" asp-for= "a =>  @Model.Bi[${tableLineNumber}].ProdInfo.Id"  class="form-control text-md-right" /></td>
-                    <td><input type="text" name="qty" id="qty${tableLineNumber}" asp-for="a => @Model.Bi[0].Qty"  class="form-control text-md-right" /></td>
-                    <td><input type="text" name="UnitPrice" id="UnitPrice${tableLineNumber}" asp-for="a => @Model.Bi[0].UnitPrice"  class="form-control text-md-right" /></td>
-                    <td><input type="text" name="TotalAmt" id="TotalAmt${tableLineNumber}" asp-for="a => @Model.Bi[0].TotalAmt"  class="form-control text-md-right" /></td>
-                    <td><input type="text" name="Note" asp-for="a => @Model.Bi[0].Note"  class="form-control text-md-right" /></td>
-                    <td></td>
-                </tr>*@
-            `)
 
+            const dataTable = $('#dataTable')
+             
+            dataTable.append(`
+                <tr style="border:1px solid black">
+                    <td><input type="text" name="Id" id="ProdInfo${tableLineNumber}"  class="form-control text-md-right" /></td>
+                    <td><input type="text" name="qty" id="qty${tableLineNumber}"  class="form-control text-md-right" /></td>
+                    <td><input type="text" name="UnitPrice" id="UnitPrice${tableLineNumber}"  class="form-control text-md-right" /></td>
+                    <td><input type="text" name="TotalAmt" id="TotalAmt${tableLineNumber}"  class="form-control text-md-right" /></td>
+                    <td><input type="text" name="Note" id="Note${tableLineNumber}" class="form-control text-md-right" /></td>
+                    <td></td>
+                </tr>
+            `)
+        c
              $(`#ProdInfo${tableLineNumber}`).autocomplete({
                  source: '@Url.Page("Create", "SearchNow")'
 
@@ -127,8 +121,18 @@
         }
 
 
+       async function sendToServer() {
+            for(let i = 0; i < tableList; i++){
+                const ProdID = $(`#ProdInfo${i}`).val()
+                const qty = $(`#qty${i}`).val()
+                const unitPrice = $(`#UnitPrice${i}`).val()
+                const totalAmt = $(`#TotalAmt${i}`).val()
+                const note = $(`#Note${i}`).val()
 
-
+                await fetch(`${window.location.href}?handler=SaveRequest&num=${i}&prodID=${ProdID}&qty=${qty}&unitPrice=${unitPrice}&totalAmt=${totalAmt}&note=${note}`)
+            }
+            await fetch(`${window.location.href}?handler=ApplyRequest`)
+        }
 
     </script>
 }

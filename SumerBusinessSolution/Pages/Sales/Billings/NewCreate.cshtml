@@ -1,4 +1,4 @@
-﻿@*@page
+﻿@page
 @model SumerBusinessSolution.NewCreateModel
 @{
     ViewData["Title"] = "NewCreate";
@@ -9,7 +9,7 @@
 <head>
 
 </head>
-<body style="margin-left:150px;">
+<body style="padding-left:150px;">
 
 
     <style>
@@ -22,111 +22,184 @@
         }
     </style>
     <div style="width:700px; padding:5px; background-color:white;">
-        @using (Html.BeginForm("BulkData", "Save", FormMethod.Post))
-        {
-            @Html.AntiForgeryToken()
-            @Html.ValidationSummary(true)
+        <form method="post">
+            <table>
+                <tr>
+                    <td>
+                        <select asp-for="a => @Model.BillHeader.CustId"
+                                asp-items="@(new SelectList(Model.Customer, "Id", "CompanyName"))"
+                                class="form-control ">
+                        </select>
+                    </td>
 
+                </tr>
+            </table>
+
+            <div><a href="#" id="addNew">Add New</a></div>
             <table id="dataTable" border="0" cellpadding="0" cellspacing="0">
                 <tr>
-                    <th>Product Code</th>
+                    <th>Prod Code</th>
                     <th>Qty</th>
                     <th>Unit Price</th>
-                    <th>Total Amt</th>
+                    <th>Total </th>
                     <th>Note</th>
                     <th></th>
                 </tr>
                 @if (Model.Bi != null && Model.Bi.Count > 0)
                 {
-                    <tr>
-                        <td>
-                            <select asp-for="a => @Model.BillHeader.CustId"
-                                    asp-items="@(new SelectList(Model.Customer, "Id", "CompanyName"))"
-                                    class="form-control ">
-                            </select>
-                        </td>
+               
+                    int j = 0;
 
-                    </tr>
+                    foreach (var i in Model.Bi)
+                    {
 
-                    <tr>
-                        <td>Note</td>
-                        <td>
-                            <input type="text" asp-for="a => @Model.BillHeader.Note" class="form-control text-md-right" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Paid Amt</td>
-                        <td>
-                            <input type="text" asp-for="a => @Model.BillHeader.PaidAmt" class="form-control text-md-right" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Discount</td>
-                        <td>
-                            <input type="text" asp-for="a => @Model.BillHeader.Discount" class="form-control text-md-right" />
-                        </td>
-                    </tr>
+
+                        <tr style="border:1px solid black">
+                            @*float a= (float)((ArrayList)paredes[i])[0];*@
+                            @*<td>@Html.TextBoxFor(a => a[j].ContactName)</td>*@
+
+                            <td onclick="bindAutocomplete(this)" onchange="bindPrice(this)">@Html.TextBoxFor(a => Model.Bi[j].ProdInfo.ProdCode) </td>
+                            <td oninput="bindTotal(this)">@Html.TextBoxFor(a => Model.Bi[j].Qty)</td>
+                            <td>@Html.TextBoxFor(a => Model.Bi[j].UnitPrice)</td>
+                            <td>@Html.TextBoxFor(a => Model.Bi[j].TotalAmt)</td>
+                            <td>@Html.TextBoxFor(a => Model.Bi[j].Note)</td>
+                            <td>
+                                @if (j > 0)
+                                {
+
+                                    // <input type="button" value="Delete" onclick="deleteRow(this)">
+                                    <a href="#" id="removeThis" class="remove">Remove</a>
+
+                                }
+                            </td>
+                        </tr>
+                        j++;
+
+                    }
+
                 }
             </table>
-            <input type="submit" value="Save" />
-        }
-        <button onclick="addToTable()"> Add table</button>
+            <table>
+                <tr>
+                    <td>Note</td>
+                    <td>
+                        <input type="text" asp-for="a => @Model.BillHeader.Note" class="form-control text-md-right" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>PaidAmt</td>
+                    <td>
+                        <input type="text" asp-for="a => @Model.BillHeader.PaidAmt" class="form-control text-md-right" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>Discount</td>
+                    <td>
+                        <input type="text" asp-for="a => @Model.BillHeader.Discount" class="form-control text-md-right" />
+                    </td>
+                </tr>
+            </table>
+            <input type="submit" value="Save Bulk Data" />
+        </form>
+        @*@using (Html.BeginForm("BulkData", "Save", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+
+        }*@
     </div>
-</body>
-
-
-
-@section Scripts {
- 
-
-    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
     <script>
-        $(document).ready(function () {
-            addToTable()
-        });
+        function RemoveRow(r) {
+            var i = r.parentNode.parentNode.rowIndex;
+            document.getElementById("dataTable").deleteRow(i);
+        }
 
-        let tableList = 0
-        function addToTable() {
-            if(tableList >= 15) {
-                return
-            }
-            const tableLineNumber = tableList
+    </script>
 
-            const dataTable = $('#dataTable')
-            dataTable.append(`
-                <tr style="border:1px solid black">
-                    <td><input type="text" id="ProdInfo${tableLineNumber}" asp-for="a => @Model.Bi[${tableLineNumber}].ProdInfo.Id" class="form-control text-md-right" /></td>
-                    <td><input type="text" id="qty${tableLineNumber}" asp-for="a => @Model.Bi[${tableLineNumber}].Qty" class="form-control text-md-right" /></td>
-                    <td><input type="text" id="UnitPrice${tableLineNumber}" asp-for="a => @Model.Bi[${tableLineNumber}].UnitPrice" class="form-control text-md-right" /></td>
-                    <td><input type="text" id="TotalAmt${tableLineNumber}" asp-for="a => @Model.Bi[${tableLineNumber}].TotalAmt" class="form-control text-md-right" /></td>
-                    <td><input type="text" asp-for="a => @Model.Bi[${tableLineNumber}].Note" class="form-control text-md-right" /></td>
-                    <td></td>
-                </tr>
-            `)
+    @* Here I will add Jquery Code for validation / dynamically add new rows / Remove rows etc *@
 
-             $(`#ProdInfo${tableLineNumber}`).autocomplete({
-                 source: '@Url.Page("Create", "SearchNow")'
+    @section Scripts{
+        <script language="javascript">
+            $(document).ready(function () {
 
-             });
+                //1. Add new row
+                $("#addNew").click(function (e) {
+                    e.preventDefault();
+                    var $tableBody = $("#dataTable");
+                    var $trLast = $tableBody.find("tr:last");
 
-            $(`#ProdInfo${tableLineNumber}`).change(() => {
-                fetch(`${window.location.href}?handler=ProdUnitPrice&term=${ $('#ProdInfo' + tableLineNumber).val()}`).then(x => x.json()).then(x => $(`#UnitPrice${tableLineNumber}`).val(x[0]))
+                    var $trNew = $trLast.clone();
+                    $trNew.find(':text').val('');
+
+                    var suffix = $trNew.find(':input:first').attr('name').match(/\d+/);
+                    $trNew.find("td:last").html('<a href="#" id="removeThis" onclick="return RemoveRow(this)" class="remove">Remove</a>');
+
+
+                    $.each($trNew.find(':input'), function (i, val) {
+                        // Replaced Name
+                        var oldN = $(this).attr('name');
+                        var newN = oldN.replace('[' + suffix + ']', '[' + (parseInt(suffix) + 1) + ']');
+                        $(this).attr('name', newN);
+                        //Replaced value
+                        var type = $(this).attr('type');
+                        if (type.toLowerCase() == "text") {
+                            $(this).attr('value', '');
+                        }
+
+                        // If you have another Type then replace with default value
+                        $(this).removeClass("input-validation-error");
+
+                    });
+                    $trLast.after($trNew);
+
+                });
+
+
 
             });
 
-            $(`#qty${tableLineNumber}`).change(() => {
-                $(`#TotalAmt${tableLineNumber}`).val($(`#qty${tableLineNumber}`).val() * $(`#UnitPrice${tableLineNumber}`).val())
-            })
+          function bindAutocomplete(t) {
+                    $(t.children[0]).autocomplete({
+                        source: '@Url.Page("Create", "SearchNow")'
+                    });
+                    
+            }
 
-            tableList++
+                  async function bindPrice(t) {
+                  
+                    const obj = await fetch(`${window.location.href}?handler=ProdUnitPrice&term=${t.children[0].value}`)
+                        const json = await obj.json()
+                        
+                    t.parentElement.children[2].children[0].value = json[0]
+                  
+                }
 
-        }
+                function bindTotal(t) {
+                    const val = t.children[0].value
+                    const price = t.parentElement.children[2].children[0].value
 
+                    t.parentElement.children[3].children[0].value = val * price
+            }
+      
+        </script>
 
-    </script>
-    }*@
+        <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+        <script>
+      
+            $(document).ready(function () {
+ 
+            @*$(`#ProdInfo${0}`).autocomplete({
+        source: '@Url.Page("Create", "SearchNow")'
+
+    });*@
+     
+    });
+        </script>
+    }
+</body>
 
 

@@ -29,9 +29,14 @@ namespace SumerBusinessSolution.Models
         [Required]
         public DateTime CreatedDateTime { get; set; }
 
+        //public int CustAccId { get; set; }
+
         [ForeignKey("CreatedById")]
         public virtual ApplicationUser ApplicationUser { get; set; }
 
+
+        //[ForeignKey("CustAccId")]
+        //public virtual CustAcc CustAcc { get; set; }
 
 
     }

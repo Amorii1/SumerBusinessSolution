@@ -1,0 +1,55 @@
+﻿@page
+@model SumerBusinessSolution.CustAccDetailsModel
+@{
+    ViewData["Title"] = "CustAccDetails";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+
+@inject Services.CommonLocalizationService localizer
+
+<br />
+<h2 class="text-info">Create a new Service Type</h2>
+<br />
+ 
+<form method="post">
+    <div class="border backgroundWhite py-2 px-2">
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="Customer.CompanyName"></label>
+            </div>
+            <div class="col-5">
+                <input asp-for="Customer.CompanyName" class="form-control" />
+            </div>
+
+        </div>
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="CustAcc.Paid"></label>
+            </div>
+            <div class="col-5">
+                <input asp-for="CustAcc.Paid" class="form-control" />
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="CustAcc.Debt"></label>
+            </div>
+            <div class="col-5">
+                <input asp-for="CustAcc.Debt" class="form-control" />
+            </div>
+        </div>
+
+
+
+        <div class="col-md-6">
+            @*<input type="submit" class="btn btn-info form-control" value="حفظ" />*@
+            <input asp-route-culture="@Request.RouteValues["culture"]" type="submit" class="btn btn-info form-control" value="@localizer.Get("اضافة")" />
+
+        </div>
+
+        <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-success text-white" asp-page="../Accounts/EditCustAcc" asp-route-CustId="@Model.Customer.Id" type="submit" title="دفع لحساب الزبون" name="PayToAcc">
+            @localizer.Get("") <i class="fas fa-check"></i>
+        </a>
+    </div>
+</form>

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Sumer.Utility;
 using SumerBusinessSolution.Data;
 using SumerBusinessSolution.Models;
 using SumerBusinessSolution.Transactions;
@@ -62,29 +63,12 @@ namespace SumerBusinessSolution
 
 
             WarehouseList = _db.Warehouse.ToList();
-            Customer = _db.Customer.ToList();
+            Customer = _db.Customer.Where(cus => cus.Status == SD.ActiveCustomer).ToList();
 
             return Page();
         }
         public ActionResult OnPost(List<BillItems> Bi)
         {
-
-            // int ProdId;
-
-            // if (ModelState.IsValid)
-            //  {
-            //using (_db dc = new MyDatabaseEntities())
-            //{
-            //foreach (var i in ci)
-            //{
-            //    if(i == null)
-            //    {
-            //        break;
-            //    }
-            //    ProdId = _db.ProdInfo.FirstOrDefault(pro => pro.ProdCode == i.ProdInfo.ProdCode).Id;
-            //    // _db.IncomingGood.Add(i);
-
-            //}
 
             StatusMessage = _SalesTrans.CreateBill(BillHeader, Bi).GetAwaiter().GetResult();
 

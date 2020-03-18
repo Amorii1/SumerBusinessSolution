@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages; 
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using SumerBusinessSolution.Data;
 using SumerBusinessSolution.Models;
 using SumerBusinessSolution.Transactions;
@@ -31,8 +31,8 @@ namespace SumerBusinessSolution.Pages.Sales.Billings
         public BillHeader BillHeader { get; set; }
 
         //[BindProperty]
-        
- 
+
+
 
         [BindProperty]
         public string ProdCode { get; set; }
@@ -47,25 +47,10 @@ namespace SumerBusinessSolution.Pages.Sales.Billings
         //public List<BillItems> Bi { get; set; }
 
         [BindProperty]
-        public  List<BillItems> Bi { get; set; }
-
+        //public List<BillItems> Bi { get; set; }
+        public List<BillItems> Bi { get; set; } = new List<BillItems>();
         public ActionResult OnGet()
         {
-             Bi = new List<BillItems> { new BillItems { ProdId = 0, Qty = 0, UnitPrice = 0, TotalAmt = 0, Note = "" } };
-           
-            
-            // Bi = new List<BillItems> { new BillItems { ProdId = 0, Qty = 0, UnitPrice = 0, TotalAmt = 0, Note = "" } };
-            
-            //var Bi0 = new BillItems { ProdId = 0, Qty = 0, UnitPrice = 0, TotalAmt = 0, Note = "" };
-            //var Bi1 = new BillItems { ProdId = 0, Qty = 0, UnitPrice = 0, TotalAmt = 0, Note = "" };
-            //var Bi2 = new BillItems { ProdId = 0, Qty = 0, UnitPrice = 0, TotalAmt = 0, Note = "" };
-
-            //Bi.Add(Bi0);
-            //Bi.Add(Bi1);
-            //Bi.Add(Bi2);
-            // Bi = new List<BillItems> { new BillItems { ProdId = 0, Qty = 0, UnitPrice = 0, TotalAmt = 0, Note = "" } };
-
-
 
             WarehouseList = _db.Warehouse.ToList();
             Customer = _db.Customer.ToList();
@@ -77,9 +62,9 @@ namespace SumerBusinessSolution.Pages.Sales.Billings
             Console.Write(Bi.Count);
             StatusMessage = _SalesTrans.CreateBill(BillHeader, Bi).GetAwaiter().GetResult();
 
-    
+
             ModelState.Clear();
- 
+
             return RedirectToPage("/Sales/Billings/Create");
         }
 
@@ -94,9 +79,9 @@ namespace SumerBusinessSolution.Pages.Sales.Billings
                                              select P.ProdCode;
 
             //int x = Bi.Count();
-        
+
             //Bi[0].UnitPrice =  500;
-          
+
             return new JsonResult(lstProdCode);
 
         }
@@ -108,10 +93,24 @@ namespace SumerBusinessSolution.Pages.Sales.Billings
                 return new JsonResult("Not Found");
             }
             IQueryable<double> unitPrice = from P in _db.ProdInfo
-                                             where (P.ProdCode.Contains(term))
-                                             select P.RetailPrice;
+                                           where (P.ProdCode.Contains(term))
+                                           select P.RetailPrice;
             return new JsonResult(unitPrice);
 
         }
+
+        public JsonResult OnGetSaveRequest(int num, int prodID, int qty, int unitPrice, int totalAmt, string note)
+        {
+            Bi.Add(new BillItems { ProdId = prodID, Qty = qty, UnitPrice = unitPrice, TotalAmt = totalAmt, Note = note });
+            return new JsonResult("");
+        }
+
+        public JsonResult OnGetApplyRequest()
+        {
+            StatusMessage = _SalesTrans.CreateBill(BillHeader, Bi).GetAwaiter().GetResult();
+            return new JsonResult("");
+        }
+
+
     }
 }

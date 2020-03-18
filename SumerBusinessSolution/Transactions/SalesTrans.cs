@@ -40,8 +40,9 @@ namespace SumerBusinessSolution.Transactions
                 // getting the unit price of each item in the bill items 
                 foreach (BillItems item in BillItems)
                 {
+                    item.ProdId = _db.ProdInfo.FirstOrDefault(pr => pr.ProdCode == item.ProdInfo.ProdCode).Id;
                     // first check if qty enough in the store room before proceeding
-                    bool CheckQty = CheckQtyInWh(item.ProdInfo.Id, StoreRoom.Id, item.Qty);
+                    bool CheckQty = CheckQtyInWh(item.ProdId??0, StoreRoom.Id, item.Qty);
 
                     if(CheckQty == false)
                     {
@@ -70,6 +71,8 @@ namespace SumerBusinessSolution.Transactions
 
                 _db.BillHeader.Add(Header);
 
+                await _db.SaveChangesAsync();
+
                 // updatinga customer Acc 
                 double DebtAmt = Header.TotalNetAmt - Header.PaidAmt;
                 UpdateCustomerAcc(Header.CustId ?? 0, Header.PaidAmt, DebtAmt, "New");
@@ -77,7 +80,6 @@ namespace SumerBusinessSolution.Transactions
                 // add a new payment to bill payments table 
                 AddBillPayment(Header.CustId ?? 0, Header.Id, Header.PaidAmt);
 
-                await _db.SaveChangesAsync();
 
                 // Creating Bill items
                 foreach (BillItems item in BillItems)
@@ -85,7 +87,7 @@ namespace SumerBusinessSolution.Transactions
                     BillItems Bill = new BillItems
                     {
                         HeaderId = Header.Id,
-                        ProdId = item.ProdInfo.Id,
+                        ProdId = item.ProdId,
                         Qty = item.Qty,
                         UnitPrice = item.UnitPrice,
                         TotalAmt = item.UnitPrice * item.Qty,
@@ -143,6 +145,28 @@ namespace SumerBusinessSolution.Transactions
             }
         }
 
+        public async Task<string> MakePaymentToAcc(int CustId, double NewPaymentAmt)
+        {
+            try
+            { 
+                CustAcc Acc = _db.CustAcc.FirstOrDefault(ac => ac.CustId == CustId);
+
+            
+                // updating customer Acc
+                //Acc.Paid += PaidAmt;
+                //Acc.Debt -= PaidAmt;
+                UpdateCustomerAcc(CustId, NewPaymentAmt, NewPaymentAmt, "Old");
+  
+                await _db.SaveChangesAsync();
+
+                return "تمت عملية الدفع";
+            }
+            catch (Exception ex)
+            {
+                return "لم تتم عملية الدفع";
+            }
+        }
+
         // this function will close a bill manually 
         public async Task<string> CloseBillManually(int HeaderId)
         {
@@ -170,10 +194,41 @@ namespace SumerBusinessSolution.Transactions
             return UserId;
         }
 
+
+        // this function will update customer account manually, only for admin
+        public async Task<string> UpdateCustomerAccManually(int CustId, double Payment, double Debt)
+        {
+            try
+            {
+                CustAcc Acc = _db.CustAcc.FirstOrDefault(ac => ac.CustId == CustId);
+
+                if(Payment > 0)
+                {
+                    Acc.Paid = Payment;
+                }
+                
+                if(Debt > 0)
+                {
+                    Acc.Debt = Debt;
+                }
+          
+                
+                await _db.SaveChangesAsync();
+
+                return "تم تعديل الحساب";
+            }
+            catch
+            {
+                return "Error! حصل خطأ لم يتم تعديل الحساب";
+            }
+
+        }
+
         // updating customer Accs 
         private void UpdateCustomerAcc(int CustId, double Paid, double Debt, string Status)
         {
             CustAcc Acc = _db.CustAcc.FirstOrDefault(cu => cu.CustId == CustId);
+
             Acc.Paid += Paid;
 
             // if new means new bill and will add more debit (in case customer didnt make full payment)
@@ -183,7 +238,12 @@ namespace SumerBusinessSolution.Transactions
             }
             else // this will be used when a customer makes a new payment on existing bill, so debt will be minus
             {
-                Acc.Debt -= Debt;
+                if(Acc.Debt > 0)
+                {
+                    Acc.Debt -= Debt;
+
+                }
+                
             }
             
         }
