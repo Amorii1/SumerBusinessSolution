@@ -30,9 +30,6 @@ namespace Sumer.Utility
             // Bills Status Types 
             public const string OpenBill = "Open";
             public const string Completed = "Completed";
-
-
-
     }
 }
 

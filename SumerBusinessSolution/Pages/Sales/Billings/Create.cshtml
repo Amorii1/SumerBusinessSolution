@@ -19,6 +19,8 @@
         }
     </style>
     <div style="width:700px; padding:5px; background-color:white;">
+        <input type ="hidden" asp-for="PricingType.Id" />
+     
         <form method="post">
             <table>
                 <tr>
@@ -27,6 +29,16 @@
                                 asp-items="@(new SelectList(Model.Customer, "Id", "CompanyName"))"
                                 class="form-control ">
                         </select>
+                    </td>
+
+                </tr>
+                <tr>
+                    <td>
+                        <select id="PriceType" asp-for="@Model.PricingType.PriceType"
+                                asp-items="@(new SelectList(Model.UnitPriceTypesList, "Id","PriceType"))"
+                                class="form-control ">
+                        </select>
+
                     </td>
 
                 </tr>
@@ -55,8 +67,8 @@
                             @*float a= (float)((ArrayList)paredes[i])[0];*@
                             @*<td>@Html.TextBoxFor(a => a[j].ContactName)</td>*@
 
-                            <td onclick="bindAutocomplete(this)" onchange="bindPrice(this)">@Html.TextBoxFor(a => Model.Bi[j].ProdInfo.ProdCode) </td>
-                            <td oninput="bindTotal(this)">@Html.TextBoxFor(a => Model.Bi[j].Qty)</td>
+                            <td onclick="bindAutocomplete(this); bindPrice(this)" onchange="bindPrice(this)" >@Html.TextBoxFor(a => Model.Bi[j].ProdInfo.ProdCode) </td>
+                            <td oninput="bindTotal(this)" onclick="bindTotal(this)" >@Html.TextBoxFor(a => Model.Bi[j].Qty)</td>
                             <td>@Html.TextBoxFor(a => Model.Bi[j].UnitPrice)</td>
                             <td>@Html.TextBoxFor(a => Model.Bi[j].TotalAmt)</td>
                             <td>@Html.TextBoxFor(a => Model.Bi[j].Note)</td>
@@ -99,11 +111,11 @@
             <input type="submit" value="Save Bulk Data" />
         </form>
         @*@using (Html.BeginForm("BulkData", "Save", FormMethod.Post))
-            {
-                @Html.AntiForgeryToken()
-                @Html.ValidationSummary(true)
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
 
-            }*@
+        }*@
     </div>
 
     <script>
@@ -155,21 +167,30 @@
 
 
             });
-
-          function bindAutocomplete(t) {
-                    $(t.children[0]).autocomplete({
+            
+            function bindAutocomplete(t) {
+                $(t.children[0]).autocomplete({
+                   
                         source: '@Url.Page("Create", "SearchNow")'
                     });
 
             }
-
+           
                   async function bindPrice(t) {
+                      if (document.getElementById("PriceType").value == 1) {
+                          const obj = await fetch(`${window.location.href}?handler=ProdUnitPriceWhole&term=${t.children[0].value}`)
+                          const json = await obj.json()
+                           t.parentElement.children[2].children[0].value = json[0]
+                      }
+                      else {
+                                                     const obj = await fetch(`${window.location.href}?handler=ProdUnitPriceRetail&term=${t.children[0].value}`)
+                          const json = await obj.json()
+                           t.parentElement.children[2].children[0].value = json[0]
+                      }
 
-                    const obj = await fetch(`${window.location.href}?handler=ProdUnitPrice&term=${t.children[0].value}`)
-                        const json = await obj.json()
-
-                    t.parentElement.children[2].children[0].value = json[0]
-
+                   
+                       console.log(document.getElementById("PriceType").value)
+                 
                 }
 
                 function bindTotal(t) {
@@ -187,6 +208,7 @@
 
         <script>
             $(document).ready(function () {
+                
     });
         </script>
     }

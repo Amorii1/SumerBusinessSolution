@@ -32,6 +32,9 @@ namespace SumerBusinessSolution
         public double PaidAmt { get; set; }
 
         [BindProperty]
+        public double TotalNetAmt { get; set; }
+
+        [BindProperty]
         public double NewPayment { get; set; }
 
         [BindProperty]
@@ -45,6 +48,7 @@ namespace SumerBusinessSolution
                 .FirstOrDefaultAsync(h => h.Id == BhId);
             HeaderId = BillHeader.Id;
             CompanyName = BillHeader.Customer.CompanyName;
+            TotalNetAmt = BillHeader.TotalNetAmt;
             PaidAmt = BillHeader.PaidAmt;
             NewPayment = 0;
 

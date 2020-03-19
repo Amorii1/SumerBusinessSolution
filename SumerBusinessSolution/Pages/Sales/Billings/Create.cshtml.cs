@@ -42,13 +42,32 @@ namespace SumerBusinessSolution.Pages.Sales.Billings
 
         public List<BillItems> Bi { get; set; }
 
+
+        public List<PricingType> UnitPriceTypesList { get; set; }
+
+        [BindProperty]
+        public PricingType PricingType { get; set; }
+
+        [BindProperty]
+        public string Selected { get; set; }
+
+
+
         public InvStockQty InvStockQty { get; set; }
         public ActionResult OnGet()
         {
             Bi = new List<BillItems> { new BillItems { ProdId = 0, Qty = 0, UnitPrice = 0, TotalAmt = 0, Note = "" } };
-
+            
             WarehouseList = _db.Warehouse.ToList();
             Customer = _db.Customer.Where(cus => cus.Status == SD.ActiveCustomer).ToList();
+
+            UnitPriceTypesList = _db.PricingType.ToList();
+ 
+            //UnitPriceTypesList.Add(SD.WholePrice);
+            // UnitPriceTypesList.Add(SD.RetailPrice);
+
+           
+
             return Page();
         }
         public ActionResult OnPost(List<BillItems> Bi)
@@ -84,15 +103,38 @@ namespace SumerBusinessSolution.Pages.Sales.Billings
 
         }
 
-        public JsonResult OnGetProdUnitPrice(string term)
+        public JsonResult OnGetProdUnitPriceWhole(string term)
         {
             if (term == null)
             {
                 return new JsonResult("Not Found");
             }
-            IQueryable<double> unitPrice = from P in _db.ProdInfo
-                                           where (P.ProdCode.Contains(term))
-                                           select P.RetailPrice;
+ 
+            IQueryable<double> unitPrice = null;
+   
+                  unitPrice = from P in _db.ProdInfo
+                                               where (P.ProdCode.Contains(term))
+                                               select P.WholePrice;
+            //}
+            
+            return new JsonResult(unitPrice);
+
+        }
+
+        public JsonResult OnGetProdUnitPriceRetail(string term)
+        {
+            if (term == null)
+            {
+                return new JsonResult("Not Found");
+            }
+
+            IQueryable<double> unitPrice = null;
+
+            unitPrice = from P in _db.ProdInfo
+                        where (P.ProdCode.Contains(term))
+                        select P.RetailPrice;
+            //}
+
             return new JsonResult(unitPrice);
 
         }
