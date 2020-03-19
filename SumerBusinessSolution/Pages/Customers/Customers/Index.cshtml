@@ -92,13 +92,9 @@
                                             @localizer.Get("") <i class="fas fa-check"></i>
                                         </a>
 
-                                        <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-success text-white" asp-page="../Accounts/PayToAcc" asp-route-CustId="@item.Id" type="submit" title="دفع لحساب الزبون" name="PayToAcc">
+                                        <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-success text-white" asp-page="../Accounts/PayToAcc" asp-route-CustId="@item.Id" type="submit" title="فواتير الزبون" name="CustomerBills">
                                             @localizer.Get("") <i class="fas fa-check"></i>
                                         </a>
-
-                                        <button asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-warning text-white" asp-page-handler="CloseBillManually" asp-route-HeaderId="@item.Id" type="submit" title="اغلاق الفاتورة" name="Close">
-                                            @localizer.Get("") <i class="fas fa-window-close"></i>
-                                        </button>
                                     }
 
                                 </form>

@@ -45,9 +45,9 @@ namespace SumerBusinessSolution
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy/MM/dd}")]
         public DateTime SearchFromDate { get; set; }
 
-    [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{yyyy-MM-dd}")]
-        public DateTime SearchToDate = DateTime.Now;
+        [DataType(DataType.Date)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy/MM/dd}")]
+        public DateTime SearchToDate { get; set; }
 
         public async Task<IActionResult> OnGet(string CustomerName = null, DateTime? SearchFromDate = null, DateTime? SearchToDate = null)
             {
