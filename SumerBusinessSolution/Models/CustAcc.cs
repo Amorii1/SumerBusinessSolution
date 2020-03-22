@@ -14,8 +14,10 @@ namespace SumerBusinessSolution.Models
 
        
         public int CustId { get; set; }
+        [Display(Name = "الرصيد")]
 
         public double Paid { get; set; }
+        [Display(Name = "الديون")]
 
         public double Debt { get; set; }
 

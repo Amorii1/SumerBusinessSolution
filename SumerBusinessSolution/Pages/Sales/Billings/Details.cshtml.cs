@@ -8,6 +8,9 @@ using Microsoft.EntityFrameworkCore;
 using SumerBusinessSolution.Data;
 using SumerBusinessSolution.Models;
 using SumerBusinessSolution.Transactions;
+using Microsoft.AspNetCore.Localization;
+using System.ComponentModel.DataAnnotations;
+
 
 namespace SumerBusinessSolution
 { 
@@ -46,12 +49,16 @@ namespace SumerBusinessSolution
             //BillHeader = await _db.BillHeader.Include(h => h.Customer)
             //   .FirstOrDefaultAsync(h => h.Id == BhId);
 
+
+
             BillItemsList = await _db.BillItems.Include(bill=> bill.BillHeader).Include(bill=> bill.BillHeader.Customer).Include(bill=> bill.ProdInfo).Include(bill=> bill.BillHeader.ApplicationUser).Where(bill => bill.HeaderId == BhId).ToListAsync();
-           
             if(BillItemsList.Count() > 0)
             {
                 BillHeader = BillItemsList[0].BillHeader;
             }
+
+
+
             return Page();
         }
         public void OnPost()

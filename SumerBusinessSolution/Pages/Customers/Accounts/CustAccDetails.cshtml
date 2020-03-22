@@ -1,55 +1,86 @@
 ﻿@page
-@model SumerBusinessSolution.CustAccDetailsModel
+@model SumerBusinessSolution.Pages.Customers.Accounts.CustAccDetailsModel
+@using Sumer.Utility
+@using Microsoft.AspNetCore.Localization
+@using System.ComponentModel.DataAnnotations;
+@*@inject IHtmlLocalizer<IndexModel> htmlLocalizer*@ @*for html lozcalization*@
+@*@inject IStringLocalizer<IndexModel> localizer*@
+@*First Method*@
+@inject Services.CommonLocalizationService localizer
+@*Second and the easier Method*@
+
 @{
     ViewData["Title"] = "CustAccDetails";
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
 
-@inject Services.CommonLocalizationService localizer
+<div class="border backgroundWhite">
+    @*<h2 class="text-info">اضافة مادة جديدة</h2>*@
+    <h2 class="text-info  text-md-right">@localizer.Get("حسابات الزبون")</h2>
 
-<br />
-<h2 class="text-info">Customers acc details </h2>
-<br />
- 
-<form method="post">
-    <div class="border backgroundWhite py-2 px-2">
-        <div class="form-group row">
-            <div class="col-2">
-                <label asp-for="Customer.CompanyName"></label>
-            </div>
-            <div class="col-5">
-                <input asp-for="Customer.CompanyName" class="form-control" />
-            </div>
+    <form method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="CustAcc.Customer.Id" />
 
-        </div>
-        <div class="form-group row">
-            <div class="col-2">
-                <label asp-for="CustAcc.Paid"></label>
+        <div class="row form-group">
+            <div class="col-md-5 offset-md-5">
+                <input asp-for="Customer.CompanyName" class="form-control  text-md-right" disabled />
             </div>
-            <div class="col-5">
-                <input asp-for="CustAcc.Paid" class="form-control" />
+            <div class="col-md-2">
+                <label asp-for="Customer.CompanyName"> </label>
             </div>
-        </div>
-        <div class="form-group row">
-            <div class="col-2">
-                <label asp-for="CustAcc.Debt"></label>
-            </div>
-            <div class="col-5">
-                <input asp-for="CustAcc.Debt" class="form-control" />
-            </div>
+            <span asp-validation-for="Customer.CompanyName" class="text-danger"></span>
         </div>
 
-
-
-        <div class="col-md-6">
-            @*<input type="submit" class="btn btn-info form-control" value="حفظ" />*@
-            <input asp-route-culture="@Request.RouteValues["culture"]" type="submit" class="btn btn-info form-control" value="@localizer.Get("اضافة")" />
-
+        <div class="row form-group">
+            <div class="col-md-5 offset-md-5">
+                <input asp-for="CustAcc.Paid" class="form-control  text-md-right" disabled />
+            </div>
+            <div class="col-md-2">
+                <label asp-for="CustAcc.Paid"> </label>
+            </div>
+            <span asp-validation-for="CustAcc.Paid" class="text-danger"></span>
         </div>
 
-        <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-success text-white" asp-page="../Accounts/EditCustAcc" asp-route-CustId="@Model.Customer.Id" type="submit" title="تعديل حساب الزبون" name="EditAcc">
-            @localizer.Get("") <i class="fas fa-check"></i>
-        </a>
-    </div>
-</form>
+        <div class="row form-group">
+            <div class="col-md-5 offset-md-5">
+                <input asp-for="CustAcc.Debt" class="form-control  text-md-right" disabled />
+            </div>
+            <div class="col-md-2">
+                <label asp-for="CustAcc.Debt"> </label>
+            </div>
+            <span asp-validation-for="CustAcc.Debt" class="text-danger"></span>
+        </div>
+
+
+
+        <div class=" form-group row">
+            <div class="col-md-5 offset-md-5">
+                <div class="row">
+                    <div class="col-md-6">
+                        <form>
+                            <input asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-success form-control" type="button" value="@localizer.Get("الغاء")" onclick="history.back()">
+                        </form>
+                    </div>
+                    @if (User.IsInRole(SD.AdminEndUser))
+                    {
+                        <div class="col-md-6">
+                            @*<a asp-page="Index" class="btn btn-success form-control">الرجوع</a>*@
+                            <a asp-page="../Accounts/EditCustAcc" asp-route-culture="@Request.RouteValues["culture"]" asp-route-CustId="@Model.Customer.Id" class="btn btn-success form-control">@localizer.Get("تعديل")</a>
+
+                        </div>
+                    }
+                </div>
+
+            </div>
+        </div>
+
+    </form>
+</div>
+
+
+
+
+
+        

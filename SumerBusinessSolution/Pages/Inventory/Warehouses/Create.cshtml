@@ -62,8 +62,8 @@
                 <select WhType="myList" asp-for="Warehouse.WhType.Type" class="form-control text-md-right">
                     @*<option value="StoreRoom">مخزن رئيسي</option>
                         <option value="ShowRoom">معرض</option>*@
-                    <option value="StoreRoom">@localizer.Get("مخزن رئيسي")</option>
-                    <option value="ShowRoom">@localizer.Get("معرض")</option>
+                    <option value="@localizer.Get("مخزن رئيسي")">@localizer.Get("مخزن رئيسي")</option>
+                    <option value="@localizer.Get("معرض")">@localizer.Get("معرض")</option>
                 </select>
             </div>
             <div class="col-md-2">

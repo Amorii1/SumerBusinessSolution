@@ -11,6 +11,8 @@ using Microsoft.EntityFrameworkCore;
 using SumerBusinessSolution.Data;
 using SumerBusinessSolution.Models;
 using SumerBusinessSolution.Transactions;
+using Microsoft.AspNetCore.Localization;
+
 
 namespace SumerBusinessSolution
 {
@@ -43,10 +45,12 @@ namespace SumerBusinessSolution
 
         [DataType(DataType.Date)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy/MM/dd}")]
+        [Display(Name = "من")]
         public DateTime SearchFromDate { get; set; }
 
         [DataType(DataType.Date)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy/MM/dd}")]
+        [Display(Name = "الى")]
         public DateTime SearchToDate { get; set; }
 
         public async Task<IActionResult> OnGet(string CustomerName = null, DateTime? SearchFromDate = null, DateTime? SearchToDate = null)

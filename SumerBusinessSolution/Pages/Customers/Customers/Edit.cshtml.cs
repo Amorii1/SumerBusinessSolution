@@ -10,7 +10,7 @@ using Sumer.Utility;
 using SumerBusinessSolution.Data;
 using SumerBusinessSolution.Models;
 
-namespace SumerBusinessSolution
+namespace SumerBusinessSolution.Pages.Customers.Customers
 {
     [Authorize(Roles = SD.AdminEndUser)]
     public class EditModel : PageModel

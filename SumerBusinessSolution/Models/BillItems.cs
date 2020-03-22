@@ -16,12 +16,15 @@ namespace SumerBusinessSolution.Models
         public int? ProdId { get; set; }
 
         [Required]
+        [Display(Name = "الكمية")]
         public double Qty { get; set; }
-
+        [Display(Name = "سعر المنتج")]
         public double UnitPrice { get; set; }
 
         [Required]
+        [Display(Name = "المبلغ الكلي")]
         public double TotalAmt { get; set; }
+        [Display(Name = "الملاحظات")]
         public string Note { get; set; }
 
         [ForeignKey("ProdId")]

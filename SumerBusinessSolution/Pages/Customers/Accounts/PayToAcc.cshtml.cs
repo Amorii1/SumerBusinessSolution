@@ -1,16 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using Sumer.Utility;
 using SumerBusinessSolution.Data;
 using SumerBusinessSolution.Models;
 using SumerBusinessSolution.Transactions;
 
-namespace SumerBusinessSolution
+namespace SumerBusinessSolution.Pages.Customers.Accounts
 {
+    [Authorize(Roles = SD.AdminEndUser)]
     public class PayToAccModel : PageModel
     {
         private readonly ApplicationDbContext _db;
@@ -29,6 +33,7 @@ namespace SumerBusinessSolution
         public CustAcc CustAcc { get; set; }
 
         [BindProperty]
+        [Display(Name = "دفع مبلغ")]
         public double NewPayment { get; set; }
 
         [BindProperty]

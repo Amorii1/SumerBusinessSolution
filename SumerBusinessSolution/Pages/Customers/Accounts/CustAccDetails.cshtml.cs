@@ -9,7 +9,7 @@ using SumerBusinessSolution.Data;
 using SumerBusinessSolution.Models;
 using SumerBusinessSolution.Transactions;
 
-namespace SumerBusinessSolution
+namespace SumerBusinessSolution.Pages.Customers.Accounts
 {
     public class CustAccDetailsModel : PageModel
     {

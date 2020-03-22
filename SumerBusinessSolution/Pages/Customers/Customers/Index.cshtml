@@ -1,14 +1,21 @@
 ﻿@page
 @model SumerBusinessSolution.Pages.Customers.Customers.IndexModel
+@using Sumer.Utility
+@using Microsoft.AspNetCore.Localization
+@using System.ComponentModel.DataAnnotations;
+@*@inject IHtmlLocalizer<IndexModel> htmlLocalizer*@ @*for html lozcalization*@
+@*@inject IStringLocalizer<IndexModel> localizer*@
+@*First Method*@
+@inject Services.CommonLocalizationService localizer
+@*Second and the easier Method*@
+
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
 
-@inject Services.CommonLocalizationService localizer
-@using Sumer.Utility
-<div class=" backgroundWhite">
+ <div class=" backgroundWhite">
     <div class="row">
 
         <div class="col-md-6 ">
@@ -16,9 +23,7 @@
         </div>
 
         <div class="col-md-6 text-right">
- 
             <h2 class="text-info"> @localizer.Get("الزبائن")</h2>
-
         </div>
 
     </div>
@@ -37,14 +42,10 @@
                                 </button>
 
                             </div>
-                            <div class="col-md-5 pb-1">
-                                @Html.Editor("searchProdCode", new { htmlAttributes = new { @class = "form-control text-md-right", placeholder = @localizer.Get("اسم الزبون....") } })
+                            <div class="col-md-10 pb-1">
+                                @Html.Editor("searchContactName", new { htmlAttributes = new { @class = "form-control text-md-right", placeholder = @localizer.Get("اسم الزبون....") } })
 
                             </div>
-                            <div class="col-md-5 pb-1">
-                                @*@Html.Editor("searchCreateDateTime", new { htmlAttributes = new { @class = "form-control text-md-right", placeholder = @localizer.Get("تاريخ الطلب....") } })*@
-                            </div>
-
 
                         </div>
                     </div>
@@ -60,67 +61,76 @@
             <tr class="table-secondary">
 
                 <th></th>
+
                 <th>
-                    @Html.DisplayNameFor(m => m.Customer.CompanyName)
+                    @Html.DisplayNameFor(m => m.Customer.PhoneNo)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(m => m.Customer.Address)
                 </th>
                 <th>
                     @Html.DisplayNameFor(m => m.Customer.ContactName)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(m => m.Customer.Address)
+                    @Html.DisplayNameFor(m => m.Customer.CompanyName)
                 </th>
-
-                <th>
-                    @Html.DisplayNameFor(m => m.Customer.PhoneNo)
-                </th>
- 
-                <th></th>
             </tr>
- 
-                @foreach (var item in Model.CustomerList)
-                {
-                    <tr>
 
-                        <td>
-                            <div class="btn-group" role="group">
-                                <form method="post">
+            @foreach (var item in Model.CustomerList)
+            {
+        <tr>
+
+            @if (User.IsInRole(SD.AdminEndUser))
+            {
+                <td style="width:150px;">
+                    <div class="btn-group" role="group">
+                        <form method="post">
 
 
-                                    @if (User.IsInRole(SD.AdminEndUser))
-                                    {
-                                        <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-success text-white" asp-page="../Accounts/CustAccDetails" asp-route-CustId="@item.Id" type="submit" title="حساب الزبون" name="AccDetails">
-                                            @localizer.Get("") <i class="fas fa-check"></i>
-                                        </a>
+                            <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-success text-white" asp-page="../Accounts/CustAccDetails" asp-route-CustId="@item.Id" type="submit" title="حسابات الزبون" name="AccDetails">
+                                @localizer.Get("حسابات الزبون") <i class="fas fa-user"></i>
+                            </a>
 
-                                        <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-success text-white" asp-page="../Accounts/PayToAcc" asp-route-CustId="@item.Id" type="submit" title="فواتير الزبون" name="CustomerBills">
-                                            @localizer.Get("") <i class="fas fa-check"></i>
-                                        </a>
-                                    }
+                            <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-success text-white" asp-page="../Accounts/PayToAcc" asp-route-CustId="@item.Id" type="submit" title="فواتير الزبون" name="CustomerBills">
+                                @localizer.Get("فواتير الزبون") <i class="fas fa-file-invoice-dollar"></i>
+                            </a>
 
-                                </form>
-                            </div>
-                        </td>
+                            <a asp-page="Edit" asp-route-Id="@item.Id" asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-info text-white " type="submit" title="@localizer.Get("تعديل الحساب")">
+                                <i class="fas fa-edit"></i>
+                                @localizer.Get("تعديل الحساب")
+                            </a>
 
-                        <td>
-                            @Html.DisplayFor(m => item.CompanyName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(m => item.ContactName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(m => item.Address)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(m => item.PhoneNo)
-                        </td>
-                  
-                    </tr>
 
- 
+                        </form>
+                    </div>
+                </td>
+
+            }
+            else
+            {
+                <td> </td>
+            }
+
+
+            <td>
+                @Html.DisplayFor(m => item.PhoneNo)
+            </td>
+            <td>
+                @Html.DisplayFor(m => item.Address)
+            </td>
+            <td>
+                @Html.DisplayFor(m => item.ContactName)
+            </td>
+            <td>
+                @Html.DisplayFor(m => item.CompanyName)
+            </td>
+        </tr>
+
+
 
             }
 
         </table>
 
     </div>
-
+    </div>

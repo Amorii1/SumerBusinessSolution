@@ -1,100 +1,107 @@
 ﻿@page
-@model SumerBusinessSolution.MakePaymentModel
+@model SumerBusinessSolution.Pages.Sales.Billings.MakePaymentModel
+@using Sumer.Utility
+@using Microsoft.AspNetCore.Localization
+@using System.ComponentModel.DataAnnotations;
+@*@inject IHtmlLocalizer<IndexModel> htmlLocalizer*@ @*for html lozcalization*@
+@*@inject IStringLocalizer<IndexModel> localizer*@
+@*First Method*@
+@inject Services.CommonLocalizationService localizer
+@*Second and the easier Method*@
+
 @{
     ViewData["Title"] = "MakePayment";
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
-@inject Services.CommonLocalizationService localizer
-<partial name="_StatusMessage" model="Model.StatusMessage" />
-<br />
-<div class="border backgroundWhite">
-    @*<h2 class="text-info">المواد الواردة </h2>*@
-    <h2 class="text-info text-md-right">  @localizer.Get("دفع فاتورة")</h2>
 
-    <form method="post">
+    <div class="border backgroundWhite">
+        <partial name="_StatusMessage" model="Model.StatusMessage" />
 
+        @*<h2 class="text-info">المواد الواردة </h2>*@
+        <h2 class="text-info text-md-right">  @localizer.Get("دفع الفاتورة")</h2>
 
+        <form method="post">
+            <input type="hidden" asp-for="BillHeader.Id" />
 
-        <div class="form-group row ">
+            <div class="form-group row">
 
-            <div class="col-md-5 offset-md-5">
-                <input type="text" id="ProdInfo" asp-for="HeaderId" class="form-control text-md-right" />
-            </div>
-            <div class="col-md-2 ">
-                <label asp-for="HeaderId"></label>
-            </div>
-
-        </div>
-
-
-
-        <div class="form-group row">
-
-            <div class="col-md-5 offset-md-5">
-                <input asp-for="CompanyName" class="form-control  text-md-right" />
-
-
-            </div>
-            <div class="col-md-2">
-                <label asp-for="CompanyName"></label>
-            </div>
-        </div>
-        <div class="form-group row">
-
-            <div class="col-md-5 offset-md-5">
-                @*<textarea placeholder="ملاحظات" asp-for="Note" class="form-control"></textarea>*@
-                <input asp-for="TotalNetAmt" class="form-control  text-md-right"></input>
-
-            </div>
-
-            <div class="col-md-2">
-                <label asp-for="TotalNetAmt"></label>
-            </div>
-        </div>
-        <div class="form-group row">
-
-            <div class="col-md-5 offset-md-5">
-                @*<textarea placeholder="ملاحظات" asp-for="Note" class="form-control"></textarea>*@
-                <input asp-for="PaidAmt" class="form-control  text-md-right"></input>
-
-            </div>
-
-            <div class="col-md-2">
-                <label asp-for="PaidAmt"></label>
-            </div>
-        </div>
-        <div class="form-group row">
-
-            <div class="col-md-5 offset-md-5">
-                @*<textarea placeholder="ملاحظات" asp-for="Note" class="form-control"></textarea>*@
-                <input asp-for="NewPayment" class="form-control  text-md-right"></input>
-
-            </div>
-
-            <div class="col-md-2">
-                <label asp-for="NewPayment"></label>
-            </div>
-        </div>
-
-        <div class="form-group row">
-            <div class="col-md-5 offset-md-5">
-                <div class="row">
-                    <div class="col-md-6">
-                        @*<a asp-page="Index" class="btn btn-success form-control">رجوع</a>*@
-                        <a asp-page="Index" class="btn btn-success form-control" asp-route-culture="@Request.RouteValues["culture"]">  @localizer.Get("الغاء")</a>
-
-                    </div>
-                    <div class="col-md-6">
-                        @*<button type="submit" class="btn btn-info form-control" onclick="return ValidateInput()">حفظ</button>*@
-                        <button asp-route-culture="@Request.RouteValues["culture"]" type="submit" class="btn btn-info form-control" onclick="return ValidateInput()">  @localizer.Get("اضافة")</button>
-
-                    </div>
-
+                <div class="col-md-5 offset-md-5">
+                    <input type="text" id="ProdInfo" asp-for="HeaderId" class="form-control text-md-right" disabled/>
+                </div>
+                <div class="col-md-2 ">
+                    <label asp-for="HeaderId"></label>
                 </div>
             </div>
-        </div>
-        @*<div class="row">
+
+
+
+            <div class="form-group row">
+
+                <div class="col-md-5 offset-md-5">
+                    <input asp-for="CompanyName" class="form-control  text-md-right" disabled />
+
+
+                </div>
+                <div class="col-md-2">
+                    <label asp-for="CompanyName"></label>
+                </div>
+            </div>
+            <div class="form-group row">
+
+                <div class="col-md-5 offset-md-5">
+                    @*<textarea placeholder="ملاحظات" asp-for="Note" class="form-control"></textarea>*@
+                    <input asp-for="TotalNetAmt" class="form-control  text-md-right" disabled/>
+
+                </div>
+
+                <div class="col-md-2">
+                    <label asp-for="TotalNetAmt"></label>
+                </div>
+            </div>
+            <div class="form-group row">
+
+                <div class="col-md-5 offset-md-5">
+                    @*<textarea placeholder="ملاحظات" asp-for="Note" class="form-control"></textarea>*@
+                    <input asp-for="PaidAmt" class="form-control  text-md-right" disabled />
+
+                </div>
+
+                <div class="col-md-2">
+                    <label asp-for="PaidAmt"></label>
+                </div>
+            </div>
+            <div class="form-group row">
+
+                <div class="col-md-5 offset-md-5">
+                    @*<textarea placeholder="ملاحظات" asp-for="Note" class="form-control"></textarea>*@
+                    <input asp-for="NewPayment" class="form-control  text-md-right" />
+
+                </div>
+
+                <div class="col-md-2">
+                    <label asp-for="NewPayment"></label>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-md-5 offset-md-5">
+                    <div class="row">
+                        <div class="col-md-6">
+                            @*<a asp-page="Index" class="btn btn-success form-control">رجوع</a>*@
+                            <a asp-page="Index" class="btn btn-success form-control" asp-route-culture="@Request.RouteValues["culture"]">  @localizer.Get("الغاء")</a>
+
+                        </div>
+                        <div class="col-md-6">
+                            @*<button type="submit" class="btn btn-info form-control" onclick="return ValidateInput()">حفظ</button>*@
+                            <button asp-route-culture="@Request.RouteValues["culture"]" type="submit" class="btn btn-info form-control" onclick="return ValidateInput()">  @localizer.Get("حفظ")</button>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            @*<div class="row">
             <div class="col-7">
                 <button type="submit" class="btn btn-info"  onclick="return ValidateInput()">تخزين</button>
                 <a asp-page="Index" class="btn btn-success form-control">رجوع</a>
@@ -102,6 +109,6 @@
             </div>
         </div>*@
 
-    </form>
-</div>
+        </form>
+    </div>
 
