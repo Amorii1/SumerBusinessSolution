@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +12,8 @@ using SumerBusinessSolution.Models;
 
 namespace SumerBusinessSolution.Pages.Inventory.Reports
 {
+    [Authorize]
+
     public class ProdInWhQtyModel : PageModel
     {
         private readonly ApplicationDbContext _db;

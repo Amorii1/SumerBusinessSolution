@@ -8,12 +8,14 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using Sumer.Utility;
 using SumerBusinessSolution.Data;
 using SumerBusinessSolution.Models;
 
 namespace SumerBusinessSolution.Pages.Inventory.Warehouses
 {
     [Authorize]
+    [Authorize(Roles = SD.StoreEndUser)]
     public class Create : PageModel
     {
         private readonly ApplicationDbContext _db;

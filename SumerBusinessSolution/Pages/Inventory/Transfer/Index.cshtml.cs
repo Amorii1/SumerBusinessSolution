@@ -13,8 +13,7 @@ using SumerBusinessSolution.Models;
 
 namespace SumerBusinessSolution.Inventory.Transfer
 {
-   // [Authorize(Roles = SD.AdminEndUser)]
-   [Authorize]
+    [Authorize(Roles = SD.AdminEndUser)]
     public class IndexModel : PageModel
     {
         private readonly ApplicationDbContext _db;

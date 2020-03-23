@@ -18,12 +18,11 @@
 <div class=" backgroundWhite">
     <div class="row">
 
-        @if (User.IsInRole(SD.AdminEndUser))
-        {
+      
             <div class="col-md-6">
                 <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="Create" class="btn btn-info"> <i class="fas fa-plus"></i></a>
             </div>
-        }
+      
         <div class="col-md-6 text-md-right">
             @*<h2 class="text-info"> حركه المنتجات </h2>*@
             <h2 class="text-info"> @localizer.Get("حركة المنتجات")</h2>
