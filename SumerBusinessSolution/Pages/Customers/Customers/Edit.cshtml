@@ -1,64 +1,94 @@
 ﻿@page
-@model SumerBusinessSolution.EditModel
+@model SumerBusinessSolution.Pages.Customers.Customers.EditModel
+@using Sumer.Utility
+@using Microsoft.AspNetCore.Localization
+@using System.ComponentModel.DataAnnotations;
+@*@inject IHtmlLocalizer<IndexModel> htmlLocalizer*@ @*for html lozcalization*@
+@*@inject IStringLocalizer<IndexModel> localizer*@
+@*First Method*@
+@inject Services.CommonLocalizationService localizer
+@*Second and the easier Method*@
+
 @{
     ViewData["Title"] = "Edit";
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
-@inject Services.CommonLocalizationService localizer
 
-<br />
-<h2 class="text-info">Edit customer info</h2>
-<br />
-<partial name="_StatusMessage" model="Model.StatusMessage" />
-<form method="post">
-    <div class="border backgroundWhite py-2 px-2">
+
+
+<div class="border backgroundWhite">
+    @*<h2 class="text-info">اضافة مادة جديدة</h2>*@
+    <h2 class="text-info  text-md-right">@localizer.Get("تعديل حساب الزبون")</h2>
+
+    <partial name="_StatusMessage" model="Model.StatusMessage" />
+    <form method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <input type="hidden" asp-for="Customer.Id" />
-        <div class="form-group row">
-            <div class="col-2">
-                <label asp-for="Customer.CompanyName"></label>
+
+        <div class="row form-group">
+            <div class="col-md-5 offset-md-5">
+                <input asp-for="Customer.CompanyName" class="form-control  text-md-right" />
             </div>
-            <div class="col-5">
-                <input asp-for="Customer.CompanyName" class="form-control" />
+            <div class="col-md-2">
+                <label asp-for="Customer.CompanyName"> </label>
             </div>
             <span asp-validation-for="Customer.CompanyName" class="text-danger"></span>
         </div>
-        <div class="form-group row">
-            <div class="col-2">
-                <label asp-for="Customer.ContactName"></label>
+
+        <div class="row form-group">
+            <div class="col-md-5 offset-md-5">
+                <input asp-for="Customer.ContactName" class="form-control  text-md-right" />
             </div>
-            <div class="col-5">
-                <input asp-for="Customer.ContactName" class="form-control" />
+            <div class="col-md-2">
+                <label asp-for="Customer.ContactName"> </label>
             </div>
             <span asp-validation-for="Customer.ContactName" class="text-danger"></span>
         </div>
-        <div class="form-group row">
-            <div class="col-2">
-                <label asp-for="Customer.Address"></label>
+
+        <div class="row form-group">
+            <div class="col-md-5 offset-md-5">
+                <input asp-for="Customer.Address" class="form-control  text-md-right" />
             </div>
-            <div class="col-5">
-                <input asp-for="Customer.Address" class="form-control" />
+            <div class="col-md-2">
+                <label asp-for="Customer.Address"> </label>
             </div>
             <span asp-validation-for="Customer.Address" class="text-danger"></span>
         </div>
 
-        <div class="form-group row">
-            <div class="col-2">
-                <label asp-for="Customer.PhoneNo"></label>
+        <div class="row form-group">
+            <div class="col-md-5 offset-md-5">
+                <input asp-for="Customer.PhoneNo" class="form-control  text-md-right" />
             </div>
-            <div class="col-5">
-                <input asp-for="Customer.PhoneNo" class="form-control" />
+            <div class="col-md-2">
+                <label asp-for="Customer.PhoneNo"> </label>
             </div>
             <span asp-validation-for="Customer.PhoneNo" class="text-danger"></span>
         </div>
 
+        <div class=" form-group row">
+            <div class="col-md-5 offset-md-5">
+                <div class="row">
 
-        <div class="col-md-6">
-            @*<input type="submit" class="btn btn-info form-control" value="حفظ" />*@
-            <input asp-route-culture="@Request.RouteValues["culture"]" type="submit" class="btn btn-info form-control" value="@localizer.Get("حفظ")" />
+                    <div class="col-md-6">
+                        @*<a asp-page="Index" class="btn btn-success form-control">الرجوع</a>*@
+                        <a asp-page="Index" asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-success form-control">@localizer.Get("الغاء")</a>
 
+                    </div>
+                    <div class="col-md-6">
+                        @*<input type="submit" class="btn btn-info form-control" value="حفظ" />*@
+                        <input asp-route-culture="@Request.RouteValues["culture"]" type="submit" class="btn btn-info form-control" value="@localizer.Get("حفظ")" />
+
+                    </div>
+                </div>
+
+            </div>
         </div>
-    </div>
-</form>
+
+    </form>
+</div>
+
+
+
 
 @section Scripts {
     @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}

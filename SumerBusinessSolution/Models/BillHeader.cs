@@ -9,20 +9,23 @@ namespace SumerBusinessSolution.Models
 {
     public class BillHeader
     {
+        [Display(Name = "رقم الفاتورة")]
         public int Id { get; set; }
         
         public int? CustId { get; set; }
-
+        [Display(Name = "الحالة")]
         [Required]
         public string Status { get; set; }
-
+        [Display(Name = "المبلغ الكلي")]
         public double TotalAmt { get; set; }
+        [Display(Name = "التخفيض")]
         public double Discount { get; set; }
+        [Display(Name = "المبلغ المتبقي")]
         public double TotalNetAmt { get; set; }
-        
- 
-        public double PaidAmt { get; set; }
 
+        [Display(Name = "المبلغ المدفوع")]
+        public double PaidAmt { get; set; }
+        [Display(Name = "تاريخ الفاتورة")]
         [Required]
         public DateTime CreatedDataTime { get; set; }
         [Required]

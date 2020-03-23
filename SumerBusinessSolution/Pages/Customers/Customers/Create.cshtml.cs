@@ -10,7 +10,8 @@ using SumerBusinessSolution.Data;
 using SumerBusinessSolution.Models;
 using SumerBusinessSolution.Transactions;
 
-namespace SumerBusinessSolution
+namespace SumerBusinessSolution.Pages.Customers.Customers
+
 {
     [Authorize(Roles = SD.AdminEndUser)]
     public class CreateModel : PageModel

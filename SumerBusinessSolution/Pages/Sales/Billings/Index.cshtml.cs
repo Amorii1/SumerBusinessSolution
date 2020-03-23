@@ -9,8 +9,11 @@ using Sumer.Utility;
 using SumerBusinessSolution.Data;
 using SumerBusinessSolution.Models;
 using SumerBusinessSolution.Transactions;
+using Microsoft.AspNetCore.Localization;
+using System.ComponentModel.DataAnnotations;
 
-namespace SumerBusinessSolution
+
+namespace SumerBusinessSolution.Pages.Sales.Billings
 {
     [Authorize]
     public class IndexModel : PageModel

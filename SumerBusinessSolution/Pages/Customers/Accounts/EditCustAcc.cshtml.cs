@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -11,7 +12,7 @@ using SumerBusinessSolution.Data;
 using SumerBusinessSolution.Models;
 using SumerBusinessSolution.Transactions;
 
-namespace SumerBusinessSolution
+namespace SumerBusinessSolution.Pages.Customers.Accounts
 {
     [Authorize(Roles = SD.AdminEndUser)]
     public class EditCustAccModel : PageModel
@@ -32,9 +33,12 @@ namespace SumerBusinessSolution
         public CustAcc CustAcc { get; set; }
 
         [BindProperty]
+        [Display(Name = "الرصيد الجديد")]
+
         public double NewPayment { get; set; }
 
         [BindProperty]
+        [Display(Name = "الديون الجديدة")]
         public double NewDebt { get; set; }
 
         [TempData]

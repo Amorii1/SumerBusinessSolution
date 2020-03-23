@@ -19,6 +19,9 @@ using SumerBusinessSolution.Models;
 
 namespace SumerBusinessSolution.Areas.Identity.Pages.Account
 {
+    
+    [Authorize]
+    [Authorize(Roles = SD.AdminEndUser)]
     [AllowAnonymous]
     public class RegisterModel : PageModel
     {
