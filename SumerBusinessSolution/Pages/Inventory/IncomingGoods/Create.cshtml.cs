@@ -65,11 +65,27 @@ namespace SumerBusinessSolution.Pages.Inventory.IncomingGoods
         [TempData]
         public string StatusMessage { get; set; }
 
+        public List<IncomingGood> InG { get; set; }
 
-        public void OnGet()
+        public ActionResult OnGet()
         {
-           WarehouseList = _db.Warehouse.ToList();
- 
+            InG = new List<IncomingGood> { new IncomingGood { ProdId = 0, WhId = WhId , Qty = 0, Note = "" } };
+
+            WarehouseList = _db.Warehouse.ToList();
+
+
+            return Page();
+
+        }
+
+        public ActionResult OnPost(List<IncomingGood> InG)
+        {
+
+            StatusMessage =  _InveTrans.CreateIncomingGoods(WhId, InG).GetAwaiter().GetResult();
+
+            ModelState.Clear();
+
+            return RedirectToPage("/inventory/incominggoods/create");
         }
 
         public JsonResult OnGetSearchNow(string term)
@@ -83,37 +99,6 @@ namespace SumerBusinessSolution.Pages.Inventory.IncomingGoods
                                              select P.ProdCode;
             return new JsonResult(lstProdCode);
 
-        }
-
-        public async Task<IActionResult> OnPost()
-        {
-            int ProdId;
-            try
-            {
-                ProdId = _db.ProdInfo.FirstOrDefault(pro => pro.ProdCode == ProdCode).Id;
-            }
-            catch
-            {
-                StatusMessage = ("Error! Product code can not be found");
-                return RedirectToPage("/inventory/incominggoods/create");
-            }
-
-            bool incomingoods = true; //_InveTrans.CreateIncomingGoods(WhId, ProdId, Qty, Note).GetAwaiter().GetResult();
-
-            if (incomingoods == true)
-            {
-               // StatusMessage = "New goods have been added successfully.";
-                StatusMessage = "تمت الاضافة";
-
-            }
-            else
-            {
-                //StatusMessage = "Error! New goods havenot been added successfully.";
-                StatusMessage = "عذرا!! لم تتم اضافة البضاعة الواردة بنجاح";
-            
-            }
-
-            return RedirectToPage("/inventory/incominggoods/create");
         }
     }
 }

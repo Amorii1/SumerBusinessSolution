@@ -13,7 +13,6 @@ using SumerBusinessSolution.Transactions;
 
 namespace SumerBusinessSolution.Pages.Inventory.TransferRequests
 {
-   // [Authorize(Roles =SD.StoreEndUser)]
    [Authorize]
     public class CreateModel : PageModel
     {
@@ -26,11 +25,8 @@ namespace SumerBusinessSolution.Pages.Inventory.TransferRequests
             _InveTrans = InveTrans;
         }
 
-
-        //public InvTransfer InvTransfer { get; set; }
-        //public Warehouse Warehouse { get; set; }
-        public IEnumerable<Warehouse> Warehouselist { get; set; }
-        public IEnumerable<Warehouse> WarehouselistTo { get; set; }
+        public IEnumerable<Warehouse> WhFromlist { get; set; }
+        public IEnumerable<Warehouse> WhTolist { get; set; }
 
         [Required]
         [BindProperty]
@@ -49,6 +45,7 @@ namespace SumerBusinessSolution.Pages.Inventory.TransferRequests
         [BindProperty]
        [Display(Name = "الكمية")]
         public double Qty { get; set; }
+
         [BindProperty]
        [Display(Name = "الملاحظات")]
         public string Note { get; set; }
@@ -61,24 +58,21 @@ namespace SumerBusinessSolution.Pages.Inventory.TransferRequests
 
         public void OnGet()
         {
-            var InvT1 = new InvTransfer { ProdId = 0, Qty = 0, Note = "" };
-            var InvT2 = new InvTransfer { ProdId = 0, Qty = 0, Note = "" };
-            var InvT3 = new InvTransfer { ProdId = 0, Qty = 0, Note = "" };
-
             InvT = new List<InvTransfer> { new InvTransfer { ProdId = 0, Qty = 0, Note = "" } };
 
-            InvT.Add(InvT1);
-            InvT.Add(InvT2);
-            InvT.Add(InvT3);
+            WhFromlist = _db.Warehouse.ToList();
+            WhTolist = _db.Warehouse.ToList().OrderByDescending(wh => wh.Id);
+        }
 
+        public IActionResult OnPost()
+        {
+            StatusMessage = _InveTrans.CreateInvTransferRequest(FromWhId, ToWhId, Note, InvT).GetAwaiter().GetResult();
 
-            Warehouselist = _db.Warehouse.ToList();
-            WarehouselistTo = _db.Warehouse.ToList().OrderByDescending(wh => wh.Id);
+            return RedirectToPage("/inventory/transferrequests/create");
         }
 
         public JsonResult OnGetSearchNow(string term)
         {
-            //   ProdInfo = _db.ProdInfo.Where(w => w.Id == ProdId).ToList();
             if (term == null)
             {
                 return new JsonResult("Not Found");
@@ -87,34 +81,6 @@ namespace SumerBusinessSolution.Pages.Inventory.TransferRequests
                                              where (P.ProdCode.Contains(term))
                                              select P.ProdCode;
             return new JsonResult(lstProdCode);
-        }
-
-        public IActionResult OnPost()
-        {
-            //int ProdId;
-            //try
-            //{
-            //    ProdId = _db.ProdInfo.FirstOrDefault(pro => pro.ProdCode == ProdCode).Id;
-            //}
-            //catch
-            //{
-            //    //StatusMessage = "Error! Product code can not be found";
-            //    StatusMessage = "عذرا! رمز المنتج غير موجود";
-            //    return RedirectToPage("/inventory/transferrequests/create");
-            //}
-            StatusMessage = _InveTrans.CreateInvTransferRequest(FromWhId, ToWhId, Note, InvT).GetAwaiter().GetResult();
-
-           // StatusMessage = _InveTrans.CreateInvTransferRequest(ProdId, FromWhId, ToWhId, Qty, Note).GetAwaiter().GetResult();
-
-            //if (invTransfer == true)
-            //{
-            //    StatusMessage = "New goods have been transfered successfully.";
-            //}
-            //else
-            //{
-            //    StatusMessage = "Error! New goods have not been transfered.";
-            //}
-            return RedirectToPage("/inventory/transferrequests/create");
         }
     }
 }

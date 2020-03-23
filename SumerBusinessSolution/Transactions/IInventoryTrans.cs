@@ -9,7 +9,7 @@ namespace SumerBusinessSolution.Transactions
     public interface IInventoryTrans
     {
         // Task<bool> CreateIncomingGoods(int WhId, int ProdId, double Qty, string Note);
-        Task<bool> CreateIncomingGoods(List<IncomingGood> IG);
+        Task<string> CreateIncomingGoods(int NewWhId, List<IncomingGood> IG);
         Task<bool> DeleteIncomingGoods(int IgId);
         Task<string> CreateInvTransfer(int? FromWhId, int? ToWhId, List<InvTransfer> InvTrans);
         Task<string> CreateInvTransferRequest(int? FromWhId, int? ToWhId, string Note, List<InvTransfer> InvTrans);

@@ -14,214 +14,142 @@
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
-<div class="border backgroundWhite">
-    <partial name="_StatusMessage" model="Model.StatusMessage" />
-    @*<h2 class="text-info">طلب حركة المواد</h2>*@
-    <h2 class="text-info text-md-right"> @localizer.Get("طلب حركة للمنتج")</h2>
+<body style="padding-left:150px;">
+    <div class="border backgroundWhite">
+        <partial name="_StatusMessage" model="Model.StatusMessage" />
+        @*<h2 class="text-info">حركة المواد</h2>*@
+        <h2 class="text-info text-md-right">@localizer.Get("تحريك المنتج")</h2>
 
-    @using (Html.BeginForm("BulkData", "Save", FormMethod.Post))
-    {
-        @Html.AntiForgeryToken()
-        @Html.ValidationSummary(true)
-
-
-        <table id="dataTable" border="0" cellpadding="0" cellspacing="0">
-            <tr>
-                <td>
-                    <select asp-for="a => @Model.FromWhId"
-                            asp-items="@(new SelectList(Model.Warehouselist, "Id", "WhName"))"
-                            class="form-control ">
-                    </select>
-                </td>
-                <td>
-                    <select asp-for="a => @Model.ToWhId"
-                            asp-items="@(new SelectList(Model.WarehouselistTo, "Id", "WhName"))"
-                            class="form-control ">
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <th>Product Code</th>
-                <th>Qty</th>
-                <th>Note</th>
-
-                <th></th>
-            </tr>
-            @if (Model.InvT != null && Model.InvT.Count > 0)
-            {
-
-                <tr style="border:1px solid black">
-                    <td><input type="text" id="ProdInfo0" asp-for="a => @Model.InvT[0].ProdInfo.ProdCode" class="form-control text-md-right" /></td>
-                    <td><input type="text" asp-for="a => @Model.InvT[0].Qty" class="form-control text-md-right" /></td>
-                    <td><input type="text" asp-for="a => @Model.InvT[0].Note" class="form-control text-md-right" /></td>
-
-                    <td></td>
-
-                </tr>
-                <tr style="border:1px solid black">
-                    <td><input type="text" id="ProdInfo1" asp-for="a => @Model.InvT[1].ProdInfo.ProdCode" class="form-control text-md-right" /></td>
-                    <td><input type="text" asp-for="a => @Model.InvT[1].Qty" class="form-control text-md-right" /></td>
-                    <td><input type="text" asp-for="a => @Model.InvT[1].Note" class="form-control text-md-right" /></td>
-
-                    <td></td>
-
-                </tr>
-                <tr style="border:1px solid black">
-                    <td><input type="text" id="ProdInfo2" asp-for="a => @Model.InvT[2].ProdInfo.ProdCode" class="form-control text-md-right" /></td>
-                    <td><input type="text" asp-for="a => @Model.InvT[2].Qty" class="form-control text-md-right" /></td>
-                    <td><input type="text" asp-for="a => @Model.InvT[2].Note" class="form-control text-md-right" /></td>
-
-                    <td></td>
-                </tr>
-                <tr><br /></tr>
+        <form method="post">
+            <table>
                 <tr>
-                    <td>Note</td>
-                    <td><input type="text" asp-for="@Model.Note" class="form-control text-md-right" /></td>
+                    <td><h3>ملاحظات</h3></td>
+                    <td>
+                        <input asp-for="@Model.Note"/> 
+                    </td>
+                </tr>
+                <tr>
+                    <td><h3>من خزن</h3></td>
+                    <td>
+                        <select asp-for="@Model.FromWhId"
+                                asp-items="@(new SelectList(Model.WhFromlist, "Id", "WhName"))"
+                                class="form-control ">
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td><h3>الى خزن</h3></td>
+                    <td>
+                        <select asp-for="@Model.ToWhId"
+                                asp-items="@(new SelectList(Model.WhTolist, "Id", "WhName"))"
+                                class="form-control ">
+                        </select>
+                    </td>
                 </tr>
 
-            }
-        </table>
-        <input type="submit" value="Save" />
+            </table>
+
+            <div><a href="#" id="addNew">Add New</a></div>
+            <table id="dataTable" border="0" cellpadding="0" cellspacing="0">
+                <tr>
+                    <th>Product Code</th>
+                    <th>Qty</th>
+                    <th>Note</th>
+                </tr>
+                @if (Model.InvT != null && Model.InvT.Count > 0)
+                {
+
+                    int j = 0;
+
+                    foreach (var i in Model.InvT)
+                    {
+
+
+                        <tr style="border:1px solid black">
+                            <td onclick="bindAutocomplete(this)">@Html.TextBoxFor(a => Model.InvT[j].ProdInfo.ProdCode) </td>
+                            <td>@Html.TextBoxFor(a => Model.InvT[j].Qty)</td>
+                            <td>@Html.TextBoxFor(a => Model.InvT[j].Note)</td>
+                            <td>
+                                @if (j > 0)
+                                {
+                                    <a href="#" id="removeThis" class="remove">Remove</a>
+
+                                }
+                            </td>
+                        </tr>
+                        j++;
+
+                    }
+
+                }
+            </table>
+
+            <input type="submit" value="Save Bulk Data" />
+        </form>
+    </div>
+
+    @section Scripts{
+        <script language="javascript">
+            $(document).ready(function () {
+
+                //1. Add new row
+                $("#addNew").click(function (e) {
+                    e.preventDefault();
+                    var $tableBody = $("#dataTable");
+                    var $trLast = $tableBody.find("tr:last");
+
+                    var $trNew = $trLast.clone();
+                    $trNew.find(':text').val('');
+
+                    var suffix = $trNew.find(':input:first').attr('name').match(/\d+/);
+                    $trNew.find("td:last").html('<a href="#" id="removeThis" onclick="return RemoveRow(this)" class="remove">Remove</a>');
+
+
+                    $.each($trNew.find(':input'), function (i, val) {
+                        // Replaced Name
+                        var oldN = $(this).attr('name');
+                        var newN = oldN.replace('[' + suffix + ']', '[' + (parseInt(suffix) + 1) + ']');
+                        $(this).attr('name', newN);
+                        //Replaced value
+                        var type = $(this).attr('type');
+                        if (type.toLowerCase() == "text") {
+                            $(this).attr('value', '');
+                        }
+
+                        // If you have another Type then replace with default value
+                        $(this).removeClass("input-validation-error");
+
+                    });
+                    $trLast.after($trNew);
+
+                });
+
+
+
+            });
+
+            function bindAutocomplete(t) {
+                $(t.children[0]).autocomplete({
+
+                        source: '@Url.Page("Create", "SearchNow")'
+                    });
+
+                }
+                   function RemoveRow(r) {
+        var i = r.parentNode.parentNode.rowIndex;
+        document.getElementById("dataTable").deleteRow(i);
     }
 
+        </script>
 
-    @*<form method="post">
+        <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
+        <script>
+            $(document).ready(function () {
 
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <br />
-
-
-            <div class="form-group row">
-
-                <div class="col-md-5 offset-md-5">
-                    <input type="text" id="ProdInfo" asp-for="ProdCode" class="form-control text-md-right" />
-                </div>
-                <div class="col-md-2">
-                    <label asp-for="ProdCode"></label>
-                </div>
-                <span asp-validation-for="ProdCode" class="text-danger"></span>
-            </div>
-
-
-            <div class="form-group row">
-
-                <div class="col-md-5 offset-md-5">
-                    <select asp-for="FromWhId"
-                            asp-items="@(new SelectList(Model.Warehouselist, "Id", "WhName"))"
-                            class="form-control" id="FromWhId">
-                    </select>
-                </div>
-                <div class="col-md-2">
-                    <label asp-for="FromWhId"></label>
-                </div>
-
-            </div>
-
-            <div class="form-group row">
-
-                <div class="col-md-5 offset-md-5">
-                    <select asp-for="ToWhId"
-                            asp-items="@(new SelectList(Model.WarehouselistTo, "Id", "WhName"))"
-                            class="form-control" id="ToWhId">
-                    </select>
-                </div>
-                <div class="col-md-2">
-                    <label asp-for="ToWhId"></label>
-                </div>
-
-            </div>
-
-            <div class="form-group row">
-
-                <div class="col-md-5 offset-md-5">
-                    <input asp-for="Qty" class="form-control text-md-right" id="qty" />
-
-                </div>
-                <div class="col-md-2">
-                    <label asp-for="Qty"></label>
-                </div>
-                <span asp-validation-for="Qty" class="text-danger"></span>
-            </div>
-
-            <div class="form-group row">
-
-                <div class="col-md-5 offset-md-5">
-
-                    <textarea placeholder=" @localizer.Get("الملاحظات")" asp-for="Note" class="form-control text-md-right"></textarea>
-
-                </div>
-                <div class="col-md-2">
-                    <label asp-for="Note"></label>
-                </div>
-                <span asp-validation-for="Note" class="text-danger"></span>
-            </div>
-
-            <div class="form-group row">
-                <div class="col-md-5 offset-md-5">
-                    <div class="row">
-
-
-                        <div class="col-md-6">
-
-                            <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="Index" class="btn btn-success form-control"> @localizer.Get("الغاء")</a>
-
-                        </div>
-                        <div class="col-md-6">
-                             <button asp-route-culture="@Request.RouteValues["culture"]" type="submit" class="btn btn-info form-control" onclick="return ValidateInput()"> @localizer.Get("ارسال الطلب")</button>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-        </form>*@
-</div>
-
-
-
-@section Scripts {
-    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-
-    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
-    <script>
-         $(document).ready(function () {
-    $('#ProdInfo0').autocomplete({
-    source: '@Url.Page("Create", "SearchNow")'
-    });
-             $('#ProdInfo1').autocomplete({
-    source: '@Url.Page("Create", "SearchNow")'
-             });
-             $('#ProdInfo2').autocomplete({
-    source: '@Url.Page("Create", "SearchNow")'
-    });
-    });
-    </script>
-
-
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <script>
-        function ValidateInput() {
-            var qty = document.getElementById("qty").value;
-            var fromWh = document.getElementById("FromWhId").value;
-            var toWh = document.getElementById("ToWhId").value;
-
-            if (qty == 0) {
-                //swal("Error!", "الكمية غير محددة", "error");
-                swal("Error!", "Enter Qty", "error");
-                return false
-            }
-            if (fromWh == toWh) {
-                //swal("Error!", "اختار المخزن الصحيح", "error");
-                swal("Error!", "Warehouses can not be similar", "error");
-                return false
-            }
-        }
-
-    </script>
-}
-
+            });
+        </script>
+    }
+</body>

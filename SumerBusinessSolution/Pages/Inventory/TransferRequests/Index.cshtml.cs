@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -40,13 +41,52 @@ namespace SumerBusinessSolution.Inventory.TransferRequests
         public int ReqId { get; set; }
         [TempData]
         public string StatusMessage { get; set; }
-        public async Task<IActionResult> OnGet()
+
+
+        [DataType(DataType.Date)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy/MM/dd}")]
+        public DateTime SearchFromDate { get; set; }
+
+        [DataType(DataType.Date)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy/MM/dd}")]
+        public DateTime SearchToDate { get; set; }
+
+
+        public async Task<IActionResult> OnGet(DateTime? SearchFromDate = null, DateTime? SearchToDate = null)
         {
- 
-            InvTransferHeaderList = _db.InvTransferHeader
+            StringBuilder Param = new StringBuilder();
+
+            if (SearchFromDate != null)
+            {
+                Param.Append(SearchFromDate);
+            }
+            Param.Append("&SearchCreatedTime=");
+
+            if (SearchToDate != null)
+            {
+                Param.Append(SearchToDate);
+            }
+            Param.Append("&SearchToDate=");
+
+
+            if (SearchFromDate != null & SearchToDate != null)
+            {
+                // BillHeaderList = await _db.BillHeader.Include(header => header.Customer).Where(u => u.CreatedDataTime >= SearchFromDate & u.CreatedDataTime <= SearchToDate).ToListAsync();
+                InvTransferHeaderList = _db.InvTransferHeader
+                  .Include(tr => tr.FromWarehouse).Include(tr => tr.ToWarehouse)
+                  .Include(tr => tr.ApplicationUser)
+                  .Where(tr => tr.TransferStatus == SD.Pending & tr.CreatedDateTime >= SearchFromDate & tr.CreatedDateTime <= SearchToDate).ToList().OrderBy(tr => tr.CreatedDateTime);
+            }
+            else
+            {
+                InvTransferHeaderList = _db.InvTransferHeader
                 .Include(tr => tr.FromWarehouse).Include(tr => tr.ToWarehouse)
-               .Include(tr => tr.ApplicationUser)
-              .Where(tr => tr.TransferStatus == SD.Pending).ToList().OrderBy(tr => tr.CreatedDateTime);
+                .Include(tr => tr.ApplicationUser)
+                .Where(tr => tr.TransferStatus == SD.Pending).ToList().OrderBy(tr => tr.CreatedDateTime);
+            }
+
+
+           
 
 
 

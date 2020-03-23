@@ -92,7 +92,7 @@
                                             @localizer.Get("") <i class="fas fa-check"></i>
                                         </a>
 
-                                        <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-success text-white" asp-page="../Accounts/PayToAcc" asp-route-CustId="@item.Id" type="submit" title="فواتير الزبون" name="CustomerBills">
+                                        <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-success text-white" asp-page="/Sales/Billings/CustBills" asp-route-CustId="@item.Id" type="submit" title="فواتير الزبون" name="CustomerBills">
                                             @localizer.Get("") <i class="fas fa-check"></i>
                                         </a>
                                     }

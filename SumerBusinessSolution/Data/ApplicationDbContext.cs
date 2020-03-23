@@ -39,6 +39,5 @@ namespace SumerBusinessSolution.Data
         public DbSet<BillPayment> BillPayment { get; set; }
         public DbSet<PricingType> PricingType { get; set; }
 
-
     }
 }

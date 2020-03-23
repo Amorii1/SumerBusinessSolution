@@ -113,21 +113,22 @@ namespace SumerBusinessSolution.Transactions
         //    }
         //}
 
-        public async Task<bool> CreateIncomingGoods(List<IncomingGood> IG)
+        public async Task<string> CreateIncomingGoods(int SelectedWhId ,List<IncomingGood> IG)
         {
             try
             {
                 DateTime InDateTime = DateTime.Now;
                 string sqlFormattedDate = InDateTime.ToString("yyyy-MM-dd HH:mm:ss");
                 int ProdId;
-
+                 
                 foreach (var income in IG)
                 {
                     ProdId = _db.ProdInfo.FirstOrDefault(pro => pro.ProdCode == income.ProdInfo.ProdCode).Id;
-                    IncomingGood = new IncomingGood
+                    
+                   IncomingGood IncomingGood = new IncomingGood
                     {
                         ProdId = ProdId,
-                        WhId = income.WhId,
+                        WhId = SelectedWhId,
                         Qty = income.Qty,
                         Note = income.Note,
                         CreatedById = GetLoggedInUserId(),
@@ -139,20 +140,20 @@ namespace SumerBusinessSolution.Transactions
                     _db.IncomingGood.Add(IncomingGood);
 
                     //updating Qty of InvStockQty
-                    ChangeStockQty(ProdId, income.WhId??0, income.Qty, "In");
+                    ChangeStockQty(ProdId, SelectedWhId, income.Qty, "In");
 
                     // creating transaction 
-                    CreateInvTransaction(ProdId, income.WhId ?? 0, income.Qty, SD.Incoming);
+                    CreateInvTransaction(ProdId, SelectedWhId, income.Qty, SD.Incoming);
                 }
  
                 // Save changes
                 await _db.SaveChangesAsync();
 
-                return true;
+                return "تمت اضافة المواد الواردة";
             }
             catch (Exception ex)
             {
-                return false;
+                return "Error! حصل خطا. لم تتم اضافة المواد";
             }
         }
 
@@ -552,7 +553,7 @@ namespace SumerBusinessSolution.Transactions
             }
        
         }
-        private void CreateInvTransaction(int ProdId, int WhId, double Qty, string TransType)
+        private void CreateInvTransaction(int ProdId, int? WhId, double Qty, string TransType)
         {
             InvTransaction InvTrans = new InvTransaction
             {
