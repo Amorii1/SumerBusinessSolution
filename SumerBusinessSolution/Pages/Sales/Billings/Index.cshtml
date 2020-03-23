@@ -43,7 +43,7 @@
 
                             </div>
                             <div class="col-md-10 pb-1">
-                                @Html.Editor("searchCompanyName", new { htmlAttributes = new { @class = "form-control text-md-right", placeholder = @localizer.Get("اسم الشركة....") } })
+                                @Html.Editor("CustomerName", new { htmlAttributes = new { @class = "form-control text-md-right", placeholder = @localizer.Get("اسم الشركة....") } })
 
                             </div>
                             @*<div class="col-md-5 pb-1">
@@ -162,4 +162,20 @@
 
 </div>
 
+@section Scripts {
+
+
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <script>
+         $(document).ready(function () {
+    $('#CustomerName').autocomplete({
+    source: '@Url.Page("Index", "SearchCustomer")'
+    });
+         });
+
+    </script>
+}
 

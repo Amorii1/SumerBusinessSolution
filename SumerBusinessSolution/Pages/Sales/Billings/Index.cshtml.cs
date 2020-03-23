@@ -11,7 +11,7 @@ using SumerBusinessSolution.Models;
 using SumerBusinessSolution.Transactions;
 using Microsoft.AspNetCore.Localization;
 using System.ComponentModel.DataAnnotations;
-
+using System.Text;
 
 namespace SumerBusinessSolution.Pages.Sales.Billings
 {
@@ -40,10 +40,30 @@ namespace SumerBusinessSolution.Pages.Sales.Billings
 
             [TempData]
             public string StatusMessage { get; set; }
-            public void OnGet()
+             public  IActionResult OnGet(string CustomerName = null)
             {
+            StringBuilder Param = new StringBuilder();
+            Param.Append("&SearchCustomer=");
+
+            if (CustomerName != null)
+            {
+                Param.Append(CustomerName);
+            }
+            Param.Append("&CustomerName=");
+
                 CustomerList = _db.Customer.ToList();
+
+            if(CustomerName != null)
+            {
+                BillHeaderList = _db.BillHeader.Where(header => header.Status == SD.OpenBill & header.Customer.CompanyName.ToLower().Contains(CustomerName.ToLower())).ToList();
+            }
+            else
+            {
                 BillHeaderList = _db.BillHeader.Where(header => header.Status == SD.OpenBill).ToList();
+            }
+   
+
+            return Page();
             }
 
         public IActionResult OnPostCloseBillManually(int HeaderId)
@@ -54,7 +74,19 @@ namespace SumerBusinessSolution.Pages.Sales.Billings
             return RedirectToPage("/Sales/Billings/Index");
         }
 
-     
+        public JsonResult OnGetSearchCustomer(string term)
+        {
+            if (term == null)
+            {
+                return new JsonResult("Not Found");
+            }
+            IQueryable<string> lstCustomers = from P in _db.Customer
+                                              where (P.CompanyName.Contains(term))
+                                              select P.CompanyName;
+            return new JsonResult(lstCustomers);
+        }
     }
 }
+
+
  
