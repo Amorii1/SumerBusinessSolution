@@ -94,7 +94,7 @@
                         </div>
                         <div class="col-md-6">
                             @*<button type="submit" class="btn btn-info form-control" onclick="return ValidateInput()">حفظ</button>*@
-                            <button asp-route-culture="@Request.RouteValues["culture"]" type="submit" class="btn btn-info form-control" onclick="return ValidateInput()">  @localizer.Get("حفظ")</button>
+                            <button asp-route-culture="@Request.RouteValues["culture"]" type="submit" class="btn btn-info form-control" asp-route-HeaderId="@Model.HeaderId">  @localizer.Get("حفظ")</button>
 
                         </div>
 

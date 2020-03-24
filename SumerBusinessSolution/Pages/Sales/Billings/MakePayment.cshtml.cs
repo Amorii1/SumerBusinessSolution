@@ -63,7 +63,7 @@ namespace SumerBusinessSolution.Pages.Sales.Billings
 
             return Page();
         }
-        public async Task<ActionResult> OnPost()
+        public async Task<ActionResult> OnPost(int HeaderId)
         {
             StatusMessage = _SalesTrans.MakePaymentOnBill(HeaderId, NewPayment).GetAwaiter().GetResult();
 
