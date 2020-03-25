@@ -39,5 +39,12 @@ namespace SumerBusinessSolution.Data
         public DbSet<BillPayment> BillPayment { get; set; }
         public DbSet<PricingType> PricingType { get; set; }
 
+        // External Bills 
+        public DbSet<ExternalBillHeader> ExternalBillHeader { get; set; }
+        public DbSet<ExternalBillItems> ExternalBillItems { get; set; }
+        public DbSet<ExternalBillPayment> ExternalBillPayment { get; set; }
+
+        // General Settings
+        public DbSet<RoleAuth> RoleAuth { get; set; } // Role authentication
     }
 }

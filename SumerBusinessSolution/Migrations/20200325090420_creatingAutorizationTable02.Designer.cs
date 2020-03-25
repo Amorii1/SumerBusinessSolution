@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SumerBusinessSolution.Data;
 
 namespace SumerBusinessSolution.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200325090420_creatingAutorizationTable02")]
+    partial class creatingAutorizationTable02
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -394,117 +396,6 @@ namespace SumerBusinessSolution.Migrations
                     b.HasIndex("CreatedById");
 
                     b.ToTable("Customer");
-                });
-
-            modelBuilder.Entity("SumerBusinessSolution.Models.ExternalBillHeader", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("CreatedById")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("CreatedDataTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("CustId")
-                        .HasColumnType("int");
-
-                    b.Property<double>("Discount")
-                        .HasColumnType("float");
-
-                    b.Property<string>("Note")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("PaidAmt")
-                        .HasColumnType("float");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("TotalAmt")
-                        .HasColumnType("float");
-
-                    b.Property<double>("TotalNetAmt")
-                        .HasColumnType("float");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CreatedById");
-
-                    b.HasIndex("CustId");
-
-                    b.ToTable("ExternalBillHeader");
-                });
-
-            modelBuilder.Entity("SumerBusinessSolution.Models.ExternalBillItems", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("HeaderId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Note")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ProdName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("Qty")
-                        .HasColumnType("float");
-
-                    b.Property<double>("TotalAmt")
-                        .HasColumnType("float");
-
-                    b.Property<double>("UnitPrice")
-                        .HasColumnType("float");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("HeaderId");
-
-                    b.ToTable("ExternalBillItems");
-                });
-
-            modelBuilder.Entity("SumerBusinessSolution.Models.ExternalBillPayment", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("CreatedById")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedDateTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("CustId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ExternalBillHeaderId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Note")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("PaidAmt")
-                        .HasColumnType("float");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CustId");
-
-                    b.HasIndex("ExternalBillHeaderId");
-
-                    b.ToTable("ExternalBillPayment");
                 });
 
             modelBuilder.Entity("SumerBusinessSolution.Models.IncomingGood", b =>
@@ -978,41 +869,6 @@ namespace SumerBusinessSolution.Migrations
                     b.HasOne("SumerBusinessSolution.Models.ApplicationUser", "ApplicationUser")
                         .WithMany()
                         .HasForeignKey("CreatedById")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("SumerBusinessSolution.Models.ExternalBillHeader", b =>
-                {
-                    b.HasOne("SumerBusinessSolution.Models.ApplicationUser", "ApplicationUser")
-                        .WithMany()
-                        .HasForeignKey("CreatedById")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("SumerBusinessSolution.Models.Customer", "Customer")
-                        .WithMany()
-                        .HasForeignKey("CustId");
-                });
-
-            modelBuilder.Entity("SumerBusinessSolution.Models.ExternalBillItems", b =>
-                {
-                    b.HasOne("SumerBusinessSolution.Models.ExternalBillHeader", "ExternalBillHeader")
-                        .WithMany()
-                        .HasForeignKey("HeaderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("SumerBusinessSolution.Models.ExternalBillPayment", b =>
-                {
-                    b.HasOne("SumerBusinessSolution.Models.Customer", "Customer")
-                        .WithMany()
-                        .HasForeignKey("CustId");
-
-                    b.HasOne("SumerBusinessSolution.Models.ExternalBillHeader", "ExternalBillHeader")
-                        .WithMany()
-                        .HasForeignKey("ExternalBillHeaderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

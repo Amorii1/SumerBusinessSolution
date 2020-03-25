@@ -109,7 +109,8 @@ namespace SumerBusinessSolution.Transactions
             }
         }
 
-        // this function will create new Bill payment, used when a customer pays an outstanding bill
+      
+    
         public async Task<string> MakePaymentOnBill(int HeaderId, double NewPaymentAmt)
         {
             try
@@ -145,6 +146,8 @@ namespace SumerBusinessSolution.Transactions
             }
         }
 
+        
+     
         public async Task<string> MakePaymentToAcc(int CustId, double NewPaymentAmt)
         {
             try
@@ -185,14 +188,7 @@ namespace SumerBusinessSolution.Transactions
 
         }
 
-            // Helping functions // 
-            private string GetLoggedInUserId()
-        {
-            var ClaimId = (ClaimsIdentity)_httpContextAccessor.HttpContext.User.Identity;
-            var Claim = ClaimId.FindFirst(ClaimTypes.NameIdentifier);
-            string UserId = Claim.Value;
-            return UserId;
-        }
+       
 
 
         // this function will update customer account manually, only for admin
@@ -202,17 +198,17 @@ namespace SumerBusinessSolution.Transactions
             {
                 CustAcc Acc = _db.CustAcc.FirstOrDefault(ac => ac.CustId == CustId);
 
-                if(Payment > 0)
+                if (Payment > 0)
                 {
                     Acc.Paid = Payment;
                 }
-                
-                if(Debt > 0)
+
+                if (Debt > 0)
                 {
                     Acc.Debt = Debt;
                 }
-          
-                
+
+
                 await _db.SaveChangesAsync();
 
                 return "تم تعديل الحساب";
@@ -223,6 +219,154 @@ namespace SumerBusinessSolution.Transactions
             }
 
         }
+
+     
+        // External Billing
+
+        // this function will create an external bill.. external bill is a bill issues for a customers
+        // for purchasing items that do not belong to the company. basically it is supplied by another or a 
+        // third party company. creating external bills will have no effect on Inventory at all
+
+        public async Task<string> CreateExternalBill(ExternalBillHeader ExternalHeader, List<ExternalBillItems> ExternalBill)
+        {
+            try
+            {
+                StoreRoom = _db.Warehouse.Include(wh => wh.WhType).FirstOrDefault(wh => wh.WhType.Type == "StoreRoom");
+
+                ExternalHeader.CreatedById = GetLoggedInUserId();
+                ExternalHeader.CreatedDataTime = DateTime.Now;
+
+                double TotalAmt = 0;
+
+                // getting the unit price of each item in the bill items 
+                foreach (ExternalBillItems item in ExternalBill)
+                {
+
+                    TotalAmt += item.TotalAmt;
+                }
+
+                // price before discount
+                ExternalHeader.TotalAmt = TotalAmt;
+
+                // in case there is a discount
+                TotalAmt = TotalAmt - ExternalHeader.Discount;
+                ExternalHeader.TotalNetAmt = TotalAmt;
+
+                if (TotalAmt == ExternalHeader.PaidAmt)
+                {
+                    ExternalHeader.Status = SD.Completed;
+                }
+                else
+                {
+                    ExternalHeader.Status = SD.OpenBill;
+                }
+
+
+                _db.ExternalBillHeader.Add(ExternalHeader);
+
+                await _db.SaveChangesAsync();
+
+                // updatinga customer Acc 
+                double DebtAmt = ExternalHeader.TotalNetAmt - ExternalHeader.PaidAmt;
+                UpdateCustomerAcc(ExternalHeader.CustId ?? 0, ExternalHeader.PaidAmt, DebtAmt, "New");
+
+                // add a new payment to bill payments table 
+                // AddBillPayment(Header.CustId ?? 0, Header.Id, Header.PaidAmt);
+
+
+                // Creating Bill items
+                foreach (ExternalBillItems item in ExternalBill)
+                {
+                    ExternalBillItems Bill = new ExternalBillItems
+                    {
+                        HeaderId = ExternalHeader.Id,
+                        ProdName = item.ProdName,
+                        Qty = item.Qty,
+                        UnitPrice = item.UnitPrice,
+                        TotalAmt = item.UnitPrice * item.Qty,
+                        Note = item.Note
+                    };
+                    _db.ExternalBillItems.Add(Bill);
+                }
+
+
+                await _db.SaveChangesAsync();
+
+
+                return "تمت اضافة فاتورة مبيعات جديدة";
+            }
+
+            catch
+            {
+                return "حصل خطأ لم يتم اضافة الفاتورة";
+            }
+        }
+
+        // this function will close an external bill manually 
+        public async Task<string> CloseExternalBillManually(int ExternalHeaderId)
+        {
+            try
+            {
+                ExternalBillHeader ExternalHeader = _db.ExternalBillHeader.FirstOrDefault(h => h.Id == ExternalHeaderId);
+                ExternalHeader.Status = SD.Completed;
+                await _db.SaveChangesAsync();
+
+                return "تم اغلاق الفاتورة بنجاح";
+            }
+            catch
+            {
+                return "حصل خطأ لم يتم اغلاق الفاتورة";
+            }
+
+        }
+
+        // Make payment on external bills
+        public async Task<string> MakePaymentOnExternalBill(int ExternalHeaderId, double NewPaymentAmt)
+        {
+            try
+            {
+                ExternalBillHeader ExternalHeader = _db.ExternalBillHeader.FirstOrDefault(h => h.Id == ExternalHeaderId);
+
+                CustAcc Acc = _db.CustAcc.FirstOrDefault(ac => ac.CustId == ExternalHeader.CustId);
+
+                // updating bill header will the payment
+                ExternalHeader.PaidAmt += NewPaymentAmt;
+
+                // if the bill paid all, change status to completed
+                if (ExternalHeader.TotalNetAmt == ExternalHeader.PaidAmt)
+                {
+                    ExternalHeader.Status = SD.Completed;
+                }
+
+                // updating customer Acc
+                //Acc.Paid += PaidAmt;
+                //Acc.Debt -= PaidAmt;
+                UpdateCustomerAcc(ExternalHeader.CustId ?? 0, NewPaymentAmt, NewPaymentAmt, "Old");
+
+                // add a new payment to bill payments table 
+                AddExternalBillPayment(ExternalHeader.CustId ?? 0, ExternalHeader.Id, NewPaymentAmt);
+   
+                await _db.SaveChangesAsync();
+
+                return "تمت عملية الدفع";
+            }
+            catch (Exception ex)
+            {
+                return "لم تتم عملية الدفع";
+            }
+        }
+
+
+        // Helping functions // 
+        private string GetLoggedInUserId()
+        {
+            var ClaimId = (ClaimsIdentity)_httpContextAccessor.HttpContext.User.Identity;
+            var Claim = ClaimId.FindFirst(ClaimTypes.NameIdentifier);
+            string UserId = Claim.Value;
+            return UserId;
+        }
+
+
 
         // updating customer Accs 
         private void UpdateCustomerAcc(int CustId, double Paid, double Debt, string Status)
@@ -281,5 +425,19 @@ namespace SumerBusinessSolution.Transactions
           
         }
 
+        // this function will update External bill payment table
+        private void AddExternalBillPayment(int CustId, int ExternalBillHeaderId, double Paid)
+        {
+            ExternalBillPayment NewPayment = new ExternalBillPayment
+            {
+                CustId = CustId,
+                ExternalBillHeaderId = ExternalBillHeaderId,
+                PaidAmt = Paid,
+                CreatedDateTime = DateTime.Now,
+                CreatedById = GetLoggedInUserId()
+            };
+            _db.ExternalBillPayment.Add(NewPayment);
+
+        }
     }
 }

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SumerBusinessSolution.Data;
 
 namespace SumerBusinessSolution.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200325110242_externalbillstables")]
+    partial class externalbillstables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -471,40 +473,6 @@ namespace SumerBusinessSolution.Migrations
                     b.HasIndex("HeaderId");
 
                     b.ToTable("ExternalBillItems");
-                });
-
-            modelBuilder.Entity("SumerBusinessSolution.Models.ExternalBillPayment", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("CreatedById")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedDateTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("CustId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ExternalBillHeaderId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Note")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("PaidAmt")
-                        .HasColumnType("float");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CustId");
-
-                    b.HasIndex("ExternalBillHeaderId");
-
-                    b.ToTable("ExternalBillPayment");
                 });
 
             modelBuilder.Entity("SumerBusinessSolution.Models.IncomingGood", b =>
@@ -1000,19 +968,6 @@ namespace SumerBusinessSolution.Migrations
                     b.HasOne("SumerBusinessSolution.Models.ExternalBillHeader", "ExternalBillHeader")
                         .WithMany()
                         .HasForeignKey("HeaderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("SumerBusinessSolution.Models.ExternalBillPayment", b =>
-                {
-                    b.HasOne("SumerBusinessSolution.Models.Customer", "Customer")
-                        .WithMany()
-                        .HasForeignKey("CustId");
-
-                    b.HasOne("SumerBusinessSolution.Models.ExternalBillHeader", "ExternalBillHeader")
-                        .WithMany()
-                        .HasForeignKey("ExternalBillHeaderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

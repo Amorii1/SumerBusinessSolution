@@ -1,0 +1,33 @@
+﻿@page
+@model SumerBusinessSolution.UserAuthorizationModel
+@{
+    ViewData["Title"] = "UserAutorization";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+
+<partial name="_StatusMessage" model="Model.StatusMessage" />
+@inject Services.CommonLocalizationService localizer
+<br />
+<div class="border backgroundWhite">
+    @*<h2 class="text-info">المواد الواردة </h2>*@
+    <h2 class="text-info text-md-right">  @localizer.Get("Authorization")</h2>
+ 
+    <form method="post">
+        <div class="form-check">
+            <input type="checkbox" asp-for="SuperAppTransReq" class="form-check-input" id="exampleCheck1">
+            <label class="form-check-label" for="exampleCheck1">السوبرفايزر يستطيع الموافقة على طلبات التنقل بين المخازن</label>
+        </div>
+
+        <div class="form-check">
+            <input type="checkbox" asp-for="SuperCreateTrans" class="form-check-input" id="exampleCheck1">
+            <label class="form-check-label" for="exampleCheck2">السوبرفايزر يستطيع قيام بعملية التحويل بين المخازن</label>
+        </div>
+
+
+
+        <input type="submit" value="Save" />
+    </form>
+
+</div>
+

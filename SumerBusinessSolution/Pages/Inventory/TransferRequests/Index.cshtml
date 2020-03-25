@@ -152,6 +152,17 @@
                                                 @localizer.Get("") <i class="fas fa-window-close"></i>
                                             </button>
                                         }
+                                        else if (User.IsInRole(SD.SupervisorEndUser) & Model.RoleAuth.AppTransReq == true)
+                                        {
+                                            <button asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-success text-white" asp-page-handler="ApproveTransferRequests" asp-route-ReqId="@item.Id" type="submit" title="Approve" name="Accept">
+                                                @localizer.Get("") <i class="fas fa-check"></i>
+                                            </button>
+
+
+                                            <button asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-warning text-white" asp-page-handler="RejectTransferRequests" asp-route-ReqId="@item.Id" type="submit" title="Reject" name="Reject">
+                                                @localizer.Get("") <i class="fas fa-window-close"></i>
+                                            </button>
+                                        }
 
                                         <button asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-danger text-white" asp-page-handler="DeleteTransferRequests" asp-route-ReqId="@item.Id" type="submit" title="Delete" name="Delete">
                                             @localizer.Get("") <i class="fas fa-trash-alt"></i>

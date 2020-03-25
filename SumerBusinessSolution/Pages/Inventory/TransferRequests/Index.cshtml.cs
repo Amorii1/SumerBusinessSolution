@@ -42,6 +42,9 @@ namespace SumerBusinessSolution.Inventory.TransferRequests
         [TempData]
         public string StatusMessage { get; set; }
 
+        [BindProperty]
+        public RoleAuth RoleAuth { get; set; }
+
 
         [DataType(DataType.Date)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy/MM/dd}")]
@@ -86,9 +89,7 @@ namespace SumerBusinessSolution.Inventory.TransferRequests
             }
 
 
-           
-
-
+            RoleAuth = _db.RoleAuth.FirstOrDefault(ro => ro.RoleName == SD.SupervisorEndUser);
 
             return Page();
 
