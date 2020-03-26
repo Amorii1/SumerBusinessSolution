@@ -46,5 +46,6 @@ namespace SumerBusinessSolution.Data
 
         // General Settings
         public DbSet<RoleAuth> RoleAuth { get; set; } // Role authentication
+        public DbSet<CompanyInfo> CompanyInfo { get; set; } // Company information
     }
 }

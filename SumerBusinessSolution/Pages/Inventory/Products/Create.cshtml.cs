@@ -134,6 +134,7 @@ namespace SumerBusinessSolution.Pages.Inventory.Products
                 ProdDescription = ProductInfo.ProdDescription,
                 ProdName = ProductInfo.ProdName,
                 ProdCategory = ProductInfo.ProdCategory,
+                CostPrice = ProductInfo.CostPrice,
                 RetailPrice = ProductInfo.RetailPrice,
                 WholePrice = ProductInfo.WholePrice,
                 CreatedDateTime = ProductInfo.CreatedDateTime,

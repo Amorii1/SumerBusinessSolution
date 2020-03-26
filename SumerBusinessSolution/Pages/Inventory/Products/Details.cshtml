@@ -73,19 +73,19 @@
         <div class="row form-group">
 
             <div class="col-md-5 offset-md-5">
-                <input asp-for="ProdInfo.CreatedById" class="form-control text-md-right" disabled />
-                <span asp-validation-for="ProdInfo.CreatedById" class="text-danger"> </span>
+                <input asp-for="ProdInfo.ApplicationUser.FirstName" class="form-control text-md-right" disabled />
+                <span asp-validation-for="ProdInfo.ApplicationUser.FirstName" class="text-danger"> </span>
 
             </div>
             <div class="col-md-2">
-                <label asp-for="ProdInfo.CreatedById"></label>
+                <label asp-for="ProdInfo.ApplicationUser.FirstName"></label>
 
             </div>
         </div>
         <div class="row form-group">
 
             <div class="col-md-5 offset-md-5">
-                <input asp-for="ProdInfo.CreatedDateTime" class="form-control text-md-right" disabled />
+                <input type="datetime-local" asp-for="ProdInfo.CreatedDateTime" class="form-control text-md-right" disabled />
                 <span asp-validation-for="ProdInfo.CreatedDateTime" class="text-danger"> </span>
 
             </div>
@@ -94,17 +94,36 @@
 
             </div>
         </div>
-        <div class="row form-group">
+        @if (Model.ProdInfo.ImgFile != null)
+        {
+            <div class="row form-group">
 
-            <div class="col-md-5 offset-md-5">
-                <img style="height: 200px; width: 100%; display: block; border-radius:3px;" src="~/img/@Model.ProdInfo.ImgFile">
+                <div class="col-md-5 offset-md-5">
+                    <img style="height: 200px; width: 100%; display: block; border-radius:3px;" src="~/img/@Model.ProdInfo.ImgFile">
 
+                </div>
+                <div class="col-md-2">
+                    <label asp-for="ProdInfo.ImgFile"></label>
+
+                </div>
             </div>
-            <div class="col-md-2">
-                <label asp-for="ProdInfo.ImgFile"></label>
+        }
 
+        @if (User.IsInRole(SD.AdminEndUser))
+        {
+            <div class="row form-group">
+
+                <div class="col-md-5 offset-md-5">
+                    <input asp-for="ProdInfo.CostPrice" class="form-control text-md-right" disabled />
+                </div>
+                <div class="col-md-2">
+                    <label asp-for="ProdInfo.CostPrice"></label>
+
+                </div>
             </div>
-        </div>
+        }
+
+
         <div class="row form-group">
 
             <div class="col-md-5 offset-md-5">

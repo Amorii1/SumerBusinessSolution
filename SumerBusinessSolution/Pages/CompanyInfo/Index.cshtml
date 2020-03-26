@@ -1,0 +1,108 @@
+﻿@page
+@model SumerBusinessSolution.IndexModel
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<div class="  border backgroundWhite">
+    @inject Services.CommonLocalizationService localizer
+    <h2 class="text-info  text-md-right">@localizer.Get("اضافة معلومات الشركة")</h2>
+
+    <form method="post" enctype="multipart/form-data">
+
+
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="row form-group">
+
+            <div class="col-md-5 offset-md-5">
+                <input asp-for="CompanyInfo.CompanyNameAr" class="form-control  text-md-right" />
+            </div>
+            <div class="col-md-2">
+                <label asp-for="CompanyInfo.CompanyNameAr"> </label>
+            </div>
+        </div>
+        <div class="row form-group">
+
+            <div class="col-md-5 offset-md-5">
+                <input asp-for="CompanyInfo.CompanyNameEn" class="form-control  text-md-right" />
+            </div>
+            <div class="col-md-2">
+                <label asp-for="CompanyInfo.CompanyNameEn"> </label>
+            </div>
+        </div>
+        <div class="row form-group">
+
+            <div class="col-md-5 offset-md-5">
+                <input asp-for="CompanyInfo.AddressAr" class="form-control  text-md-right" />
+            </div>
+            <div class="col-md-2">
+                <label asp-for="CompanyInfo.AddressAr"> </label>
+            </div>
+        </div>
+        <div class="row form-group">
+
+            <div class="col-md-5 offset-md-5">
+                <input asp-for="CompanyInfo.AddressEn" class="form-control  text-md-right" />
+            </div>
+            <div class="col-md-2">
+                <label asp-for="CompanyInfo.AddressEn"> </label>
+            </div>
+        </div>
+        <div class="row form-group">
+
+            <div class="col-md-5 offset-md-5">
+                <input asp-for="CompanyInfo.PhoneNo" class="form-control  text-md-right" />
+            </div>
+            <div class="col-md-2">
+                <label asp-for="CompanyInfo.PhoneNo"> </label>
+            </div>
+        </div>
+        <div class="row form-group">
+
+            <div class="col-md-5 offset-md-5">
+                <input asp-for="CompanyInfo.PhoneNo02" class="form-control  text-md-right" />
+            </div>
+            <div class="col-md-2">
+                <label asp-for="CompanyInfo.PhoneNo02"> </label>
+            </div>
+        </div>
+        <div class="row form-group">
+
+            <div class="col-md-5 offset-md-5">
+                <input asp-for="CompanyInfo.Email" class="form-control  text-md-right" />
+            </div>
+            <div class="col-md-2">
+                <label asp-for="CompanyInfo.Email"> </label>
+            </div>
+        </div>
+        <div class="row form-group">
+
+            <div class="col-md-5 offset-md-5">
+                <input asp-for="CompanyInfo.Note" class="form-control  text-md-right" />
+            </div>
+            <div class="col-md-2">
+                <label asp-for="CompanyInfo.Note"> </label>
+            </div>
+        </div>
+
+        <br />
+        <br />
+        <div class=" form-group row">
+            <div class="col-md-5 offset-md-5">
+                <div class="row">
+                    <div class="col-md-6">
+                        @*<input type="submit" class="btn btn-info form-control" value="حفظ" />*@
+                        <input asp-route-culture="@Request.RouteValues["culture"]" type="submit" class="btn btn-info form-control" value="@localizer.Get("تعديل")" />
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+    </form>
+</div>
+
+

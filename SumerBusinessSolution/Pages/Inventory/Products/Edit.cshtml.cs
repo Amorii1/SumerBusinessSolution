@@ -77,8 +77,10 @@ namespace SumerBusinessSolution.Pages.Products
             ProductFromDB.CreatedById = ProdInfo.CreatedById;
             ProductFromDB.CreatedDateTime = ProdInfo.CreatedDateTime;
             ProductFromDB.ImgFile = ProdInfo.ImgFile;
+            ProductFromDB.CostPrice = ProdInfo.CostPrice;
             ProductFromDB.RetailPrice = ProdInfo.RetailPrice;
             ProductFromDB.WholePrice = ProdInfo.WholePrice;
+ 
 
             await _db.SaveChangesAsync();
 

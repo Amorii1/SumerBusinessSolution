@@ -20,7 +20,7 @@
     <form method="post" enctype="multipart/form-data">
 
         <input type="hidden" asp-for="ProdInfo.Id" />
-
+        <input type="hidden" asp-for="ProdInfo.CreatedById" />
 
         <div class="row form-group">
 
@@ -85,21 +85,17 @@
 
         </div>
 
-
-
-        @*<div class="row form-group">
-                <div class="col-2">
-                    <label asp-for="ProductInfo.ImgFile"></label>
-
+        @if (User.IsInRole(SD.AdminEndUser))
+        {
+            <div class="row form-group">
+                <div class="col-md-5 offset-md-5">
+                    <input asp-for="ProdInfo.CostPrice" class="form-control text-md-right" />
                 </div>
-                <div class="col-6">
-                    <input asp-for="ProductInfo.ImgFile" class="form-control" />
-                    <span asp-validation-for="ProductInfo.ImgFile" class="text-danger"> </span>
-
+                <div class="col-md-2">
+                    <label asp-for="ProdInfo.CostPrice"></label>
                 </div>
-            </div>*@
-
-
+            </div>
+        }
 
 
         <div class="row form-group">
@@ -135,9 +131,9 @@
                     <div class="col-md-6">
 
                         @*<a asp-page="Index" asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-success form-control">@localizer.Get("رجوع")</a>*@
-                        <form>
-                            <input asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-success form-control" type="button" value="@localizer.Get("الغاء")" onclick="history.back()">
-                        </form>
+
+                        <input asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-success form-control" type="button" value="@localizer.Get("الغاء")" onclick="history.back()">
+
 
                     </div>
                     <div class="col-md-6">
@@ -147,11 +143,9 @@
                     </div>
                 </div>
 
+
             </div>
         </div>
-
-
-
     </form>
 
 </div>

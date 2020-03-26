@@ -36,6 +36,10 @@ namespace SumerBusinessSolution.Models
 
         public double WholePrice  { get; set; }
 
+        [Display(Name = "سعر الكلفة")]
+
+        public double CostPrice { get; set; }
+
         [Required]
         [Display(Name = "معرف المنشئ")]
         public string CreatedById { get; set; }

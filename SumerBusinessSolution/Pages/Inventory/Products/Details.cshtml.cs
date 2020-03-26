@@ -27,7 +27,7 @@ namespace SumerBusinessSolution.Pages.Inventory.Products
             {
                 return NotFound();
             }
-            ProdInfo = await _db.ProdInfo.FirstOrDefaultAsync(m => m.Id == ID);
+            ProdInfo = await _db.ProdInfo.Include(m=> m.ApplicationUser).FirstOrDefaultAsync(m => m.Id == ID);
             if (ProdInfo == null)
             {
 
