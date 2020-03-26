@@ -87,13 +87,20 @@ namespace SumerBusinessSolution.Transactions
                     BillItems Bill = new BillItems
                     {
                         HeaderId = Header.Id,
-                        ProdId = item.ProdInfo.Id,
+                        ProdId = item.ProdId,
                         Qty = item.Qty,
                         UnitPrice = item.UnitPrice,
                         TotalAmt = item.UnitPrice * item.Qty,
                         Note = item.Note
                     };
+
+                    // decrease stock qty of that item 
+                    DecreaseStockQty(Bill.ProdId??0, StoreRoom.Id, Bill.Qty);
+
+                    // create inv transaction 
+                    CreateInvTransaction(Bill.ProdId??0, StoreRoom.Id, Bill.Qty ,SD.Sales);
                     _db.BillItems.Add(Bill);
+
                 }
                 
             
@@ -439,5 +446,33 @@ namespace SumerBusinessSolution.Transactions
             _db.ExternalBillPayment.Add(NewPayment);
 
         }
+
+
+        // this function will decrease the stock qty
+        private void DecreaseStockQty(int ProdId, int WhId, double Qty)
+        {
+            InvStockQty = _db.InvStockQty.FirstOrDefaultAsync(inv => inv.ProdId == ProdId & inv.WhId == WhId).GetAwaiter().GetResult();
+            if (InvStockQty != null)
+            {
+                    InvStockQty.Qty -= Qty;
+            }
+
+        }
+
+        // add a sale transaction inside invTransaction table 
+        private void CreateInvTransaction(int ProdId, int? WhId, double Qty, string TransType)
+        {
+            InvTransaction InvTrans = new InvTransaction
+            {
+                ProdId = ProdId,
+                WhId = WhId,
+                Qty = Qty,
+                TransType = TransType,
+                CreatedById = GetLoggedInUserId(),
+                CreatedDateTime = DateTime.Now
+            };
+            _db.InvTransaction.Add(InvTrans);
+        }
+
     }
 }

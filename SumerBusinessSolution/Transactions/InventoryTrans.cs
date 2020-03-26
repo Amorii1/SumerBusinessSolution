@@ -74,44 +74,7 @@ namespace SumerBusinessSolution.Transactions
             return true;
         }
 
-        // This function used to create Incoming Goods
-        //public async Task<bool> CreateIncomingGoods(int WhId, int ProdId, double Qty, string Note)
-        //{
-        //    try
-        //    {
-        //        DateTime InDateTime = DateTime.Now;
-        //        string sqlFormattedDate = InDateTime.ToString("yyyy-MM-dd HH:mm:ss");
-                
-        //        // creating new incoming goods
-        //        IncomingGood = new IncomingGood
-        //        {
-        //            ProdId = ProdId,
-        //            WhId = WhId,
-        //            Qty = Qty,
-        //            Note = Note,
-        //            CreatedById = GetLoggedInUserId(),
-
-        //            CreatedDateTime = InDateTime //DateTime.Now.GetDateTimeFormats()
-
-        //        };
-        //         _db.IncomingGood.Add(IncomingGood);
-
-        //        //updating Qty of InvStockQty
-        //        ChangeStockQty(ProdId, WhId, Qty, "In");
-                
-        //        // creating transaction 
-        //        CreateInvTransaction(ProdId, WhId, Qty, SD.Incoming);
-
-        //        // Save changes
-        //        await _db.SaveChangesAsync();
-
-        //        return true;
-        //    }
-        //    catch(Exception ex)
-        //    {
-        //        return false;
-        //    }
-        //}
+     
 
         public async Task<string> CreateIncomingGoods(int SelectedWhId ,List<IncomingGood> IG)
         {
@@ -191,64 +154,9 @@ namespace SumerBusinessSolution.Transactions
             }
         }
 
-        // This function used to create inventory Transfer. The transfer is created only For the Admin
-        //public async Task<string> CreateInvTransfer(int ProdId, int FromWhId, int ToWhId, double Qty, string Note)
-        //{
-        //    // Check if the warehouse has enough qty of that product
-        //    bool CheckQty = CheckQtyInWh(ProdId, FromWhId, Qty);
-
-        //    if(CheckQty == false)
-        //    {
-        //        return "Error! No enough quantity";
-        //    }
-
-        //    //Decrease Qty of From Warehouse
-        //    ChangeStockQty(ProdId, FromWhId, Qty, "Out");
-
-        //    // Increase Qty of To Warehouse 
-        //    ChangeStockQty(ProdId, ToWhId, Qty, "In");
-
-        //    // Create Inv Transfer Record 
-        //    InvTransfer InvTransfer = new InvTransfer
-        //    {
-        //        ProdId = ProdId,
-        //        FromWhId = FromWhId,
-        //        ToWhId = ToWhId,
-        //        Qty = Qty,
-        //        TransferStatus = SD.Approved,
-        //        CreatedById = GetLoggedInUserId(),
-        //        CreatedDateTime = DateTime.Now, 
-        //        Note = Note
-        //    };
-
-        //    _db.InvTransfer.Add(InvTransfer);
-
-        //    // Create Inv Transaction with Negative Qty of From Warehouse
-        //    CreateInvTransaction(ProdId, FromWhId, Qty * -1, SD.TransferOut);
-
-        //    // Create Inv Transaction with Positive Qty of To Warehouse
-        //    CreateInvTransaction(ProdId, ToWhId, Qty, SD.TransferIn);
-
-        //    await _db.SaveChangesAsync();
-
-        //    //return "تمت عملية التحويل";
-        //    return "Transfer Added Successfully";
-
-        //}
 
         public async Task<string> CreateInvTransfer(int? FromWhId, int? ToWhId, List<InvTransfer> InvTrans)
         {
-
-            // come back to qty check ////
-            // Check if the warehouse has enough qty of that product
-            //bool CheckQty = CheckQtyInWh(ProdId, FromWhId, Qty);
-
-            //if (CheckQty == false)
-            //{
-            //    return "Error! No enough quantity";
-            //}
-
-            // Create Transfer Header
 
             InvTransferHeader NewHeader = new InvTransferHeader
             {
