@@ -42,34 +42,41 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="row" style="margin-top:10px;">
-                                <div class="col-md-2 text-md-right pb-1">
+                                <div class="col-md-1 text-md-right pb-1">
 
                                     <button asp-route-culture="@Request.RouteValues["culture"]" type="submit" name="submit" value="search" class="btn btn-info form-control">
                                         <i class="fas fa-search"></i>
                                     </button>
 
                                 </div>
-                                <div class="col-md-5 pb-1">
+                                <div class="col-md-3 pb-1">
                                     @*@Html.Editor("searchProdCode", new { htmlAttributes = new { @class = "form-control", placeholder = ".....رمز المنتج " } })*@
 
-                                    @Html.Editor("searchProdCode", new { htmlAttributes = new { @class = "form-control text-md-right", placeholder = @localizer.Get(".....رمز المنتج ") } })
+                                    @Html.Editor("searchProdCode", new { htmlAttributes = new { @class = "form-control text-md-right", placeholder = @localizer.Get("اسم الزبون....") } })
 
                                 </div>
-                                <div class="col-md-5 pb-1">
-                                    @*@Html.Editor("searchCreateDateTime", new { htmlAttributes = new { @class = "form-control", placeholder = "..... تاريخ الاضافه " } })*@
-
-                                    <div class="form-group">
-                                        <label asp-for="SearchFromDate" class="control-label"></label>
-                                        <input asp-for="SearchFromDate" class="form-control" />
-                                        @*<span asp-validation-for="SearchCreatedTime" class="text-danger"></span>*@
+                                <div class="col-md-4 pb-1">
+                                    <div class="form-group row float-md-right">
+                                        <div>
+                                            <input asp-for="SearchToDate" class="form-control" />
+                                            @*<span asp-validation-for="SearchCreatedTime" class="text-danger"></span>*@
+                                        </div>
+                                        <div>
+                                            <label asp-for="SearchToDate" class="control-label"></label>
+                                        </div>
                                     </div>
+                                </div>
+                                <div class="col-md-4 pb-1">
+                                    <div class="form-group row float-md-right">
+                                        <div>
+                                            <input asp-for="SearchFromDate" class="form-control" />
+                                            @*<span asp-validation-for="SearchCreatedTime" class="text-danger"></span>*@
+                                        </div>
 
-                                    <div class="form-group">
-                                        <label asp-for="SearchToDate" class="control-label"></label>
-                                        <input asp-for="SearchToDate" class="form-control" />
-                                        @*<span asp-validation-for="SearchCreatedTime" class="text-danger"></span>*@
+                                        <div>
+                                            <label asp-for="SearchFromDate" class="control-label"></label>
+                                        </div>
                                     </div>
-
                                 </div>
 
                             </div>

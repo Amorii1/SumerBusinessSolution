@@ -22,7 +22,7 @@
 
             <img src="~/img/quantity.png" style="width:120px;height:120px;" />
             @*<p class="text-center">كمية المواد</p>*@
-        <p class="text-center">@localizer.Get("تقارير كمية المنتجات")</p>
+        <h4 class="text-center">@localizer.Get("تقارير كمية المنتجات")</h4>
 
         </a>
     </div>
@@ -31,7 +31,7 @@
         <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="/inventory/reports/WhProdQty">
             <img src="~/img/stock.png" style="width:120px;height:120px;" />
             @*<p class="text-center">المخازن</p>*@
-        <p class="text-center">@localizer.Get("تقارير المخازن")</p>
+        <h4 class="text-center">@localizer.Get("تقارير المخازن")</h4>
         </a>
     </div>
     @if (User.IsInRole(SD.AdminEndUser))
@@ -40,7 +40,7 @@
             <a  asp-route-culture="@Request.RouteValues["culture"]" asp-page="/inventory/reports/InvTransactions">
                 <img src="~/img/lamp.png" style="width:120px;height:120px;" />
                 @*<p class="text-center">العمليات تجارية</p>*@
-            <p class="text-center">@localizer.Get("تقارير العمليات التجارية")</p>
+            <h4 class="text-center">@localizer.Get("تقارير العمليات التجارية")</h4>
 
             </a>
         </div>
