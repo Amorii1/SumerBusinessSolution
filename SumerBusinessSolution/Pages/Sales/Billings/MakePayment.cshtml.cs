@@ -37,7 +37,7 @@ namespace SumerBusinessSolution.Pages.Sales.Billings
         public double PaidAmt { get; set; }
 
         [BindProperty]
-        [Display(Name = "المبلغ المتبقي")]
+        [Display(Name = "المبلغ الاجمالي")]
         public double TotalNetAmt { get; set; }
 
         [BindProperty]

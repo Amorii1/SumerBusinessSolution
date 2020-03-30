@@ -67,14 +67,19 @@
                 <li> <a class="nav-link  text-md-right text-dark" asp-area="" asp-page="/inventory/incominggoods/index"> المواد الواردة <i class="fas fa-truck-loading"></i></a></li>
                 @if (User.IsInRole(SD.AdminEndUser))
                 {
-                    <li><a class="nav-link  text-md-right text-dark" asp-area="" asp-page="/inventory/transfer/index"> تحويل <i class="fas fa-exchange-alt"></i></a></li>
+                    <li><a class="nav-link  text-md-right text-dark" asp-area="" asp-page="/inventory/transfer/create"> تحريك <i class="fas fa-exchange-alt"></i></a></li>
                 }
                 @if (User.IsInRole(SD.SupervisorEndUser) || User.IsInRole(SD.StoreEndUser))
                 {
-                    <li> <a class="nav-link text-md-right text-dark" asp-area="" asp-page="/inventory/transferrequests/index"> طلب تحويل<i class="fas fa-exchange-alt"></i></a></li>
+                    <li> <a class="nav-link text-md-right text-dark" asp-area="" asp-page="/inventory/transferrequests/create"> طلب تحريك<i class="fas fa-exchange-alt"></i></a></li>
                 }
-                <li> <a class="nav-link  text-md-right  text-md-right text-dark" asp-area="" asp-page="/inventory/products/index"> المنتجات <i class="fas fa-boxes"></i></a></li>
-                <li> <a class="nav-link  text-md-right text-dark" asp-area="" asp-page="/inventory/reports/index"> التقارير<i class="fas fa-file-alt"></i></a></li>
+                <li><a class="nav-link  text-md-right text-dark" asp-area="" asp-page="/inventory/transfer/index"> حركة المنتجات  <i class="fas fa-exchange-alt"></i></a></li>
+                <li><a class="nav-link  text-md-right text-dark" asp-area="" asp-page="/inventory/transferrequests/index"> طلبات الحركة <i class="fas fa-exchange-alt"></i></a></li>
+                @*<li> <a class="nav-link  text-md-right  text-md-right text-dark" asp-area="" asp-page="/inventory/products/index"> المنتجات <i class="fas fa-boxes"></i></a></li>*@
+                <li> <a class="nav-link  text-md-right text-dark" asp-area="" asp-page="/Reports"> التقارير<i class="fas fa-file-alt"></i></a></li>
+                <li> <a class="nav-link  text-md-right text-dark" asp-area="" asp-page="/Sales/Billings/index"> الفواتير<i class="fas fa-file-invoice-dollar"></i></a></li>
+                <li> <a class="nav-link  text-md-right text-dark" asp-area="" asp-page="/Sales/Billings/Create"> أنشاء فاتورة<i class="fas fa-file-invoice-dollar"></i></a></li>
+                <li> <a class="nav-link  text-md-right text-dark" asp-area="" asp-page="/Customers/Customers/index"> الزبائن<i class="fas fa-user"></i></a></li>
                 <li> <a class="nav-link  text-md-right text-dark" asp-area="" asp-page="/settings"> الاعدادات <i class="fas fa-cogs"></i> </a></li>
 
                 @*<li> <a class="nav-link  text-md-right text-dark" asp-area="" asp-page="/inventory/warehouses/index"> المخازن<i class="fas fa-warehouse"></i></a></li>
@@ -82,11 +87,13 @@
 
 
             </ul>
+            <a href="../identity/account/Logout" class="btn btn-info form-control" >@localizer.Get("تسجيل الخروج") <i class="fas fa-sign-out-alt"></i></a>
+
             @*<div class="social_media">
-                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
-                </div>*@
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+        </div>*@
         </div>
 
 

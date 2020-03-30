@@ -18,7 +18,7 @@ namespace SumerBusinessSolution.Pages.Inventory.IncomingGoods
 {
    [Authorize(Roles = SD.AdminEndUser)]
 
-   [Authorize(Roles = SD.SupervisorEndUser)]
+   [Authorize]
     public class CreateModel : PageModel
     {
         private readonly ApplicationDbContext _db;
@@ -41,6 +41,7 @@ namespace SumerBusinessSolution.Pages.Inventory.IncomingGoods
         public IList<Warehouse> WarehouseList { get; set; }
 
         [BindProperty]
+        [Display(Name = "المخزن")]
         public int WhId { get; set; }
 
         [BindProperty]

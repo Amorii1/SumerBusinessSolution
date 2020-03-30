@@ -14,7 +14,7 @@ namespace SumerBusinessSolution.Pages.Users
 {
     [Authorize(Roles = SD.AdminEndUser)]
 
-  [Authorize(Roles = SD.SupervisorEndUser)]
+  //[Authorize(Roles = SD.SupervisorEndUser)]
     public class EditModel : PageModel
     {
         private readonly ApplicationDbContext _db;

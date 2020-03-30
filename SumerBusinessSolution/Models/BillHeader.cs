@@ -11,7 +11,7 @@ namespace SumerBusinessSolution.Models
     {
         [Display(Name = "رقم الفاتورة")]
         public int Id { get; set; }
-        
+        [Display(Name = "اسم الشركة")]
         public int? CustId { get; set; }
         [Display(Name = "الحالة")]
         [Required]
@@ -20,7 +20,7 @@ namespace SumerBusinessSolution.Models
         public double TotalAmt { get; set; }
         [Display(Name = "التخفيض")]
         public double Discount { get; set; }
-        [Display(Name = "المبلغ المتبقي")]
+        [Display(Name = "المبلغ الاجمالي")]
         public double TotalNetAmt { get; set; }
 
         [Display(Name = "المبلغ المدفوع")]
@@ -30,6 +30,8 @@ namespace SumerBusinessSolution.Models
         public DateTime CreatedDataTime { get; set; }
         [Required]
         public string CreatedById { get; set; }
+        [Display(Name = "الملاحظات")]
+
         public string Note { get; set; }
 
         [ForeignKey("CreatedById")]

@@ -35,8 +35,11 @@ namespace SumerBusinessSolution
         public InvTransfer InvTransfer  { get; set; }
         public InvTransferHeader InvTransferHeader { get; set; }
 
+        [BindProperty]
+        public RoleAuth RoleAuth { get; set; }
 
-            [BindProperty]
+
+        [BindProperty]
             public int ReqId { get; set; }
             [TempData]
             public string StatusMessage { get; set; }
@@ -49,8 +52,10 @@ namespace SumerBusinessSolution
                 InvTransferList = _db.InvTransfer.Include(tr => tr.ProdInfo).Include(tr => tr.InvTransferHeader)
                 .Include(tr => tr.InvTransferHeader.ApplicationUser)
                 .Where(tr => tr.HeaderId == ReqId).ToList().OrderBy(tr => tr.InvTransferHeader.CreatedDateTime);
- 
-                return Page();
+
+            RoleAuth = _db.RoleAuth.FirstOrDefault(ro => ro.RoleName == SD.SupervisorEndUser);
+
+            return Page();
 
             }
             public IActionResult OnPostApproveTransferRequests(int ReqId)

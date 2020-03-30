@@ -1,5 +1,5 @@
 ﻿@page
-@model SumerBusinessSolution.SettingsModel
+@model SumerBusinessSolution.INVSettingsModel
 @using Sumer.Utility
 @using Microsoft.AspNetCore.Localization
 @using System.ComponentModel.DataAnnotations;
@@ -19,23 +19,24 @@
 <div class="row" style="padding-left:230px; padding-right:100px;">
     <div class="column" style="padding-left:80px;">
         <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="">
-            <img src="~/img/application.png" style="width:120px;height:120px;" />
-            <h4 class="text-center"> @localizer.Get("الصلاحيات")</h4>
-
-        </a>
-    </div>
-    <div class="column" style="padding-left:80px;">
-        <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="Users/Index">
-            <img src="~/img/team.png" style="width:120px;height:120px;" />
-            <h4 class="text-center"> @localizer.Get("المستخدمين")</h4>
+            <img src="~/img/inventory.png" style="width:120px;height:120px;" />
+            <h4 class="text-center"> @localizer.Get("انواع المخازن")</h4>
 
         </a>
     </div>
 
     <div class="column" style="padding-left:80px;">
-        <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="INVSettings">
-            <img src="~/img/warehouse.png" style="width:120px;height:115px;" />
-            <h4 class="text-center mt-md-1"> @localizer.Get("ادارة المخازن")</h4>
+        <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="Inventory/Warehouses/Index">
+            <img src="~/img/warehouse.png" style="width:120px;height:120px;" />
+            <h4 class="text-center"> @localizer.Get("المخازن")</h4>
+
+        </a>
+    </div>
+
+    <div class="column" style="padding-left:80px;">
+        <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="Inventory/Products/Index">
+            <img src="~/img/lamp.png" style="width:120px;height:120px;" />
+            <h4 class="text-center"> @localizer.Get("المنتجات")</h4>
 
         </a>
     </div>

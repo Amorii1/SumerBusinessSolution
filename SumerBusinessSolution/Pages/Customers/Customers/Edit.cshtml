@@ -71,8 +71,9 @@
 
                     <div class="col-md-6">
                         @*<a asp-page="Index" class="btn btn-success form-control">الرجوع</a>*@
-                        <a asp-page="Index" asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-success form-control">@localizer.Get("الغاء")</a>
-
+                        <form>
+                            <input asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-success form-control" type="button" value="@localizer.Get("الغاء")" onclick="history.back()">
+                        </form>
                     </div>
                     <div class="col-md-6">
                         @*<input type="submit" class="btn btn-info form-control" value="حفظ" />*@

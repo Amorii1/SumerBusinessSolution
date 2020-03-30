@@ -1,0 +1,43 @@
+﻿@page
+@model SumerBusinessSolution.ReportsModel
+@using Sumer.Utility
+@using Microsoft.AspNetCore.Localization
+@using System.ComponentModel.DataAnnotations;
+@*@inject IHtmlLocalizer<IndexModel> htmlLocalizer*@ @*for html lozcalization*@
+@*@inject IStringLocalizer<IndexModel> localizer*@
+@*First Method*@
+@inject Services.CommonLocalizationService localizer
+@*Second and the easier Method*@
+
+@{
+    ViewData["Title"] = "Settings";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<br />
+<br />
+<div class="row" style="padding-left:250px; padding-right:100px;">
+    <div class="column" style="padding-left:80px;">
+        <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="Customers/Reports/Index">
+            <img src="~/img/team.png" style="width:120px;height:140px;" />
+            <h4 class="text-center"> @localizer.Get("الزبائن")</h4>
+
+        </a>
+    </div>
+
+    <div class="column" style="padding-left:80px;">
+        <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="Inventory/Reports/Index">
+            <img src="~/img/inventory.png" style="width:140px;height:140px;" />
+            <h4 class="text-center"> @localizer.Get("المخازن")</h4>
+
+        </a>
+    </div>
+
+    <div class="column" style="padding-left:80px;">
+        <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="Sales/Reports/Bills">
+            <img src="~/img/bills.png" style="width:140px;height:140px;" />
+            <h4 class="text-center"> @localizer.Get("الفواتير")</h4>
+
+        </a>
+    </div>
+</div>

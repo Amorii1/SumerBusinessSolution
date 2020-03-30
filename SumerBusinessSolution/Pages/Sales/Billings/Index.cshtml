@@ -1,6 +1,7 @@
 ﻿@page
 @model SumerBusinessSolution.Pages.Sales.Billings.IndexModel
 @using Sumer.Utility
+@using SumerBusinessSolution.Models
 @using Microsoft.AspNetCore.Localization
 @using System.ComponentModel.DataAnnotations;
 @*@inject IHtmlLocalizer<IndexModel> htmlLocalizer*@ @*for html lozcalization*@
@@ -99,16 +100,16 @@
                                 <form method="post">
 
                                     <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-primary" asp-page="MakePayment" type="submit" asp-route-BhId="@item.Id" name="Accept">
-                                        @localizer.Get("تسديد") <i class="fas fa-check"></i>
+                                        @localizer.Get("") <i class="fas fa-money-check-alt"></i>
                                     </a>
 
                                     <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-success" asp-page="Details" type="submit" asp-route-BhId="@item.Id" name="Details">
-                                        @localizer.Get("التفاصيل") <i class="far fa-clipboard"></i>
+                                        @localizer.Get("") <i class="far fa-clipboard"></i>
                                     </a>
-                                    @if (User.IsInRole(SD.AdminEndUser))
+                                    @if (User.IsInRole(SD.AdminEndUser) && (item.Status == SD.OpenBill))
                                     {
                                         <a asp-route-culture="@Request.RouteValues["culture"]" data-toggle="modal" data-target="#Ask" class="btn btn-danger" asp-page-handler="CloseBillManually" asp-route-HeaderId="@item.Id" type="submit" name="Close">
-                                            @localizer.Get("اغلاق") <i class="fas fa-window-close"></i>
+                                            @localizer.Get("") <i class="fas fa-window-close"></i>
                                         </a>
 
 

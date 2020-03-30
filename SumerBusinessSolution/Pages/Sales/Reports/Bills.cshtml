@@ -113,16 +113,16 @@
                     <form method="post">
 
                         <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-primary" asp-page="../Billings/MakePayment" type="submit" asp-route-BhId="@item.Id" name="Accept">
-                            @localizer.Get("تسديد") <i class="fas fa-check"></i>
+                            @localizer.Get("") <i class="fas fa-money-check-alt"></i>
                         </a>
 
                         <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-success" asp-page="../Billings/Details" type="submit" asp-route-BhId="@item.Id" name="Details">
-                            @localizer.Get("التفاصيل") <i class="far fa-clipboard"></i>
+                            @localizer.Get("") <i class="far fa-clipboard"></i>
                         </a>
                         @if (User.IsInRole(SD.AdminEndUser))
                         {
                             <a asp-route-culture="@Request.RouteValues["culture"]" data-toggle="modal" data-target="#Ask" class="btn btn-danger" asp-page-handler="CloseBillManually" asp-route-HeaderId="@item.Id" type="submit" name="Close">
-                                @localizer.Get("اغلاق") <i class="fas fa-window-close"></i>
+                                @localizer.Get("") <i class="fas fa-window-close"></i>
                             </a>
 
 

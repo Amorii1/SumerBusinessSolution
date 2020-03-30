@@ -87,11 +87,11 @@
                             @if (User.IsInRole(SD.AdminEndUser))
                             {
                                 <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-success text-white" asp-page="../Accounts/EditCustAcc" asp-route-CustId="@item.Id" type="submit" title="تعديل الحساب" name="AccDetails">
-                                    @localizer.Get("تعديل الحسابات") <i class="fas fa-check"></i>
+                                    @localizer.Get("") <i class="fas fa-edit"></i>
                                 </a>
                             }
-                            <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-success text-white" asp-page="../Accounts/PayToAcc" asp-route-CustId="@item.Id" type="submit" title="دفع لحساب الزبون" name="PayToAcc">
-                                @localizer.Get("تسديد") <i class="fas fa-check"></i>
+                            <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-info text-white" asp-page="../Accounts/PayToAcc" asp-route-CustId="@item.Id" type="submit" title="دفع لحساب الزبون" name="PayToAcc">
+                                @localizer.Get("") <i class="fas fa-money-check-alt"></i>
                             </a>
 
 

@@ -82,22 +82,22 @@
 
                     @if (User.IsInRole(SD.AdminEndUser))
                     {
-                        <td style="width:150px;">
+                        <td style="width:250px;">
                             <div class="btn-group" role="group">
                                 <form method="post">
 
 
                                     <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-success text-white" asp-page="../Accounts/CustAccDetails" asp-route-CustId="@item.Id" type="submit" title="حسابات الزبون" name="AccDetails">
-                                        @localizer.Get("حسابات الزبون") <i class="fas fa-user"></i>
+                                        @localizer.Get("") <i class="fas fa-file-invoice-dollar"></i>
                                     </a>
 
-                                    <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-success text-white" asp-page="../Accounts/PayToAcc" asp-route-CustId="@item.Id" type="submit" title="فواتير الزبون" name="CustomerBills">
+                                    @*<a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-success text-white" asp-page="/sales/Billings/CustBills" asp-route-CustId="@item.Id" type="submit" title="فواتير الزبون" name="CustomerBills">
                                         @localizer.Get("فواتير الزبون") <i class="fas fa-file-invoice-dollar"></i>
-                                    </a>
+                                    </a>*@
 
                                     <a asp-page="Edit" asp-route-Id="@item.Id" asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-info text-white " type="submit" title="@localizer.Get("تعديل الحساب")">
-                                        <i class="fas fa-edit"></i>
-                                        @localizer.Get("تعديل الحساب")
+                                        <i class="fas fa-user-edit"></i>
+                                        @localizer.Get("")
                                     </a>
 
 

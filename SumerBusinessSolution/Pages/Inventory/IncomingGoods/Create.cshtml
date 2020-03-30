@@ -15,14 +15,14 @@
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 <partial name="_StatusMessage" model="Model.StatusMessage" />
-<br />
-<div class="border backgroundWhite">
+<div class="  border backgroundWhite">
     @*<h2 class="text-info">المواد الواردة </h2>*@
     <h2 class="text-info text-md-right">  @localizer.Get("أضافة مواد واردة")</h2>
 
-    <div><a href="#" id="addNew">Add New</a></div>
     <form method="post">
-        <table>
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        @*<table>
             <tr>
                 <td>
                     <select asp-for="@Model.WhId"
@@ -32,13 +32,34 @@
                 </td>
 
             </tr>
-        </table>
-        <table id="dataTable" border="0" cellpadding="0" cellspacing="0">
+        </table>*@
+
+        <div class="row form-group">
+
+            <div class="col-md-5 offset-md-5">
+                <select asp-for="@Model.WhId"
+                        asp-items="@(new SelectList(Model.WarehouseList, "Id", "WhName"))"
+                        class="form-control ">
+                </select>
+            </div>
+            <div class="col-md-2">
+                <label asp-for="@Model.WhId"> </label>
+            </div>
+        </div>
+
+
+        <table id="dataTable" class="table table-striped border table-responsive-md table-responsive-lg">
             <tr>
-                <th>Prod Code</th>
-                <th>Qty</th>
-                <th>Note</th>
-                <th></th>
+                <th>
+                    @Html.DisplayNameFor(a => Model.InG[0].ProdInfo.ProdCode)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(a => Model.InG[0].Qty)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(a => Model.InG[0].Note)
+                </th>
+                <th><a href="#" id="addNew">   <i class="fas fa-plus"></i></a></th>
             </tr>
             @if (Model.InG != null && Model.InG.Count > 0)
             {
@@ -49,7 +70,7 @@
                 {
 
 
-                    <tr style="border:1px solid black">
+                    <tr>
                         @*float a= (float)((ArrayList)paredes[i])[0];*@
                         @*<td>@Html.TextBoxFor(a => a[j].ContactName)</td>*@
 
@@ -71,8 +92,31 @@
                 }
 
             }
+
         </table>
-        <input type="submit" value="Save Bulk Data" />
+    
+        <div class=" form-group row">
+            <div class="col-md-5 offset-md-5">
+                <div class="row">
+
+                    <div class="col-md-6">
+                        @*<a asp-page="Index" class="btn btn-success form-control">الرجوع</a>*@
+                        <form>
+                            <input asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-success form-control" type="button" value="@localizer.Get("الغاء")" onclick="history.back()">
+                        </form>
+                    </div>
+                    <div class="col-md-6">
+                        @*<input type="submit" class="btn btn-info form-control" value="حفظ" />*@
+                        <input asp-route-culture="@Request.RouteValues["culture"]" type="submit" class="btn btn-info form-control" value="@localizer.Get("اضافة")" />
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        @*<input type="submit" value="Save Bulk Data" />*@
+
     </form>
     @*@using (Html.BeginForm("BulkData", "Save", FormMethod.Post))
         {
@@ -81,6 +125,22 @@
 
         }*@
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 <script>
     function RemoveRow(r) {
@@ -106,7 +166,7 @@
                     $trNew.find(':text').val('');
 
                     var suffix = $trNew.find(':input:first').attr('name').match(/\d+/);
-                    $trNew.find("td:last").html('<a href="#" id="removeThis" onclick="return RemoveRow(this)" class="remove">Remove</a>');
+                    $trNew.find("td:last").html('<a href="#" id="removeThis" onclick="return RemoveRow(this)" class="remove"><i class="fas fa-window-close"></i></a>');
 
 
                     $.each($trNew.find(':input'), function (i, val) {

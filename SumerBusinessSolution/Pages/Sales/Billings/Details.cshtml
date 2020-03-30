@@ -178,12 +178,14 @@
             <div class="col-md-5 offset-md-5">
                 <div class="row">
                     <div class="col-md-6">
-                        <a asp-page="Index" class="btn btn-success form-control" asp-route-culture="@Request.RouteValues["culture"]">  @localizer.Get("الغاء")</a>
+                        <form>
+                            <input asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-success form-control" type="button" value="@localizer.Get("الغاء")" onclick="history.back()">
+                        </form>
                     </div>
                     <div class="col-md-6">
-                        <button asp-route-Id="@Model.BillHeader.Id" asp-page="MakePayment" asp-route-culture="@Request.RouteValues["culture"]" type="submit" class="btn btn-info form-control" onclick="return ValidateInput()">
+                        <a asp-route-Id="@Model.BillHeader.Id" asp-page="MakePayment" asp-route-culture="@Request.RouteValues["culture"]" type="submit" class="btn btn-info form-control" >
                             @localizer.Get("تسديد الفاتورة")
-                        </button>
+                        </a>
                     </div>
 
                 </div>
