@@ -73,47 +73,47 @@
         </div>
 
         @*<table>
-            <tr>
-                <td>
-                    <label asp-for="@Model.InvTransferHeader.FromWarehouse.WhName"></label>
-                </td>
-                <td>
-                    <input asp-for="@Model.InvTransferHeader.FromWarehouse.WhName" />
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <label asp-for="@Model.InvTransferHeader.ToWarehouse.WhName"></label>
-                </td>
-                <td>
-                    <input asp-for="@Model.InvTransferHeader.ToWarehouse.WhName" />
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <label asp-for="@Model.InvTransferHeader.Note"></label>
-                </td>
-                <td>
-                    <input asp-for="@Model.InvTransferHeader.Note" />
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <label asp-for="@Model.InvTransferHeader.ApplicationUser.FirstName"></label>
-                </td>
-                <td>
-                    <input asp-for="@Model.InvTransferHeader.ApplicationUser.FirstName" />
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <label asp-for="@Model.InvTransferHeader.CreatedDateTime"></label>
-                </td>
-                <td>
-                    <input asp-for="@Model.InvTransferHeader.CreatedDateTime" />
-                </td>
-            </tr>
-        </table>*@
+                <tr>
+                    <td>
+                        <label asp-for="@Model.InvTransferHeader.FromWarehouse.WhName"></label>
+                    </td>
+                    <td>
+                        <input asp-for="@Model.InvTransferHeader.FromWarehouse.WhName" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label asp-for="@Model.InvTransferHeader.ToWarehouse.WhName"></label>
+                    </td>
+                    <td>
+                        <input asp-for="@Model.InvTransferHeader.ToWarehouse.WhName" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label asp-for="@Model.InvTransferHeader.Note"></label>
+                    </td>
+                    <td>
+                        <input asp-for="@Model.InvTransferHeader.Note" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label asp-for="@Model.InvTransferHeader.ApplicationUser.FirstName"></label>
+                    </td>
+                    <td>
+                        <input asp-for="@Model.InvTransferHeader.ApplicationUser.FirstName" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label asp-for="@Model.InvTransferHeader.CreatedDateTime"></label>
+                    </td>
+                    <td>
+                        <input asp-for="@Model.InvTransferHeader.CreatedDateTime" />
+                    </td>
+                </tr>
+            </table>*@
 
         <table class="table table-striped border table-responsive-md table-responsive-lg">
             <tr class="table-secondary">
@@ -151,12 +151,10 @@
                             {
 
 
-                                <form method="post">
-                                    <button asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-danger text-white" asp-page-handler="DeleteTransferRequestsLine" asp-route-LineId="@item.Id" asp-route-ReqId="@item.HeaderId" type="submit" title="Delete" name="Delete">
-                                        @localizer.Get("حذف") <i class="fas fa-trash-alt"></i>
-                                    </button>
-                                </form>
 
+                                <button asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-danger text-white" asp-page-handler="DeleteTransferRequestsLine" asp-route-LineId="@item.Id" asp-route-ReqId="@item.HeaderId" type="submit" title="Delete" name="Delete">
+                                    @localizer.Get("حذف") <i class="fas fa-trash-alt"></i>
+                                </button>
                             }
 
                         </td>
@@ -186,40 +184,47 @@
             <div class=" form-group row">
                 <div class="col-md-5 offset-md-5">
                     <div class="row">
-
                         <div class="col-md-4">
                             @*<a asp-page="Index" asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-success form-control">@localizer.Get("رجوع")</a>*@
-                            <form>
-                                <input asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-success form-control" type="button" value="@localizer.Get("رجوع")" onclick="history.back()">
-                            </form>
+
+                            <button asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-dark text-white" asp-page-handler="DeleteTransferRequests" asp-route-ReqId="@Model.InvTransferHeader.Id" type="submit" title="Delete" name="Delete">
+                                @localizer.Get("") <i class="fas fa-trash-alt"></i>
+                            </button>
                         </div>
                         <div class="col-md-4">
-                            <form method="post">
-                                <button asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-info text-white" asp-page-handler="ApproveTransferRequests" asp-route-ReqId="@Model.InvTransferHeader.Id" type="submit" title="Approve" name="Approve">
-                                    @localizer.Get("قبول الطلب") <i class="fas fa-check"></i>
-                                </button>
-                            </form>
+                            @*<a asp-page="Index" asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-success form-control">@localizer.Get("رجوع")</a>*@
+
+                            <input asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-success form-control" type="button" value="@localizer.Get("رجوع")" onclick="history.back()">
+
                         </div>
-                                <div class="col-md-4">
-                                    <form method="post">
-                                        <button asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-danger text-white" asp-page-handler="RejectTransferRequests" asp-route-ReqId="@Model.InvTransferHeader.Id" type="submit" title="Reject" name="Reject">
-                                            @localizer.Get("رفض الطلب") <i class="fas fa-window-close"></i>
-                                        </button>
-                                    </form>
-                                </div>
-</div>
+                        <div class="col-md-4">
+
+                            <button asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-danger text-white" asp-page-handler="RejectTransferRequests" asp-route-ReqId="@Model.InvTransferHeader.Id" type="submit" title="Reject" name="Reject">
+                                @localizer.Get("رفض الطلب") <i class="fas fa-window-close"></i>
+                            </button>
+
+                        </div>
+                        <div class="col-md-4">
+
+                            <button asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-info text-white" asp-page-handler="ApproveTransferRequests" asp-route-ReqId="@Model.InvTransferHeader.Id" type="submit" title="Approve" name="Approve">
+                                @localizer.Get("قبول الطلب") <i class="fas fa-check"></i>
+                            </button>
+
+                        </div>
+
+                    </div>
 
                 </div>
             </div>
 
             @*<form method="post">
-                <button asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-success text-white" asp-page-handler="ApproveTransferRequests" asp-route-ReqId="@Model.InvTransferHeader.Id" type="submit" title="Approve" name="Approve">
-                    @localizer.Get("قبول الطلب") <i class="fas fa-check"></i>
-                </button>
-                <button asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-danger text-white" asp-page-handler="RejectTransferRequests" asp-route-ReqId="@Model.InvTransferHeader.Id" type="submit" title="Reject" name="Reject">
-                    @localizer.Get("رفض الطلب") <i class="fas fa-window-close"></i>
-                </button>
-            </form>*@
+                    <button asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-success text-white" asp-page-handler="ApproveTransferRequests" asp-route-ReqId="@Model.InvTransferHeader.Id" type="submit" title="Approve" name="Approve">
+                        @localizer.Get("قبول الطلب") <i class="fas fa-check"></i>
+                    </button>
+                    <button asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-danger text-white" asp-page-handler="RejectTransferRequests" asp-route-ReqId="@Model.InvTransferHeader.Id" type="submit" title="Reject" name="Reject">
+                        @localizer.Get("رفض الطلب") <i class="fas fa-window-close"></i>
+                    </button>
+                </form>*@
         }
 
     </form>
