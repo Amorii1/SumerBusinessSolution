@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using SumerBusinessSolution.Data;
+ 
 using SumerBusinessSolution.Models;
 
 namespace SumerBusinessSolution
@@ -14,6 +15,7 @@ namespace SumerBusinessSolution
     {
 
         private readonly ApplicationDbContext _db;
+  
 
         //private readonly IServiceScopeFactory _serviceScopeFactory;
 
@@ -22,6 +24,7 @@ namespace SumerBusinessSolution
         public IndexModel(ApplicationDbContext db)
         {
             _db = db;
+    
 
         }
         public async Task<IActionResult> OnGet()
@@ -50,6 +53,8 @@ namespace SumerBusinessSolution
             CompanyInfoFromDB.Note = CompanyInfo.Note;
 
             await _db.SaveChangesAsync();
+
+           // _reqNote.SendMessage("Ahmed", "New request for you!!").GetAwaiter().GetResult();
 
             return RedirectToPage("Index");
         }

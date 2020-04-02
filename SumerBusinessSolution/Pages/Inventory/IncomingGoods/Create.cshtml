@@ -23,16 +23,16 @@
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
         @*<table>
-            <tr>
-                <td>
-                    <select asp-for="@Model.WhId"
-                            asp-items="@(new SelectList(Model.WarehouseList, "Id", "WhName"))"
-                            class="form-control ">
-                    </select>
-                </td>
+                <tr>
+                    <td>
+                        <select asp-for="@Model.WhId"
+                                asp-items="@(new SelectList(Model.WarehouseList, "Id", "WhName"))"
+                                class="form-control ">
+                        </select>
+                    </td>
 
-            </tr>
-        </table>*@
+                </tr>
+            </table>*@
 
         <div class="row form-group">
 
@@ -94,16 +94,17 @@
             }
 
         </table>
-    
+
         <div class=" form-group row">
+
             <div class="col-md-5 offset-md-5">
                 <div class="row">
 
                     <div class="col-md-6">
                         @*<a asp-page="Index" class="btn btn-success form-control">الرجوع</a>*@
-                        <form>
-                            <input asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-success form-control" type="button" value="@localizer.Get("الغاء")" onclick="history.back()">
-                        </form>
+
+                        <input asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-success form-control" type="button" value="@localizer.Get("الغاء")" onclick="history.back()">
+
                     </div>
                     <div class="col-md-6">
                         @*<input type="submit" class="btn btn-info form-control" value="حفظ" />*@
@@ -113,6 +114,8 @@
                 </div>
 
             </div>
+
+
         </div>
 
         @*<input type="submit" value="Save Bulk Data" />*@
@@ -223,7 +226,7 @@
 
                     t.parentElement.children[3].children[0].value = val * price
         }
-    
+
 
     </script>
 
@@ -237,7 +240,7 @@
         });
     </script>
 }
- 
+
 
 @*<form method="post">
 
@@ -322,34 +325,34 @@
 
 
 @*@section Scripts {
-    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+        @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
-    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
-    <script>
-         $(document).ready(function () {
-    $('#ProdInfo').autocomplete({
-    source: '@Url.Page("Create", "SearchNow")'
-    });
-    });
-    </script>
+        <script>
+             $(document).ready(function () {
+        $('#ProdInfo').autocomplete({
+        source: '@Url.Page("Create", "SearchNow")'
+        });
+        });
+        </script>
 
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <script>
-        function ValidateInput() {
-            var qty = document.getElementById("qty").value;
-            var PId = document.getElementById("ProdInfo").value;
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        <script>
+            function ValidateInput() {
+                var qty = document.getElementById("qty").value;
+                var PId = document.getElementById("ProdInfo").value;
 
-            if (qty == 0) {
-         
-                swal("Error!", "No quantity Entered", "error");
-                return false
+                if (qty == 0) {
+
+                    swal("Error!", "No quantity Entered", "error");
+                    return false
+                }
+
             }
 
-        }
+        </script>
 
-    </script>
-
-}*@
+    }*@

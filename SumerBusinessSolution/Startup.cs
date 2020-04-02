@@ -21,6 +21,7 @@ using System.Reflection;
 using SumerBusinessSolution.Resources;
 using SumerBusinessSolution.RouteModelConventions;
 using Microsoft.AspNetCore.Localization.Routing;
+ 
 
 namespace SumerBusinessSolution
 {
@@ -77,6 +78,9 @@ namespace SumerBusinessSolution
             services.AddTransient<ISalesTrans, SalesTrans>();
             services.AddTransient(typeof(ISalesTrans), typeof(SalesTrans));
 
+            //services.AddTransient<IReqNote, ReqNote>();
+            //services.AddTransient(typeof(IReqNote), typeof(ReqNote));
+
             services.AddHttpContextAccessor();
 
             services.AddMvc().AddViewLocalization().AddDataAnnotationsLocalization(options =>
@@ -94,6 +98,8 @@ namespace SumerBusinessSolution
                 options.LogoutPath = "/Identity/Account/Logout";
                 options.AccessDeniedPath = "/Identity/Account/AccessDenied";
             });
+
+            services.AddSignalR();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -126,7 +132,12 @@ namespace SumerBusinessSolution
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();
+               // endpoints.MapHub<ReqNote>("/reqNote");
             });
+
+            //check this 
+
+          
         }
     }
 }

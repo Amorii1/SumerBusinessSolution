@@ -28,19 +28,31 @@ namespace SumerBusinessSolution.Pages.Inventory.IncomingGoods
         public ProdInfo ProdInfo { get; set; }
         public Warehouse Warehouse { get; set; }
 
+     
+     
+
+       
+        //[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy/MM/dd}")]
+      //  public DateTime SearchFromDate = new DateTime(DateTime.Now.Year, 1, 1); //  { get; set; }
+
+
+
         [DataType(DataType.Date)]
         [Display(Name = "من")]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy/MM/dd}")]
-        public DateTime SearchFromDate { get; set; }
+        static DateTime SearchFromDate(DateTime y)
+        {
+            return new DateTime(y.Year, 1, 1);
+        }
 
         [DataType(DataType.Date)]
         [Display(Name = "الى")]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy/MM/dd}")]
-        public DateTime SearchToDate { get; set; }
+        //[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy/MM/dd}")]
+        public DateTime SearchToDate = DateTime.Today; //{ get; set; }
 
 
         public async Task<IActionResult> OnGet(string SearchProdCode = null, DateTime? SearchFromDate = null, DateTime? SearchToDate = null)
         {
+
             StringBuilder Param = new StringBuilder();
 
 
@@ -65,7 +77,9 @@ namespace SumerBusinessSolution.Pages.Inventory.IncomingGoods
 
             if (SearchFromDate != null & SearchToDate != null & SearchProdCode == null)
             {
-                IncomingGoodList = await _db.IncomingGood.Include(tr => tr.ProdInfo).Where(u => u.CreatedDateTime >= SearchFromDate & u.CreatedDateTime <= SearchToDate).ToListAsync();
+                IncomingGoodList = await _db.IncomingGood.Include(tr => tr.ProdInfo)
+                    .Include(tr => tr.ApplicationUser)
+                    .Where(u => u.CreatedDateTime >= SearchFromDate & u.CreatedDateTime <= SearchToDate).ToListAsync();
              //   IncomingGoodList = _db.IncomingGood.Where(u => u.ProdInfo.ProdCode.ToLower().Contains(SearchProdCode.ToLower())).ToList();
 
             }
@@ -73,7 +87,7 @@ namespace SumerBusinessSolution.Pages.Inventory.IncomingGoods
             {
                 if (SearchFromDate != null & SearchToDate != null & SearchProdCode != null)
                 {
-                    IncomingGoodList = await _db.IncomingGood.Include(tr => tr.ProdInfo).Where(u => u.ProdInfo.ProdCode.ToLower().Contains(SearchProdCode.ToLower()) & u.CreatedDateTime >= SearchFromDate & u.CreatedDateTime <= SearchToDate).ToListAsync();
+                    IncomingGoodList = await _db.IncomingGood.Include(tr => tr.ProdInfo).Include(tr => tr.ApplicationUser).Where(u => u.ProdInfo.ProdCode.ToLower().Contains(SearchProdCode.ToLower()) & u.CreatedDateTime >= SearchFromDate & u.CreatedDateTime <= SearchToDate).ToListAsync();
                 }
                 else
                 {
@@ -85,7 +99,9 @@ namespace SumerBusinessSolution.Pages.Inventory.IncomingGoods
                     {
  
 
-                          IncomingGoodList = _db.IncomingGood.Include(tr => tr.Warehouse).Include(tr => tr.ProdInfo).Include(tr => tr.ApplicationUser)
+                          IncomingGoodList = _db.IncomingGood.Include(tr => tr.Warehouse)
+                            .Include(tr => tr.ProdInfo)
+                            .Include(tr => tr.ApplicationUser)
                           .Where(tr => tr.CreatedDateTime > DateTime.Now.AddMonths(-1)).ToList().OrderBy(tr => tr.CreatedDateTime);
                     }
                 }

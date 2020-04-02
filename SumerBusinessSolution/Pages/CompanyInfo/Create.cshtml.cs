@@ -7,13 +7,14 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using SumerBusinessSolution.Data;
 using SumerBusinessSolution.Models;
-
+ 
 namespace SumerBusinessSolution
 {
     public class CreateModel : PageModel
     {
 
         private readonly ApplicationDbContext _db;
+ 
  
         //private readonly IServiceScopeFactory _serviceScopeFactory;
 
@@ -22,6 +23,7 @@ namespace SumerBusinessSolution
         public CreateModel(ApplicationDbContext db)
         {
             _db = db;
+ 
  
         }
         public void OnGet()
@@ -38,6 +40,8 @@ namespace SumerBusinessSolution
             }
             _db.CompanyInfo.Add(CompanyInfo); // like migration 
             await _db.SaveChangesAsync();
+
+           
 
             return RedirectToPage("Index");
         }
