@@ -28,16 +28,25 @@ namespace SumerBusinessSolution.Pages.Inventory.IncomingGoods
         public ProdInfo ProdInfo { get; set; }
         public Warehouse Warehouse { get; set; }
 
-
-        //[DataType(DataType.Date)]
+        [DataType(DataType.Date)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy/MM/dd}")]
         [Display(Name = "من")]
-        public DateTime SearchFromDate = new DateTime(DateTime.Now.Year, 1, 1); //  { get; set; }
-        // [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy/MM/dd}")]
+        public DateTime SearchFromDate { get; set; }
 
-       // [DataType(DataType.Date)]
+        [DataType(DataType.Date)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy/MM/dd}")]
         [Display(Name = "الى")]
-        public DateTime SearchToDate = DateTime.Today; //{ get; set; }
-        //  [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
+        public DateTime SearchToDate { get; set; }
+
+        // //[DataType(DataType.Date)]
+        // [Display(Name = "من")]
+        // public DateTime SearchFromDate = new DateTime(DateTime.Now.Year, 1, 1); //  { get; set; }
+        // // [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy/MM/dd}")]
+
+        //// [DataType(DataType.Date)]
+        // [Display(Name = "الى")]
+        // public DateTime SearchToDate = DateTime.Today; //{ get; set; }
+        // //  [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
 
         public IActionResult OnGet(string SearchProdCode = null, DateTime? SearchFromDate = null, DateTime? SearchToDate = null)
         {

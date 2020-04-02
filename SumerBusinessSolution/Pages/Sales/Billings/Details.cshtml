@@ -178,17 +178,47 @@
             <div class="col-md-5 offset-md-5">
                 <div class="row">
                     <div class="col-md-6">
-                         
-                            <input asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-success form-control" type="button" value="@localizer.Get("الغاء")" onclick="history.back()">
-                       
-                    </div>
-                    <div class="col-md-6">
-                        <a asp-route-BhId="@Model.BillHeader.Id" asp-page="MakePayment" asp-route-culture="@Request.RouteValues["culture"]" type="submit" class="btn btn-info form-control" >
-                            @localizer.Get("تسديد الفاتورة")
-                        </a>
-                    </div>
 
-                </div>
+                        <input asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-success form-control" type="button" value="@localizer.Get("الغاء")" onclick="history.back()">
+
+                    </div>
+                    @if (Model.BillHeader.Status == SD.OpenBill)
+                    {
+                        <div class="col-md-6">
+                            <a asp-route-BhId="@Model.BillHeader.Id" asp-page="MakePayment" asp-route-culture="@Request.RouteValues["culture"]" type="submit" class="btn btn-info form-control">
+                                @localizer.Get("تسديد الفاتورة")
+                            </a>
+                        </div>
+                    }
+
+                        @if (User.IsInRole(SD.AdminEndUser) && (Model.BillHeader.Status == SD.OpenBill))
+                        {
+                            <a asp-route-culture="@Request.RouteValues["culture"]" data-toggle="modal" data-target="#Ask" class="btn btn-danger" asp-page-handler="CloseBillManually" asp-route-HeaderId="@Model.BillHeader.Id" type="submit" name="Close">
+                                @localizer.Get("") <i class="fas fa-window-close"></i>
+                            </a>
+
+
+
+                        }
+
+                        <div class="modal fade" id="Ask" role="dialog" method="post">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button class="close" data-dismiss="modal">&times;</button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p class="alert alert-danger">@localizer.Get("هل انت متأكد؟")</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <input asp-route-culture="@Request.RouteValues["culture"]" type="submit" asp-page-handler="CloseBillManually" asp-route-HeaderId="@Model.BillHeader.Id" class="btn btn-success" value="@localizer.Get("نعم")" />
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
             </div>
         </div>
 

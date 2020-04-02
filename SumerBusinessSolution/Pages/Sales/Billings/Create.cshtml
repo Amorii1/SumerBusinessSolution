@@ -48,32 +48,32 @@
                 </div>
 
                 @*<table>
-                    <tr>
-                        <td>
-                            <select asp-for="a => @Model.BillHeader.CustId"
-                                    asp-items="@(new SelectList(Model.Customer, "Id", "CompanyName"))"
-                                    class="form-control ">
-                            </select>
-                        </td>
+            <tr>
+                <td>
+                    <select asp-for="a => @Model.BillHeader.CustId"
+                            asp-items="@(new SelectList(Model.Customer, "Id", "CompanyName"))"
+                            class="form-control ">
+                    </select>
+                </td>
 
-                    </tr>
-                    <tr>
-                        <td>
-                            <select id="PriceType" asp-for="@Model.PricingType.PriceType"
-                                    asp-items="@(new SelectList(Model.UnitPriceTypesList, "Id","PriceType"))"
-                                    class="form-control ">
-                            </select>
+            </tr>
+            <tr>
+                <td>
+                    <select id="PriceType" asp-for="@Model.PricingType.PriceType"
+                            asp-items="@(new SelectList(Model.UnitPriceTypesList, "Id","PriceType"))"
+                            class="form-control ">
+                    </select>
 
-                        </td>
+                </td>
 
-                    </tr>
-                </table>*@
+            </tr>
+        </table>*@
 
 
                 <table id="dataTable" class="table table-striped border table-responsive-md table-responsive-lg">
                     <tr class="table-secondary">
                         @*<table id="dataTable" border="0" cellpadding="0" cellspacing="0">
-                        <tr>*@
+                <tr>*@
                         <th>
                             @Html.DisplayNameFor(a => Model.Bi[0].ProdInfo.ProdCode)
                         </th>
@@ -91,10 +91,10 @@
                         </th>
 
                         @*<th>Prod Code</th>
-                        <th>Qty</th>
-                        <th>Unit Price</th>
-                        <th>Total </th>
-                        <th>Note</th>*@
+                <th>Qty</th>
+                <th>Unit Price</th>
+                <th>Total </th>
+                <th>Note</th>*@
                         <th><a href="#" id="addNew">   <i class="fas fa-plus"></i></a></th>
                     </tr>
                     @if (Model.Bi != null && Model.Bi.Count > 0)
@@ -142,6 +142,16 @@
                         <label asp-for="@Model.BillHeader.PaidAmt"> </label>
                     </div>
                 </div>
+
+                <div class="row form-group">
+
+                    <div class="col-md-5 offset-md-5">
+                        <input type="text" asp-for="a => @Model.BillHeader.Discount" class="form-control text-md-right" />
+                    </div>
+                    <div class="col-md-2">
+                        <label asp-for="@Model.BillHeader.Discount"> </label>
+                    </div>
+                </div>
                 <div class="row form-group">
 
                     <div class="col-md-5 offset-md-5">
@@ -152,36 +162,6 @@
                         <label asp-for="@Model.BillHeader.Note"> </label>
                     </div>
                 </div>
-                <div class="row form-group">
-
-                    <div class="col-md-5 offset-md-5">
-                        <input type="text" asp-for="a => @Model.BillHeader.Discount" class="form-control text-md-right" />
-                    </div>
-                    <div class="col-md-2">
-                        <label asp-for="@Model.BillHeader.Discount"> </label>
-                    </div>
-                </div>
-
-                @*<table>
-                    <tr>
-                        <td>Note</td>
-                        <td>
-                            <input type="text" asp-for="a => @Model.BillHeader.Note" class="form-control text-md-right" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>PaidAmt</td>
-                        <td>
-                            <input type="text" asp-for="a => @Model.BillHeader.PaidAmt" class="form-control text-md-right" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Discount</td>
-                        <td>
-                            <input type="text" asp-for="a => @Model.BillHeader.Discount" class="form-control text-md-right" />
-                        </td>
-                    </tr>
-                </table>*@
 
                 <div class=" form-group row">
                     <div class="col-md-5 offset-md-5">
@@ -189,9 +169,9 @@
 
                             <div class="col-md-6">
                                 @*<a asp-page="Index" class="btn btn-success form-control">الرجوع</a>*@
-                               
-                                    <input asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-success form-control" type="button" value="@localizer.Get("الغاء")" onclick="history.back()">
-                                
+
+                                <input asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-success form-control" type="button" value="@localizer.Get("الغاء")" onclick="history.back()">
+
                             </div>
                             <div class="col-md-6">
                                 @*<input type="submit" class="btn btn-info form-control" value="حفظ" />*@

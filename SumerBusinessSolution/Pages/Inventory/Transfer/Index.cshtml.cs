@@ -32,13 +32,23 @@ namespace SumerBusinessSolution.Inventory.Transfer
         public ProdInfo ProdInfo { get; set; }
         public Warehouse Warehouse { get; set; }
 
-        //[DataType(DataType.Date)]
-        [Display(Name = "من")]
-        public DateTime SearchFromDate = new DateTime(DateTime.Now.Year, 1, 1); 
+        ////[DataType(DataType.Date)]
+        //[Display(Name = "من")]
+        //public DateTime SearchFromDate = new DateTime(DateTime.Now.Year, 1, 1); 
 
-        // [DataType(DataType.Date)]
+        //// [DataType(DataType.Date)]
+        //[Display(Name = "الى")]
+        //public DateTime SearchToDate = DateTime.Today; 
+
+        [DataType(DataType.Date)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy/MM/dd}")]
+        [Display(Name = "من")]
+        public DateTime SearchFromDate { get; set; }
+
+        [DataType(DataType.Date)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy/MM/dd}")]
         [Display(Name = "الى")]
-        public DateTime SearchToDate = DateTime.Today; 
+        public DateTime SearchToDate { get; set; }
 
         public async Task<IActionResult> OnGet(string SearchProdCode = null, DateTime? SearchFromDate = null, DateTime? SearchToDate = null)
         {

@@ -32,17 +32,10 @@ namespace SumerBusinessSolution
         [BindProperty]
         public BillItems BillItems { get; set; }
 
-        public List<BillItems> BillItemsList { get; set; } 
+        public List<BillItems> BillItemsList { get; set; }
 
-        //[BindProperty]
-        //public string CompanyName { get; set; }
-
-        //[BindProperty]
-        //public double PaidAmt { get; set; }
-
-
-        //[BindProperty]
-        //public int HeaderId { get; set; }
+        [TempData]
+        public string StatusMessage { get; set; }
 
         public async Task<ActionResult> OnGet(int BhId)
         {
@@ -66,6 +59,14 @@ namespace SumerBusinessSolution
             //StatusMessage = _SalesTrans.MakePaymentOnBill(HeaderId, NewPayment).GetAwaiter().GetResult();
 
            // return RedirectToPage("Index");
+        }
+
+        public IActionResult OnPostCloseBillManually(int HeaderId)
+        {
+
+            StatusMessage = _SalesTrans.CloseBillManually(HeaderId).GetAwaiter().GetResult();
+
+            return RedirectToPage("/Sales/Billings/Index");
         }
     }
 }
