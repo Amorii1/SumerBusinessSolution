@@ -14,139 +14,186 @@
     ViewData["Title"] = "Details";
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
-
+<style>
+    table, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+</style>
 
 <div class="border backgroundWhite">
     @*<h2 class="text-info">المواد الواردة </h2>*@
     <h2 class="text-info text-md-right">  @localizer.Get("تفاصيل الفاتورة")</h2>
 
     <form method="post">
-
-        <div class="form-group row ">
+        <div id="tabledata">
             <input type="hidden" asp-for="BillHeader.Id" />
-            <div class="col-md-5 offset-md-5">
-                <input type="text" id="ProdInfo" asp-for="BillHeader.Id" class="form-control text-md-right" disabled />
-            </div>
-            <div class="col-md-2 ">
-                <label asp-for="BillHeader.Id"></label>
+
+            <div>
+                <p class="text-md-center" style="font-size:200px;">LOGO</p>
             </div>
 
-        </div>
+            <div class="row col-md-12">
+                @*<div class="form-group row ">
+                        <div class="col-md-5 offset-md-5">
+                            <input type="text" id="ProdInfo" asp-for="BillHeader.Id" class="form-control text-md-right" />
+                        </div>
+                        <div class="col-md-2 ">
+                            <label asp-for="BillHeader.Id"></label>
+                        </div>
+                    </div>*@
 
+                <div class="row pt-md-2  border border-dark col-md-3 form-control form-group offset-md-1">
+                    <h5 class="font-weight-bold text-md-right">@Model.BillHeader.Id &nbsp; : رقم الفاتورة</h5>
+                </div>
 
+                @*<div class="form-group row">
+                        <div class="col-md-5 offset-md-5">
+                            <input asp-for="BillHeader.Customer.CompanyName" class="form-control  text-md-right" disabled />
+                        </div>
+                        <div class="col-md-2">
+                            <label asp-for="BillHeader.Customer.CompanyName"></label>
+                        </div>
+                    </div>*@
 
-        <div class="form-group row">
+                <div class="row pt-md-2 border border-dark col-md-3 form-control form-group offset-md-1">
+                    <h5 class="font-weight-bold text-md-right">@Model.BillHeader.Customer.CompanyName &nbsp; : اسم الزبون</h5>
+                </div>
 
-            <div class="col-md-5 offset-md-5">
-                <input asp-for="BillHeader.Customer.CompanyName" class="form-control  text-md-right" disabled />
-
-
-            </div>
-            <div class="col-md-2">
-                <label asp-for="BillHeader.Customer.CompanyName"></label>
-            </div>
-        </div>
-        <div class="form-group row">
-            <div class="col-md-5 offset-md-5">
-                @*<textarea placeholder="ملاحظات" asp-for="Note" class="form-control"></textarea>*@
-                <input asp-for="BillHeader.TotalAmt" class="form-control  text-md-right" disabled />
-
-            </div>
-
-            <div class="col-md-2">
-                <label asp-for="BillHeader.TotalAmt"></label>
-            </div>
-        </div>
-        <div class="form-group row">
-            <div class="col-md-5 offset-md-5">
-                @*<textarea placeholder="ملاحظات" asp-for="Note" class="form-control"></textarea>*@
-                <input asp-for="BillHeader.Discount" class="form-control  text-md-right" disabled />
-
-            </div>
-
-            <div class="col-md-2">
-                <label asp-for="BillHeader.Discount"></label>
-            </div>
-        </div>
-        <div class="form-group row">
-            <div class="col-md-5 offset-md-5">
-                @*<textarea placeholder="ملاحظات" asp-for="Note" class="form-control"></textarea>*@
-                <input asp-for="BillHeader.TotalNetAmt" class="form-control  text-md-right" disabled />
+                @*<div class="form-group row">
+                        <div class="col-md-5 offset-md-5">
+                            <input asp-for="BillHeader.ApplicationUser.FirstName" class="form-control  text-md-right" disabled />
+                        </div>
+                        <div class="col-md-2">
+                            <label asp-for="BillHeader.ApplicationUser.FirstName"></label>
+                        </div>
+                    </div>*@
+                <div class="row pt-md-2  border border-dark col-md-3 form-control form-group offset-md-1">
+                    <h5 class="font-weight-bold text-md-right">@Model.BillHeader.ApplicationUser.FirstName &nbsp; : اسم الموظف</h5>
+                </div>
 
             </div>
 
-            <div class="col-md-2">
-                <label asp-for="BillHeader.TotalNetAmt"></label>
+
+
+            <div class="row col-md-12">
+                @*<div class="form-group row">
+                        <div class="col-md-5 offset-md-5">
+                            <input asp-for="BillHeader.TotalAmt" class="form-control  text-md-right" disabled />
+                        </div>
+                        <div class="col-md-2">
+                            <label asp-for="BillHeader.TotalAmt"></label>
+                        </div>
+                    </div>*@
+
+                <div class="row pt-md-2 border border-dark col-md-3 form-control form-group offset-md-1">
+                    <h5 class="font-weight-bold text-md-right">@Model.BillHeader.TotalAmt &nbsp; : المبلغ الكلي</h5>
+                </div>
+
+                @*<div class="form-group row">
+                        <div class="col-md-5 offset-md-5">
+                            <input asp-for="BillHeader.Discount" class="form-control  text-md-right" disabled />
+                        </div>
+                        <div class="col-md-2">
+                            <label asp-for="BillHeader.Discount"></label>
+                        </div>
+                    </div>*@
+
+                <div class="row pt-md-2 border border-dark col-md-3 form-control form-group offset-md-1">
+                    <h5 class="font-weight-bold text-md-right">@Model.BillHeader.Discount &nbsp; : التخفيض</h5>
+                </div>
+
+                @*<div class="form-group row">
+                        <div class="col-md-5 offset-md-5">
+                            <input asp-for="BillHeader.TotalNetAmt" class="form-control  text-md-right" disabled />
+                        </div>
+                        <div class="col-md-2">
+                            <label asp-for="BillHeader.TotalNetAmt"></label>
+                        </div>
+                    </div>*@
+
+                <div class="row pt-md-2 border border-dark col-md-3 form-control form-group offset-md-1">
+                    <h5 class="font-weight-bold text-md-right">@Model.BillHeader.TotalNetAmt &nbsp; : المبلغ الاجمالي</h5>
+                </div>
+
             </div>
-        </div>
-        <div class="form-group row">
 
-            <div class="col-md-5 offset-md-5">
-                @*<textarea placeholder="ملاحظات" asp-for="Note" class="form-control"></textarea>*@
-                <input asp-for="BillHeader.PaidAmt" class="form-control  text-md-right" disabled />
 
-            </div>
 
-            <div class="col-md-2">
-                <label asp-for="BillHeader.PaidAmt"></label>
-            </div>
-        </div>
-        <div class="form-group row">
 
-            <div class="col-md-5 offset-md-5">
-                <input asp-for="BillHeader.CreatedDataTime" class="form-control  text-md-right" disabled />
+            <div class="row col-md-12">
 
-            </div>
 
-            <div class="col-md-2">
-                <label asp-for="BillHeader.CreatedDataTime"></label>
-            </div>
-        </div>
-        <div class="form-group row">
+                @*<div class="form-group row">
+                        <div class="col-md-5 offset-md-5">
+                            <input asp-for="BillHeader.CreatedDataTime" class="form-control  text-md-right" disabled />
+                        </div>
+                        <div class="col-md-2">
+                            <label asp-for="BillHeader.CreatedDataTime"></label>
+                        </div>
+                    </div>*@
 
-            <div class="col-md-5 offset-md-5">
-                <input asp-for="BillHeader.Status" class="form-control  text-md-right" disabled />
+                <div class="row pt-md-2  border border-dark col-md-5 form-control form-group offset-md-1">
+                    <h5 class="font-weight-bold text-md-right">@Model.BillHeader.CreatedDataTime &nbsp; : تاريخ الفاتورة</h5>
+                </div>
 
-            </div>
+                @*<div class="form-group row">
+                        <div class="col-md-5 offset-md-5">
+                            <input asp-for="BillHeader.Status" class="form-control  text-md-right" disabled />
+                        </div>
+                        <div class="col-md-2">
+                            <label asp-for="BillHeader.Status"></label>
+                        </div>
+                    </div>*@
 
-            <div class="col-md-2">
-                <label asp-for="BillHeader.Status"></label>
-            </div>
-        </div>
-        <div class="form-group row">
-
-            <div class="col-md-5 offset-md-5">
-                <input asp-for="BillHeader.ApplicationUser.FirstName" class="form-control  text-md-right" disabled />
+                <div class="row pt-md-2  border border-dark col-md-4 form-control form-group offset-md-1">
+                    <h5 class="font-weight-bold text-md-right"> حالة الفاتورة  : @Model.BillHeader.Status</h5>
+                </div>
 
             </div>
 
-            <div class="col-md-2">
-                <label asp-for="BillHeader.ApplicationUser.FirstName"></label>
+            @*<div class="form-group row">
+                    <div class="col-md-5 offset-md-5">
+                        <input asp-for="BillHeader.PaidAmt" class="form-control  text-md-right" disabled />
+                    </div>
+                    <div class="col-md-2">
+                        <label asp-for="BillHeader.PaidAmt"></label>
+                    </div>
+                </div>*@
+
+            <div class="row pt-md-2 border border-dark col-md-10 form-control form-group offset-md-1">
+                <h5 class="font-weight-bold text-md-right">@Model.BillHeader.PaidAmt &nbsp; : المبلغ المدفوع</h5>
             </div>
-        </div>
 
-        <table class="table table-striped border table-responsive-md table-responsive-lg">
-            <tr class="table-secondary">
 
-                <th>
-                    @Html.DisplayNameFor(m => m.BillItems.Note)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(m => m.BillItems.TotalAmt)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(m => m.BillItems.UnitPrice)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(m => m.BillItems.Qty)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(m => m.BillItems.ProdInfo.ProdCode)
-                </th>
 
-            </tr>
+            <table class="table table-striped border table-responsive-md table-responsive-lg">
+                <tr class="table-secondary">
 
-            @foreach (var item in Model.BillItemsList)
+                    <th>
+                        @Html.DisplayNameFor(m => m.BillItems.Note)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(m => m.BillItems.TotalAmt)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(m => m.BillItems.UnitPrice)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(m => m.BillItems.Qty)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(m => m.BillItems.ProdInfo.ProdCode)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(m => m.BillItems.ProdInfo.ProdName)
+                    </th>
+                    <th>ت</th>
+
+                </tr>
+                @{int RowNo = 0;}
+
+                @foreach (var item in Model.BillItemsList)
                 {
                     <tr>
                         <td>
@@ -156,34 +203,38 @@
                         <td>
                             @Html.DisplayFor(m => item.TotalAmt)
                         </td>
-                       <td>
+                        <td>
                             @Html.DisplayFor(m => item.UnitPrice)
                         </td>
                         <td>
                             @Html.DisplayFor(m => item.Qty)
                         </td>
-                     <td>
+                        <td>
                             @Html.DisplayFor(m => item.ProdInfo.ProdCode)
                         </td>
+                        <td>
+                            @Html.DisplayFor(m => item.ProdInfo.ProdName)
+                        </td>
+                        <td>@{RowNo++;} @RowNo</td>
                     </tr>
 
                 }
 
 
 
-        </table>
+            </table>
 
-
+        </div>
         <div class="form-group row">
             <div class="col-md-5 offset-md-5">
                 <div class="row">
                     <div class="col-md-6">
-                         
-                            <input asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-success form-control" type="button" value="@localizer.Get("الغاء")" onclick="history.back()">
-                       
+
+                        <input asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-success form-control" type="button" value="@localizer.Get("الغاء")" onclick="history.back()">
+
                     </div>
                     <div class="col-md-6">
-                        <a asp-route-BhId="@Model.BillHeader.Id" asp-page="MakePayment" asp-route-culture="@Request.RouteValues["culture"]" type="submit" class="btn btn-info form-control" >
+                        <a asp-route-BhId="@Model.BillHeader.Id" asp-page="MakePayment" asp-route-culture="@Request.RouteValues["culture"]" type="submit" class="btn btn-info form-control">
                             @localizer.Get("تسديد الفاتورة")
                         </a>
                     </div>
@@ -202,5 +253,31 @@
 
     </form>
 </div>
+<div>
+    <button class="btn btn-success" onclick="downloadDoc()">@localizer.Get("طباعة الفاتورة")</button>
+</div>
+
+
+
+<script type="text/javascript" src="~/js/jquery.js"></script>
+<script type="text/javascript" src="~/js/pdfmake.min.js"></script>
+<script type="text/javascript" src="~/js/html2canvas.min.js"></script>
+
+<script type="text/javascript">
+    function downloadDoc() {
+        html2canvas($("#tabledata")[0], {
+            onrendered: function (canvas) {
+                var data = canvas.toDataURL();
+                var docDefinition = {
+                    content: [{
+                        image: data,
+                        width: 500
+                    }]
+                };
+                pdfMake.createPdf(docDefinition).download("Table.pdf");
+            }
+        })
+    }
+</script>
 
 

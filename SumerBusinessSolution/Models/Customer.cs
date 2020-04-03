@@ -12,7 +12,7 @@ namespace SumerBusinessSolution.Models
         public int Id { get; set; }
 
         [Required]
-        [Display(Name = "اسم الشركة")]
+        [Display(Name = "اسم الزبون")]
         public string  CompanyName { get; set; } 
 
         [Required]

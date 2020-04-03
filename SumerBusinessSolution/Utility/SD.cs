@@ -28,7 +28,7 @@ namespace Sumer.Utility
             public const string InactiveCustomer = "Inactive";
 
             // Bills Status Types 
-            public const string OpenBill = "غير مكملة";
+            public const string OpenBill = "غير مكتملة";
             public const string Completed = "مغلقة";
     }
 }
