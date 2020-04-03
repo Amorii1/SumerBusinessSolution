@@ -78,16 +78,18 @@ namespace SumerBusinessSolution.Inventory.TransferRequests
             {
                 // BillHeaderList = await _db.BillHeader.Include(header => header.Customer).Where(u => u.CreatedDataTime >= SearchFromDate & u.CreatedDataTime <= SearchToDate).ToListAsync();
                 InvTransferHeaderList = _db.InvTransferHeader
-                  .Include(tr => tr.FromWarehouse).Include(tr => tr.ToWarehouse)
+                  .Include(tr => tr.FromWarehouse)
+                  .Include(tr => tr.ToWarehouse)
                   .Include(tr => tr.ApplicationUser)
-                  .Where(tr => tr.TransferStatus == SD.Pending & tr.CreatedDateTime >= SearchFromDate & tr.CreatedDateTime <= SearchToDate).ToList().OrderBy(tr => tr.CreatedDateTime);
+                  .Where(tr => tr.TransferStatus == SD.Pending & tr.CreatedDateTime >= SearchFromDate & tr.CreatedDateTime <= SearchToDate).ToList().OrderByDescending(tr => tr.CreatedDateTime);
             }
             else
             {
                 InvTransferHeaderList = _db.InvTransferHeader
-                .Include(tr => tr.FromWarehouse).Include(tr => tr.ToWarehouse)
+                .Include(tr => tr.FromWarehouse)
+                .Include(tr => tr.ToWarehouse)
                 .Include(tr => tr.ApplicationUser)
-                .Where(tr => tr.TransferStatus == SD.Pending).ToList().OrderBy(tr => tr.CreatedDateTime);
+                .Where(tr => tr.TransferStatus == SD.Pending).ToList().OrderByDescending(tr => tr.CreatedDateTime);
             }
 
 
@@ -111,12 +113,6 @@ namespace SumerBusinessSolution.Inventory.TransferRequests
  
             return RedirectToPage("/Inventory/transferrequests/index");
         }
-        public IActionResult OnPostDeleteTransferRequests(int ReqId) 
-        {
-
-            StatusMessage = _InveTrans.DeleteInvTransferRequestHeader(ReqId).GetAwaiter().GetResult();       
-
-            return RedirectToPage("/Inventory/transferrequests/index");
-        }
+       
     }
 }

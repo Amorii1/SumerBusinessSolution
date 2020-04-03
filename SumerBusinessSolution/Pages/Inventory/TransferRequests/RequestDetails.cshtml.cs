@@ -73,5 +73,13 @@ namespace SumerBusinessSolution
                StatusMessage = _InveTrans.DeleteInvTransferRequestLine(LineId).GetAwaiter().GetResult();
                return RedirectToPage("/Inventory/transferrequests/requestdetails", new { ReqId = ReqId });
             }
+
+        public IActionResult OnPostDeleteTransferRequests(int ReqId)
+        {
+
+            StatusMessage = _InveTrans.DeleteInvTransferRequestHeader(ReqId).GetAwaiter().GetResult();
+
+            return RedirectToPage("/Inventory/transferrequests/index");
         }
+    }
     }

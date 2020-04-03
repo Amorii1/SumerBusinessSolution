@@ -181,7 +181,7 @@ namespace SumerBusinessSolution.Transactions
                 {
                      _db.InvTransferHeader.Remove(NewHeader);
                     await _db.SaveChangesAsync();
-                    return "Error! No enough quantity: " + InvTr.ProdInfo.ProdCode;
+                    return "Error! لايوجد كمية كافية للمادة: " + InvTr.ProdInfo.ProdCode;
                 }
 
 
@@ -209,8 +209,7 @@ namespace SumerBusinessSolution.Transactions
 
             await _db.SaveChangesAsync();
 
-            //return "تمت عملية التحويل";
-            return "Transfer Added Successfully";
+            return "تمت عملية التحويل";
 
         }
 
@@ -261,7 +260,7 @@ namespace SumerBusinessSolution.Transactions
 
             await _db.SaveChangesAsync();
 
-            return "تم ارسال طلب التحويل";
+            return "تم ارسال طلب التحويل بنجاح";
             //return "Request Added Successfully";
 
         }
@@ -494,6 +493,11 @@ namespace SumerBusinessSolution.Transactions
         private bool CheckQtyInWh(int ProdId, int WhId, double Qty)
         {
             InvStockQty = _db.InvStockQty.FirstOrDefaultAsync(inv => inv.ProdId == ProdId & inv.WhId == WhId).GetAwaiter().GetResult();
+
+            if(InvStockQty == null)
+            {
+                return false;
+            }
 
             double StockQty = InvStockQty.Qty;
 

@@ -47,11 +47,27 @@
                                 @Html.Editor("CustomerName", new { htmlAttributes = new { @class = "form-control text-md-right", placeholder = @localizer.Get("اسم الشركة....") } })
 
                             </div>
-                            @*<div class="col-md-5 pb-1">
-                                    @Html.Editor("searchCreateDateTime", new { htmlAttributes = new { @class = "form-control text-md-right", placeholder = @localizer.Get("تاريخ الطلب....") } })
-                                </div>*@
+                            <div class="col-md-4 pb-1">
+                                <div class="form-group row float-md-right">
+                                    <div>
+                                        <input asp-for="SearchToDate" class="form-control" />
+                                     </div>
+                                    <div>
+                                        <label asp-for="SearchToDate" class="control-label"></label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 pb-1">
+                                <div class="form-group row float-md-right">
+                                    <div>
+                                        <input asp-for="SearchFromDate" class="form-control" />
+                                     </div>
 
-
+                                    <div>
+                                        <label asp-for="SearchFromDate" class="control-label"></label>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -106,30 +122,7 @@
                                     <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-success" asp-page="Details" type="submit" asp-route-BhId="@item.Id" name="Details">
                                         @localizer.Get("") <i class="far fa-clipboard"></i>
                                     </a>
-                                    @if (User.IsInRole(SD.AdminEndUser) && (item.Status == SD.OpenBill))
-                                    {
-                                        <a asp-route-culture="@Request.RouteValues["culture"]" data-toggle="modal" data-target="#Ask" class="btn btn-danger" asp-page-handler="CloseBillManually" asp-route-HeaderId="@item.Id" type="submit" name="Close">
-                                            @localizer.Get("") <i class="fas fa-window-close"></i>
-                                        </a>
-
-
-                                        <div class="modal fade" id="Ask" role="dialog" method="post">
-                                            <div class="modal-dialog">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <button class="close" data-dismiss="modal">&times;</button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <p class="alert alert-danger">@localizer.Get("هل انت متأكد؟")</p>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <input asp-route-culture="@Request.RouteValues["culture"]" type="submit" asp-page-handler="CloseBillManually" asp-route-HeaderId="@item.Id" class="btn btn-success" value="@localizer.Get("نعم")" />
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                    }
+                               
 
                                 </form>
                             </div>

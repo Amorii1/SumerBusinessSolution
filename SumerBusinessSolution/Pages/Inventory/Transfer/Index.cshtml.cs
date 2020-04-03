@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -31,45 +32,97 @@ namespace SumerBusinessSolution.Inventory.Transfer
         public ProdInfo ProdInfo { get; set; }
         public Warehouse Warehouse { get; set; }
 
+        ////[DataType(DataType.Date)]
+        //[Display(Name = "من")]
+        //public DateTime SearchFromDate = new DateTime(DateTime.Now.Year, 1, 1); 
 
-        public  IActionResult OnGet(string searchCreateDateTime = null, string searchProdCode = null)
+        //// [DataType(DataType.Date)]
+        //[Display(Name = "الى")]
+        //public DateTime SearchToDate = DateTime.Today; 
+
+        [DataType(DataType.Date)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy/MM/dd}")]
+        [Display(Name = "من")]
+        public DateTime SearchFromDate { get; set; }
+
+        [DataType(DataType.Date)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy/MM/dd}")]
+        [Display(Name = "الى")]
+        public DateTime SearchToDate { get; set; }
+
+        public async Task<IActionResult> OnGet(string SearchProdCode = null, DateTime? SearchFromDate = null, DateTime? SearchToDate = null)
         {
-            InvTransferList = _db.InvTransfer.Include(tr => tr.ProdInfo).Include(tr => tr.InvTransferHeader)
-                .Include(tr=> tr.InvTransferHeader.FromWarehouse).Include(tr=> tr.InvTransferHeader.ToWarehouse)
-                .Include(tr=> tr.InvTransferHeader.ApplicationUser)
-               .Where(tr => tr.InvTransferHeader.CreatedDateTime > DateTime.Now.AddMonths(-1) & tr.InvTransferHeader.TransferStatus == SD.Approved).ToList().OrderBy(tr => tr.InvTransferHeader.CreatedDateTime);
-
+         
             StringBuilder Param = new StringBuilder();
 
             Param.Append("&searchProdCode=");
 
-            if (searchProdCode != null)
+            if (SearchProdCode != null)
             {
-                Param.Append(searchProdCode);
+                Param.Append(SearchProdCode);
             }
             Param.Append("&searchCreateDateTime=");
 
-            if (searchCreateDateTime != null)
+            if (SearchFromDate != null)
             {
-                Param.Append(searchCreateDateTime);
+                Param.Append(SearchFromDate);
             }
+            Param.Append("&SearchCreatedTime=");
 
-
-            if (searchProdCode != null)
+            if (SearchToDate != null)
             {
-                InvTransferList = _db.InvTransfer.Where(u => u.ProdInfo.ProdCode.ToLower().Contains(searchProdCode.ToLower())).ToList();
+                Param.Append(SearchToDate);
+            }
+            Param.Append("&SearchToDate=");
+
+            if (SearchFromDate != null & SearchToDate != null & SearchProdCode == null)
+            {
+                InvTransferList =   _db.InvTransfer
+                      .Include(tr => tr.ProdInfo)
+                      .Include(tr => tr.InvTransferHeader)
+                      .Include(tr => tr.InvTransferHeader.FromWarehouse)
+                      .Include(tr => tr.InvTransferHeader.ToWarehouse)
+                      .Include(tr => tr.InvTransferHeader.ApplicationUser)
+                      .Where(tr => tr.InvTransferHeader.CreatedDateTime >= SearchFromDate & tr.InvTransferHeader.CreatedDateTime <= SearchToDate & tr.InvTransferHeader.TransferStatus == SD.Approved).ToList().OrderByDescending(tr => tr.InvTransferHeader.CreatedDateTime);
 
             }
             else
             {
-                if (searchCreateDateTime != null)
+                if (SearchFromDate != null & SearchToDate != null & SearchProdCode != null)
                 {
-
-                 //   InvTransferList = _db.InvTransfer.Where(u => u.CreatedDateTime.ToString().Contains(searchCreateDateTime)).ToList();
-
+                    InvTransferList =   _db.InvTransfer
+                   .Include(tr => tr.ProdInfo)
+                   .Include(tr => tr.InvTransferHeader)
+                   .Include(tr => tr.InvTransferHeader.FromWarehouse)
+                   .Include(tr => tr.InvTransferHeader.ToWarehouse)
+                   .Include(tr => tr.InvTransferHeader.ApplicationUser)
+                   .Where(tr => tr.ProdInfo.ProdCode.ToLower().Contains(SearchProdCode.ToLower()) & tr.InvTransferHeader.CreatedDateTime >= SearchFromDate & tr.InvTransferHeader.CreatedDateTime <= SearchToDate & tr.InvTransferHeader.TransferStatus == SD.Approved).ToList().OrderByDescending(tr => tr.InvTransferHeader.CreatedDateTime);
                 }
-
+                else
+                {
+                    if (SearchFromDate == null & SearchToDate == null & SearchProdCode != null)
+                    {
+                        InvTransferList =   _db.InvTransfer
+                           .Include(tr => tr.ProdInfo)
+                           .Include(tr => tr.InvTransferHeader)
+                           .Include(tr => tr.InvTransferHeader.FromWarehouse)
+                           .Include(tr => tr.InvTransferHeader.ToWarehouse)
+                           .Include(tr => tr.InvTransferHeader.ApplicationUser)
+                           .Where(tr => tr.ProdInfo.ProdCode.ToLower().Contains(SearchProdCode.ToLower()) & tr.InvTransferHeader.TransferStatus == SD.Approved).ToList().OrderByDescending(tr => tr.InvTransferHeader.CreatedDateTime);
+                    }
+                    else
+                    {
+                        InvTransferList = _db.InvTransfer
+                        .Include(tr => tr.ProdInfo)
+                        .Include(tr => tr.InvTransferHeader)
+                        .Include(tr => tr.InvTransferHeader.FromWarehouse)
+                        .Include(tr => tr.InvTransferHeader.ToWarehouse)
+                        .Include(tr => tr.InvTransferHeader.ApplicationUser)
+                        .Where(tr => tr.InvTransferHeader.CreatedDateTime > DateTime.Now.AddMonths(-1) & tr.InvTransferHeader.TransferStatus == SD.Approved).ToList().OrderByDescending(tr => tr.InvTransferHeader.CreatedDateTime);
+                    }
+                }
             }
+            
             return Page();
         }
 

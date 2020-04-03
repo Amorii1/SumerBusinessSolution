@@ -12,6 +12,7 @@ using SumerBusinessSolution.Transactions;
 using Microsoft.AspNetCore.Localization;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
+using Microsoft.EntityFrameworkCore;
 
 namespace SumerBusinessSolution.Pages.Sales.Billings
 {
@@ -31,17 +32,27 @@ namespace SumerBusinessSolution.Pages.Sales.Billings
             public BillHeader BillHeader { get; set; }
 
             [BindProperty]
-            public List<BillHeader> BillHeaderList { get; set; }
+            public IEnumerable<BillHeader> BillHeaderList { get; set; }
             public List<Customer> CustomerList { get; set; }
 
 
             [BindProperty]
             public int HeaderId { get; set; }
 
-            [TempData]
-            public string StatusMessage { get; set; }
-             public  IActionResult OnGet(string CustomerName = null)
-            {
+
+        [DataType(DataType.Date)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy/MM/dd}")]
+        [Display(Name = "من")]
+        public DateTime SearchFromDate { get; set; }
+
+        [DataType(DataType.Date)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy/MM/dd}")]
+        [Display(Name = "الى")]
+        public DateTime SearchToDate { get; set; }
+
+
+        public  IActionResult OnGet(string CustomerName = null, DateTime? SearchFromDate = null, DateTime? SearchToDate = null)
+        {
             StringBuilder Param = new StringBuilder();
             Param.Append("&SearchCustomer=");
 
@@ -53,26 +64,47 @@ namespace SumerBusinessSolution.Pages.Sales.Billings
 
                 CustomerList = _db.Customer.ToList();
 
-            if(CustomerName != null)
+            if (SearchFromDate != null & SearchToDate != null & CustomerName == null)
             {
-                BillHeaderList = _db.BillHeader.Where(header => header.Status == SD.OpenBill & header.Customer.CompanyName.ToLower().Contains(CustomerName.ToLower())).ToList();
-            }
+                BillHeaderList = _db.BillHeader
+                    .Where(header => header.Status == SD.OpenBill & header.CreatedDataTime >= SearchFromDate & header.CreatedDataTime <= SearchToDate).ToList()
+                    .OrderByDescending(header => header.CreatedDataTime);
+             }
             else
             {
-                BillHeaderList = _db.BillHeader.Where(header => header.Status == SD.OpenBill).ToList();
+                if (SearchFromDate != null & SearchToDate != null & CustomerName != null)
+                {
+                    BillHeaderList =   _db.BillHeader
+                        .Include(header => header.Customer)
+                        .Where(header => header.Customer.CompanyName.ToLower().Contains(CustomerName.ToLower()) & header.Status == SD.OpenBill & header.CreatedDataTime >= SearchFromDate & header.CreatedDataTime <= SearchToDate).ToList()
+                        .OrderByDescending(header => header.CreatedDataTime);
+                 }
+                else
+                {
+                    if (SearchFromDate == null & SearchToDate == null & CustomerName != null)
+                    {
+                        BillHeaderList = _db.BillHeader
+                            .Include(header => header.Customer)
+                            .Where(header => header.Customer.CompanyName.ToLower().Contains(CustomerName.ToLower()) & header.Status == SD.OpenBill).ToList()
+                            .OrderByDescending(header => header.CreatedDataTime);
+ 
+                    }
+                    else
+                    {
+                        BillHeaderList = _db.BillHeader
+                            .Include(header => header.Customer)
+                            .Where(header => header.CreatedDataTime >= DateTime.Now.AddMonths(-1) & header.Status == SD.OpenBill).ToList()
+                            .OrderByDescending(header => header.CreatedDataTime);
+                     }
+                }
+
             }
-   
+
 
             return Page();
             }
 
-        public IActionResult OnPostCloseBillManually(int HeaderId)
-        {
-
-            StatusMessage = _SalesTrans.CloseBillManually(HeaderId).GetAwaiter().GetResult();
-
-            return RedirectToPage("/Sales/Billings/Index");
-        }
+     
 
         public JsonResult OnGetSearchCustomer(string term)
         {

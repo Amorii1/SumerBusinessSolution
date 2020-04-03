@@ -47,13 +47,33 @@
                                 @Html.Editor("searchProdCode", new { htmlAttributes = new { @class = "form-control text-md-right", placeholder = @localizer.Get("رمز المنتج....") } })
 
                             </div>
-                            <div class="col-md-5 pb-1">
-                                @Html.Editor("searchCreateDateTime", new { htmlAttributes = new { @class = "form-control text-md-right", placeholder = @localizer.Get("تاريخ الحركة") } })
+                            <div class="col-md-4 pb-1">
+                                <div class="form-group row float-md-right">
+                                    <div>
+                                        <input type="date" asp-for="SearchToDate" class="form-control" />
+                                        @*<span asp-validation-for="SearchCreatedTime" class="text-danger"></span>*@
+                                    </div>
+                                    <div>
+                                        <label asp-for="SearchToDate" class="control-label"></label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 pb-1">
+                                <div class="form-group row float-md-right">
+                                    <div>
+                                        <input type="date" asp-for="SearchFromDate" class="form-control" />
+                                        @*<span asp-validation-for="SearchCreatedTime" class="text-danger"></span>*@
+                                    </div>
+
+                                    <div>
+                                        <label asp-for="SearchFromDate" class="control-label"></label>
+                                    </div>
+                                </div>
                             </div>
                             @*<div>
-                                    start Date:<input type="datetime" name="startdate" />
-                                    End Date:<input type="datetime" name="enddate" />
-                                </div>*@
+            start Date:<input type="datetime" name="startdate" />
+            End Date:<input type="datetime" name="enddate" />
+        </div>*@
 
                         </div>
                     </div>

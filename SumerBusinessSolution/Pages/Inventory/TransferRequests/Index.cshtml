@@ -205,9 +205,7 @@
                                             </button>
                                         }*@
 
-                                        <button asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-dark text-white" asp-page-handler="DeleteTransferRequests" asp-route-ReqId="@item.Id" type="submit" title="Delete" name="Delete">
-                                            @localizer.Get("") <i class="fas fa-trash-alt"></i>
-                                        </button>
+                             
                                         <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-info text-white" asp-page="RequestDetails" asp-route-ReqId="@item.Id" type="submit" title="Details" name="Details">
                                             @localizer.Get("") <i class="fas fa-info"></i>
                                         </a>
