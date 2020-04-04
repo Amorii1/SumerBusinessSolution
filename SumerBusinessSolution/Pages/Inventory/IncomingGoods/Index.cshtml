@@ -35,10 +35,9 @@
 
         </div>
 
-
-        @*<form method="get" asp-page="Index">
+        <form method="get" asp-page="Index">
             <div class="border backgroundWhite">
-                <div class="container ">
+                <div @*style="height:60px;"*@ class="container ">
                     <div class="row">
                         <div class="col-md-12">
                             <div class="row" style="margin-top:10px;">
@@ -49,15 +48,11 @@
                                     </button>
 
                                 </div>
-                                <div class="col-md-3 pb-1">
-                                  
-                                    @Html.Editor("searchProdCode", new { htmlAttributes = new { @class = "form-control text-md-right", placeholder = @localizer.Get("....رمز المنتج") } })
-
-                                </div>
+                             
                                 <div class="col-md-4 pb-1">
                                     <div class="form-group row float-md-right">
                                         <div>
-                                            <input type="date" asp-for="SearchToDate" class="form-control"/>
+                                            <input asp-for="SearchToDate" class="form-control" />
                                         </div>
                                         <div>
                                             <label asp-for="SearchToDate" class="control-label"></label>
@@ -69,6 +64,54 @@
                                         <div>
                                             <input asp-for="SearchFromDate" class="form-control" />
                                         </div>
+
+                                        <div>
+                                            <label asp-for="SearchFromDate" class="control-label"></label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        @*<form method="get" asp-page="Index">
+            <div class="border backgroundWhite">
+                <div  class="container ">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="row" style="margin-top:10px;">
+                                <div class="col-md-1 text-md-right pb-1">
+
+                                    <button asp-route-culture="@Request.RouteValues["culture"]" type="submit" name="submit" value="search" class="btn btn-info form-control">
+                                        <i class="fas fa-search"></i>
+                                    </button>
+
+                                </div>
+                                <div class="col-md-3 pb-1">
+
+                                    @Html.Editor("searchProdCode", new { htmlAttributes = new { @class = "form-control text-md-right", placeholder = @localizer.Get("....رمز المنتج") } })
+
+                                </div>
+                                <div class="col-md-4 pb-1">
+                                    <div class="form-group row float-md-right">
+                                        <div>
+                                            <input type="date" asp-for="SearchToDate" class="form-control"/>
+                                         </div>
+                                        <div>
+                                            <label asp-for="SearchToDate" class="control-label"></label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 pb-1">
+                                    <div class="form-group row float-md-right">
+                                        <div>
+                                            <input type="date" asp-for="SearchFromDate" class="form-control" />
+                                         </div>
 
                                         <div>
                                             <label asp-for="SearchFromDate" class="control-label"></label>
