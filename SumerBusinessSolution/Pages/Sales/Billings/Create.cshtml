@@ -70,7 +70,7 @@
         </table>*@
 
 
-                <table id="dataTable" class="table table-striped border table-responsive-md table-responsive-lg">
+                <table id="dataTable" dir="rtl" class="table table-striped border table-responsive-md table-responsive-lg">
                     <tr class="table-secondary">
                         @*<table id="dataTable" border="0" cellpadding="0" cellspacing="0">
                 <tr>*@
@@ -110,10 +110,10 @@
                                 @*float a= (float)((ArrayList)paredes[i])[0];*@
                                 @*<td>@Html.TextBoxFor(a => a[j].ContactName)</td>*@
 
-                                <td onclick="bindAutocomplete(this); bindPrice(this)" onchange="bindPrice(this)">@Html.TextBoxFor(a => Model.Bi[j].ProdInfo.ProdCode) </td>
+                                <td onclick="bindAutocomplete(this); bindPrice(this)" onchange="bindPrice(this)">@Html.TextBoxFor(a => Model.Bi[j].ProdInfo.ProdCode)</td>
                                 <td oninput="bindTotal(this)" onclick="bindTotal(this)">@Html.TextBoxFor(a => Model.Bi[j].Qty)</td>
                                 <td>@Html.TextBoxFor(a => Model.Bi[j].UnitPrice)</td>
-                                <td>@Html.TextBoxFor(a => Model.Bi[j].TotalAmt)</td>
+                                <td onchange="bindTotalAmt(this)">@Html.TextBoxFor(a => Model.Bi[j].TotalAmt)</td>
                                 <td>@Html.TextBoxFor(a => Model.Bi[j].Note)</td>
                                 <td>
                                     @if (j > 0)
@@ -131,6 +131,16 @@
 
                     }
                 </table>
+                <div class="row form-group">
+
+                    <div class="col-md-5 offset-md-5">
+                        <input type="text" id="totalAmt" asp-for="a => @Model.BillHeader.TotalAmt" class="form-control text-md-right" />
+
+                    </div>
+                    <div class="col-md-2">
+                        <label asp-for="@Model.BillHeader.TotalAmt"> </label>
+                    </div>
+                </div>
 
                 <div class="row form-group">
 
@@ -197,22 +207,6 @@
 
         }*@
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         <script>
             function RemoveRow(r) {
                 var i = r.parentNode.parentNode.rowIndex;
@@ -278,13 +272,13 @@
                            t.parentElement.children[2].children[0].value = json[0]
                       }
                       else {
-                                                     const obj = await fetch(`${window.location.href}?handler=ProdUnitPriceRetail&term=${t.children[0].value}`)
+                         const obj = await fetch(`${window.location.href}?handler=ProdUnitPriceRetail&term=${t.children[0].value}`)
                           const json = await obj.json()
                            t.parentElement.children[2].children[0].value = json[0]
                       }
 
 
-                       console.log(document.getElementById("PriceType").value)
+                       //console.log(document.getElementById("PriceType").value)
 
                 }
 
@@ -293,8 +287,28 @@
                     const price = t.parentElement.children[2].children[0].value
 
                     t.parentElement.children[3].children[0].value = val * price
-            }
+                }
 
+                function bindTotalAmt(t) {
+                  
+
+                    //for (var i = 0, row; row = table.rows[i]; i++) {
+                    //    var x = row.children[3].value
+                    //    console.log(x)
+                    //}
+                  
+                    //var newAmt = t.children[0].value
+                    //newAmt = parseFloat(newAmt)
+                    //var currAmt = parseFloat(document.getElementById("totalAmt").value)
+
+                    //if (currAmt > 0) {
+                       
+                    //      document.getElementById("totalAmt").value = currAmt + newAmt 
+                    //}
+                    //else {
+                    //    document.getElementById("totalAmt").value = newAmt
+                    //}
+                }
             </script>
 
             <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
