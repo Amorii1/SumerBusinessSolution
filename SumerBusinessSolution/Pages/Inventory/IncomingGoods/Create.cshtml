@@ -48,7 +48,7 @@
         </div>
 
 
-        <table dir="rtl" id="dataTable" class="table table-striped border table-responsive-md table-responsive-lg">
+        <table dir="rtl" id="dataTable" class=" text-md-center table table-striped border table-responsive-md table-responsive-lg">
             <tr>
                 <th>
                     @Html.DisplayNameFor(a => Model.InG[0].ProdInfo.ProdCode)
@@ -103,7 +103,9 @@
                     <div class="col-md-6">
                         @*<a asp-page="Index" class="btn btn-success form-control">الرجوع</a>*@
 
-                        <input asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-secondary form-control" type="button" value="@localizer.Get("الغاء")" onclick="history.back()">
+                        <a asp-page="Index" asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-secondary form-control">
+                            @localizer.Get("رجوع")
+                        </a>
 
                     </div>
                     <div class="col-md-6">

@@ -71,9 +71,10 @@
 
                     <div class="col-md-6">
                         @*<a asp-page="Index" class="btn btn-success form-control">الرجوع</a>*@
-                        <form>
-                            <input asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-secondary form-control" type="button" value="@localizer.Get("الغاء")" onclick="history.back()">
-                        </form>
+                        <a asp-page="Index" asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-secondary form-control">
+                            @localizer.Get("رجوع")
+                        </a>
+
                     </div>
                     <div class="col-md-6">
                         @*<input type="submit" class="btn btn-info form-control" value="حفظ" />*@

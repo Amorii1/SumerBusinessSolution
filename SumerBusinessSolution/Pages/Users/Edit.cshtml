@@ -14,6 +14,9 @@
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
+@*<partial name="_StatusMessage" model="Model.StatusMessage" />*@
+
+
 <div class="border backgroundWhite">
 
     <h2 class="text-info text-md-right">@localizer.Get("تعديل معلومات المستخدم")</h2>
@@ -29,11 +32,11 @@
                     <input asp-for="ApplicationUser.FirstName" class="form-control text-md-right" />
                 </div>
                 <div class="col-md-2">
-                    <label asp-for="ApplicationUser.FirstName" ></label>
+                    <label asp-for="ApplicationUser.FirstName"></label>
                 </div>
                 <span asp-validation-for="ApplicationUser.FirstName" class="text-danger"></span>
             </div>
-          
+
         </div>
 
 
@@ -45,7 +48,7 @@
                 </div>
                 <div class="col-md-2">
                     @*<label asp-for="ApplicationUser.Email" class="text-info"></label>*@
-                    <label  >@localizer.Get("البريد الالكتروني")</label>
+                    <label>@localizer.Get("البريد الالكتروني")</label>
                 </div>
             </div>
             <span asp-validation-for="ApplicationUser.Email" class="text-danger"></span>
@@ -58,7 +61,7 @@
                 </div>
                 <div class="col-md-2">
                     @*<label asp-for="ApplicationUser.PhoneNumber" class="text-info"></label>*@
-                    <label >@localizer.Get("رقم الهاتف")</label>
+                    <label>@localizer.Get("رقم الهاتف")</label>
                 </div>
             </div>
             <span asp-validation-for="ApplicationUser.PhoneNumber" class="text-danger"></span>

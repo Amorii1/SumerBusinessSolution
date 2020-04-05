@@ -68,9 +68,11 @@
                 <div class="col-md-5 offset-md-5">
                     <div class="row">
                         <div class="col-md-6">
-                             
-                                <input asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-secondary form-control" type="button" value="@localizer.Get("الغاء")" onclick="history.back()">
-                            
+
+                            @*<a asp-page="../Accounts/CustAccDetails" asp-route-culture="@Request.RouteValues["culture"]" asp-route="" class="btn btn-secondary form-control">
+                                @localizer.Get("الغاء")
+                            </a>*@
+
                         </div>
                         <div class="col-md-6">
                             @*<input type="submit" class="btn btn-info form-control" value="حفظ" />*@

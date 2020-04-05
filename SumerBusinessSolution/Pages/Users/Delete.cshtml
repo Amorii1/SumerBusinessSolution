@@ -14,6 +14,10 @@
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
+@*<partial name="_StatusMessage" model="Model.StatusMessage" />*@
+
+
+
 <div class=" border backgroundWhite">
     <h2 class="text-info text-md-right">@localizer.Get("حذف حساب المستخدم")</h2>
     <form method="post">
@@ -36,7 +40,7 @@
                 </div>
                 <div class="col-md-2">
                     @*<label asp-for="ApplicationUser.Email" class="text-info"></label>*@
-                    <label >@localizer.Get("البريد الالكتروني")</label>
+                    <label>@localizer.Get("البريد الالكتروني")</label>
                 </div>
 
             </div>
@@ -48,7 +52,7 @@
                 </div>
                 <div class="col-md-2">
                     @*<label asp-for="ApplicationUser.PhoneNumber" class="text-info"></label>*@
-                    <label >@localizer.Get("رقم الهاتف")</label>
+                    <label>@localizer.Get("رقم الهاتف")</label>
                 </div>
 
             </div>

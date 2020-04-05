@@ -13,89 +13,92 @@
     ViewData["Title"] = "ProdTrans";
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
-    <div class="backgroundWhite">
 
-        <h2 class="text-info text-md-right">@localizer.Get("العمليات التجارية للمنتج")</h2>
+@*<partial name="_StatusMessage" model="Model.StatusMessage" />*@
 
-        <table class="table table-striped border table-responsive-md table-responsive-lg">
+<div class="backgroundWhite">
 
-            <tr class="table-secondary">
+    <h2 class="text-info text-md-right">@localizer.Get("العمليات التجارية للمنتج")</h2>
 
-                <th>
-                    @Html.DisplayNameFor(m => m.InvTransList[0].CreatedDateTime)
-                </th>
+    <table class="table table-striped border table-responsive-md table-responsive-lg">
 
-                <th>
-                    @Html.DisplayNameFor(m => m.InvTransList[0].ApplicationUser.FirstName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(m => m.InvTransList[0].TransType)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(m => m.InvTransList[0].Qty)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(m => m.InvTransList[0].Warehouse.WhName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(m => m.InvTransList[0].ProdInfo.ProdName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(m => m.InvTransList[0].ProdInfo.ProdCode)
-                </th>
+        <tr class="table-secondary">
+
+            <th>
+                @Html.DisplayNameFor(m => m.InvTransList[0].CreatedDateTime)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(m => m.InvTransList[0].ApplicationUser.FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(m => m.InvTransList[0].TransType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(m => m.InvTransList[0].Qty)
+            </th>
+            <th>
+                @Html.DisplayNameFor(m => m.InvTransList[0].Warehouse.WhName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(m => m.InvTransList[0].ProdInfo.ProdName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(m => m.InvTransList[0].ProdInfo.ProdCode)
+            </th>
 
 
-                @*<th></th>
-        <th></th>*@
-            </tr>
-            @foreach (var item in Model.InvTransList)
-            {
-
-        <tr>
-            <td>
-                @Html.DisplayFor(m => item.CreatedDateTime)
-            </td>
-            <td>
-                @Html.DisplayFor(m => item.ApplicationUser.FirstName)
-            </td>
-            <td>
-                @Html.DisplayFor(m => item.TransType)
-            </td>
-            <td>
-                @Html.DisplayFor(m => item.Qty)
-            </td>
-            <td>
-                @Html.DisplayFor(m => item.Warehouse.WhName)
-            </td>
-            <td>
-                @Html.DisplayFor(m => item.ProdInfo.ProdName)
-            </td>
-            <td>
-                @Html.DisplayFor(m => item.ProdInfo.ProdCode)
-            </td>
+            @*<th></th>
+                <th></th>*@
         </tr>
-            }
-        </table>
+        @foreach (var item in Model.InvTransList)
+        {
+
+            <tr>
+                <td>
+                    @Html.DisplayFor(m => item.CreatedDateTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(m => item.ApplicationUser.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(m => item.TransType)
+                </td>
+                <td>
+                    @Html.DisplayFor(m => item.Qty)
+                </td>
+                <td>
+                    @Html.DisplayFor(m => item.Warehouse.WhName)
+                </td>
+                <td>
+                    @Html.DisplayFor(m => item.ProdInfo.ProdName)
+                </td>
+                <td>
+                    @Html.DisplayFor(m => item.ProdInfo.ProdCode)
+                </td>
+            </tr>
+        }
+    </table>
 
 
-        <div class=" form-group row">
-            <div class="col-md-5 offset-md-5">
-                <div class="row">
-                    <div class="col-md-6">
-                        @*<a asp-page="/Inventory/Reports/Index" asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-success form-control">@localizer.Get("الرجوع لصفحة التقارير")</a>*@
-                        <button asp-route-culture="@Request.RouteValues["culture"]" onclick="goBack()" class="btn btn-success form-control">@localizer.Get("الغاء")</button>
+    <div class=" form-group row">
+        <div class="col-md-5 offset-md-5">
+            <div class="row">
+                <div class="col-md-6">
+                    @*<a asp-page="/Inventory/Reports/Index" asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-success form-control">@localizer.Get("الرجوع لصفحة التقارير")</a>*@
+                    <button asp-route-culture="@Request.RouteValues["culture"]" onclick="goBack()" class="btn btn-secondary form-control">@localizer.Get("الغاء")</button>
 
-                    </div>
                 </div>
-
             </div>
+
         </div>
-
-
     </div>
 
-    <script>
-function goBack() {
-  window.history.back();
-}
-    </script>
+
+</div>
+
+<script>
+    function goBack() {
+        window.history.back();
+    }
+</script>

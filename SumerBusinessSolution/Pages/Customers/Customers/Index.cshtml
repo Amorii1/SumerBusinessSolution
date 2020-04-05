@@ -95,7 +95,7 @@
                                             @localizer.Get("فواتير الزبون") <i class="fas fa-file-invoice-dollar"></i>
                                         </a>*@
 
-                                    <a asp-page="Edit" asp-route-Id="@item.Id" asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-success text-white " type="submit" title="@localizer.Get("تعديل الحساب")">
+                                    <a asp-page="Edit" asp-route-CustId="@item.Id" asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-success text-white " type="submit" title="@localizer.Get("تعديل الحساب")">
                                         <i class="fas fa-user-edit"></i>
                                         @localizer.Get("")
                                     </a>
