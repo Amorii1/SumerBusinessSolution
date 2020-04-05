@@ -139,13 +139,13 @@ namespace SumerBusinessSolution.Pages.Sales.Billings
 
         }
 
-        public JsonResult OnGetCheckQty(string term)
+        public JsonResult OnGetCheckQty(string term, double qty)
         {
             if (term == null)
             {
                 return new JsonResult("Not Found");
             }
-            bool qtyCheck = CheckQtyInWh(term, 5);
+            bool qtyCheck = CheckQtyInWh(term, qty);
 
             return new JsonResult(qtyCheck);
 
