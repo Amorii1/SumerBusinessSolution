@@ -1,107 +1,203 @@
 ﻿@page
 @model SumerBusinessSolution.Pages.Sales.ExternalBillings.CreateModel
+@using Sumer.Utility
+@using Microsoft.AspNetCore.Localization
+@using System.ComponentModel.DataAnnotations;
+@*@inject IHtmlLocalizer<IndexModel> htmlLocalizer*@ @*for html lozcalization*@
+@*@inject IStringLocalizer<IndexModel> localizer*@
+@*First Method*@
+@inject Services.CommonLocalizationService localizer
+@*Second and the easier Method*@
+
 @{
     ViewData["Title"] = "Create";
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
-<head>
+<div class=" border backgroundWhite">
+    <h2 class="text-info  text-md-right">@localizer.Get("انشاء فاتورة جديدة")</h2>
 
-</head>
-<body style="padding-left:150px;">
-    <style>
-        th {
-            text-align: left;
-        }
 
-        td {
-            padding: 5px;
-        }
-    </style>
-    <div style="width:700px; padding:5px; background-color:white;">
-        <form method="post">
-            <table>
+    <form method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="row form-group">
+
+            <div class="col-md-5 offset-md-5">
+                <select asp-for="a => @Model.ExternalBillHeader.CustId"
+                        asp-items="@(new SelectList(Model.Customer, "Id", "CompanyName"))"
+                        class="form-control ">
+                </select>
+            </div>
+            <div class="col-md-2">
+                <label asp-for="@Model.ExternalBillHeader.CustId"> </label>
+            </div>
+        </div>
+        @*<table>
                 <tr>
                     <td>
-                        <select asp-for="a => @Model.ExternalBillHeader.CustId"
+                        <select asp-for="a => @Model.BillHeader.CustId"
                                 asp-items="@(new SelectList(Model.Customer, "Id", "CompanyName"))"
                                 class="form-control ">
                         </select>
                     </td>
 
                 </tr>
-            </table>
-
-            <div><a href="#" id="addNew">Add New</a></div>
-            <table id="dataTable" border="0" cellpadding="0" cellspacing="0">
                 <tr>
-                    <th>Prod Name</th>
+                    <td>
+                        <select id="PriceType" asp-for="@Model.PricingType.PriceType"
+                                asp-items="@(new SelectList(Model.UnitPriceTypesList, "Id","PriceType"))"
+                                class="form-control ">
+                        </select>
+
+                    </td>
+
+                </tr>
+            </table>*@
+
+
+        <table id="dataTable" dir="rtl" class="table table-striped border table-responsive-md table-responsive-lg">
+            <tr class="table-secondary">
+                @*<table id="dataTable" border="0" cellpadding="0" cellspacing="0">
+                    <tr>*@
+                <th>
+                    @Html.DisplayNameFor(a => Model.Bi[0].ProdName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(a => Model.Bi[0].Qty)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(a => Model.Bi[0].UnitPrice)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(a => Model.Bi[0].TotalAmt)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(a => Model.Bi[0].Note)
+                </th>
+
+                @*<th>Prod Code</th>
                     <th>Qty</th>
                     <th>Unit Price</th>
                     <th>Total </th>
-                    <th>Note</th>
-                    <th></th>
-                </tr>
-                @if (Model.Bi != null && Model.Bi.Count > 0)
+                    <th>Note</th>*@
+                <th><a href="#" title="اضافة" id="addNew">   <i class="fas fa-plus"></i></a></th>
+            </tr>
+            @if (Model.Bi != null && Model.Bi.Count > 0)
+            {
+
+                int j = 0;
+
+                foreach (var i in Model.Bi)
                 {
 
-                    int j = 0;
 
-                    foreach (var i in Model.Bi)
-                    {
+                    <tr>
+                        @*float a= (float)((ArrayList)paredes[i])[0];*@
+                        @*<td>@Html.TextBoxFor(a => a[j].ContactName)</td>*@
 
+                        <td onclick="bindAutocomplete(this); bindPrice(this)" onchange="bindPrice(this)">@Html.TextBoxFor(a => Model.Bi[j].ProdName) </td>
+                        <td oninput="bindTotal(this)" onclick="bindTotal(this)">@Html.TextBoxFor(a => Model.Bi[j].Qty)</td>
+                        <td>@Html.TextBoxFor(a => Model.Bi[j].UnitPrice)</td>
+                        <td>@Html.TextBoxFor(a => Model.Bi[j].TotalAmt)</td>
+                        <td>@Html.TextBoxFor(a => Model.Bi[j].Note)</td>
+                        <td>
+                            @if (j > 0)
+                            {
 
-                        <tr style="border:1px solid black">
-                            <td>@Html.TextBoxFor(a => Model.Bi[j].ProdName) </td>
-                            <td>@Html.TextBoxFor(a => Model.Bi[j].Qty)</td>
-                            <td onfocusout="bindTotal(this)" oninput="bindTotal(this)">@Html.TextBoxFor(a => Model.Bi[j].UnitPrice)</td>
-                            <td>@Html.TextBoxFor(a => Model.Bi[j].TotalAmt)</td>
-                            <td>@Html.TextBoxFor(a => Model.Bi[j].Note)</td>
-                            <td>
-                                @if (j > 0)
-                                {
+                                // <input type="button" value="Delete" onclick="deleteRow(this)">
+                                <a href="#" id="removeThis" class="remove">Remove</a>
 
-                                    // <input type="button" value="Delete" onclick="deleteRow(this)">
-                                    <a href="#" id="removeThis" class="remove">Remove</a>
-
-                                }
-                            </td>
-                        </tr>
-                        j++;
-
-                    }
+                            }
+                        </td>
+                    </tr>
+                    j++;
 
                 }
-            </table>
-            <table>
+
+            }
+        </table>
+
+        <div class="row form-group">
+
+            <div class="col-md-5 offset-md-5">
+                <input type="text" asp-for="a => @Model.ExternalBillHeader.PaidAmt" class="form-control text-md-right" />
+
+            </div>
+            <div class="col-md-2">
+                <label asp-for="@Model.ExternalBillHeader.PaidAmt"> </label>
+            </div>
+        </div>
+        <div class="row form-group">
+
+            <div class="col-md-5 offset-md-5">
+                <input type="text" asp-for="a => @Model.ExternalBillHeader.Note" class="form-control text-md-right" />
+
+            </div>
+            <div class="col-md-2">
+                <label asp-for="@Model.ExternalBillHeader.Note"> </label>
+            </div>
+        </div>
+        <div class="row form-group">
+
+            <div class="col-md-5 offset-md-5">
+                <input type="text" asp-for="a => @Model.ExternalBillHeader.Discount" class="form-control text-md-right" />
+            </div>
+            <div class="col-md-2">
+                <label asp-for="@Model.ExternalBillHeader.Discount"> </label>
+            </div>
+        </div>
+
+        @*<table>
                 <tr>
                     <td>Note</td>
                     <td>
-                        <input type="text" asp-for="a => @Model.ExternalBillHeader.Note" class="form-control text-md-right" />
+                        <input type="text" asp-for="a => @Model.BillHeader.Note" class="form-control text-md-right" />
                     </td>
                 </tr>
                 <tr>
                     <td>PaidAmt</td>
                     <td>
-                        <input type="text" asp-for="a => @Model.ExternalBillHeader.PaidAmt" class="form-control text-md-right" />
+                        <input type="text" asp-for="a => @Model.BillHeader.PaidAmt" class="form-control text-md-right" />
                     </td>
                 </tr>
                 <tr>
                     <td>Discount</td>
                     <td>
-                        <input type="text" asp-for="a => @Model.ExternalBillHeader.Discount" class="form-control text-md-right" />
+                        <input type="text" asp-for="a => @Model.BillHeader.Discount" class="form-control text-md-right" />
                     </td>
                 </tr>
-            </table>
-            <input type="submit" value="Save Bulk Data" />
-        </form>
-        @*@using (Html.BeginForm("BulkData", "Save", FormMethod.Post))
-            {
-                @Html.AntiForgeryToken()
-                @Html.ValidationSummary(true)
+            </table>*@
 
-            }*@
-    </div>
+        <div class=" form-group row">
+            <div class="col-md-5 offset-md-5">
+                <div class="row">
+
+                    <div class="col-md-6">
+                        @*<a asp-page="Index" class="btn btn-success form-control">الرجوع</a>*@
+
+                        <input asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-secondary form-control" type="button" value="@localizer.Get("الغاء")" onclick="history.back()">
+
+                    </div>
+                    <div class="col-md-6">
+                        @*<input type="submit" class="btn btn-info form-control" value="حفظ" />*@
+                        <input asp-route-culture="@Request.RouteValues["culture"]" type="submit" class="btn btn-info form-control" value="@localizer.Get("انشاء")" />
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        @*<input type="submit" value="Save Bulk Data" />*@
+    </form>
+
+</div>
+
+
+
+
+
 
     <script>
         function RemoveRow(r) {
@@ -151,11 +247,11 @@
                 });
             });
 
-                function bindTotal(t) {
-                    const val = t.parentElement.children[1].children[0].value //t.children[0].value
-                    const price = t.parentElement.children[2].children[0].value
+            function bindTotal(t) {
+                const val = t.parentElement.children[1].children[0].value //t.children[0].value
+                const price = t.parentElement.children[2].children[0].value
 
-                    t.parentElement.children[3].children[0].value = val * price
+                t.parentElement.children[3].children[0].value = val * price
             }
 
         </script>
@@ -170,4 +266,4 @@
             });
         </script>
     }
-</body>
+

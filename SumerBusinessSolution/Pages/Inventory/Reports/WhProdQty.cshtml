@@ -89,14 +89,15 @@
         <tr>
 
             <td>
-                <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="../Transactions/ProdTrans" asp-route-ProdId="@item.ProdId" asp-route-WhId="@item.WhId" style="text-decoration:none;">
-                    &nbsp; @localizer.Get("تفاصيل العمليات التجارية")
+                <a  class="btn btn-info" asp-route-culture="@Request.RouteValues["culture"]" title="العمليات التجارية للمنتج" asp-page="../Transactions/ProdTrans" asp-route-ProdId="@item.ProdId" asp-route-WhId="@item.WhId">
+                    <i class="far fa-clipboard"></i>@localizer.Get("")
                 </a>
+
             </td>
             <td>
                
-                <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="../Products/Details" asp-route-ID="@item.ProdInfo.Id" style="text-decoration:none;">
-                    &nbsp;@localizer.Get("تفاصيل المنتج")
+                <a  class="btn btn-primary" asp-route-culture="@Request.RouteValues["culture"]" title="تفاصيل المنتج" asp-page="../Products/Details" asp-route-ID="@item.ProdInfo.Id">
+                    <i class="far fa-clipboard"></i>@localizer.Get("")
                 </a>
             </td>
             @if (item.Qty < 10)

@@ -15,138 +15,183 @@
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
+<style>
+    table, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+</style>
 
 <div class="border backgroundWhite">
     @*<h2 class="text-info">المواد الواردة </h2>*@
     <h2 class="text-info text-md-right">  @localizer.Get("تفاصيل الفاتورة")</h2>
 
     <form method="post">
-
-        <div class="form-group row ">
+        <div id="tabledata">
             <input type="hidden" asp-for="ExternalBillHeader.Id" />
-            <div class="col-md-5 offset-md-5">
-                <input type="text" id="ProdInfo" asp-for="ExternalBillHeader.Id" class="form-control text-md-right" disabled />
-            </div>
-            <div class="col-md-2 ">
-                <label asp-for="ExternalBillHeader.Id"></label>
+
+            <div>
+                <p class="text-md-center" style="font-size:200px;">LOGO</p>
             </div>
 
-        </div>
+            <div class="row col-md-12">
+                @*<div class="form-group row ">
+                        <div class="col-md-5 offset-md-5">
+                            <input type="text" id="ProdInfo" asp-for="BillHeader.Id" class="form-control text-md-right" />
+                        </div>
+                        <div class="col-md-2 ">
+                            <label asp-for="BillHeader.Id"></label>
+                        </div>
+                    </div>*@
 
+                <div class="row pt-md-2  border border-dark col-md-3 form-control form-group offset-md-1">
+                    <h5 class="font-weight-bold text-md-right">@Model.ExternalBillHeader.Id &nbsp; : رقم الفاتورة</h5>
+                </div>
 
+                @*<div class="form-group row">
+                        <div class="col-md-5 offset-md-5">
+                            <input asp-for="BillHeader.Customer.CompanyName" class="form-control  text-md-right" disabled />
+                        </div>
+                        <div class="col-md-2">
+                            <label asp-for="BillHeader.Customer.CompanyName"></label>
+                        </div>
+                    </div>*@
 
-        <div class="form-group row">
+                <div class="row pt-md-2 border border-dark col-md-3 form-control form-group offset-md-1">
+                    <h5 class="font-weight-bold text-md-right">@Model.ExternalBillHeader.Customer.CompanyName &nbsp; : اسم الزبون</h5>
+                </div>
 
-            <div class="col-md-5 offset-md-5">
-                <input asp-for="ExternalBillHeader.Customer.CompanyName" class="form-control  text-md-right" disabled />
-
-
-            </div>
-            <div class="col-md-2">
-                <label asp-for="ExternalBillHeader.Customer.CompanyName"></label>
-            </div>
-        </div>
-        <div class="form-group row">
-            <div class="col-md-5 offset-md-5">
-                @*<textarea placeholder="ملاحظات" asp-for="Note" class="form-control"></textarea>*@
-                <input asp-for="ExternalBillHeader.TotalAmt" class="form-control  text-md-right" disabled />
-
-            </div>
-
-            <div class="col-md-2">
-                <label asp-for="ExternalBillHeader.TotalAmt"></label>
-            </div>
-        </div>
-        <div class="form-group row">
-            <div class="col-md-5 offset-md-5">
-                @*<textarea placeholder="ملاحظات" asp-for="Note" class="form-control"></textarea>*@
-                <input asp-for="ExternalBillHeader.Discount" class="form-control  text-md-right" disabled />
-
-            </div>
-
-            <div class="col-md-2">
-                <label asp-for="ExternalBillHeader.Discount"></label>
-            </div>
-        </div>
-        <div class="form-group row">
-            <div class="col-md-5 offset-md-5">
-                @*<textarea placeholder="ملاحظات" asp-for="Note" class="form-control"></textarea>*@
-                <input asp-for="ExternalBillHeader.TotalNetAmt" class="form-control  text-md-right" disabled />
+                @*<div class="form-group row">
+                        <div class="col-md-5 offset-md-5">
+                            <input asp-for="BillHeader.ApplicationUser.FirstName" class="form-control  text-md-right" disabled />
+                        </div>
+                        <div class="col-md-2">
+                            <label asp-for="BillHeader.ApplicationUser.FirstName"></label>
+                        </div>
+                    </div>*@
+                <div class="row pt-md-2  border border-dark col-md-3 form-control form-group offset-md-1">
+                    <h5 class="font-weight-bold text-md-right">@Model.ExternalBillHeader.ApplicationUser.FirstName &nbsp; : اسم الموظف</h5>
+                </div>
 
             </div>
 
-            <div class="col-md-2">
-                <label asp-for="ExternalBillHeader.TotalNetAmt"></label>
+
+
+            <div class="row col-md-12">
+                @*<div class="form-group row">
+                        <div class="col-md-5 offset-md-5">
+                            <input asp-for="BillHeader.TotalAmt" class="form-control  text-md-right" disabled />
+                        </div>
+                        <div class="col-md-2">
+                            <label asp-for="BillHeader.TotalAmt"></label>
+                        </div>
+                    </div>*@
+
+                <div class="row pt-md-2 border border-dark col-md-3 form-control form-group offset-md-1">
+                    <h5 class="font-weight-bold text-md-right">@Model.ExternalBillHeader.TotalAmt &nbsp; : المبلغ الكلي</h5>
+                </div>
+
+                @*<div class="form-group row">
+                        <div class="col-md-5 offset-md-5">
+                            <input asp-for="BillHeader.Discount" class="form-control  text-md-right" disabled />
+                        </div>
+                        <div class="col-md-2">
+                            <label asp-for="BillHeader.Discount"></label>
+                        </div>
+                    </div>*@
+
+                <div class="row pt-md-2 border border-dark col-md-3 form-control form-group offset-md-1">
+                    <h5 class="font-weight-bold text-md-right">@Model.ExternalBillHeader.Discount &nbsp; : التخفيض</h5>
+                </div>
+
+                @*<div class="form-group row">
+                        <div class="col-md-5 offset-md-5">
+                            <input asp-for="BillHeader.TotalNetAmt" class="form-control  text-md-right" disabled />
+                        </div>
+                        <div class="col-md-2">
+                            <label asp-for="BillHeader.TotalNetAmt"></label>
+                        </div>
+                    </div>*@
+
+                <div class="row pt-md-2 border border-dark col-md-3 form-control form-group offset-md-1">
+                    <h5 class="font-weight-bold text-md-right">@Model.ExternalBillHeader.TotalNetAmt &nbsp; : المبلغ الاجمالي</h5>
+                </div>
+
             </div>
-        </div>
-        <div class="form-group row">
 
-            <div class="col-md-5 offset-md-5">
-                @*<textarea placeholder="ملاحظات" asp-for="Note" class="form-control"></textarea>*@
-                <input asp-for="ExternalBillHeader.PaidAmt" class="form-control  text-md-right" disabled />
 
-            </div>
 
-            <div class="col-md-2">
-                <label asp-for="ExternalBillHeader.PaidAmt"></label>
-            </div>
-        </div>
-        <div class="form-group row">
 
-            <div class="col-md-5 offset-md-5">
-                <input asp-for="ExternalBillHeader.CreatedDataTime" class="form-control  text-md-right" disabled />
+            <div class="row col-md-12">
 
-            </div>
 
-            <div class="col-md-2">
-                <label asp-for="ExternalBillHeader.CreatedDataTime"></label>
-            </div>
-        </div>
-        <div class="form-group row">
+                @*<div class="form-group row">
+                        <div class="col-md-5 offset-md-5">
+                            <input asp-for="BillHeader.CreatedDataTime" class="form-control  text-md-right" disabled />
+                        </div>
+                        <div class="col-md-2">
+                            <label asp-for="BillHeader.CreatedDataTime"></label>
+                        </div>
+                    </div>*@
 
-            <div class="col-md-5 offset-md-5">
-                <input asp-for="ExternalBillHeader.Status" class="form-control  text-md-right" disabled />
+                <div class="row pt-md-2  border border-dark col-md-5 form-control form-group offset-md-1">
+                    <h5 class="font-weight-bold text-md-right">@Model.ExternalBillHeader.CreatedDataTime &nbsp; : تاريخ الفاتورة</h5>
+                </div>
 
-            </div>
+                @*<div class="form-group row">
+                        <div class="col-md-5 offset-md-5">
+                            <input asp-for="BillHeader.Status" class="form-control  text-md-right" disabled />
+                        </div>
+                        <div class="col-md-2">
+                            <label asp-for="BillHeader.Status"></label>
+                        </div>
+                    </div>*@
 
-            <div class="col-md-2">
-                <label asp-for="ExternalBillHeader.Status"></label>
-            </div>
-        </div>
-        <div class="form-group row">
-
-            <div class="col-md-5 offset-md-5">
-                <input asp-for="ExternalBillHeader.ApplicationUser.FirstName" class="form-control  text-md-right" disabled />
+                <div class="row pt-md-2  border border-dark col-md-4 form-control form-group offset-md-1">
+                    <h5 class="font-weight-bold text-md-right"> حالة الفاتورة  : @Model.ExternalBillHeader.Status</h5>
+                </div>
 
             </div>
 
-            <div class="col-md-2">
-                <label asp-for="ExternalBillHeader.ApplicationUser.FirstName"></label>
+            @*<div class="form-group row">
+                    <div class="col-md-5 offset-md-5">
+                        <input asp-for="BillHeader.PaidAmt" class="form-control  text-md-right" disabled />
+                    </div>
+                    <div class="col-md-2">
+                        <label asp-for="BillHeader.PaidAmt"></label>
+                    </div>
+                </div>*@
+
+            <div class="row pt-md-2 border border-dark col-md-10 form-control form-group offset-md-1">
+                <h5 class="font-weight-bold text-md-right">@Model.ExternalBillHeader.PaidAmt &nbsp; : المبلغ المدفوع</h5>
             </div>
-        </div>
 
-        <table class="table table-striped border table-responsive-md table-responsive-lg">
-            <tr class="table-secondary">
 
-                <th>
-                    @Html.DisplayNameFor(m => m.ExternalBillItems.Note)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(m => m.ExternalBillItems.TotalAmt)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(m => m.ExternalBillItems.UnitPrice)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(m => m.ExternalBillItems.Qty)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(m => m.ExternalBillItems.ProdName)
-                </th>
 
-            </tr>
+            <table class="table table-striped border table-responsive-md table-responsive-lg">
+                <tr class="table-secondary">
 
-            @foreach (var item in Model.ExternalBillItemsList)
+                    <th>
+                        @Html.DisplayNameFor(m => m.ExternalBillItems.Note)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(m => m.ExternalBillItems.TotalAmt)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(m => m.ExternalBillItems.UnitPrice)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(m => m.ExternalBillItems.Qty)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(m => m.ExternalBillItems.ProdName)
+                    </th>
+                    <th>ت</th>
+
+                </tr>
+                @{int RowNo = 0;}
+
+                @foreach (var item in Model.ExternalBillItemsList)
                 {
                     <tr>
                         <td>
@@ -156,35 +201,69 @@
                         <td>
                             @Html.DisplayFor(m => item.TotalAmt)
                         </td>
-                       <td>
+                        <td>
                             @Html.DisplayFor(m => item.UnitPrice)
                         </td>
                         <td>
                             @Html.DisplayFor(m => item.Qty)
                         </td>
-                     <td>
+                       
+                        <td>
                             @Html.DisplayFor(m => item.ProdName)
                         </td>
+                        <td>@{RowNo++;} @RowNo</td>
                     </tr>
 
                 }
 
 
 
-        </table>
-
+            </table>
+        </div>
 
         <div class="form-group row">
             <div class="col-md-5 offset-md-5">
                 <div class="row">
                     <div class="col-md-6">
-                        <a asp-page="Index" class="btn btn-success form-control" asp-route-culture="@Request.RouteValues["culture"]">  @localizer.Get("الغاء")</a>
+
+                        <input asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-secondary form-control" type="button" value="@localizer.Get("الغاء")" onclick="history.back()">
+
                     </div>
-                    <div class="col-md-6">
-                        <button asp-route-Id="@Model.ExternalBillHeader.Id" asp-page="MakePayment" asp-route-culture="@Request.RouteValues["culture"]" type="submit" class="btn btn-info form-control" onclick="return ValidateInput()">
-                            @localizer.Get("تسديد الفاتورة")
-                        </button>
-                    </div>
+                    @if (Model.ExternalBillHeader.Status == SD.OpenBill)
+                    {
+                        <div class="col-md-3">
+                            <a asp-route-BhId="@Model.ExternalBillHeader.Id" asp-page="MakePayment" asp-route-culture="@Request.RouteValues["culture"]" type="submit" class="btn btn-info form-control">
+                                @localizer.Get("تسديد")
+                            </a>
+                        </div>
+                    }
+
+                    @if (User.IsInRole(SD.AdminEndUser) && (Model.ExternalBillHeader.Status == SD.OpenBill))
+                    {
+                        <div class="col-md-3">
+                            <a asp-route-culture="@Request.RouteValues["culture"]" data-toggle="modal" data-target="#Ask" class="btn btn-danger" asp-page-handler="CloseBillManually" asp-route-HeaderId="@Model.ExternalBillHeader.Id" type="submit" name="Close">
+                                @localizer.Get("اغلاق")
+                            </a>
+                        </div>
+                        <div class="modal fade" id="Ask" role="dialog" method="post">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button class="close" data-dismiss="modal">&times;</button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p class="alert alert-danger">@localizer.Get("هل انت متأكد؟")</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <input asp-route-culture="@Request.RouteValues["culture"]" type="submit" asp-page-handler="CloseBillManually" asp-route-HeaderId="@Model.ExternalBillHeader.Id" class="btn btn-info" value="@localizer.Get("نعم")" />
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    }
+
 
                 </div>
             </div>
@@ -200,5 +279,35 @@
 
     </form>
 </div>
+
+
+<div>
+    <button class="btn btn-primary" onclick="downloadDoc()">@localizer.Get("طباعة الفاتورة")</button>
+</div>
+
+
+
+<script type="text/javascript" src="~/js/jquery.js"></script>
+<script type="text/javascript" src="~/js/pdfmake.min.js"></script>
+<script type="text/javascript" src="~/js/html2canvas.min.js"></script>
+
+<script type="text/javascript">
+    function downloadDoc() {
+        html2canvas($("#tabledata")[0], {
+            onrendered: function (canvas) {
+                var data = canvas.toDataURL();
+                var docDefinition = {
+                    content: [{
+                        image: data,
+                        width: 500
+                    }]
+                };
+                pdfMake.createPdf(docDefinition).download("Table.pdf");
+            }
+        })
+    }
+</script>
+
+
 
 

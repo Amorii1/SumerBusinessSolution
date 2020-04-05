@@ -23,7 +23,7 @@ namespace SumerBusinessSolution.Models
        [Display(Name = "وحدة القياس")]
         public string UOM { get; set; }
 
-        
+        [Display(Name = "الملاحظات")]
         public string Note { get; set; }
 
 

@@ -19,7 +19,7 @@
         @if (User.IsInRole(SD.AdminEndUser))
         {
             <div class="col-md-6">
-                <a asp-page="Create" asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-info"> <i class="fas fa-plus"></i></a>
+                <a asp-page="Create" asp-route-culture="@Request.RouteValues["culture"]" title="اضافة" class="btn btn-info"> <i class="fas fa-plus"></i></a>
             </div>
         }
         <div class="col-md-6">
@@ -37,7 +37,7 @@
                         <div class="row" style="margin-top:10px;">
                             <div class="col-md-2 text-md-right pb-1">
 
-                                <button asp-route-culture="@Request.RouteValues["culture"]" type="submit" name="submit" value="search" class="btn btn-info form-control">
+                                <button asp-route-culture="@Request.RouteValues["culture"]" type="submit" title="بحث" name="submit" value="search" class="btn btn-info form-control">
                                     <i class="fas fa-search"></i>
                                 </button>
 
@@ -96,16 +96,18 @@
                 {
         <tr>
 
-            <td style="width:150px;">
+            <td style="width:250px;">
                 <div class="btn-group " role="group">
-                    @if (User.IsInRole(SD.AdminEndUser))
-                    {
+                    <form method="post">
+                        @if (User.IsInRole(SD.AdminEndUser))
+                        {
 
-                        <a class="btn btn-primary" asp-route-culture="@Request.RouteValues["culture"]" asp-page="Edit" asp-route-Id="@item.Id" title="Edit"><i class="fa fa-edit"></i>@localizer.Get("تعديل")</a>
-                        <a class="btn btn-danger" asp-route-culture="@Request.RouteValues["culture"]" asp-page="Delete" asp-route-Id="@item.Id" title="Delete"><i class="far fa-trash-alt"></i>@localizer.Get("حذف")</a>
-                    }
-                    <a class="btn btn-success" asp-route-culture="@Request.RouteValues["culture"]" asp-page="Details" asp-route-Id="@item.Id" title="Details"><i class="far fa-clipboard"></i>@localizer.Get("التفاصيل")</a>
-                </div>
+                            <a class="btn btn-success" asp-route-culture="@Request.RouteValues["culture"]" asp-page="Edit" asp-route-Id="@item.Id" title="تعديل"><i class="fa fa-edit"></i>@localizer.Get("")</a>
+                            <a class="btn btn-danger" asp-route-culture="@Request.RouteValues["culture"]" asp-page="Delete" asp-route-Id="@item.Id" title="مسح"><i class="far fa-trash-alt"></i>@localizer.Get("")</a>
+                        }
+                        <a class="btn btn-primary" asp-route-culture="@Request.RouteValues["culture"]" asp-page="Details" asp-route-Id="@item.Id" title="التفاصيل"><i class="far fa-clipboard"></i>@localizer.Get("")</a>
+               </form>
+                        </div>
             </td>
 
             <td>

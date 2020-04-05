@@ -11,7 +11,7 @@ namespace SumerBusinessSolution.Models
     {
         [Display(Name = "رقم الفاتورة")]
         public int Id { get; set; }
-
+        [Display(Name = "اسم الزبون")]
         public int? CustId { get; set; }
         [Display(Name = "الحالة")]
         [Required]
@@ -30,6 +30,7 @@ namespace SumerBusinessSolution.Models
         public DateTime CreatedDataTime { get; set; }
         [Required]
         public string CreatedById { get; set; }
+        [Display(Name = "الملاحظات")]
         public string Note { get; set; }
 
         [ForeignKey("CreatedById")]

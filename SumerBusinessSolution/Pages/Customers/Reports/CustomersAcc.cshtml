@@ -34,7 +34,7 @@
                             <div class="row" style="margin-top:10px;">
                                 <div class="col-md-2 text-md-right pb-1">
 
-                                    <button asp-route-culture="@Request.RouteValues["culture"]" type="submit" name="submit" value="search" class="btn btn-info form-control">
+                                    <button asp-route-culture="@Request.RouteValues["culture"]" type="submit" title="بحث" name="submit" value="search" class="btn btn-info form-control">
                                         <i class="fas fa-search"></i>
                                     </button>
 
@@ -86,7 +86,7 @@
 
                             @if (User.IsInRole(SD.AdminEndUser))
                             {
-                                <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-success text-white" asp-page="../Accounts/EditCustAcc" asp-route-CustId="@item.Id" type="submit" title="تعديل الحساب" name="AccDetails">
+                                <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-success text-white" asp-page="../Accounts/EditCustAcc" asp-route-CustId="@item.Id" type="submit" title="تعديل الحسابات" name="AccDetails">
                                     @localizer.Get("") <i class="fas fa-edit"></i>
                                 </a>
                             }
@@ -121,12 +121,12 @@
                         <form method="post">
                             @if (User.IsInRole(SD.AdminEndUser))
                             {
-                                <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-success text-white" asp-page="../Accounts/EditCustAcc" asp-route-CustId="@item.Id" type="submit" title="تعديل الحساب" name="AccDetails">
-                                    @localizer.Get("تعديل الحسابات") <i class="fas fa-check"></i>
+                                <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-success text-white" asp-page="../Accounts/EditCustAcc" asp-route-CustId="@item.Id" type="submit" title="تعديل الحسابات" name="AccDetails">
+                                    @localizer.Get("") <i class="fas fa-edit"></i>
                                 </a>
                             }
-                            <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-success text-white" asp-page="../Accounts/PayToAcc" asp-route-CustId="@item.Id" type="submit" title="دفع لحساب الزبون" name="PayToAcc">
-                                @localizer.Get("تسديد") <i class="fas fa-check"></i>
+                            <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-info text-white" asp-page="../Accounts/PayToAcc" asp-route-CustId="@item.Id" type="submit" title="دفع لحساب الزبون" name="PayToAcc">
+                                @localizer.Get("") <i class="fas fa-money-check-alt"></i>
                             </a>
 
 

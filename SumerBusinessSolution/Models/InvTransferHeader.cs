@@ -22,7 +22,7 @@ namespace SumerBusinessSolution.Models
         public string TransferStatus { get; set; }
 
         [Required]
-        [Display(Name = "تاريخ الحركة ")]
+        [Display(Name = "تاريخ النقل ")]
 
         public DateTime CreatedDateTime { get; set; }
 

@@ -21,7 +21,7 @@
             @if (User.IsInRole(SD.AdminEndUser))
             {
                 <div class="col-md-3  ">
-                    <a asp-page="../IncomingGoods/Create" asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-info">
+                    <a asp-page="../IncomingGoods/Create" title="اضافة" asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-info">
 
                         <i class="fas fa-plus"></i>
 
@@ -41,15 +41,15 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="row" style="margin-top:10px;">
-                                <div class="col-md-1 text-md-right pb-1">
+                                <div class="col-md-2 text-md-right pb-1">
 
-                                    <button asp-route-culture="@Request.RouteValues["culture"]" type="submit" name="submit" value="search" class="btn btn-info form-control">
+                                    <button asp-route-culture="@Request.RouteValues["culture"]" title="بحث" type="submit" name="submit" value="search" class="btn btn-info form-control">
                                         <i class="fas fa-search"></i>
                                     </button>
 
                                 </div>
                              
-                                <div class="col-md-4 pb-1">
+                                <div class="col-md-5 pb-1">
                                     <div class="form-group row float-md-right">
                                         <div>
                                             <input asp-for="SearchToDate" class="form-control" />
@@ -59,7 +59,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4 pb-1">
+                                <div class="col-md-5 pb-1">
                                     <div class="form-group row float-md-right">
                                         <div>
                                             <input asp-for="SearchFromDate" class="form-control" />
@@ -171,10 +171,8 @@
                     {
                         <tr>
                             <td>
-                                <a asp-page="/Inventory/Products/details" asp-route-culture="@Request.RouteValues["culture"]" asp-route-Id="@item.ProdInfo.Id" style="text-decoration:none;">
-                                    @localizer.Get("تفاصيل المنتج")
-                                </a>
-
+                               
+                                <a class="btn btn-primary" asp-route-culture="@Request.RouteValues["culture"]" asp-page="/Inventory/Products/details" asp-route-Id="@item.ProdInfo.Id" title="تفاصيل المنتج"><i class="far fa-clipboard"></i>@localizer.Get("")</a>
                             </td>
                             <td>
                                 @Html.DisplayFor(m => item.ApplicationUser.FirstName)

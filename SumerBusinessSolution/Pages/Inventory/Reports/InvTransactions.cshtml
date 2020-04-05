@@ -108,19 +108,19 @@
 
             <td>
                 @*<a asp-page="../Transactions/ProdTrans" asp-route-TransId="@item.Id" style="text-decoration:none;">
-                <img src="~/images/car.png" width="40" /> &nbsp; تفاصيل
-            </a>*@
-                <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="../Transactions/ProdTrans" asp-route-TransId="@item.Id" style="text-decoration:none;">
-                    &nbsp; @localizer.Get("تفاصيل العملية")
-                </a>
+            <img src="~/images/car.png" width="40" /> &nbsp; تفاصيل
+        </a>*@
+              
+                <a class="btn btn-info" asp-route-culture="@Request.RouteValues["culture"]" asp-page="../Transactions/ProdTrans" asp-route-TransId="@item.Id" title="تفاصيل العملية"><i class="far fa-clipboard"></i>@localizer.Get("")</a>
+
             </td>
             <td>
                 @*<a asp-page="../Products/Details" asp-route-ID="@item.ProdInfo.Id" style="text-decoration:none;">
-                <img src="~/images/car.png" width="40" /> &nbsp; تفاصيل المنتج
-            </a>*@
-                <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="../Products/Details" asp-route-ID="@item.ProdInfo.Id" style="text-decoration:none;">
-                    &nbsp; @localizer.Get("تفاصيل المنتج")
-                </a>
+            <img src="~/images/car.png" width="40" /> &nbsp; تفاصيل المنتج
+        </a>*@
+              
+                <a class="btn btn-primary" asp-route-culture="@Request.RouteValues["culture"]" asp-page="../Products/Details" asp-route-ID="@item.ProdInfo.Id" title="تفاصيل المنتج"><i class="far fa-clipboard"></i>@localizer.Get("")</a>
+
             </td>
             <td>
                 @Html.DisplayFor(m => item.TransType)

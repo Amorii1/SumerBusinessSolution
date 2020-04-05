@@ -95,7 +95,7 @@
                     <th>Unit Price</th>
                     <th>Total </th>
                     <th>Note</th>*@
-                <th><a href="#" id="addNew">   <i class="fas fa-plus"></i></a></th>
+                <th><a href="#" title="اضافة" id="addNew">   <i class="fas fa-plus"></i></a></th>
             </tr>
             @if (Model.Bi != null && Model.Bi.Count > 0)
             {
@@ -190,7 +190,7 @@
                     <div class="col-md-6">
                         @*<a asp-page="Index" class="btn btn-success form-control">الرجوع</a>*@
 
-                        <input asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-success form-control" type="button" value="@localizer.Get("الغاء")" onclick="history.back()">
+                        <input asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-secondary form-control" type="button" value="@localizer.Get("الغاء")" onclick="history.back()">
 
                     </div>
                     <div class="col-md-6">
@@ -257,7 +257,7 @@
                     $trNew.find(':text').val('');
 
                     var suffix = $trNew.find(':input:first').attr('name').match(/\d+/);
-                    $trNew.find("td:last").html('<a href="#" id="removeThis" onclick="return RemoveRow(this)" class="remove"><i class="fas fa-window-close"></i></a>');
+                    $trNew.find("td:last").html('<a href="#" id="removeThis" onclick="return RemoveRow(this)" title="الغاء" class="remove"><i class="fas fa-window-close"></i></a>');
 
 
                     $.each($trNew.find(':input'), function (i, val) {

@@ -20,19 +20,22 @@
 
         @if (User.IsInRole(SD.AdminEndUser))
         {
-            <div class="col-md-6">
-                <div class="btn-group">
-                    <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="Create" class="btn btn-info"> <i class="fas fa-plus"></i>@localizer.Get("مخزن")</a>
-                    <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="../Whtypes/Create" class="btn btn-primary"> <i class="fas fa-plus"></i>@localizer.Get("نوع مخزن")</a>
-                </div>
-            </div>
-        }
-        <div class="col-md-6 text-md-right">
-            @*<h2 class="text-info"> المخازن </h2>*@
-            <h2 class="text-info"> @localizer.Get("المخازن") </h2>
+        <div class=" row col-md-6">
+            <div>
+                <a asp-route-culture="@Request.RouteValues["culture"]" title="اضافة مخزن جديد" asp-page="Create" class="btn btn-info">  @localizer.Get("مخزن")  <i class="fas fa-plus"></i></a>
 
+            </div>
+            <div class="pl-md-1">
+                <a asp-route-culture="@Request.RouteValues["culture"]" title="اضافة نوع جديد" asp-page="../Whtypes/Create" class="btn btn-primary"> @localizer.Get("نوع مخزن")  <i class="fas fa-plus"></i></a>
+            </div>
         </div>
-    </div>
+            }
+            <div class="col-md-6 text-md-right">
+                @*<h2 class="text-info"> المخازن </h2>*@
+                <h2 class="text-info"> @localizer.Get("المخازن") </h2>
+
+            </div>
+        </div>
 
 
     <form method="get" asp-page="Index">
@@ -43,7 +46,7 @@
                     <div class="col-md-12">
                         <div class="row" style="margin-top:10px;">
                             <div class="col-md-2 text-md-right pb-1">
-                                <button asp-route-culture="@Request.RouteValues["culture"]" type="submit" name="submit" value="search" class="btn btn-info form-control">
+                                <button asp-route-culture="@Request.RouteValues["culture"]" title="بحث" type="submit" name="submit" value="search" class="btn btn-info form-control">
                                     <i class="fas fa-search"></i>
                                 </button>
                             </div>
