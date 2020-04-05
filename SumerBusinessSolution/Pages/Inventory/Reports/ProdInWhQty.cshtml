@@ -32,7 +32,7 @@
                     <div class="col-md-12">
                         <div class="row" style="margin-top:10px;">
                             <div class="col-md-2 text-md-right pb-1">
-                                <button asp-route-culture="@Request.RouteValues["culture"]" type="submit" name="submit" value="search" class="btn btn-info form-control">
+                                <button asp-route-culture="@Request.RouteValues["culture"]" type="submit" title="بحث" name="submit" value="search" class="btn btn-info form-control">
                                     <i class="fas fa-search"></i>
                                 </button>
                             </div>
@@ -93,25 +93,27 @@
                     <img src="~/images/car.png" width="40" /> &nbsp; تحديث الكميه
                 </a>*@
 
-                    <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="../Products/UpdateProdStkQty" asp-route-StkId="@item.Id" style="text-decoration:none;">
-                        &nbsp;@localizer.Get("تحديث الكمية")
+                    <a title="تحديث الكمية" asp-route-culture="@Request.RouteValues["culture"]" asp-page="../Products/UpdateProdStkQty" asp-route-StkId="@item.Id" >
+                        <i class="fas fa-plus"></i>@localizer.Get("")
                     </a>
                 }
             </td>
             <td>
                 @*<a asp-page="../Transactions/ProdTrans" asp-route-ProdId="@item.ProdId" asp-route-WhId="@item.WhId" style="text-decoration:none;">
-                <img src="~/images/car.png" width="40" /> &nbsp; تفاصيل
-            </a>*@
-                <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="../Transactions/ProdTrans" asp-route-ProdId="@item.ProdId" asp-route-WhId="@item.WhId" style="text-decoration:none;">
-                    &nbsp; @localizer.Get("تفاصيل العمليات التجارية")
+            <img src="~/images/car.png" width="40" /> &nbsp; تفاصيل
+        </a>*@
+               
+                <a class="btn btn-info" asp-route-culture="@Request.RouteValues["culture"]" title="العمليات التجارية للمنتج" asp-page="../Transactions/ProdTrans" asp-route-ProdId="@item.ProdId" asp-route-WhId="@item.WhId">
+                    <i class="far fa-clipboard"></i>@localizer.Get("")
                 </a>
             </td>
             <td>
                 @*<a asp-page="../Products/Details" asp-route-ID="@item.ProdInfo.Id" style="text-decoration:none;">
-                <img src="~/images/car.png" width="40" /> &nbsp; تفاصيل المنتج
-            </a>*@
-                <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="../Products/Details" asp-route-ID="@item.ProdInfo.Id" style="text-decoration:none;">
-                    &nbsp;@localizer.Get("تفاصيل المنتج")
+            <img src="~/images/car.png" width="40" /> &nbsp; تفاصيل المنتج
+        </a>*@
+                
+                <a class="btn btn-primary" asp-route-culture="@Request.RouteValues["culture"]" title="تفاصيل المنتج" asp-page="../Products/Details" asp-route-ID="@item.ProdInfo.Id">
+                    <i class="far fa-clipboard"></i>@localizer.Get("")
                 </a>
             </td>
 

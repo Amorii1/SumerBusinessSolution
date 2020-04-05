@@ -24,7 +24,7 @@
                     <input asp-for="ApplicationUser.FirstName" disabled class="form-control text-md-right" />
                 </div>
                 <div class="col-md-2">
-                    <label asp-for="ApplicationUser.FirstName" class="text-info"></label>
+                    <label asp-for="ApplicationUser.FirstName"></label>
                 </div>
 
             </div>
@@ -36,7 +36,7 @@
                 </div>
                 <div class="col-md-2">
                     @*<label asp-for="ApplicationUser.Email" class="text-info"></label>*@
-                    <label  class="text-info">@localizer.Get("البريد الالكتروني")</label>
+                    <label >@localizer.Get("البريد الالكتروني")</label>
                 </div>
 
             </div>
@@ -48,7 +48,7 @@
                 </div>
                 <div class="col-md-2">
                     @*<label asp-for="ApplicationUser.PhoneNumber" class="text-info"></label>*@
-                    <label  class="text-info">@localizer.Get("رقم الهاتف")</label>
+                    <label >@localizer.Get("رقم الهاتف")</label>
                 </div>
 
             </div>
@@ -89,7 +89,7 @@
                 <div class="row">
                     <div class="col-md-6">
                         @*<a asp-page="Index" class="btn btn-success form-control">رجوع</a>*@
-                        <a asp-page="Index" asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-success form-control">@localizer.Get("الغاء")</a>
+                        <a asp-page="Index" asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-secondary form-control">@localizer.Get("الغاء")</a>
 
                     </div>
                     <div class="col-md-6">

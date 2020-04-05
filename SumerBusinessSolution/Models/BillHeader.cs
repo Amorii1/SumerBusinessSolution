@@ -11,7 +11,7 @@ namespace SumerBusinessSolution.Models
     {
         [Display(Name = "رقم الفاتورة")]
         public int Id { get; set; }
-        [Display(Name = "اسم الشركة")]
+        [Display(Name = "اسم الزبون")]
         public int? CustId { get; set; }
         [Display(Name = "الحالة")]
         [Required]

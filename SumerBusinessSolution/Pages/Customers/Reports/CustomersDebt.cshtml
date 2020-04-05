@@ -20,7 +20,7 @@
         <div class="row">
             <div class="col-md-12 text-md-right">
                 @*<h2 class="text-info"> طلبات حركه المنتجات </h2>*@
-                <h2 class="text-info"> @localizer.Get("حسابات الزبائن")</h2>
+                <h2 class="text-info"> @localizer.Get("ديون الزبائن")</h2>
             </div>
         </div>
 
@@ -34,7 +34,7 @@
                             <div class="row" style="margin-top:10px;">
                                 <div class="col-md-2 text-md-right pb-1">
 
-                                    <button asp-route-culture="@Request.RouteValues["culture"]" type="submit" name="submit" value="search" class="btn btn-info form-control">
+                                    <button asp-route-culture="@Request.RouteValues["culture"]" type="submit" name="submit" title="بحث" value="search" class="btn btn-info form-control">
                                         <i class="fas fa-search"></i>
                                     </button>
 
@@ -81,7 +81,7 @@
                         <form method="post">
                             @if (User.IsInRole(SD.AdminEndUser))
                             {
-                                <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-success text-white" asp-page="../Accounts/EditCustAcc" asp-route-CustId="@item.Id" type="submit" title="تعديل الحساب" name="AccDetails">
+                                <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-success text-white" asp-page="../Accounts/EditCustAcc" asp-route-CustId="@item.Id" type="submit" title="تعديل الحسابات" name="AccDetails">
                                     @localizer.Get("") <i class="fas fa-edit"></i>
                                 </a>
                             }

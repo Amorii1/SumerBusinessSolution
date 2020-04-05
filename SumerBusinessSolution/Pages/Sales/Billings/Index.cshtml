@@ -19,7 +19,7 @@
     <div class="row">
 
         <div class="col-md-6 ">
-            <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="Create" class="btn btn-info"> <i class="fas fa-plus"></i></a>
+            <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="Create" title="اضافة" class="btn btn-info"> <i class="fas fa-plus"></i></a>
         </div>
 
         <div class="col-md-6 text-right">
@@ -38,16 +38,16 @@
                         <div class="row" style="margin-top:10px;">
                             <div class="col-md-2 text-md-right pb-1">
 
-                                <button asp-route-culture="@Request.RouteValues["culture"]" type="submit" name="submit" value="search" class="btn btn-info form-control">
+                                <button asp-route-culture="@Request.RouteValues["culture"]" type="submit" name="submit" title="بحث" value="search" class="btn btn-info form-control">
                                     <i class="fas fa-search"></i>
                                 </button>
 
                             </div>
-                            <div class="col-md-10 pb-1">
-                                @Html.Editor("CustomerName", new { htmlAttributes = new { @class = "form-control text-md-right", placeholder = @localizer.Get("اسم الشركة....") } })
+                            <div class="col-md-3 pb-1">
+                                @Html.Editor("CustomerName", new { htmlAttributes = new { @class = "form-control text-md-right", placeholder = @localizer.Get("اسم الزبون....") } })
 
                             </div>
-                            <div class="col-md-4 pb-1">
+                            <div class="col-md-3 pb-1">
                                 <div class="form-group row float-md-right">
                                     <div>
                                         <input asp-for="SearchToDate" class="form-control" />
@@ -57,7 +57,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-4 pb-1">
+                            <div class="col-md-3 pb-1">
                                 <div class="form-group row float-md-right">
                                     <div>
                                         <input asp-for="SearchFromDate" class="form-control" />
@@ -115,11 +115,11 @@
                             <div class="btn-group" role="group">
                                 <form method="post">
 
-                                    <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-primary" asp-page="MakePayment" type="submit" asp-route-BhId="@item.Id" name="Accept">
+                                    <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-info" asp-page="MakePayment" type="submit" title="تسديد" asp-route-BhId="@item.Id" name="Accept">
                                         @localizer.Get("") <i class="fas fa-money-check-alt"></i>
                                     </a>
 
-                                    <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-success" asp-page="Details" type="submit" asp-route-BhId="@item.Id" name="Details">
+                                    <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-primary" asp-page="Details" type="submit" title="التفاصيل" asp-route-BhId="@item.Id" name="Details">
                                         @localizer.Get("") <i class="far fa-clipboard"></i>
                                     </a>
                                

@@ -14,6 +14,7 @@ namespace SumerBusinessSolution.Models
         public int Id { get; set; }
 
         public int HeaderId { get; set; }
+        [Display(Name = "اسم المنتج") ]
 
         public string ProdName { get; set; }
 

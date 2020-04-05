@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Localization;
 using System.ComponentModel.DataAnnotations;
 
 
-namespace SumerBusinessSolution
+namespace SumerBusinessSolution.Pages.Sales.Billings
 { 
     public class DetailsModel : PageModel
     {

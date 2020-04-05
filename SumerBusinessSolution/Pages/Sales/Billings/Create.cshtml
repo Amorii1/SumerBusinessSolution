@@ -48,32 +48,32 @@
         </div>
 
         @*<table>
-            <tr>
-                <td>
-                    <select asp-for="a => @Model.BillHeader.CustId"
-                            asp-items="@(new SelectList(Model.Customer, "Id", "CompanyName"))"
-                            class="form-control ">
-                    </select>
-                </td>
+                <tr>
+                    <td>
+                        <select asp-for="a => @Model.BillHeader.CustId"
+                                asp-items="@(new SelectList(Model.Customer, "Id", "CompanyName"))"
+                                class="form-control ">
+                        </select>
+                    </td>
 
-            </tr>
-            <tr>
-                <td>
-                    <select id="PriceType" asp-for="@Model.PricingType.PriceType"
-                            asp-items="@(new SelectList(Model.UnitPriceTypesList, "Id","PriceType"))"
-                            class="form-control ">
-                    </select>
+                </tr>
+                <tr>
+                    <td>
+                        <select id="PriceType" asp-for="@Model.PricingType.PriceType"
+                                asp-items="@(new SelectList(Model.UnitPriceTypesList, "Id","PriceType"))"
+                                class="form-control ">
+                        </select>
 
-                </td>
+                    </td>
 
-            </tr>
-        </table>*@
+                </tr>
+            </table>*@
 
 
         <table id="dataTable" dir="rtl" class="table table-striped border table-responsive-md table-responsive-lg">
             <tr class="table-secondary">
                 @*<table id="dataTable" border="0" cellpadding="0" cellspacing="0">
-                <tr>*@
+                    <tr>*@
                 <th>
                     @Html.DisplayNameFor(a => Model.Bi[0].ProdInfo.ProdCode)
                 </th>
@@ -91,11 +91,11 @@
                 </th>
 
                 @*<th>Prod Code</th>
-                <th>Qty</th>
-                <th>Unit Price</th>
-                <th>Total </th>
-                <th>Note</th>*@
-                <th><a href="#" id="addNew">   <i class="fas fa-plus"></i></a></th>
+                    <th>Qty</th>
+                    <th>Unit Price</th>
+                    <th>Total </th>
+                    <th>Note</th>*@
+                <th><a href="#" title="اضافة" id="addNew">   <i class="fas fa-plus"></i></a></th>
             </tr>
             @if (Model.Bi != null && Model.Bi.Count > 0)
             {
@@ -132,8 +132,6 @@
             }
         </table>
 
-  
-
         <div class="row form-group">
 
             <div class="col-md-5 offset-md-5">
@@ -163,6 +161,28 @@
                 <label asp-for="@Model.BillHeader.Discount"> </label>
             </div>
         </div>
+
+        @*<table>
+                <tr>
+                    <td>Note</td>
+                    <td>
+                        <input type="text" asp-for="a => @Model.BillHeader.Note" class="form-control text-md-right" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>PaidAmt</td>
+                    <td>
+                        <input type="text" asp-for="a => @Model.BillHeader.PaidAmt" class="form-control text-md-right" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>Discount</td>
+                    <td>
+                        <input type="text" asp-for="a => @Model.BillHeader.Discount" class="form-control text-md-right" />
+                    </td>
+                </tr>
+            </table>*@
+
         <div class=" form-group row">
             <div class="col-md-5 offset-md-5">
                 <div class="row">
@@ -170,7 +190,7 @@
                     <div class="col-md-6">
                         @*<a asp-page="Index" class="btn btn-success form-control">الرجوع</a>*@
 
-                        <input asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-success form-control" type="button" value="@localizer.Get("الغاء")" onclick="history.back()">
+                        <input asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-secondary form-control" type="button" value="@localizer.Get("الغاء")" onclick="history.back()">
 
                     </div>
                     <div class="col-md-6">
@@ -182,10 +202,33 @@
 
             </div>
         </div>
- 
+
+        @*<input type="submit" value="Save Bulk Data" />*@
     </form>
 
 </div>
+
+
+
+@*@using (Html.BeginForm("BulkData", "Save", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+
+    }*@
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -214,7 +257,7 @@
                     $trNew.find(':text').val('');
 
                     var suffix = $trNew.find(':input:first').attr('name').match(/\d+/);
-                    $trNew.find("td:last").html('<a href="#" id="removeThis" onclick="return RemoveRow(this)" class="remove"><i class="fas fa-window-close"></i></a>');
+                    $trNew.find("td:last").html('<a href="#" id="removeThis" onclick="return RemoveRow(this)" title="الغاء" class="remove"><i class="fas fa-window-close"></i></a>');
 
 
                     $.each($trNew.find(':input'), function (i, val) {
@@ -270,15 +313,7 @@
                     const price = t.parentElement.children[2].children[0].value
 
                     t.parentElement.children[3].children[0].value = val * price
-        }
-
-                      // function checkStockQty(t) {
-                    
-                      //    const obj = await fetch(`${window.location.href}?handler=CheckQty&term=${t.children[0].value}&qty=${t.children[1].value}`)
-                      //    const json = await obj.json()
-                      //    // t.parentElement.children[2].children[0].value = json[0]
-                      //     console.log(json[1]);
-                      //}
+            }
 
     </script>
 

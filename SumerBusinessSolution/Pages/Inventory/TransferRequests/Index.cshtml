@@ -19,12 +19,12 @@
         <div class="row">
 
             <div class="col-md-6 ">
-                <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="Create" class="btn btn-info"> <i class="fas fa-plus"></i></a>
+                <a asp-route-culture="@Request.RouteValues["culture"]" title="طلب نقل جديد" asp-page="Create" class="btn btn-info"> <i class="fas fa-plus"></i></a>
             </div>
 
             <div class="col-md-6 text-right">
                 @*<h2 class="text-info"> طلبات حركه المنتجات </h2>*@
-                <h2 class="text-info"> @localizer.Get("طلبات حركة المنتجات")</h2>
+                <h2 class="text-info"> @localizer.Get("طلبات نقل المواد")</h2>
 
             </div>
 
@@ -37,7 +37,7 @@
                             <div class="row" style="margin-top:10px;">
                                 <div class="col-md-2 text-md-right pb-1">
 
-                                    <button asp-route-culture="@Request.RouteValues["culture"]" type="submit" name="submit" value="search" class="btn btn-info form-control">
+                                    <button asp-route-culture="@Request.RouteValues["culture"]" title="بحث" type="submit" name="submit" value="search" class="btn btn-info form-control">
                                         <i class="fas fa-search"></i>
                                     </button>
 
@@ -162,8 +162,6 @@
                     <th>
                         @Html.DisplayNameFor(m => m.InvTransferHeader.FromWhId)
                     </th>
-
-                    <th></th>
                 </tr>
 
                 @if (Model.InvTransferHeaderList.Count() == 0)
@@ -177,19 +175,19 @@
                     {
                         <tr>
 
-                            <td>
+                            <td style="width:250px;">
                                 <div class="btn-group" role="group">
                                     <form method="post">
 
 
                                         @if (User.IsInRole(SD.AdminEndUser) || (User.IsInRole(SD.SupervisorEndUser) & Model.RoleAuth.AppTransReq == true))
                                         {
-                                            <button asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-success text-white" asp-page-handler="ApproveTransferRequests" asp-route-ReqId="@item.Id" type="submit" title="Approve" name="Accept">
+                                            <button asp-route-culture="@Request.RouteValues["culture"]"  class="btn btn-info text-white" asp-page-handler="ApproveTransferRequests" asp-route-ReqId="@item.Id" type="submit" title="قبول" name="Accept">
                                                 @localizer.Get("") <i class="fas fa-check"></i>
                                             </button>
 
 
-                                            <button asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-danger text-white" asp-page-handler="RejectTransferRequests" asp-route-ReqId="@item.Id" type="submit" title="Reject" name="Reject">
+                                            <button asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-danger text-white" asp-page-handler="RejectTransferRequests" asp-route-ReqId="@item.Id" type="submit" title="رفض" name="Reject">
                                                 @localizer.Get("") <i class="fas fa-window-close"></i>
                                             </button>
                                         }
@@ -206,9 +204,9 @@
                                         }*@
 
                              
-                                        <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-info text-white" asp-page="RequestDetails" asp-route-ReqId="@item.Id" type="submit" title="Details" name="Details">
-                                            @localizer.Get("") <i class="fas fa-info"></i>
-                                        </a>
+                                    <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-primary text-white" asp-page="RequestDetails" asp-route-ReqId="@item.Id" type="submit" title="تفاصيل الطلب" name="Details">
+                                        <i class="far fa-clipboard"></i>@localizer.Get("")
+                                    </a>
                                     </form>
                                 </div>
                             </td>

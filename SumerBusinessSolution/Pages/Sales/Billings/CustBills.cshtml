@@ -103,17 +103,17 @@
                                 <form method="post">
                                     @if (item.Status == SD.OpenBill)
                                     {
-                                        <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-primary" asp-page="MakePayment" type="submit" asp-route-BhId="@item.Id" name="MakePayment">
+                                        <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-info" asp-page="MakePayment" type="submit" asp-route-BhId="@item.Id" title="تسديد" name="MakePayment">
                                             @localizer.Get("") <i class="fas fa-money-check-alt"></i>
                                         </a>
                                     }
 
-                                    <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-success" asp-page="Details" type="submit" asp-route-BhId="@item.Id" name="Details">
+                                    <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-primary" asp-page="Details" type="submit" title="تفاصيل الفاتورة" asp-route-BhId="@item.Id" name="Details">
                                         @localizer.Get("") <i class="far fa-clipboard"></i>
                                     </a>
                                     @if (User.IsInRole(SD.AdminEndUser) && (item.Status == SD.OpenBill))
                                     {
-                                        <a asp-route-culture="@Request.RouteValues["culture"]" data-toggle="modal" data-target="#Ask" class="btn btn-danger" asp-page-handler="CloseBillManually" asp-route-HeaderId="@item.Id" type="submit" name="Close">
+                                        <a asp-route-culture="@Request.RouteValues["culture"]" data-toggle="modal" data-target="#Ask" class="btn btn-danger" asp-page-handler="CloseBillManually" asp-route-HeaderId="@item.Id" type="submit" title="أغلاق" name="Close">
                                             @localizer.Get("") <i class="fas fa-window-close"></i>
                                         </a>
 

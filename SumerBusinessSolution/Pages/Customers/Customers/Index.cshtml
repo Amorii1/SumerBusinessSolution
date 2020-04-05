@@ -19,7 +19,7 @@
     <div class="row">
 
         <div class="col-md-6 ">
-            <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="Create" class="btn btn-info"> <i class="fas fa-plus"></i></a>
+            <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="Create" class="btn btn-info" title="اضافة"> <i class="fas fa-plus"></i></a>
         </div>
 
         <div class="col-md-6 text-right">
@@ -37,7 +37,7 @@
                         <div class="row" style="margin-top:10px;">
                             <div class="col-md-2 text-md-right pb-1">
 
-                                <button asp-route-culture="@Request.RouteValues["culture"]" type="submit" name="submit" value="search" class="btn btn-info form-control">
+                                <button asp-route-culture="@Request.RouteValues["culture"]" title="بحث" type="submit" name="submit" value="search" class="btn btn-info form-control">
                                     <i class="fas fa-search"></i>
                                 </button>
 
@@ -82,12 +82,12 @@
 
                     @if (User.IsInRole(SD.AdminEndUser))
                     {
-                        <td style="width:250px;">
+                        <td style="width:150px;">
                             <div class="btn-group" role="group">
                                 <form method="post">
 
 
-                                    <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-success text-white" asp-page="../Accounts/CustAccDetails" asp-route-CustId="@item.Id" type="submit" title="حسابات الزبون" name="AccDetails">
+                                    <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-primary text-white" asp-page="../Accounts/CustAccDetails" asp-route-CustId="@item.Id" type="submit" title=@localizer.Get("حسابات الزبون") name="AccDetails">
                                         @localizer.Get("") <i class="fas fa-file-invoice-dollar"></i>
                                     </a>
 
@@ -95,7 +95,7 @@
                                             @localizer.Get("فواتير الزبون") <i class="fas fa-file-invoice-dollar"></i>
                                         </a>*@
 
-                                    <a asp-page="Edit" asp-route-Id="@item.Id" asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-info text-white " type="submit" title="@localizer.Get("تعديل الحساب")">
+                                    <a asp-page="Edit" asp-route-Id="@item.Id" asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-success text-white " type="submit" title="@localizer.Get("تعديل الحساب")">
                                         <i class="fas fa-user-edit"></i>
                                         @localizer.Get("")
                                     </a>
