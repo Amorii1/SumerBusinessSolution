@@ -15,66 +15,68 @@
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
-    <div class=" backgroundWhite">
-        <div class="row">
+<partial name="_StatusMessage" model="Model.StatusMessage" />
 
-            <div class="col-md-6 ">
-                <a asp-route-culture="@Request.RouteValues["culture"]" title="طلب نقل جديد" asp-page="Create" class="btn btn-info"> <i class="fas fa-plus"></i></a>
-            </div>
+<div class=" backgroundWhite">
+    <div class="row">
 
-            <div class="col-md-6 text-right">
-                @*<h2 class="text-info"> طلبات حركه المنتجات </h2>*@
-                <h2 class="text-info"> @localizer.Get("طلبات نقل المواد")</h2>
+        <div class="col-md-6 ">
+            <a asp-route-culture="@Request.RouteValues["culture"]" title="طلب نقل جديد" asp-page="Create" class="btn btn-info"> <i class="fas fa-plus"></i></a>
+        </div>
 
-            </div>
+        <div class="col-md-6 text-right">
+            @*<h2 class="text-info"> طلبات حركه المنتجات </h2>*@
+            <h2 class="text-info"> @localizer.Get("طلبات نقل المواد")</h2>
 
         </div>
-        <form method="get" asp-page="Index">
-            <div class="border backgroundWhite">
-                <div @*style="height:60px;"*@ class="container ">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="row" style="margin-top:10px;">
-                                <div class="col-md-2 text-md-right pb-1">
 
-                                    <button asp-route-culture="@Request.RouteValues["culture"]" title="بحث" type="submit" name="submit" value="search" class="btn btn-info form-control">
-                                        <i class="fas fa-search"></i>
-                                    </button>
+    </div>
+    <form method="get" asp-page="Index">
+        <div class="border backgroundWhite">
+            <div @*style="height:60px;"*@ class="container ">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row" style="margin-top:10px;">
+                            <div class="col-md-2 text-md-right pb-1">
 
-                                </div>
-                                <div class="col-md-5 pb-1">
-                                    <div class="form-group row float-md-right">
-                                        <div>
-                                            <input asp-for="SearchToDate" class="form-control" />
-                                            @*<span asp-validation-for="SearchCreatedTime" class="text-danger"></span>*@
-                                        </div>
-                                        <div>
-                                            <label asp-for="SearchToDate" class="control-label"></label>
-                                        </div>
+                                <button asp-route-culture="@Request.RouteValues["culture"]" title="بحث" type="submit" name="submit" value="search" class="btn btn-info form-control">
+                                    <i class="fas fa-search"></i>
+                                </button>
+
+                            </div>
+                            <div class="col-md-5 pb-1">
+                                <div class="form-group row float-md-right">
+                                    <div>
+                                        <input asp-for="SearchToDate" class="form-control" />
+                                        @*<span asp-validation-for="SearchCreatedTime" class="text-danger"></span>*@
+                                    </div>
+                                    <div>
+                                        <label asp-for="SearchToDate" class="control-label"></label>
                                     </div>
                                 </div>
-                                <div class="col-md-5 pb-1">
-                                    <div class="form-group row float-md-right">
-                                        <div>
-                                            <input asp-for="SearchFromDate" class="form-control" />
-                                            @*<span asp-validation-for="SearchCreatedTime" class="text-danger"></span>*@
-                                        </div>
+                            </div>
+                            <div class="col-md-5 pb-1">
+                                <div class="form-group row float-md-right">
+                                    <div>
+                                        <input asp-for="SearchFromDate" class="form-control" />
+                                        @*<span asp-validation-for="SearchCreatedTime" class="text-danger"></span>*@
+                                    </div>
 
-                                        <div>
-                                            <label asp-for="SearchFromDate" class="control-label"></label>
-                                        </div>
+                                    <div>
+                                        <label asp-for="SearchFromDate" class="control-label"></label>
                                     </div>
                                 </div>
-
                             </div>
 
                         </div>
+
                     </div>
                 </div>
             </div>
-        </form>
+        </div>
+    </form>
 
-        @*<form method="get" asp-page="Index">
+    @*<form method="get" asp-page="Index">
             <div class="border backgroundWhite">
                 <div  class="container ">
                     <div class="row">
@@ -109,7 +111,7 @@
             </div>
         </form>*@
 
-        @*<form method="get" asp-page="Index">
+    @*<form method="get" asp-page="Index">
             <div class="border backgroundWhite">
 
                 <div class="container">
@@ -140,58 +142,58 @@
         </form>*@
 
 
-        <div>
+    <div>
 
-            <table class="table table-striped border table-responsive-md table-responsive-lg">
-                <tr class="table-secondary">
+        <table class="table table-striped border table-responsive-md table-responsive-lg">
+            <tr class="table-secondary">
 
-                    <th></th>
-                    <th>
-                        @Html.DisplayNameFor(m => m.InvTransferHeader.ApplicationUser.FirstName)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(m => m.InvTransferHeader.CreatedDateTime)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(m => m.InvTransferHeader.Note)
-                    </th>
+                <th></th>
+                <th>
+                    @Html.DisplayNameFor(m => m.InvTransferHeader.ApplicationUser.FirstName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(m => m.InvTransferHeader.CreatedDateTime)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(m => m.InvTransferHeader.Note)
+                </th>
 
-                    <th>
-                        @Html.DisplayNameFor(m => m.InvTransferHeader.ToWhId)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(m => m.InvTransferHeader.FromWhId)
-                    </th>
-                </tr>
+                <th>
+                    @Html.DisplayNameFor(m => m.InvTransferHeader.ToWhId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(m => m.InvTransferHeader.FromWhId)
+                </th>
+            </tr>
 
-                @if (Model.InvTransferHeaderList.Count() == 0)
+            @if (Model.InvTransferHeaderList.Count() == 0)
+            {
+                <h2 class="text-danger text-md-center"> @localizer.Get("لا يوجد طلبات")</h2>
+
+            }
+            else
+            {
+                @foreach (var item in Model.InvTransferHeaderList)
                 {
-                    <h2 class="text-danger text-md-center"> @localizer.Get("لا يوجد طلبات")</h2>
+                    <tr>
 
-                }
-                else
-                {
-                    @foreach (var item in Model.InvTransferHeaderList)
-                    {
-                        <tr>
-
-                            <td style="width:250px;">
-                                <div class="btn-group" role="group">
-                                    <form method="post">
+                        <td style="width:250px;">
+                            <div class="btn-group" role="group">
+                                <form method="post">
 
 
-                                        @if (User.IsInRole(SD.AdminEndUser) || (User.IsInRole(SD.SupervisorEndUser) & Model.RoleAuth.AppTransReq == true))
-                                        {
-                                            <button asp-route-culture="@Request.RouteValues["culture"]"  class="btn btn-info text-white" asp-page-handler="ApproveTransferRequests" asp-route-ReqId="@item.Id" type="submit" title="قبول" name="Accept">
-                                                @localizer.Get("") <i class="fas fa-check"></i>
-                                            </button>
+                                    @if (User.IsInRole(SD.AdminEndUser) || (User.IsInRole(SD.SupervisorEndUser) & Model.RoleAuth.AppTransReq == true))
+                                    {
+                                        <button asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-info text-white" asp-page-handler="ApproveTransferRequests" asp-route-ReqId="@item.Id" type="submit" title="قبول" name="Accept">
+                                            @localizer.Get("") <i class="fas fa-check"></i>
+                                        </button>
 
 
-                                            <button asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-danger text-white" asp-page-handler="RejectTransferRequests" asp-route-ReqId="@item.Id" type="submit" title="رفض" name="Reject">
-                                                @localizer.Get("") <i class="fas fa-window-close"></i>
-                                            </button>
-                                        }
-                                        @*else if (User.IsInRole(SD.SupervisorEndUser) & Model.RoleAuth.AppTransReq == true)
+                                        <button asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-danger text-white" asp-page-handler="RejectTransferRequests" asp-route-ReqId="@item.Id" type="submit" title="رفض" name="Reject">
+                                            @localizer.Get("") <i class="fas fa-window-close"></i>
+                                        </button>
+                                    }
+                                    @*else if (User.IsInRole(SD.SupervisorEndUser) & Model.RoleAuth.AppTransReq == true)
                                         {
                                             <button asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-success text-white" asp-page-handler="ApproveTransferRequests" asp-route-ReqId="@item.Id" type="submit" title="Approve" name="Accept">
                                                 @localizer.Get("") <i class="fas fa-check"></i>
@@ -203,38 +205,37 @@
                                             </button>
                                         }*@
 
-                             
+
                                     <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-primary text-white" asp-page="RequestDetails" asp-route-ReqId="@item.Id" type="submit" title="تفاصيل الطلب" name="Details">
                                         <i class="far fa-clipboard"></i>@localizer.Get("")
                                     </a>
-                                    </form>
-                                </div>
-                            </td>
+                                </form>
+                            </div>
+                        </td>
 
-                            <td>
-                                @Html.DisplayFor(m => item.ApplicationUser.FirstName)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(m => item.CreatedDateTime)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(m => item.Note)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(m => item.ToWarehouse.WhName)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(m => item.FromWarehouse.WhName)
-                            </td>
-                        </tr>
-
-                    }
+                        <td>
+                            @Html.DisplayFor(m => item.ApplicationUser.FirstName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.CreatedDateTime)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.Note)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.ToWarehouse.WhName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.FromWarehouse.WhName)
+                        </td>
+                    </tr>
 
                 }
 
-            </table>
+            }
 
-        </div>
+        </table>
 
     </div>
- 
+
+</div>

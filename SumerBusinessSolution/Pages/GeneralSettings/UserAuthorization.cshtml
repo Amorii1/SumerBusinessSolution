@@ -8,25 +8,42 @@
 
 <partial name="_StatusMessage" model="Model.StatusMessage" />
 @inject Services.CommonLocalizationService localizer
-<br />
 <div class="border backgroundWhite">
     @*<h2 class="text-info">المواد الواردة </h2>*@
-    <h2 class="text-info text-md-right">  @localizer.Get("Authorization")</h2>
+    <h2 class="text-info text-md-right">  @localizer.Get("الصلاحيات")</h2>
  
     <form method="post">
-        <div class="form-check">
+        <div dir="rtl" class="form-check text-md-right">
             <input type="checkbox" asp-for="SuperAppTransReq" class="form-check-input" id="exampleCheck1">
-            <label class="form-check-label" for="exampleCheck1">السوبرفايزر يستطيع الموافقة على طلبات التنقل بين المخازن</label>
+            <label class="form-check-label" for="exampleCheck1">&nbsp;&nbsp;&nbsp;المشرف يستطيع الموافقة على طلبات التنقل بين المخازن</label>
         </div>
-
-        <div class="form-check">
+        <br />
+        <div dir="rtl" class="form-check text-md-right">
             <input type="checkbox" asp-for="SuperCreateTrans" class="form-check-input" id="exampleCheck1">
-            <label class="form-check-label" for="exampleCheck2">السوبرفايزر يستطيع قيام بعملية التحويل بين المخازن</label>
+            <label class="form-check-label" for="exampleCheck2">&nbsp;&nbsp;&nbsp;المشرف يستطيع قيام بعملية التحويل بين المخازن</label>
+        </div>
+        <br />
+        <div class=" form-group row">
+            <div class="col-md-5 offset-md-5">
+                <div class="row">
+
+                    <div class="col-md-6">
+                        @*<a asp-page="Index" class="btn btn-success form-control">الرجوع</a>*@
+                        <a asp-page="/Settings" asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-secondary form-control">
+                            @localizer.Get("رجوع")
+                        </a>
+
+                    </div>
+                    <div class="col-md-6">
+                        @*<input type="submit" class="btn btn-info form-control" value="حفظ" />*@
+                        <input asp-route-culture="@Request.RouteValues["culture"]" type="submit" class="btn btn-info form-control" value="@localizer.Get("حفظ")" />
+
+                    </div>
+                </div>
+
+            </div>
         </div>
 
-
-
-        <input type="submit" value="Save" />
     </form>
 
 </div>

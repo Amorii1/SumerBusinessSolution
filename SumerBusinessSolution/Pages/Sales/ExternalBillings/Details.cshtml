@@ -15,6 +15,11 @@
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
+
+@*<partial name="_StatusMessage" model="Model.StatusMessage" />*@
+
+
+
 <style>
     table, th, td {
         border: 1px solid black;
@@ -226,7 +231,7 @@
                 <div class="row">
                     <div class="col-md-6">
 
-                        <input asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-secondary form-control" type="button" value="@localizer.Get("الغاء")" onclick="history.back()">
+                        <input asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-secondary form-control" type="button" value="@localizer.Get("رجوع")" onclick="history.back()">
 
                     </div>
                     @if (Model.ExternalBillHeader.Status == SD.OpenBill)

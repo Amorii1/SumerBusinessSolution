@@ -15,38 +15,44 @@
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
-@*<form method="get" asp-page="Index">
-    <div class="border backgroundWhite">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="row" style="margin-top:10px;">
-                        <div class="col-md-2 text-md-right pb-1">
-                         
-                            <button asp-route-culture="@Request.RouteValues["culture"]" type="submit" name="submit" value="search"   class="btn btn-info form-control">
-                                <i class="fas fa-search"></i>
-                            </button>
+<partial name="_StatusMessage" model="Model.StatusMessage" />
 
-                        </div>
-                    
-                        <div class="col-md-4 pb-1">
-                            <div class="form-group row float-md-right">
-                                <div>
-                                    <input asp-for="SearchToDate" class="form-control" />
-                                </div>
-                                <div>
-                                    <label asp-for="SearchToDate" class="control-label"></label>
+
+
+
+@*<form method="get" asp-page="Index">
+        <div class="border backgroundWhite">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row" style="margin-top:10px;">
+                            <div class="col-md-2 text-md-right pb-1">
+
+                                <button asp-route-culture="@Request.RouteValues["culture"]" type="submit" name="submit" value="search"   class="btn btn-info form-control">
+                                    <i class="fas fa-search"></i>
+                                </button>
+
+                            </div>
+
+                            <div class="col-md-4 pb-1">
+                                <div class="form-group row float-md-right">
+                                    <div>
+                                        <input asp-for="SearchToDate" class="form-control" />
+                                    </div>
+                                    <div>
+                                        <label asp-for="SearchToDate" class="control-label"></label>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-4 pb-1">
-                            <div class="form-group row float-md-right">
-                                <div>
-                                    <input asp-for="SearchFromDate" class="form-control" />
-                                </div>
+                            <div class="col-md-4 pb-1">
+                                <div class="form-group row float-md-right">
+                                    <div>
+                                        <input asp-for="SearchFromDate" class="form-control" />
+                                    </div>
 
-                                <div>
-                                    <label asp-for="SearchFromDate" class="control-label"></label>
+                                    <div>
+                                        <label asp-for="SearchFromDate" class="control-label"></label>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -54,8 +60,7 @@
                 </div>
             </div>
         </div>
-    </div>
-</form>*@
+    </form>*@
 
 
 <div class=" backgroundWhite">
@@ -160,6 +165,20 @@
 
         </table>
 
-    </div>
-</div>
+
+        <div class="form-group row">
+            <div class="col-md-5 offset-md-5">
+                <div class="row">
+                    <div class="col-md-6">
+
+                        <input asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-secondary form-control" type="button" value="@localizer.Get("رجوع")" onclick="history.back()">
+
+                    </div>
+                    </div>
+                    </div>
+                    </div>
+
+
+                </div>
+            </div>
 

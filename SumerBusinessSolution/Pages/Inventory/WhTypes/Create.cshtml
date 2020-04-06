@@ -14,6 +14,9 @@
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
+
+@*<partial name="_StatusMessage" model="Model.StatusMessage" />*@
+
 <div class="border backgroundWhite">
     @*<h2 class="text-info">أضافة  نوع مخزن جديد</h2>*@
     <h2 class="text-info text-md-right">@localizer.Get("اضافة نوع مخزن جديد")</h2>
@@ -45,7 +48,7 @@
 
                     <div class="col-md-6">
                         @*<a asp-page="../Warehouses/Index" class="btn btn-success form-control">رجوع </a>*@
-                        <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="../Warehouses/Index" class="btn btn-secondary form-control">@localizer.Get("الغاء") </a>
+                        <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="../Warehouses/Index" class="btn btn-secondary form-control">@localizer.Get("رجوع") </a>
 
                     </div>
                     <div class="col-md-6">
