@@ -50,11 +50,12 @@ namespace SumerBusinessSolution.Pages.Sales.Billings
         [TempData]
         public int NewCustId { get; set; }
 
-        public async Task<IActionResult> OnGet(int CustId)
+        public  IActionResult OnGet(int CustId)
         {
-            BillHeaderList = await _db.BillHeader
+            BillHeaderList = _db.BillHeader
                   .Include(header => header.Customer)
-                  .Where(header => header.CustId == CustId).ToListAsync();
+                  .Where(header => header.CustId == CustId).ToList()
+                  .OrderByDescending(header => header.CreatedDataTime);
 
             //StringBuilder Param = new StringBuilder();
             //Param.Append("&CustId=");

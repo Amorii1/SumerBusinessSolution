@@ -102,20 +102,22 @@
                         <td style="width:250px;">
                             <div class="btn-group" role="group">
                                 <form method="post">
-
-                                    <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-info" asp-page="MakePayment" title="تسديد" type="submit" asp-route-BhId="@item.Id" name="Accept">
-                                        @localizer.Get("") <i class="fas fa-money-check-alt"></i>
-                                    </a>
+                                    @if (item.Status == SD.OpenBill)
+                                    {
+                                        <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-info" asp-page="MakePayment" title="تسديد" type="submit" asp-route-BhId="@item.Id" name="Payment">
+                                            @localizer.Get("") <i class="fas fa-money-check-alt"></i>
+                                        </a>
+                                    }
 
                                     <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-primary" asp-page="Details" type="submit" title="التفاصيل" asp-route-BhId="@item.Id" name="Details">
                                         @localizer.Get("") <i class="far fa-clipboard"></i>
                                     </a>
-                                    @if (User.IsInRole(SD.AdminEndUser))
+                                    @*@if (User.IsInRole(SD.AdminEndUser) & item.Status == SD.OpenBill)
                                     {
-                                        <button  asp-route-culture="@Request.RouteValues["culture"]" data-toggle="modal" data-target="#Ask" class="btn btn-danger" title="اغلاق" asp-page-handler="CloseBillManually" asp-route-ExternalHeaderId="@item.Id" type="submit" name="Close">
+                                        <button asp-route-culture="@Request.RouteValues["culture"]" data-toggle="modal" data-target="#Ask" class="btn btn-danger" title="اغلاق" asp-page-handler="CloseBillManually" asp-route-ExternalHeaderId="@item.Id" type="submit" name="Close">
                                             @localizer.Get("") <i class="fas fa-window-close"></i>
                                         </button>
-                                        
+
 
 
                                         <div class="modal fade" id="Ask" role="dialog" method="post">
@@ -134,7 +136,7 @@
 
                                             </div>
                                         </div>
-                                    }
+                                    }*@
 
                                 </form>
                             </div>

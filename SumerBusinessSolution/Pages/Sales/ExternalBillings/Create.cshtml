@@ -15,7 +15,7 @@
 }
 
 <div class=" border backgroundWhite">
-    <h2 class="text-info  text-md-right">@localizer.Get("انشاء فاتورة جديدة")</h2>
+    <h2 class="text-info  text-md-right">@localizer.Get("انشاء فاتورة خارجية جديدة")</h2>
 
 
     <form method="post">
@@ -34,32 +34,32 @@
             </div>
         </div>
         @*<table>
-                <tr>
-                    <td>
-                        <select asp-for="a => @Model.BillHeader.CustId"
-                                asp-items="@(new SelectList(Model.Customer, "Id", "CompanyName"))"
-                                class="form-control ">
-                        </select>
-                    </td>
+            <tr>
+                <td>
+                    <select asp-for="a => @Model.BillHeader.CustId"
+                            asp-items="@(new SelectList(Model.Customer, "Id", "CompanyName"))"
+                            class="form-control ">
+                    </select>
+                </td>
 
-                </tr>
-                <tr>
-                    <td>
-                        <select id="PriceType" asp-for="@Model.PricingType.PriceType"
-                                asp-items="@(new SelectList(Model.UnitPriceTypesList, "Id","PriceType"))"
-                                class="form-control ">
-                        </select>
+            </tr>
+            <tr>
+                <td>
+                    <select id="PriceType" asp-for="@Model.PricingType.PriceType"
+                            asp-items="@(new SelectList(Model.UnitPriceTypesList, "Id","PriceType"))"
+                            class="form-control ">
+                    </select>
 
-                    </td>
+                </td>
 
-                </tr>
-            </table>*@
+            </tr>
+        </table>*@
 
 
         <table id="dataTable" dir="rtl" class="table table-striped border table-responsive-md table-responsive-lg">
             <tr class="table-secondary">
                 @*<table id="dataTable" border="0" cellpadding="0" cellspacing="0">
-                    <tr>*@
+                <tr>*@
                 <th>
                     @Html.DisplayNameFor(a => Model.Bi[0].ProdName)
                 </th>
@@ -77,10 +77,10 @@
                 </th>
 
                 @*<th>Prod Code</th>
-                    <th>Qty</th>
-                    <th>Unit Price</th>
-                    <th>Total </th>
-                    <th>Note</th>*@
+                <th>Qty</th>
+                <th>Unit Price</th>
+                <th>Total </th>
+                <th>Note</th>*@
                 <th><a href="#" title="اضافة" id="addNew">   <i class="fas fa-plus"></i></a></th>
             </tr>
             @if (Model.Bi != null && Model.Bi.Count > 0)
@@ -96,9 +96,9 @@
                         @*float a= (float)((ArrayList)paredes[i])[0];*@
                         @*<td>@Html.TextBoxFor(a => a[j].ContactName)</td>*@
 
-                        <td onclick="bindAutocomplete(this); bindPrice(this)" onchange="bindPrice(this)">@Html.TextBoxFor(a => Model.Bi[j].ProdName) </td>
-                        <td oninput="bindTotal(this)" onclick="bindTotal(this)">@Html.TextBoxFor(a => Model.Bi[j].Qty)</td>
-                        <td>@Html.TextBoxFor(a => Model.Bi[j].UnitPrice)</td>
+                        <td>@Html.TextBoxFor(a => Model.Bi[j].ProdName) </td>
+                        <td>@Html.TextBoxFor(a => Model.Bi[j].Qty)</td>
+                        <td oninput="bindTotal(this)" onclick="bindTotal(this)">@Html.TextBoxFor(a => Model.Bi[j].UnitPrice)</td>
                         <td>@Html.TextBoxFor(a => Model.Bi[j].TotalAmt)</td>
                         <td>@Html.TextBoxFor(a => Model.Bi[j].Note)</td>
                         <td>
@@ -128,6 +128,16 @@
                 <label asp-for="@Model.ExternalBillHeader.PaidAmt"> </label>
             </div>
         </div>
+
+        <div class="row form-group">
+
+            <div class="col-md-5 offset-md-5">
+                <input type="text" asp-for="a => @Model.ExternalBillHeader.Discount" class="form-control text-md-right" />
+            </div>
+            <div class="col-md-2">
+                <label asp-for="@Model.ExternalBillHeader.Discount"> </label>
+            </div>
+        </div>
         <div class="row form-group">
 
             <div class="col-md-5 offset-md-5">
@@ -138,36 +148,6 @@
                 <label asp-for="@Model.ExternalBillHeader.Note"> </label>
             </div>
         </div>
-        <div class="row form-group">
-
-            <div class="col-md-5 offset-md-5">
-                <input type="text" asp-for="a => @Model.ExternalBillHeader.Discount" class="form-control text-md-right" />
-            </div>
-            <div class="col-md-2">
-                <label asp-for="@Model.ExternalBillHeader.Discount"> </label>
-            </div>
-        </div>
-
-        @*<table>
-                <tr>
-                    <td>Note</td>
-                    <td>
-                        <input type="text" asp-for="a => @Model.BillHeader.Note" class="form-control text-md-right" />
-                    </td>
-                </tr>
-                <tr>
-                    <td>PaidAmt</td>
-                    <td>
-                        <input type="text" asp-for="a => @Model.BillHeader.PaidAmt" class="form-control text-md-right" />
-                    </td>
-                </tr>
-                <tr>
-                    <td>Discount</td>
-                    <td>
-                        <input type="text" asp-for="a => @Model.BillHeader.Discount" class="form-control text-md-right" />
-                    </td>
-                </tr>
-            </table>*@
 
         <div class=" form-group row">
             <div class="col-md-5 offset-md-5">
@@ -246,12 +226,18 @@
 
                 });
             });
+ 
+
+         
 
             function bindTotal(t) {
-                const val = t.parentElement.children[1].children[0].value //t.children[0].value
-                const price = t.parentElement.children[2].children[0].value
+
+                    const val =  t.parentElement.children[1].children[0].value //t.children[0].value
+                    const price = t.parentElement.children[2].children[0].value
 
                 t.parentElement.children[3].children[0].value = val * price
+
+                console.log(val);
             }
 
         </script>

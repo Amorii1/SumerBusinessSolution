@@ -52,7 +52,7 @@ namespace SumerBusinessSolution.Pages.Customers.Customers
                 await _db.SaveChangesAsync();
             StatusMessage = "تم التعديل على معلومات الزبون";
 
-            return RedirectToPage("/Customers/Customers/Edit", new { CustId = Customer.Id });
+            return RedirectToPage("/Customers/Customers/Edit", new { CustId = CustFromDB.Id });
         }
         }
     }

@@ -10,7 +10,8 @@ using Sumer.Utility;
 using SumerBusinessSolution.Data;
 using SumerBusinessSolution.Models;
 using SumerBusinessSolution.Transactions;
-
+using Microsoft.AspNetCore.SignalR;
+using SumerBusinessSolution.Hubs;
 namespace SumerBusinessSolution.Pages.Inventory.TransferRequests
 {
    [Authorize]
@@ -18,11 +19,12 @@ namespace SumerBusinessSolution.Pages.Inventory.TransferRequests
     {
         private readonly ApplicationDbContext _db;
         private readonly IInventoryTrans _InveTrans;
-
-        public CreateModel(ApplicationDbContext db, IInventoryTrans InveTrans)
+        private readonly IHubContext<NotificationHub> _hubContext;
+        public CreateModel(ApplicationDbContext db, IInventoryTrans InveTrans, IHubContext<NotificationHub> hubContext)
         {
             _db = db;
             _InveTrans = InveTrans;
+            _hubContext = hubContext;
         }
 
         public IEnumerable<Warehouse> WhFromlist { get; set; }
@@ -66,7 +68,7 @@ namespace SumerBusinessSolution.Pages.Inventory.TransferRequests
 
         public IActionResult OnPost()
         {
-            StatusMessage = _InveTrans.CreateInvTransferRequest(FromWhId, ToWhId, Note, InvT).GetAwaiter().GetResult();
+            StatusMessage = _InveTrans.CreateInvTransferRequest(FromWhId, ToWhId, Note, InvT, _hubContext).GetAwaiter().GetResult();
 
             return RedirectToPage("/inventory/transferrequests/create");
         }

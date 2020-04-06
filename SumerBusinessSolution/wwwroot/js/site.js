@@ -4,81 +4,41 @@
 // Write your Javascript code.
 
 $(function () {
+
     $('[data-toggle="tooltip"]').tooltip();
-    $('[data-toggle="popover"]').popover({
-        placement: 'bottom',
-        content: function () {
-            return $("#notification-content").html();
-        },
-        html: true
-    });
-
-    $('body').append(`<div id="notification-content" class="hide"></div>`)
-
-
-    function getNotification() {
-        var res = "<ul class='list-group'>";
-        $.ajax({
-            url: "/Notification/getNotification",
-            method: "GET",
-            success: function (result) {
-
-                if (result.count != 0) {
-                    $("#notificationCount").html(result.count);
-                    $("#notificationCount").show('slow');
-                } else {
-                    $("#notificationCount").html();
-                    $("#notificationCount").hide('slow');
-                    $("#notificationCount").popover('hide');
-                }
-
-                var notifications = result.userNotification;
-                notifications.forEach(element => {
-                    res = res + "<li class='list-group-item notification-text' data-id='" + element.notification.id + "'>" + element.notification.text + "</li>";
-                });
-
-                res = res + "</ul>";
-
-                $("#notification-content").html(res);
-
-                console.log(result);
-            },
-            error: function (error) {
-                console.log(error);
-            }
-        });
-    }
-
-    $("ul").on('click', 'li.notification-text', function (e) {
-        var target = e.target;
-        var id = $(target).data('id');
-
-        readNotification(id, target);
-    })
-
-    function readNotification(id, target) {
-        $.ajax({
-            url: "/Notification/ReadNotification",
-            method: "GET",
-            data: { notificationId: id },
-            success: function (result) {
-                getNotification();
-                $(target).fadeOut('slow');
-            },
-            error: function (error) {
-                console.log(error);
-            }
-        })
-    }
-
-    getNotification();
-
-    let connection = new signalR.HubConnection("/signalrServer");
-
-    connection.on('displayNotification', () => {
-        getNotification();
-    });
-    
-    connection.start();
 
 });
+
+function enableNotifications() {
+
+    var connection = new signalR.HubConnectionBuilder().withUrl("/notificationHub").build();
+
+    connection.on("NewTransferRequest", function (from, to, id) {
+        console.log("received notification");
+        $('<tr><td>' + from + '</td><td>' + to + '</td><td><a data-notificationId="' + id + '" class="notification-link" href="/inventory/transferrequests/requestdetails?ReqId=' + id + '" target="_blank">Link</a></td></tr>').prependTo('#table-body');
+
+        $('#notification').popover('show');
+    });
+
+    connection.start().then(function () {
+        return console.log("Connected");
+    }).catch(function (err) {
+        return console.error(err.toString());
+    });
+
+
+    $('#notification').popover({
+        content: function () {
+            return $($("#notification-content").html());
+        }
+    });
+
+    $.getJSON('/inventory/transferrequests/index?handler=pendingrequests', function (data) {
+        if (data && data.length) {
+            data.forEach((tx) => {
+                $('<tr><td>' + tx.fromWarehouse.whName + '</td><td>' + tx.toWarehouse.whName + '</td><td><a data-notificationId="' + tx.id + '" class="notification-link" href="/inventory/transferrequests/requestdetails?ReqId=' + tx.id + '" target="_blank">Link</a></td></tr>').prependTo('#table-body');
+            });
+            //$('#notification').popover('show');
+        }
+    });
+}

@@ -58,78 +58,110 @@
             </nav>
         </header>*@
 
-  
-        <div class="wrapper">
-            <div class="sidebar">
-                <a asp-page="/Index"><h2>SUMER</h2></a>
-                <ul>
-                    <li> <a class="nav-link  text-md-right text-dark" asp-area="" asp-page="/Index"> الرئيسية <i class="fas fa-home"></i></a></li>
-                    <li> <a class="nav-link  text-md-right text-dark" asp-area="" asp-page="/inventory/incominggoods/index"> المواد الواردة <i class="fas fa-truck-loading"></i></a></li>
-                    <li><a class="nav-link  text-md-right text-dark" asp-area="" asp-page="/inventory/transfer/index"> نقل المواد  <i class="fas fa-exchange-alt"></i></a></li>
 
+    <div class="wrapper">
+        <div class="sidebar">
+            <a asp-page="/Index"><h2>SUMER</h2></a>
+            <ul>
+                <li> <a class="nav-link  text-md-right text-dark" asp-area="" asp-page="/Index"> الرئيسية <i class="fas fa-home"></i></a></li>
+                <li> <a class="nav-link  text-md-right text-dark" asp-area="" asp-page="/inventory/incominggoods/index"> المواد الواردة <i class="fas fa-truck-loading"></i></a></li>
+                <li><a class="nav-link  text-md-right text-dark" asp-area="" asp-page="/inventory/transfer/index"> نقل المواد  <i class="fas fa-exchange-alt"></i></a></li>
+
+                @if (User.IsInRole(SD.AdminEndUser))
+                {
+                    <li><a class="nav-link  text-md-right text-dark" asp-area="" asp-page="/inventory/transfer/create"> نقل جديد  <i class="fas fa-exchange-alt"></i></a></li>
+                }
+                @if (User.IsInRole(SD.SupervisorEndUser) || User.IsInRole(SD.StoreEndUser))
+                {
+                    <li> <a class="nav-link text-md-right text-dark" asp-area="" asp-page="/inventory/transferrequests/create"> طلب نقل <i class="fas fa-exchange-alt"></i></a></li>
+                }
+                <li><a class="nav-link  text-md-right text-dark" asp-area="" asp-page="/inventory/transferrequests/index"> طلبات النقل <i class="fas fa-exchange-alt"></i></a></li>
+                <li> <a class="nav-link  text-md-right text-dark" asp-area="" asp-page="/Customers/Customers/index"> الزبائن<i class="fas fa-user"></i></a></li>
+                <li> <a class="nav-link  text-md-right text-dark" asp-area="" asp-page="/Sales/Billings/index"> الفواتير<i class="fas fa-file-invoice-dollar"></i></a></li>
+                <li> <a class="nav-link  text-md-right text-dark" asp-area="" asp-page="/Sales/Billings/Create"> فاتورة جديدة<i class="fas fa-file-invoice-dollar"></i></a></li>
+
+                @*<li> <a class="nav-link  text-md-right  text-md-right text-dark" asp-area="" asp-page="/inventory/products/index"> المنتجات <i class="fas fa-boxes"></i></a></li>*@
+                <li> <a class="nav-link  text-md-right text-dark" asp-area="" asp-page="/Reports"> التقارير<i class="fas fa-file-alt"></i></a></li>
+                <li> <a class="nav-link  text-md-right text-dark" asp-area="" asp-page="/settings"> الاعدادات <i class="fas fa-cogs"></i> </a></li>
+
+                @*<li> <a class="nav-link  text-md-right text-dark" asp-area="" asp-page="/inventory/warehouses/index"> المخازن<i class="fas fa-warehouse"></i></a></li>
+                    <li> <a class="nav-link  text-md-right text-dark" asp-area="" asp-page="/users/index"> الاعضاء<i class="fas fa-users"></i> </a></li>*@
+
+
+            </ul>
+            @if (User.IsInRole(SD.SupervisorEndUser) || User.IsInRole(SD.StoreEndUser) || User.IsInRole(SD.AdminEndUser))
+            {
+                <a href="../identity/account/Logout" class="btn btn-info form-control">@localizer.Get("تسجيل الخروج") <i class="fas fa-sign-out-alt"></i></a>
+            }
+            @*<div class="social_media">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>*@
+        </div>
+
+
+
+        <div class="container">
+
+            <main role="main" class="pb-3">
+                <div class="main_content">
+
+                    @*Notification Bell, SignalR*@
+                    @RenderBody()
+                    <a href="#" class="float" onclick="history.back()">
+                        <i class="fas fa-chevron-circle-left my-float"></i>
+                    </a>
+                    <div id="notification-content" style="display:none">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        From
+                                    </th>
+                                    <th>
+                                        To
+                                    </th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody id="table-body">
+                            </tbody>
+                        </table>
+                    </div>
                     @if (User.IsInRole(SD.AdminEndUser))
                     {
-                        <li><a class="nav-link  text-md-right text-dark" asp-area="" asp-page="/inventory/transfer/create"> نقل جديد  <i class="fas fa-exchange-alt"></i></a></li>
-                    }
-                    @if (User.IsInRole(SD.SupervisorEndUser) || User.IsInRole(SD.StoreEndUser))
-                    {
-                        <li> <a class="nav-link text-md-right text-dark" asp-area="" asp-page="/inventory/transferrequests/create"> طلب نقل <i class="fas fa-exchange-alt"></i></a></li>
-                    }
-                    <li><a class="nav-link  text-md-right text-dark" asp-area="" asp-page="/inventory/transferrequests/index"> طلبات النقل <i class="fas fa-exchange-alt"></i></a></li>
-                    <li> <a class="nav-link  text-md-right text-dark" asp-area="" asp-page="/Customers/Customers/index"> الزبائن<i class="fas fa-user"></i></a></li>
-                    <li> <a class="nav-link  text-md-right text-dark" asp-area="" asp-page="/Sales/Billings/index"> الفواتير<i class="fas fa-file-invoice-dollar"></i></a></li>
-                    <li> <a class="nav-link  text-md-right text-dark" asp-area="" asp-page="/Sales/Billings/Create"> فاتورة جديدة<i class="fas fa-file-invoice-dollar"></i></a></li>
-
-                    @*<li> <a class="nav-link  text-md-right  text-md-right text-dark" asp-area="" asp-page="/inventory/products/index"> المنتجات <i class="fas fa-boxes"></i></a></li>*@
-                    <li> <a class="nav-link  text-md-right text-dark" asp-area="" asp-page="/Reports"> التقارير<i class="fas fa-file-alt"></i></a></li>
-                    <li> <a class="nav-link  text-md-right text-dark" asp-area="" asp-page="/settings"> الاعدادات <i class="fas fa-cogs"></i> </a></li>
-
-                    @*<li> <a class="nav-link  text-md-right text-dark" asp-area="" asp-page="/inventory/warehouses/index"> المخازن<i class="fas fa-warehouse"></i></a></li>
-        <li> <a class="nav-link  text-md-right text-dark" asp-area="" asp-page="/users/index"> الاعضاء<i class="fas fa-users"></i> </a></li>*@
-
-
-                </ul>
-                @if (User.IsInRole(SD.SupervisorEndUser) || User.IsInRole(SD.StoreEndUser) || User.IsInRole(SD.AdminEndUser))
-                {
-                <a href="../identity/account/Logout" class="btn btn-info form-control">@localizer.Get("تسجيل الخروج") <i class="fas fa-sign-out-alt"></i></a>
-                }
-                @*<div class="social_media">
-            <a href="#"><i class="fab fa-facebook-f"></i></a>
-            <a href="#"><i class="fab fa-twitter"></i></a>
-            <a href="#"><i class="fab fa-instagram"></i></a>
-        </div>*@
-            </div>
-
-
-
-            <div class="container">
-
-                <main role="main" class="pb-3">
-                    <div class="main_content">
-
-
-
-
-                        @RenderBody()
-                        <a href="#" class="float" onclick="history.back()">
-                            <i class="fas fa-chevron-circle-left my-float"></i>
+                        <a href="#" class="float" id="notification" style="margin-left:60px!important"
+                           role="button"
+                           data-html="true"
+                           data-toggle="popover"
+                           data-placement="bottom"
+                           data-title="Transfer Requests">
+                            <i class="fas fa-bell my-float"></i>
                         </a>
-
-                    </div>
-                </main>
-
-            </div>
-        </div>
-        @*<footer class="border-top footer text-muted">
-                <div class="container">
-                    &copy; 2020 - SumerBusinessSolution - <a asp-area="" asp-page="/Privacy">Privacy</a>
+                    }
                 </div>
-            </footer>*@
+            </main>
+
+        </div>
+    </div>
+    @*<footer class="border-top footer text-muted">
+            <div class="container">
+                &copy; 2020 - SumerBusinessSolution - <a asp-area="" asp-page="/Privacy">Privacy</a>
+            </div>
+        </footer>*@
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
+    <script src="~/lib/jquery-ui/jquery-ui.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-
+    @if (User.IsInRole(SD.AdminEndUser))
+    {
+        <script>
+            enableNotifications();
+        </script>
+    }
     @RenderSection("Scripts", required: false)
 </body>
 </html>

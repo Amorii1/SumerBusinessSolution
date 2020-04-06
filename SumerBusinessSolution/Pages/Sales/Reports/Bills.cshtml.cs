@@ -33,7 +33,7 @@ namespace SumerBusinessSolution
             public BillHeader BillHeader { get; set; }
 
             [BindProperty]
-            public List<BillHeader> BillHeaderList { get; set; }
+            public IEnumerable<BillHeader> BillHeaderList { get; set; }
             public List<Customer> CustomerList { get; set; }
 
 
@@ -53,11 +53,11 @@ namespace SumerBusinessSolution
         [Display(Name = "الى")]
         public DateTime SearchToDate { get; set; }
 
-        public async Task<IActionResult> OnGet(string CustomerName = null, DateTime? SearchFromDate = null, DateTime? SearchToDate = null)
+        public  IActionResult  OnGet(string CustomerName = null, DateTime? SearchFromDate = null, DateTime? SearchToDate = null)
             {
-               //  CustomerList = _db.Customer.ToList();
-                BillHeaderList = await _db.BillHeader.Include(header=> header.Customer).Where(header => header.CreatedDataTime >= DateTime.Now.AddMonths(-1)).ToListAsync();
-             
+          
+              
+
             StringBuilder Param = new StringBuilder();
 
             Param.Append("&SearchCustomer=");
@@ -83,33 +83,40 @@ namespace SumerBusinessSolution
 
             if (SearchFromDate != null & SearchToDate !=null & CustomerName == null)
             {
-                BillHeaderList = await _db.BillHeader.Include(header => header.Customer).Where(u => u.CreatedDataTime >= SearchFromDate & u.CreatedDataTime <= SearchToDate).ToListAsync();
+                BillHeaderList =   _db.BillHeader
+                    .Include(header => header.Customer)
+                    .Where(u => u.CreatedDataTime >= SearchFromDate & u.CreatedDataTime <= SearchToDate).ToList()
+                     .OrderByDescending(header => header.CreatedDataTime);
             }
             else
             {
                 if (SearchFromDate != null & SearchToDate != null & CustomerName != null)
                 {
-                    BillHeaderList = await _db.BillHeader.Include(header => header.Customer).Where(u => u.Customer.CompanyName.ToLower().Contains(CustomerName.ToLower()) & u.CreatedDataTime >= SearchFromDate & u.CreatedDataTime <= SearchToDate).ToListAsync();
+                    BillHeaderList =   _db.BillHeader
+                        .Include(header => header.Customer)
+                        .Where(u => u.Customer.CompanyName.ToLower().Contains(CustomerName.ToLower()) & u.CreatedDataTime >= SearchFromDate & u.CreatedDataTime <= SearchToDate).ToList()
+                        .OrderByDescending(header => header.CreatedDataTime);
                 }
                 else
                 {
                     if (SearchFromDate == null & SearchToDate == null & CustomerName != null)
                     {
-                        BillHeaderList = await _db.BillHeader.Include(header => header.Customer).Where(u => u.Customer.CompanyName.ToLower().Contains(CustomerName.ToLower())).ToListAsync();
+                        BillHeaderList =   _db.BillHeader
+                            .Include(header => header.Customer)
+                            .Where(u => u.Customer.CompanyName.ToLower().Contains(CustomerName.ToLower())).ToList()
+                            .OrderByDescending(header => header.CreatedDataTime);
 
                     }
                     else
                     {
-                           BillHeaderList = await _db.BillHeader.Include(header => header.Customer).Where(header => header.CreatedDataTime >= DateTime.Now.AddMonths(-1)).ToListAsync();
+                        BillHeaderList = _db.BillHeader
+                               .Include(header => header.Customer)
+                               .Where(header => header.CreatedDataTime >= DateTime.Now.AddMonths(-1)).ToList()
+                               .OrderByDescending(header => header.CreatedDataTime);
                     }
                 }
-                  
-              
-               
+
             }
-
-         
-
             return Page();    
         }
 

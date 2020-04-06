@@ -98,6 +98,12 @@ namespace SumerBusinessSolution.Inventory.TransferRequests
             return Page();
 
         }
+
+        // SignalR code
+        public async Task<IActionResult> OnGetPendingRequests()
+        {
+            return new JsonResult(await _InveTrans.GetPendingTransferRequests());
+        }
         public  IActionResult  OnPostApproveTransferRequests(int ReqId)
         {
 

@@ -20,6 +20,9 @@ namespace SumerBusinessSolution.Pages.Sales.ExternalBillings
         private readonly ApplicationDbContext _db;
         private readonly ISalesTrans _SalesTrans;
 
+        [TempData]
+        public string StatusMessage { get; set; }
+
         //private readonly IServiceScopeFactory _serviceScopeFactory;
         public DetailsModel(ApplicationDbContext db, ISalesTrans SalesTrans)
         {
@@ -57,10 +60,17 @@ namespace SumerBusinessSolution.Pages.Sales.ExternalBillings
                 ExternalBillHeader = ExternalBillItemsList[0].ExternalBillHeader;
             }
 
-
-
             return Page();
         }
+
+        public IActionResult OnPostCloseBillManually(int BhId)
+        {
+
+            StatusMessage = _SalesTrans.CloseExternalBillManually(BhId).GetAwaiter().GetResult();
+
+            return RedirectToPage("/Sales/ExternalBillings/Index");
+        }
+
         public void OnPost()
         {
             //StatusMessage = _SalesTrans.MakePaymentOnBill(HeaderId, NewPayment).GetAwaiter().GetResult();

@@ -111,7 +111,7 @@
                                     <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-primary" asp-page="Details" type="submit" title="تفاصيل الفاتورة" asp-route-BhId="@item.Id" name="Details">
                                         @localizer.Get("") <i class="far fa-clipboard"></i>
                                     </a>
-                                    @if (User.IsInRole(SD.AdminEndUser) && (item.Status == SD.OpenBill))
+                                    @*@if (User.IsInRole(SD.AdminEndUser) && (item.Status == SD.OpenBill))
                                     {
                                         <a asp-route-culture="@Request.RouteValues["culture"]" data-toggle="modal" data-target="#Ask" class="btn btn-danger" asp-page-handler="CloseBillManually" asp-route-HeaderId="@item.Id" type="submit" title="أغلاق" name="Close">
                                             @localizer.Get("") <i class="fas fa-window-close"></i>
@@ -134,7 +134,7 @@
 
                                             </div>
                                         </div>
-                                    }
+                                    }*@
 
                                 </form>
                             </div>

@@ -21,7 +21,7 @@ using System.Reflection;
 using SumerBusinessSolution.Resources;
 using SumerBusinessSolution.RouteModelConventions;
 using Microsoft.AspNetCore.Localization.Routing;
- 
+using SumerBusinessSolution.Hubs;
 
 namespace SumerBusinessSolution
 {
@@ -132,7 +132,7 @@ namespace SumerBusinessSolution
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();
-               // endpoints.MapHub<ReqNote>("/reqNote");
+                endpoints.MapHub<NotificationHub>("/notificationHub");
             });
 
             //check this 

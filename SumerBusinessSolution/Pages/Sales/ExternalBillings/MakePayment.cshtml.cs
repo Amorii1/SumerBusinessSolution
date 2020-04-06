@@ -67,7 +67,7 @@ namespace SumerBusinessSolution.Pages.Sales.ExternalBillings
         {
             StatusMessage = _SalesTrans.MakePaymentOnExternalBill(ExternalHeaderId, NewPayment).GetAwaiter().GetResult();
 
-            return RedirectToPage("Index");
+            return RedirectToPage("MakePayment", new { BhId = ExternalHeaderId });
         }
     }
 }

@@ -51,7 +51,7 @@
                                 <div class="form-group row float-md-right">
                                     <div>
                                         <input asp-for="SearchToDate" class="form-control" />
-                                     </div>
+                                    </div>
                                     <div>
                                         <label asp-for="SearchToDate" class="control-label"></label>
                                     </div>
@@ -61,7 +61,7 @@
                                 <div class="form-group row float-md-right">
                                     <div>
                                         <input asp-for="SearchFromDate" class="form-control" />
-                                     </div>
+                                    </div>
 
                                     <div>
                                         <label asp-for="SearchFromDate" class="control-label"></label>
@@ -110,19 +110,20 @@
                 @foreach (var item in Model.BillHeaderList)
                 {
                     <tr>
-
                         <td style="width:150px;">
                             <div class="btn-group" role="group">
                                 <form method="post">
-
-                                    <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-info" asp-page="MakePayment" type="submit" title="تسديد" asp-route-BhId="@item.Id" name="Accept">
-                                        @localizer.Get("") <i class="fas fa-money-check-alt"></i>
-                                    </a>
+                                    @if (item.Status == SD.OpenBill)
+                                    {
+                                        <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-info" asp-page="MakePayment" type="submit" title="تسديد" asp-route-BhId="@item.Id" name="Payment">
+                                            @localizer.Get("") <i class="fas fa-money-check-alt"></i>
+                                        </a>
+                                    }
 
                                     <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-primary" asp-page="Details" type="submit" title="التفاصيل" asp-route-BhId="@item.Id" name="Details">
                                         @localizer.Get("") <i class="far fa-clipboard"></i>
                                     </a>
-                               
+
 
                                 </form>
                             </div>

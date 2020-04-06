@@ -9,7 +9,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Http;
 using Sumer.Utility;
-
+using Microsoft.AspNetCore.SignalR;
+using SumerBusinessSolution.Hubs;
+using Microsoft.AspNet.SignalR.Infrastructure;
+using Microsoft.AspNet.SignalR.Hubs;
 namespace SumerBusinessSolution.Transactions
 {
     public class InventoryTrans : IInventoryTrans
@@ -216,7 +219,7 @@ namespace SumerBusinessSolution.Transactions
         // This function is called when a Store User wants to transfer from a warehouse to another. So this function
         // Will create a request for the Admin to approve
 
-        public async Task<string> CreateInvTransferRequest(int? FromWhId, int? ToWhId, string Note, List<InvTransfer> InvTrans)
+        public async Task<string> CreateInvTransferRequest(int? FromWhId, int? ToWhId, string Note, List<InvTransfer> InvTrans, IHubContext<NotificationHub> hubContext)
         {
             // Create Transfer Header
 
@@ -260,11 +263,19 @@ namespace SumerBusinessSolution.Transactions
 
             await _db.SaveChangesAsync();
 
+            await hubContext.Clients.All.SendAsync("NewTransferRequest", _db.Warehouse.Find(NewHeader.FromWhId).WhName, _db.Warehouse.Find(NewHeader.ToWhId).WhName, NewHeader.Id);
+
             return "تم ارسال طلب التحويل بنجاح";
             //return "Request Added Successfully";
 
         }
 
+
+        // Signalr notifications 
+        public async Task<IEnumerable<InvTransferHeader>> GetPendingTransferRequests()
+        {
+            return await _db.InvTransferHeader.Include(c => c.FromWarehouse).Include(c => c.ToWarehouse).Where(c => c.TransferStatus == SD.Pending).ToListAsync();
+        }
         //public async Task<string> CreateInvTransferRequest(int ProdId, int FromWhId, int ToWhId, double Qty, string Note)
         //{
         //    // Check if the warehouse has enough qty of that product

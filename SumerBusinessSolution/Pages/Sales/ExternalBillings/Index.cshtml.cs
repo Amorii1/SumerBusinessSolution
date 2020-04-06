@@ -31,7 +31,7 @@ namespace SumerBusinessSolution.Pages.Sales.ExternalBillings
             public ExternalBillHeader ExternalBillHeader { get; set; }
 
             [BindProperty]
-            public List<ExternalBillHeader> ExternalBillHeaderList { get; set; }
+            public IEnumerable<ExternalBillHeader> ExternalBillHeaderList { get; set; }
             public List<Customer> CustomerList { get; set; }
 
 
@@ -71,24 +71,30 @@ namespace SumerBusinessSolution.Pages.Sales.ExternalBillings
             {
                 if (ShowAll == true)
                 {
-                    ExternalBillHeaderList = _db.ExternalBillHeader.Where(header => header.Customer.CompanyName.ToLower().Contains(CustomerName.ToLower())).ToList();
+                    ExternalBillHeaderList = _db.ExternalBillHeader
+                        .Where(header => header.Customer.CompanyName.ToLower().Contains(CustomerName.ToLower())).ToList()
+                        .OrderByDescending(header => header.CreatedDataTime);
                 }
                 else
                 {
 
-                    ExternalBillHeaderList = _db.ExternalBillHeader.Where(header => header.Status == SD.OpenBill & header.Customer.CompanyName.ToLower().Contains(CustomerName.ToLower())).ToList();
+                    ExternalBillHeaderList = _db.ExternalBillHeader
+                        .Where(header => header.Status == SD.OpenBill & header.Customer.CompanyName.ToLower().Contains(CustomerName.ToLower())).ToList()
+                        .OrderByDescending(header => header.CreatedDataTime);
                 }
             }
             else
             {
                 if (ShowAll == true)
                 {
-                    ExternalBillHeaderList = _db.ExternalBillHeader.ToList();
+                    ExternalBillHeaderList = _db.ExternalBillHeader.ToList()
+                        .OrderByDescending(header => header.CreatedDataTime);
 
                 }
                 else
                 {
-                    ExternalBillHeaderList = _db.ExternalBillHeader.Where(header => header.Status == SD.OpenBill).ToList();
+                    ExternalBillHeaderList = _db.ExternalBillHeader.Where(header => header.Status == SD.OpenBill).ToList()
+                        .OrderByDescending(header => header.CreatedDataTime);
 
                 }
             }

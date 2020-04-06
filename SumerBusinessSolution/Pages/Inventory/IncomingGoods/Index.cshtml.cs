@@ -28,6 +28,7 @@ namespace SumerBusinessSolution.Pages.Inventory.IncomingGoods
         public ProdInfo ProdInfo { get; set; }
         public Warehouse Warehouse { get; set; }
 
+
         [DataType(DataType.Date)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy/MM/dd}")]
         [Display(Name = "من")]
@@ -38,15 +39,6 @@ namespace SumerBusinessSolution.Pages.Inventory.IncomingGoods
         [Display(Name = "الى")]
         public DateTime SearchToDate { get; set; }
 
-        // //[DataType(DataType.Date)]
-        // [Display(Name = "من")]
-        // public DateTime SearchFromDate = new DateTime(DateTime.Now.Year, 1, 1); //  { get; set; }
-        // // [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy/MM/dd}")]
-
-        //// [DataType(DataType.Date)]
-        // [Display(Name = "الى")]
-        // public DateTime SearchToDate = DateTime.Today; //{ get; set; }
-        // //  [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
 
         public IActionResult OnGet(string SearchProdCode = null, DateTime? SearchFromDate = null, DateTime? SearchToDate = null)
         {
@@ -61,17 +53,17 @@ namespace SumerBusinessSolution.Pages.Inventory.IncomingGoods
             }
             Param.Append("&searchProdCode=");
 
-            if (SearchFromDate != null)
-            {
-                Param.Append(SearchFromDate);
-            }
-            Param.Append("&SearchCreatedTime=");
+            //if (SearchFromDate != null)
+            //{
+            //    Param.Append(SearchFromDate);
+            //}
+            //Param.Append("&SearchCreatedTime=");
 
-            if (SearchToDate != null)
-            {
-                Param.Append(SearchToDate);
-            }
-            Param.Append("&SearchToDate=");
+            //if (SearchToDate != null)
+            //{
+            //    Param.Append(SearchToDate);
+            //}
+            //Param.Append("&SearchToDate=");
 
             if (SearchFromDate != null & SearchToDate != null & SearchProdCode == null)
             {
