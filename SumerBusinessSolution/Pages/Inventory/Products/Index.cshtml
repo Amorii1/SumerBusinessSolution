@@ -1,6 +1,6 @@
 ﻿@page
 @model SumerBusinessSolution.Pages.Inventory.Products.IndexModel
-@using Sumer.Utility
+@using SumerBusinessSolution.Utility
 @using Microsoft.AspNetCore.Localization
 @using System.ComponentModel.DataAnnotations;
 @*@inject IHtmlLocalizer<IndexModel> htmlLocalizer*@ @*for html lozcalization*@
@@ -42,12 +42,11 @@
                                 </button>
 
                             </div>
-                            <div class="col-md-5 pb-1">
+                            <div class="col-md-5 pb-1" onclick="bindCodeAutocomplete(this)">
                                 @*@Html.Editor("SearchProdCode", new { htmlAttributes = new { @class = "form-control", placeholder = "....رمز المنتج" } })*@
                                 @Html.Editor("SearchProdCode", new { htmlAttributes = new { @class = "form-control text-md-right", placeholder = @localizer.Get("رمز المنتج....") } })
-
                             </div>
-                            <div class="col-md-5 pb-1">
+                            <div class="col-md-5 pb-1" onclick="bindNameAutocomplete(this)">
                                 @*@Html.Editor("SearchProdName", new { htmlAttributes = new { @class = "form-control", placeholder ="....اسم المنتج" } })*@
                                 @Html.Editor("SearchProdName", new { htmlAttributes = new { @class = "form-control text-md-right", placeholder = @localizer.Get("اسم المنتج....") } })
 
@@ -94,35 +93,35 @@
             {
                 @foreach (var item in Model.ProdInfo)
                 {
-        <tr>
+                    <tr>
 
-            <td style="width:250px;">
-                <div class="btn-group " role="group">
-                    <form method="post">
-                        @if (User.IsInRole(SD.AdminEndUser))
-                        {
+                        <td style="width:250px;">
+                            <div class="btn-group " role="group">
+                                <form method="post">
+                                    @if (User.IsInRole(SD.AdminEndUser))
+                                    {
 
-                            <a class="btn btn-success" asp-route-culture="@Request.RouteValues["culture"]" asp-page="Edit" asp-route-Id="@item.Id" title="تعديل"><i class="fa fa-edit"></i>@localizer.Get("")</a>
-                            <a class="btn btn-danger" asp-route-culture="@Request.RouteValues["culture"]" asp-page="Delete" asp-route-Id="@item.Id" title="مسح"><i class="far fa-trash-alt"></i>@localizer.Get("")</a>
-                        }
-                        <a class="btn btn-primary" asp-route-culture="@Request.RouteValues["culture"]" asp-page="Details" asp-route-Id="@item.Id" title="التفاصيل"><i class="far fa-clipboard"></i>@localizer.Get("")</a>
-               </form>
-                        </div>
-            </td>
+                                        <a class="btn btn-success" asp-route-culture="@Request.RouteValues["culture"]" asp-page="Edit" asp-route-ProdId="@item.Id" title="تعديل"><i class="fa fa-edit"></i>@localizer.Get("")</a>
+                                        <a class="btn btn-danger" asp-route-culture="@Request.RouteValues["culture"]" asp-page="Delete" asp-route-Id="@item.Id" title="مسح"><i class="far fa-trash-alt"></i>@localizer.Get("")</a>
+                                    }
+                                    <a class="btn btn-primary" asp-route-culture="@Request.RouteValues["culture"]" asp-page="Details" asp-route-Id="@item.Id" title="التفاصيل"><i class="far fa-clipboard"></i>@localizer.Get("")</a>
+                                </form>
+                            </div>
+                        </td>
 
-            <td>
-                @Html.DisplayFor(m => item.WholePrice)
-            </td>
-            <td>
-                @Html.DisplayFor(m => item.RetailPrice)
-            </td>
-            <td>
-                @Html.DisplayFor(m => item.ProdName)
-            </td>
-            <td>
-                @Html.DisplayFor(m => item.ProdCode)
-            </td>
-        </tr>
+                        <td>
+                            @Html.DisplayFor(m => item.WholePrice)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.RetailPrice)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.ProdName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.ProdCode)
+                        </td>
+                    </tr>
 
                 }
             }
@@ -131,3 +130,39 @@
     </div>
 </div>
 
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <script>
+        $(document).ready(function () {
+
+        $('#searchProdCode').autocomplete({
+        source: '@Url.Page("Index", "SearchNow")'
+        });
+        });
+        console.log("OK!!");
+
+           function bindCodeAutocomplete(t) {
+                $(t.children[0]).autocomplete({
+
+                        source: '@Url.Page("Index", "SearchNow")'
+                    });
+
+        }
+
+        
+           function bindNameAutocomplete(t) {
+                $(t.children[0]).autocomplete({
+
+                        source: '@Url.Page("Index", "SearchNameNow")'
+                    });
+
+            }
+
+    </script>
+}

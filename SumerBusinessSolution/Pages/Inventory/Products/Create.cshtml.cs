@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using SumerBusinessSolution.Data;
 using SumerBusinessSolution.Models;
+using SumerBusinessSolution.Transactions;
 
 namespace SumerBusinessSolution.Pages.Inventory.Products
 {
@@ -22,12 +23,14 @@ namespace SumerBusinessSolution.Pages.Inventory.Products
         private readonly ApplicationDbContext _db;
         private readonly IHostingEnvironment _host;
         private readonly UserManager<IdentityUser> _userManager;
+        private readonly IInventoryTrans _InveTrans;
 
-        public CreateModel(ApplicationDbContext db, IHostingEnvironment host, UserManager<IdentityUser> userManager)
+        public CreateModel(ApplicationDbContext db, IHostingEnvironment host, UserManager<IdentityUser> userManager, IInventoryTrans InvTrans)
         {
             _db = db;
             _host = host;
             _userManager = userManager;
+            _InveTrans = InvTrans;
 
         }
         [BindProperty]
@@ -39,20 +42,18 @@ namespace SumerBusinessSolution.Pages.Inventory.Products
         public IFormFile imgf { get; set; }
         public IList<TempProdImg> AddPhoto { get; set; }
 
-        //public async Task<IActionResult> OnGet()
-        //{
-        //    var user = await _userManager.GetUserAsync(User);
-        //    var email = await _userManager.GetEmailAsync(user);
-        //    ApplicationUser = _db.ApplicationUser.FirstOrDefault(c => c.Email == email);
-        //    if (ApplicationUser==null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    ProductInfo = new ProductInfo();
-        //    ProductInfo.ApplicationUser.Id = ProductInfo.ID;
-        //    ProductInfo.CreatedDateTime = DateTime.Now;
-        //    return Page();
-        //}
+        [BindProperty]
+        public double OpenQty { get; set; }
+
+        [BindProperty]
+        public List<Warehouse> WarehouseList { get; set; }
+
+        [BindProperty]
+        public int SelectedWarehouse { get; set; }
+
+        [TempData]
+        public string StatusMessage { get; set; }
+ 
         public IActionResult OnGet(string AdminId = null)
         {
             if (AdminId == null)
@@ -63,7 +64,8 @@ namespace SumerBusinessSolution.Pages.Inventory.Products
 
             };
 
-           // userid = AdminId;
+            // userid = AdminId;
+            WarehouseList = _db.Warehouse.Where(wh => wh.Active == true).ToList();
             return Page();
 
         }
@@ -100,6 +102,14 @@ namespace SumerBusinessSolution.Pages.Inventory.Products
 
         public async Task<IActionResult> OnPost()
         {
+            bool check =  _InveTrans.CheckProdCodeExist(ProductInfo.ProdCode).GetAwaiter().GetResult();
+
+            if(check == false)
+            {
+                StatusMessage = "رمز المادة مضافة سابقا";
+                return Page();
+            }
+
             var ClaimId = (ClaimsIdentity)User.Identity;
             var Claim = ClaimId.FindFirst(ClaimTypes.NameIdentifier);
             string UserId = Claim.Value;
@@ -157,8 +167,13 @@ namespace SumerBusinessSolution.Pages.Inventory.Products
             }
             _db.TempProdImg.RemoveRange(AddPhoto);
             _db.ProdInfo.Add(Information);
+
             await _db.SaveChangesAsync();
-            return RedirectToPage("Index");
+            var Prod = _db.ProdInfo.FirstOrDefault(pr => pr.ProdCode == ProductInfo.ProdCode);
+            bool CreateProdInWh = _InveTrans.CreateProdInWh(Prod.Id, SelectedWarehouse,OpenQty);
+
+            StatusMessage = "تمت اضافة مادة جديدة";
+            return RedirectToPage("Create");
         }
 
         private bool IsImagValidate(string filename)

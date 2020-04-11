@@ -13,7 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
-using Sumer.Utility;
+using SumerBusinessSolution.Utility;
 using SumerBusinessSolution.Data;
 using SumerBusinessSolution.Models;
 
@@ -22,7 +22,7 @@ namespace SumerBusinessSolution.Areas.Identity.Pages.Account
     
     [Authorize]
     [Authorize(Roles = SD.AdminEndUser)]
-    [AllowAnonymous]
+ 
     public class RegisterModel : PageModel
     {
 
@@ -56,10 +56,14 @@ namespace SumerBusinessSolution.Areas.Identity.Pages.Account
 
         public class InputModel
         {
+            //[Required]
+            //[EmailAddress]
+            //[Display(Name = "البريد الالكتروني")]
+            //public string Email { get; set; }
+
             [Required]
-            [EmailAddress]
-            [Display(Name = "البريد الالكتروني")]
-            public string Email { get; set; }
+            [Display(Name = "اسم الدخول")]
+            public string UserName { get; set; }
 
             [Required]
             [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
@@ -79,15 +83,25 @@ namespace SumerBusinessSolution.Areas.Identity.Pages.Account
             public string PhoneNumber { get; set; }
             [Display(Name = "مدير")]
             public bool IsAdmin { get; set; }
-            [Display(Name = "مشرف")]
-            public bool IsSupervisor { get; set; }
 
+            //[Display(Name = "مشرف")]
+            //public bool IsSupervisor { get; set; }
+
+            //[Display(Name = "موضف شو روم")]
+            //public bool IsStoreUser { get; set; }
 
         }
+        [BindProperty]
+        [Display(Name = "صفة المستخدم")]
+        public string SelectedRole { get; set; }
+
 
         public void OnGet(string returnUrl = null)
         {
+       
             ReturnUrl = returnUrl;
+
+ 
         }
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
@@ -98,8 +112,8 @@ namespace SumerBusinessSolution.Areas.Identity.Pages.Account
 
                 var user = new ApplicationUser
                 {
-                    UserName = Input.Email,
-                    Email = Input.Email,
+                    UserName = Input.UserName,
+                 //   Email = Input.Email,
                     FirstName = Input.FirstName,
                     LastName = Input.LastName,
                     PhoneNumber = Input.PhoneNumber,
@@ -141,24 +155,36 @@ namespace SumerBusinessSolution.Areas.Identity.Pages.Account
                     //await _signInManager.SignInAsync(user, isPersistent: false);
                     //return LocalRedirect(returnUrl);
 
-
-                    if (Input.IsAdmin)
+                    if (SelectedRole == SD.AdminEndUser)
                     {
                         await _userManager.AddToRoleAsync(user, SD.AdminEndUser);
                     }
-                    else
+                    else if (SelectedRole == SD.SupervisorEndUser)
                     {
-                        if (Input.IsSupervisor)
-                        {
-                            await _userManager.AddToRoleAsync(user, SD.SupervisorEndUser);
-
-                        }
-                        else
-                        {
-                            await _userManager.AddToRoleAsync(user, SD.StoreEndUser);
-
-                        }
+                        await _userManager.AddToRoleAsync(user, SD.SupervisorEndUser);
                     }
+                    else if(SelectedRole == SD.StoreEndUser)
+                    {
+                        await _userManager.AddToRoleAsync(user, SD.StoreEndUser);
+                    }
+
+                    //if (Input.IsAdmin)
+                    //{
+                    //    await _userManager.AddToRoleAsync(user, SD.AdminEndUser);
+                    //}
+                    //else
+                    //{
+                    //    if (Input.IsSupervisor)
+                    //    {
+                    //        await _userManager.AddToRoleAsync(user, SD.SupervisorEndUser);
+
+                    //    }
+                    //    else
+                    //    {
+                    //        await _userManager.AddToRoleAsync(user, SD.StoreEndUser);
+
+                    //    }
+                    //}
                 }
              
            

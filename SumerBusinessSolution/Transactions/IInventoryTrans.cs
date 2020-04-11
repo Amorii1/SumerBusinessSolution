@@ -23,7 +23,7 @@ namespace SumerBusinessSolution.Transactions
         Task<bool> CheckProdCodeExist(string ProdCode);
         Task<bool> UpdateProdStkQty(int StkId, double Qty);
         Task<IEnumerable<InvTransferHeader>> GetPendingTransferRequests();
-        bool CreateProdInWh(int ProdId);
+        bool CreateProdInWh(int ProdId, int WhId, double OpenQty);
 
     }
 }

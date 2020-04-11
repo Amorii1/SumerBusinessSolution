@@ -64,6 +64,31 @@ namespace SumerBusinessSolution.Pages.Inventory.Products
 
             return Page();
         }
+        public JsonResult OnGetSearchNow(string term)
+        {
+            if (term == null)
+            {
+                return new JsonResult("Not Found");
+            }
+            IQueryable<string> lstProdCode = from P in _db.ProdInfo
+                                             where (P.ProdCode.Contains(term))
+                                             select P.ProdCode;
+            return new JsonResult(lstProdCode);
+
+        }
+
+        public JsonResult OnGetSearchNameNow(string term)
+        {
+            if (term == null)
+            {
+                return new JsonResult("Not Found");
+            }
+            IQueryable<string> lstProdName = from P in _db.ProdInfo
+                                             where (P.ProdName.Contains(term))
+                                             select P.ProdName;
+            return new JsonResult(lstProdName);
+
+        }
 
 
         //public async Task<IActionResult> OnGet()

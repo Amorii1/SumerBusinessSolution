@@ -37,6 +37,9 @@ namespace SumerBusinessSolution.Models
 
         public DateTime CreatedDateTime { get; set; }
 
+        [Required]
+        public bool Active { get; set; }
+
         [ForeignKey("TypeId")]
         public virtual WhType WhType { set; get; }
 

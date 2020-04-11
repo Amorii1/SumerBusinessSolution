@@ -1,0 +1,66 @@
+﻿@page
+@model SumerBusinessSolution.Pages.Inventory.WhTypes.IndexModel
+@inject Services.CommonLocalizationService localizer
+@using SumerBusinessSolution.Utility
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<partial name="_StatusMessage" model="Model.StatusMessage" />
+<div class=" backgroundWhite">
+    <div class="row">
+
+        @if (User.IsInRole(SD.AdminEndUser))
+        {
+            <div class=" row col-md-6">
+                <div class="pl-md-1">
+                    <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="Create" class="btn btn-primary"> <i class="fas fa-plus"></i></a>
+                </div>
+            </div>
+        }
+        <div class="col-md-6 text-md-right">
+            @*<h2 class="text-info"> المخازن </h2>*@
+            <h2 class="text-info"> @localizer.Get("انواع المخازن") </h2>
+        </div>
+    </div>
+    <div>
+        <table dir="rtl" class="table table-striped border table-responsive-md table-responsive-lg">
+            <tr class="table-secondary">
+                <th>
+                    @Html.DisplayNameFor(m => m.WhType[0].Type)
+                </th>
+                <th></th>
+            </tr>
+            @if (Model.WhType.Count() == 0)
+            {
+                @*<h2 class="text-danger text-md-center">لا يوجد مخازن مضافة     </h2>*@
+                <h2 class="text-danger text-md-center">@localizer.Get("لا يوجد نوع مخزن مضاف")</h2>
+
+            }
+            else
+            {
+                @foreach (var item in Model.WhType)
+                {
+                    <tr>
+
+                        <td>
+                            @Html.DisplayFor(m => item.Type)
+                        </td>
+                        <td>
+                            <form>
+                                <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-primary text-white" asp-page="Edit" asp-route-TypeId="@item.Id" type="submit" title="تعديل" name="Edit">
+                                    <i class="far fa-clipboard"></i>@localizer.Get("")
+                                </a>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            }
+        </table>
+    </div>
+
+</div>
+
+
+

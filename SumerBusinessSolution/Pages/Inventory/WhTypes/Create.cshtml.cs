@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using Sumer.Utility;
+using SumerBusinessSolution.Utility;
 using SumerBusinessSolution.Data;
 using SumerBusinessSolution.Models;
 
@@ -27,6 +27,9 @@ namespace SumerBusinessSolution.Pages.Inventory.WhTypes
             WhType = await _db.WhType.FirstOrDefaultAsync(t => t.Id == TypeId);
             return Page();
         }
+
+        [TempData]
+        public string StatusMessage { get; set; }
         public async Task<IActionResult> OnPost()
         {
             if (!ModelState.IsValid)
@@ -35,6 +38,7 @@ namespace SumerBusinessSolution.Pages.Inventory.WhTypes
             }
             _db.WhType.Add(WhType);
             await _db.SaveChangesAsync();
+            StatusMessage = "تمت اضافة نوع مخزن جديد";
             return Page();
         }
     }

@@ -5,9 +5,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 using SumerBusinessSolution.Data;
 using SumerBusinessSolution.Models;
-using Sumer.Utility;
+using SumerBusinessSolution.Utility;
 
 namespace SumerBusinessSolution.Inventory.Warehouses
 {
@@ -27,7 +28,7 @@ namespace SumerBusinessSolution.Inventory.Warehouses
         public void OnGet()
         {
             WhType = _db.WhType.FirstOrDefault();
-            Warehouse = _db.Warehouse.ToList();
+            Warehouse = _db.Warehouse.Include(wh => wh.WhType).ToList();
            
 
         }

@@ -8,13 +8,13 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using Sumer.Utility;
+using SumerBusinessSolution.Utility;
 using SumerBusinessSolution.Data;
 using SumerBusinessSolution.Models;
 
 namespace SumerBusinessSolution.Inventory.Transfer
 {
-    [Authorize(Roles = SD.AdminEndUser)]
+    [Authorize]
     public class IndexModel : PageModel
     {
         private readonly ApplicationDbContext _db;
@@ -31,6 +31,9 @@ namespace SumerBusinessSolution.Inventory.Transfer
 
         public ProdInfo ProdInfo { get; set; }
         public Warehouse Warehouse { get; set; }
+
+        [BindProperty]
+        public RoleAuth RoleAuth { get; set; }
 
         ////[DataType(DataType.Date)]
         //[Display(Name = "من")]
@@ -122,7 +125,8 @@ namespace SumerBusinessSolution.Inventory.Transfer
                     }
                 }
             }
-            
+            RoleAuth = _db.RoleAuth.FirstOrDefault(ro => ro.RoleName == SD.SupervisorEndUser);
+
             return Page();
         }
 

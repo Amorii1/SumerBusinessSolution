@@ -1,6 +1,6 @@
 ﻿@page
 @model SumerBusinessSolution.Pages.Inventory.WhTypes.Create
-@using Sumer.Utility
+@using SumerBusinessSolution.Utility
 @using Microsoft.AspNetCore.Localization
 @using System.ComponentModel.DataAnnotations;
 @*@inject IHtmlLocalizer<IndexModel> htmlLocalizer*@ @*for html lozcalization*@
@@ -17,16 +17,17 @@
 
 @*<partial name="_StatusMessage" model="Model.StatusMessage" />*@
 
-<div class="border backgroundWhite">
-    @*<h2 class="text-info">أضافة  نوع مخزن جديد</h2>*@
-    <h2 class="text-info text-md-right">@localizer.Get("اضافة نوع مخزن جديد")</h2>
+    <div class="border backgroundWhite">
+        @*<h2 class="text-info">أضافة  نوع مخزن جديد</h2>*@
+        <partial name="_StatusMessage" model="Model.StatusMessage" />
+        <h2 class="text-info text-md-right">@localizer.Get("اضافة نوع مخزن جديد")</h2>
 
-    <form method="post">
-        <div class="form-group row">
+        <form method="post">
+            <div class="form-group row">
 
-            <div class="col-md-5 offset-md-5">
-                <input asp-for="WhType.Type" class="form-control text-md-right" />
-                @*<select WhType="myList" asp-for="WhType.Type" class="form-control">
+                <div class="col-md-5 offset-md-5">
+                    <input asp-for="WhType.Type" class="form-control text-md-right" />
+                    @*<select WhType="myList" asp-for="WhType.Type" class="form-control">
 
                         <option value="StoreRoom">مخزن</option>
                         <option value="ShowRoom">معرض</option>
@@ -34,34 +35,34 @@
 
 
 
+                </div>
+                <div class="col-md-2">
+                    <label asp-for="WhType.Type"></label>
+                </div>
+                <span asp-validation-for="WhType.Type" class="text-danger"></span>
             </div>
-            <div class="col-md-2">
-                <label asp-for="WhType.Type"></label>
-            </div>
-            <span asp-validation-for="WhType.Type" class="text-danger"></span>
-        </div>
 
-        <div class="form-group row">
-            <div class="col-md-5 offset-md-5">
+            <div class="form-group row">
+                <div class="col-md-5 offset-md-5">
 
-                <div class="row">
+                    <div class="row">
 
-                    <div class="col-md-6">
-                        @*<a asp-page="../Warehouses/Index" class="btn btn-success form-control">رجوع </a>*@
-                        <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="../Warehouses/Index" class="btn btn-secondary form-control">@localizer.Get("رجوع") </a>
+                        <div class="col-md-6">
+                            @*<a asp-page="../Warehouses/Index" class="btn btn-success form-control">رجوع </a>*@
+                            <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="../Warehouses/Index" class="btn btn-secondary form-control">@localizer.Get("رجوع") </a>
 
-                    </div>
-                    <div class="col-md-6">
-                        @*<input type="submit" class="btn btn-info form-control" value="حفظ" />*@
-                        <input asp-route-culture="@Request.RouteValues["culture"]" type="submit" class="btn btn-info form-control" value="@localizer.Get("اضافة")" />
+                        </div>
+                        <div class="col-md-6">
+                            @*<input type="submit" class="btn btn-info form-control" value="حفظ" />*@
+                            <input asp-route-culture="@Request.RouteValues["culture"]" type="submit" class="btn btn-info form-control" value="@localizer.Get("اضافة")" />
 
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-    </form>
-</div>
+        </form>
+    </div>
 
 @section Scripts {
     @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}

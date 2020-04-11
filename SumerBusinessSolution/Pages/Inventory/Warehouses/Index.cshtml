@@ -1,6 +1,6 @@
 ﻿@page
 @model SumerBusinessSolution.Inventory.Warehouses.IndexModel
-@using Sumer.Utility
+@using SumerBusinessSolution.Utility
 @using Microsoft.AspNetCore.Localization
 @using System.ComponentModel.DataAnnotations;
 @*@inject IHtmlLocalizer<IndexModel> htmlLocalizer*@ @*for html lozcalization*@
@@ -16,27 +16,6 @@
 
 
 <div class=" backgroundWhite">
-    <div class="row">
-
-        @if (User.IsInRole(SD.AdminEndUser))
-        {
-        <div class=" row col-md-6">
-            <div>
-                <a asp-route-culture="@Request.RouteValues["culture"]" title="اضافة مخزن جديد" asp-page="Create" class="btn btn-info">  @localizer.Get("مخزن")  <i class="fas fa-plus"></i></a>
-
-            </div>
-            <div class="pl-md-1">
-                <a asp-route-culture="@Request.RouteValues["culture"]" title="اضافة نوع جديد" asp-page="../Whtypes/Create" class="btn btn-primary"> @localizer.Get("نوع مخزن")  <i class="fas fa-plus"></i></a>
-            </div>
-        </div>
-            }
-            <div class="col-md-6 text-md-right">
-                @*<h2 class="text-info"> المخازن </h2>*@
-                <h2 class="text-info"> @localizer.Get("المخازن") </h2>
-
-            </div>
-        </div>
-
 
     <form method="get" asp-page="Index">
         <div class="border backgroundWhite">
@@ -73,7 +52,7 @@
     <div>
         <table class="table table-striped border table-responsive-md table-responsive-lg">
             <tr class="table-secondary">
-                
+                <th></th>
                 <th>
                     @Html.DisplayNameFor(m => m.Warehouse[0].CreatedDateTime)
                 </th>
@@ -104,12 +83,13 @@
                 @foreach (var item in Model.Warehouse)
                 {
         <tr>
-
-
-
-
-
-
+            <td>
+                <form>
+                    <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-primary text-white" asp-page="Edit" asp-route-WhId="@item.Id" type="submit" title="تعديل" name="Edit">
+                        <i class="far fa-clipboard"></i>@localizer.Get("")
+                    </a>
+                </form>
+            </td>
             <td>
                 @Html.DisplayFor(m => item.CreatedDateTime)
             </td>
@@ -128,6 +108,7 @@
             <td>
                 @Html.DisplayFor(m => item.WhCode)
             </td>
+
 
         </tr>
                 }

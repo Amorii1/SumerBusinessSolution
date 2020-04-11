@@ -45,10 +45,14 @@ namespace SumerBusinessSolution.Areas.Identity.Pages.Account
 
         public class InputModel
         {
-            [Display(Name = "البريد الالكتروني")]
+            //[Display(Name = "البريد الالكتروني")]
+            //[Required]
+            //[EmailAddress]
+            // public string Email { get; set; }
+            [Display(Name = "اسم الدخول")]
             [Required]
-            [EmailAddress]
-            public string Email { get; set; }
+            public string UserName { get; set; }
+
             [Display(Name = "الرمز السري")]
             [Required]
             [DataType(DataType.Password)]
@@ -83,7 +87,7 @@ namespace SumerBusinessSolution.Areas.Identity.Pages.Account
             {
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: true);
+                var result = await _signInManager.PasswordSignInAsync(Input.UserName, Input.Password, Input.RememberMe, lockoutOnFailure: true);
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("تم تسجيل الدخول  بنجاح");
@@ -116,7 +120,7 @@ namespace SumerBusinessSolution.Areas.Identity.Pages.Account
                 return Page();
             }
 
-            var user = await _userManager.FindByEmailAsync(Input.Email);
+            var user = await _userManager.FindByEmailAsync(Input.UserName);
             if (user == null)
             {
                 ModelState.AddModelError(string.Empty, "تم ارسال تاكيد الحساب, يرجى مراجعة بريدك الالكتروني");

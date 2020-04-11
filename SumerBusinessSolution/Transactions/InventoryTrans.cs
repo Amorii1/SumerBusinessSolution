@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Http;
-using Sumer.Utility;
+using SumerBusinessSolution.Utility;
 using Microsoft.AspNetCore.SignalR;
 using SumerBusinessSolution.Hubs;
 using Microsoft.AspNet.SignalR.Infrastructure;
@@ -57,17 +57,28 @@ namespace SumerBusinessSolution.Transactions
         }
 
         // This function used for the first time a product is created. 
-        // When a product is created it will create a record of this product for each Warehouse with ZERO Qty
-        public bool CreateProdInWh(int ProdId)
+        // First will open a balance qty of a selected warehouse in (WhStockQty) when a product is created, and the rest of the 
+        // warehouses, a record will be created with zero Qty
+        public bool CreateProdInWh(int ProdId, int WhId, double OpenQty)
         {
-            WarehouseList = _db.Warehouse.ToList();
+            WarehouseList = _db.Warehouse.Where(wh=> wh.Active == true).ToList();
 
             try
             {
                 //Iterating through a list of all warehouses
                 foreach (Warehouse Wh in WarehouseList)
                 {
-                    CreateInvStockQty(ProdId, Wh.Id, 0).GetAwaiter().GetResult() ;
+                    if(Wh.Id == WhId)
+                    {
+                        // this line will create an open qty balance at the selected warehouse
+                        CreateInvStockQty(ProdId, Wh.Id, OpenQty).GetAwaiter().GetResult();
+                    }
+                    else
+                    {
+                        // the rest of the warehouses will be with zero qty
+                        CreateInvStockQty(ProdId, Wh.Id, 0).GetAwaiter().GetResult();
+                    }
+                    
                 }
             }
             catch

@@ -1,6 +1,6 @@
 ﻿@page
 @model SumerBusinessSolution.Pages.Products.EditModel
-@using Sumer.Utility
+@using SumerBusinessSolution.Utility
 @using Microsoft.AspNetCore.Localization
 @using System.ComponentModel.DataAnnotations;
 @*@inject IHtmlLocalizer<IndexModel> htmlLocalizer*@ @*for html lozcalization*@
@@ -63,31 +63,22 @@
 
             </div>
         </div>
-        <div class="row form-group">
-            <div class="col-md-5 offset-md-5">
-                <input asp-for="ProdInfo.ProdCategory" class="form-control text-md-right" />
-                <span asp-validation-for="ProdInfo.ProdCategory" class="text-danger"> </span>
-            </div>
-            <div class="col-md-2">
-                <label asp-for="ProdInfo.ProdCategory"></label>
+        
+            <div class="row form-group">
+
+
+
+                <div class="col-md-5 offset-md-5">
+                    <input type="file" asp-for="img" class="form-control p-md-1">
+                    <img style="height: 200px; width: 100%; display: block; border-radius:3px;" src="~/img/@Model.ProdInfo.ImgFile">
+
+                </div>
+                <div class="col-md-2">
+                    <label asp-for="ProdInfo.ImgFile"></label>
+                </div>
 
             </div>
-
-        </div>
-
-
-        <div class="row form-group">
-            <div class="col-md-5 offset-md-5">
-                <input type="file" asp-for="img" class="form-control p-md-1">
-                <img style="height: 200px; width: 100%; display: block; border-radius:3px;" src="~/img/@Model.ProdInfo.ImgFile">
-
-            </div>
-            <div class="col-md-2">
-                <label asp-for="ProdInfo.ImgFile"></label>
-            </div>
-
-        </div>
-
+          
         @if (User.IsInRole(SD.AdminEndUser))
         {
             <div class="row form-group">

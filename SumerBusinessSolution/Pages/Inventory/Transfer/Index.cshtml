@@ -1,6 +1,6 @@
 ﻿@page
 @model SumerBusinessSolution.Inventory.Transfer.IndexModel
-@using Sumer.Utility
+@using SumerBusinessSolution.Utility
 @using Microsoft.AspNetCore.Localization
 @using System.ComponentModel.DataAnnotations;
 @*@inject IHtmlLocalizer<IndexModel> htmlLocalizer*@ @*for html lozcalization*@
@@ -9,7 +9,7 @@
 @inject Services.CommonLocalizationService localizer
 @*Second and the easier Method*@
 
-@using Sumer.Utility
+@using SumerBusinessSolution.Utility
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Pages/Shared/_Layout.cshtml";
@@ -18,17 +18,19 @@
 <div class=" backgroundWhite">
     <div class="row">
 
-      
+        @if (User.IsInRole(SD.AdminEndUser) || (User.IsInRole(SD.SupervisorEndUser) & Model.RoleAuth.CreateTrans == true))
+        {
             <div class="col-md-6">
                 <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="Create" title="نقل جديد" class="btn btn-info"> <i class="fas fa-plus"></i></a>
             </div>
-      
-        <div class="col-md-6 text-md-right">
-            @*<h2 class="text-info"> حركه المنتجات </h2>*@
-            <h2 class="text-info"> @localizer.Get("نقل المواد")</h2>
+        }
 
+            <div class="col-md-6 text-md-right">
+                @*<h2 class="text-info"> حركه المنتجات </h2>*@
+                <h2 class="text-info"> @localizer.Get("نقل المواد")</h2>
+
+            </div>
         </div>
-    </div>
 
     <form method="get" asp-page="Index">
         <div class="border backgroundWhite">

@@ -1,4 +1,4 @@
-﻿@using Sumer.Utility
+﻿@using SumerBusinessSolution.Utility
 @using Microsoft.AspNetCore.Localization
 @using System.ComponentModel.DataAnnotations;
 @*@inject IHtmlLocalizer<IndexModel> htmlLocalizer*@ @*for html lozcalization*@
@@ -61,7 +61,7 @@
 
     <div class="wrapper">
         <div class="sidebar">
-            <a asp-page="/Index"><h2>SUMER</h2></a>
+            <a asp-page="/Index"> <h2>BNAS FOR LIGHTING</h2></a>
             <ul>
                 <li> <a class="nav-link  text-md-right text-dark" asp-area="" asp-page="/Index"> الرئيسية <i class="fas fa-home"></i></a></li>
                 <li> <a class="nav-link  text-md-right text-dark" asp-area="" asp-page="/inventory/incominggoods/index"> المواد الواردة <i class="fas fa-truck-loading"></i></a></li>
@@ -71,10 +71,9 @@
                 {
                     <li><a class="nav-link  text-md-right text-dark" asp-area="" asp-page="/inventory/transfer/create"> نقل جديد  <i class="fas fa-exchange-alt"></i></a></li>
                 }
-                @if (User.IsInRole(SD.SupervisorEndUser) || User.IsInRole(SD.StoreEndUser))
-                {
-                    <li> <a class="nav-link text-md-right text-dark" asp-area="" asp-page="/inventory/transferrequests/create"> طلب نقل <i class="fas fa-exchange-alt"></i></a></li>
-                }
+             
+                <li> <a class="nav-link text-md-right text-dark" asp-area="" asp-page="/inventory/transferrequests/create"> طلب نقل جديد <i class="fas fa-exchange-alt"></i></a></li>
+                
                 <li><a class="nav-link  text-md-right text-dark" asp-area="" asp-page="/inventory/transferrequests/index"> طلبات النقل <i class="fas fa-exchange-alt"></i></a></li>
                 <li> <a class="nav-link  text-md-right text-dark" asp-area="" asp-page="/Customers/Customers/index"> الزبائن<i class="fas fa-user"></i></a></li>
                 <li> <a class="nav-link  text-md-right text-dark" asp-area="" asp-page="/Sales/Billings/index"> الفواتير<i class="fas fa-file-invoice-dollar"></i></a></li>

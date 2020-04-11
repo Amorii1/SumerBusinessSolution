@@ -1,6 +1,6 @@
 ﻿@page
 @model SumerBusinessSolution.Pages.Inventory.Products.DetailsModel
-@using Sumer.Utility
+@using SumerBusinessSolution.Utility
 @using Microsoft.AspNetCore.Localization
 @using System.ComponentModel.DataAnnotations;
 @*@inject IHtmlLocalizer<IndexModel> htmlLocalizer*@ @*for html lozcalization*@
@@ -55,18 +55,6 @@
             </div>
             <div class="col-md-2">
                 <label asp-for="ProdInfo.ProdDescription"></label>
-
-            </div>
-        </div>
-        <div class="row form-group">
-
-            <div class="col-md-5 offset-md-5">
-                <input asp-for="ProdInfo.ProdCategory" class="form-control text-md-right" disabled />
-                <span asp-validation-for="ProdInfo.ProdCategory" class="text-danger"> </span>
-
-            </div>
-            <div class="col-md-2">
-                <label asp-for="ProdInfo.ProdCategory"></label>
 
             </div>
         </div>
@@ -155,9 +143,9 @@
 
                     <div class="col-md-6">
                         @*<a asp-page="Index" asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-success form-control">@localizer.Get("رجوع")</a>*@
-                       
-                            <input asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-secondary form-control" type="button" value="@localizer.Get("رجوع")" onclick="history.back()">
-                        
+
+                        <input asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-secondary form-control" type="button" value="@localizer.Get("رجوع")" onclick="history.back()">
+
                     </div>
                     <div class="col-md-6">
                         @*<a asp-page="Edit" class="btn btn-info form-control" asp-route-Id="@Model.ProdInfo.Id">تعديل</a>*@
