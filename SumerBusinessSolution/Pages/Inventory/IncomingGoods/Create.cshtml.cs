@@ -72,7 +72,7 @@ namespace SumerBusinessSolution.Pages.Inventory.IncomingGoods
         {
             InG = new List<IncomingGood> { new IncomingGood { ProdId = 0, WhId = WhId , Qty = 0, Note = "" } };
 
-            WarehouseList = _db.Warehouse.ToList();
+            WarehouseList = _db.Warehouse.Where(wh=> wh.Active == true).OrderByDescending(wh=> wh.WhType.Type).ToList();
 
 
             return Page();

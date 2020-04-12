@@ -106,7 +106,7 @@ namespace SumerBusinessSolution.Pages.Inventory.Products
 
             if(check == false)
             {
-                StatusMessage = "رمز المادة مضافة سابقا";
+                StatusMessage = "Error!رمز المادة مضافة سابقا";
                 return Page();
             }
 

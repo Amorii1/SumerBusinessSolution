@@ -62,8 +62,11 @@ namespace SumerBusinessSolution.Pages.Inventory.TransferRequests
         {
             InvT = new List<InvTransfer> { new InvTransfer { ProdId = 0, Qty = 0, Note = "" } };
 
-            WhFromlist = _db.Warehouse.ToList();
-            WhTolist = _db.Warehouse.ToList().OrderByDescending(wh => wh.Id);
+        //    WhFromlist = _db.Warehouse.ToList();
+        //    WhTolist = _db.Warehouse.ToList().OrderByDescending(wh => wh.Id);
+
+            WhFromlist = _db.Warehouse.Where(wh => wh.Active == true).OrderByDescending(wh => wh.WhType.Type).ToList();
+            WhTolist = _db.Warehouse.Where(wh => wh.Active == true).OrderBy(wh => wh.WhType.Type).ToList();
         }
 
         public IActionResult OnPost()
@@ -73,7 +76,7 @@ namespace SumerBusinessSolution.Pages.Inventory.TransferRequests
             return RedirectToPage("/inventory/transferrequests/create");
         }
 
-        public JsonResult OnGetSearchNow(string term)
+        public JsonResult OnGetSearchNow(string term) 
         {
             if (term == null)
             {

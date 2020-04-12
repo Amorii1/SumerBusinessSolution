@@ -68,8 +68,8 @@ namespace SumerBusinessSolution.Pages.Inventory.Transfer
         {
             InvT = new List<InvTransfer> { new InvTransfer { ProdId = 0, Qty = 0, Note = "" } };
 
-            WhFromlist = _db.Warehouse.ToList();
-            WhTolist = _db.Warehouse.OrderByDescending(wh => wh.Id);
+            WhFromlist = _db.Warehouse.Where(wh=> wh.Active == true).OrderByDescending(wh => wh.WhType.Type).ToList();
+            WhTolist = _db.Warehouse.Where(wh => wh.Active == true).OrderBy(wh => wh.WhType.Type).ToList();
 
             return Page();
         }

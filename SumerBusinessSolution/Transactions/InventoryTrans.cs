@@ -71,7 +71,9 @@ namespace SumerBusinessSolution.Transactions
                     if(Wh.Id == WhId)
                     {
                         // this line will create an open qty balance at the selected warehouse
+                        CreateInvTransaction(ProdId, Wh.Id, OpenQty, SD.OpenBalance);
                         CreateInvStockQty(ProdId, Wh.Id, OpenQty).GetAwaiter().GetResult();
+                        
                     }
                     else
                     {

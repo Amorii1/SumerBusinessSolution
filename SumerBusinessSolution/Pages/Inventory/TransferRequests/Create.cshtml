@@ -14,174 +14,113 @@
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
-    <div class="  border backgroundWhite">
-        <partial name="_StatusMessage" model="Model.StatusMessage" />
-        @*<h2 class="text-info">حركة المواد</h2>*@
-        <h2 class="text-info text-md-right">@localizer.Get("طلب نقل المواد")</h2>
+<div class="  border backgroundWhite">
+    <partial name="_StatusMessage" model="Model.StatusMessage" />
+    <h2 class="text-info text-md-right">@localizer.Get("طلب نقل المواد")</h2>
 
-        <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <form method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
 
-            <div class="row form-group">
+        <div class="row form-group">
 
-                <div class="col-md-5 offset-md-5">
-                    <select asp-for="@Model.FromWhId"
-                            asp-items="@(new SelectList(Model.WhFromlist, "Id", "WhName"))"
-                            class="form-control ">
-                    </select>
-                </div>
-                <div class="col-md-2">
-                    <label asp-for="@Model.FromWhId"> </label>
-                </div>
+            <div class="col-md-5 offset-md-5">
+                <select asp-for="@Model.FromWhId"
+                        asp-items="@(new SelectList(Model.WhFromlist, "Id", "WhName"))"
+                        class="form-control ">
+                </select>
             </div>
-            <div class="row form-group">
-
-                <div class="col-md-5 offset-md-5">
-                    <select asp-for="@Model.ToWhId"
-                            asp-items="@(new SelectList(Model.WhTolist, "Id", "WhName"))"
-                            class="form-control ">
-                    </select>
-                </div>
-                <div class="col-md-2">
-                    <label asp-for="@Model.ToWhId"> </label>
-                </div>
+            <div class="col-md-2">
+                <label asp-for="@Model.FromWhId"> </label>
             </div>
-            <div class="row form-group">
+        </div>
+        <div class="row form-group">
 
-                <div class="col-md-5 offset-md-5">
-                    <input asp-for="@Model.Note" class="form-control  text-md-right" />
-                </div>
-                <div class="col-md-2">
-                    <label asp-for="@Model.Note"> </label>
-                </div>
+            <div class="col-md-5 offset-md-5">
+                <select asp-for="@Model.ToWhId"
+                        asp-items="@(new SelectList(Model.WhTolist, "Id", "WhName"))"
+                        class="form-control ">
+                </select>
             </div>
+            <div class="col-md-2">
+                <label asp-for="@Model.ToWhId"> </label>
+            </div>
+        </div>
+        <div class="row form-group">
 
+            <div class="col-md-5 offset-md-5">
+                <input asp-for="@Model.Note" class="form-control  text-md-right" />
+            </div>
+            <div class="col-md-2">
+                <label asp-for="@Model.Note"> </label>
+            </div>
+        </div>
 
-
-
-
-
-
-            @*<table>
+        <table dir="rtl" id="dataTable" class=" text-md-center table table-striped border table-responsive-md table-responsive-lg">
             <tr>
-                <td><h3>ملاحظات</h3></td>
-                <td>
-                    <input asp-for="@Model.Note" />
-                </td>
+                <th>
+                    @Html.DisplayNameFor(a => Model.InvT[0].ProdInfo.ProdCode)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(a => Model.InvT[0].Qty)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(a => Model.InvT[0].Note)
+                </th>
+                <th><a title="اضافة" href="#" id="addNew">   <i class="fas fa-plus"></i></a></th>
+
             </tr>
-            <tr>
-                <td><h3>من خزن</h3></td>
-                <td>
-                    <select asp-for="@Model.FromWhId"
-                            asp-items="@(new SelectList(Model.WhFromlist, "Id", "WhName"))"
-                            class="form-control ">
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td><h3>الى خزن</h3></td>
-                <td>
-                    <select asp-for="@Model.ToWhId"
-                            asp-items="@(new SelectList(Model.WhTolist, "Id", "WhName"))"
-                            class="form-control ">
-                    </select>
-                </td>
-            </tr>
+            @if (Model.InvT != null && Model.InvT.Count > 0)
+            {
 
-        </table>*@
+                int j = 0;
 
-            <table dir="rtl" id="dataTable" class=" text-md-center table table-striped border table-responsive-md table-responsive-lg">
-                <tr>
-                    @*<th>Product Code</th>
-                <th>Qty</th>
-                <th>Note</th>*@
-
-                    <th>
-                        @Html.DisplayNameFor(a => Model.InvT[0].ProdInfo.ProdCode)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(a => Model.InvT[0].Qty)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(a => Model.InvT[0].Note)
-                    </th>
-                    <th><a title="اضافة" href="#" id="addNew">   <i class="fas fa-plus"></i></a></th>
-
-                </tr>
-                @if (Model.InvT != null && Model.InvT.Count > 0)
+                foreach (var i in Model.InvT)
                 {
 
-                    int j = 0;
 
-                    foreach (var i in Model.InvT)
-                    {
+                    <tr>
+                        <td onclick="bindAutocomplete(this)">@Html.TextBoxFor(a => Model.InvT[j].ProdInfo.ProdCode) </td>
+                        <td>@Html.TextBoxFor(a => Model.InvT[j].Qty)</td>
+                        <td>@Html.TextBoxFor(a => Model.InvT[j].Note)</td>
+                        <td>
+                            @if (j > 0)
+                            {
+                                <a href="#" id="removeThis" class="remove">Remove</a>
 
-
-                        <tr>
-                            <td onclick="bindAutocomplete(this)">@Html.TextBoxFor(a => Model.InvT[j].ProdInfo.ProdCode) </td>
-                            <td>@Html.TextBoxFor(a => Model.InvT[j].Qty)</td>
-                            <td>@Html.TextBoxFor(a => Model.InvT[j].Note)</td>
-                            <td>
-                                @if (j > 0)
-                                {
-                                    <a href="#" id="removeThis" class="remove">Remove</a>
-
-                                }
-                            </td>
-                        </tr>
-                        j++;
-
-                    }
+                            }
+                        </td>
+                    </tr>
+                    j++;
 
                 }
-            </table>
-            <div class=" form-group row">
-                <div class="col-md-5 offset-md-5">
-                    <div class="row">
 
-                        <div class="col-md-6">
-                            @*<a asp-page="Index" class="btn btn-success form-control">الرجوع</a>*@
+            }
+        </table>
+        <div class=" form-group row">
+            <div class="col-md-5 offset-md-5">
+                <div class="row">
 
-                            <a asp-page="Index" asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-secondary form-control">
-                                @localizer.Get("رجوع")
-                            </a>
+                    <div class="col-md-6">
+                        <a asp-page="Index" asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-secondary form-control">
+                            @localizer.Get("رجوع")
+                        </a>
 
-                        </div>
-                        <div class="col-md-6">
-                            @*<input type="submit" class="btn btn-info form-control" value="حفظ" />*@
-                            <input asp-route-culture="@Request.RouteValues["culture"]" type="submit" class="btn btn-info form-control" value="@localizer.Get("ارسال")" />
-
-                        </div>
                     </div>
+                    <div class="col-md-6">
+                        <input asp-route-culture="@Request.RouteValues["culture"]" type="submit" class="btn btn-info form-control" value="@localizer.Get("ارسال")" />
 
+                    </div>
                 </div>
+
             </div>
+        </div>
 
+    </form>
+</div>
 
-            @*<input type="submit" value="Save Bulk Data" />*@
-        </form>
-    </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    @section Scripts{
-        <script language="javascript">
+@section Scripts{
+    <script language="javascript">
             $(document).ready(function () {
 
                 //1. Add new row
@@ -194,7 +133,7 @@
                     $trNew.find(':text').val('');
 
                     var suffix = $trNew.find(':input:first').attr('name').match(/\d+/);
-                    $trNew.find("td:last").html('<a href="#" id="removeThis" onclick="return RemoveRow(this)" title="الغاء" class="remove"><i class="fas fa-window-close"></i></a>');
+                    $trNew.find("td:last").html('<a href="#" id="removeThis" title="الغاء" onclick="return RemoveRow(this)" class="remove"><i class="fas fa-window-close"></i></a>');
 
 
                     $.each($trNew.find(':input'), function (i, val) {
@@ -232,15 +171,24 @@
         document.getElementById("dataTable").deleteRow(i);
     }
 
-        </script>
+    </script>
 
-        <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
-        <script>
-            $(document).ready(function () {
+    <script>
+        $(document).ready(function () {
 
+        });
+
+        $(document).ready(function () {
+            $(window).keydown(function (event) {
+                if (event.keyCode == 13) {
+                    event.preventDefault();
+                    return false;
+                }
             });
-        </script>
-    }
+        });
+    </script>
+}

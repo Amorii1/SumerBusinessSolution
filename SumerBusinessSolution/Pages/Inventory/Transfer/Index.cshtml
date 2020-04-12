@@ -45,7 +45,6 @@
                                 </button>
                             </div>
                             <div class="col-md-4 pb-1">
-                                @*@Html.Editor("searchProdCode", new { htmlAttributes = new { @class = "form-control", placeholder = ".....رمز المنتج" } })*@
                                 @Html.Editor("searchProdCode", new { htmlAttributes = new { @class = "form-control text-md-right", placeholder = @localizer.Get("رمز المنتج....") } })
 
                             </div>
@@ -53,7 +52,6 @@
                                 <div class="form-group row float-md-right">
                                     <div>
                                         <input type="date" asp-for="SearchToDate" class="form-control" />
-                                        @*<span asp-validation-for="SearchCreatedTime" class="text-danger"></span>*@
                                     </div>
                                     <div>
                                         <label asp-for="SearchToDate" class="control-label"></label>
@@ -64,7 +62,6 @@
                                 <div class="form-group row float-md-right">
                                     <div>
                                         <input type="date" asp-for="SearchFromDate" class="form-control" />
-                                        @*<span asp-validation-for="SearchCreatedTime" class="text-danger"></span>*@
                                     </div>
 
                                     <div>
@@ -72,11 +69,6 @@
                                     </div>
                                 </div>
                             </div>
-                            @*<div>
-            start Date:<input type="datetime" name="startdate" />
-            End Date:<input type="datetime" name="enddate" />
-        </div>*@
-
                         </div>
                     </div>
                 </div>
@@ -128,34 +120,35 @@
             {
                 @foreach (var item in Model.InvTransferList)
                 {
-                    <tr>
+        <tr>
 
-                        <td>
-                            @Html.DisplayFor(m => item.InvTransferHeader.ApplicationUser.FirstName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(m => item.InvTransferHeader.CreatedDateTime)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(m => item.Note)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(m => item.Qty)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(m => item.InvTransferHeader.ToWarehouse.WhName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(m => item.InvTransferHeader.FromWarehouse.WhName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(m => item.ProdInfo.ProdName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(m => item.ProdInfo.ProdCode)
-                        </td>
+            <td>
+                @Html.DisplayFor(m => item.InvTransferHeader.ApplicationUser.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(m => item.InvTransferHeader.CreatedDateTime)
+            </td>
+            <td>
+                @Html.DisplayFor(m => item.Note)
+            </td>
+            <td>
+                @Html.DisplayFor(m => item.Qty)
+            </td>
+            <td>
+                @Html.DisplayFor(m => item.InvTransferHeader.FromWarehouse.WhName)
+            </td>
+            <td>
+                @Html.DisplayFor(m => item.InvTransferHeader.ToWarehouse.WhName)
+            </td>
 
-                    </tr>
+            <td>
+                @Html.DisplayFor(m => item.ProdInfo.ProdName)
+            </td>
+            <td>
+                @Html.DisplayFor(m => item.ProdInfo.ProdCode)
+            </td>
+
+        </tr>
                 }
             }
 

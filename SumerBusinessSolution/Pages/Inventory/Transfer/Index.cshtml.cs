@@ -35,14 +35,6 @@ namespace SumerBusinessSolution.Inventory.Transfer
         [BindProperty]
         public RoleAuth RoleAuth { get; set; }
 
-        ////[DataType(DataType.Date)]
-        //[Display(Name = "من")]
-        //public DateTime SearchFromDate = new DateTime(DateTime.Now.Year, 1, 1); 
-
-        //// [DataType(DataType.Date)]
-        //[Display(Name = "الى")]
-        //public DateTime SearchToDate = DateTime.Today; 
-
         [DataType(DataType.Date)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy/MM/dd}")]
         [Display(Name = "من")]
