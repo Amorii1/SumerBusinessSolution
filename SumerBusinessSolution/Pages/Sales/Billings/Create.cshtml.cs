@@ -38,6 +38,10 @@ namespace SumerBusinessSolution.Pages.Sales.Billings
         public IList<Warehouse> WarehouseList { get; set; }
 
         [BindProperty]
+        [Display(Name = "المخزن")]
+        public int SelectedWh { get; set; }
+
+        [BindProperty]
         public IList<Customer> Customer { get; set; }
 
         public List<BillItems> Bi { get; set; }
@@ -51,14 +55,15 @@ namespace SumerBusinessSolution.Pages.Sales.Billings
         [BindProperty]
         public string Selected { get; set; }
 
-
+        [BindProperty]
+        public string CustomerName { get; set; }
 
         public InvStockQty InvStockQty { get; set; }
         public ActionResult OnGet()
         {
             Bi = new List<BillItems> { new BillItems { ProdId = 0, Qty = 0, UnitPrice = 0, TotalAmt = 0, Note = "" } };
             
-            WarehouseList = _db.Warehouse.ToList();
+            WarehouseList = _db.Warehouse.Where(wh=> wh.WhType.Type.ToLower() == SD.ShowRoom.ToLower()).ToList();
             Customer = _db.Customer.Where(cus => cus.Status == SD.ActiveCustomer).ToList();
 
             UnitPriceTypesList = _db.PricingType.ToList();
@@ -72,8 +77,9 @@ namespace SumerBusinessSolution.Pages.Sales.Billings
         }
         public ActionResult OnPost(List<BillItems> Bi)
         {
-
-            StatusMessage = _SalesTrans.CreateBill(BillHeader, Bi).GetAwaiter().GetResult();
+            Customer Customer = _db.Customer.FirstOrDefault(c=> c.CompanyName == CustomerName);
+            BillHeader.CustId = Customer.Id;
+            StatusMessage = _SalesTrans.CreateBill(BillHeader, Bi, SelectedWh).GetAwaiter().GetResult();
 
 
             //_db.SaveChanges();
@@ -166,6 +172,18 @@ namespace SumerBusinessSolution.Pages.Sales.Billings
             {
                 return false;
             }
+        }
+
+        public JsonResult OnGetSearchCustomer(string term)
+        {
+            if (term == null)
+            {
+                return new JsonResult("Not Found");
+            }
+            IQueryable<string> lstCustomers = from P in _db.Customer
+                                              where (P.CompanyName.Contains(term))
+                                              select P.CompanyName;
+            return new JsonResult(lstCustomers);
         }
     }
 

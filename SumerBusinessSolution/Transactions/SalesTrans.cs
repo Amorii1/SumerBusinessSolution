@@ -26,11 +26,11 @@ namespace SumerBusinessSolution.Transactions
         public Warehouse ShowRoom { get; set; }
         
         // this function will create a bill for the first time
-        public async Task<string> CreateBill(BillHeader Header, List<BillItems> BillItems)
+        public async Task<string> CreateBill(BillHeader Header, List<BillItems> BillItems, int WhId)
         {
             try
             {
-                ShowRoom = _db.Warehouse.Include(wh => wh.WhType).FirstOrDefault(wh => wh.WhType.Type == "Showroom"); 
+              //  ShowRoom = WhId; //_db.Warehouse.Include(wh => wh.WhType).FirstOrDefault(wh => wh.WhType.Type == "Showroom"); 
 
                 Header.CreatedById = GetLoggedInUserId();
                 Header.CreatedDataTime = DateTime.Now;
@@ -42,7 +42,7 @@ namespace SumerBusinessSolution.Transactions
                 {
                     item.ProdId = _db.ProdInfo.FirstOrDefault(pr => pr.ProdCode == item.ProdInfo.ProdCode).Id;
                     // first check if qty enough in the store room before proceeding
-                    bool CheckQty = CheckQtyInWh(item.ProdId??0, ShowRoom.Id, item.Qty);
+                    bool CheckQty = CheckQtyInWh(item.ProdId??0, WhId, item.Qty);
 
                     if(CheckQty == false)
                     {
@@ -95,10 +95,10 @@ namespace SumerBusinessSolution.Transactions
                     };
 
                     // decrease stock qty of that item 
-                    DecreaseStockQty(Bill.ProdId??0, ShowRoom.Id, Bill.Qty);
+                    DecreaseStockQty(Bill.ProdId??0, WhId, Bill.Qty);
 
                     // create inv transaction 
-                    CreateInvTransaction(Bill.ProdId??0, ShowRoom.Id, Bill.Qty ,SD.Sales);
+                    CreateInvTransaction(Bill.ProdId??0, WhId, Bill.Qty ,SD.Sales);
                     _db.BillItems.Add(Bill);
 
                 }

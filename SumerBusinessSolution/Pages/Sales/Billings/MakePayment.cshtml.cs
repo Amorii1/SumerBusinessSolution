@@ -45,6 +45,10 @@ namespace SumerBusinessSolution.Pages.Sales.Billings
         public double NewPayment { get; set; }
 
         [BindProperty]
+        [Display(Name = "المبلغ المتبقي")]
+        public double BalanceAmt { get; set; }
+
+        [BindProperty]
         [Display(Name = "رقم الفاتورة")]
         public int HeaderId { get; set; }
 
@@ -59,7 +63,7 @@ namespace SumerBusinessSolution.Pages.Sales.Billings
             TotalNetAmt = BillHeader.TotalNetAmt;
             PaidAmt = BillHeader.PaidAmt;
             NewPayment = 0;
-
+            BalanceAmt = TotalNetAmt - PaidAmt;
 
             return Page();
         }

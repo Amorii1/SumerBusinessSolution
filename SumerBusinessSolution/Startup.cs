@@ -49,14 +49,19 @@ namespace SumerBusinessSolution
             services.AddLocalization(options => options.ResourcesPath = "Resources");
             services.Configure<RequestLocalizationOptions>(options =>
             {
+                
                 var supportedCultures = new[]
                  {
-        new CultureInfo("ar"),
-        new CultureInfo("en"),
-        //new CultureInfo("fr"),
-        //new CultureInfo("es")
-    };
-                options.DefaultRequestCulture = new RequestCulture("ar");
+                    new CultureInfo("ar") {
+                     DateTimeFormat =
+                        {
+                            ShortDatePattern = "dd/MM/yyyy"
+                        }
+                    },
+                    new CultureInfo("en"),
+        
+            };
+                options.DefaultRequestCulture = new RequestCulture(culture: "ar", uiCulture: "ar");
                 options.SupportedCultures = supportedCultures;
                 options.SupportedUICultures = supportedCultures;
                 options.RequestCultureProviders.Insert(0, new RouteDataRequestCultureProvider { Options = options });
@@ -67,6 +72,7 @@ namespace SumerBusinessSolution
             services.AddRazorPages(options => {
                 options.Conventions.Add(new CultureTemplatePageRouteModelConvention());
             });
+ 
 
             services.AddMvcCore().AddViewLocalization();
             services.AddTransient<IInventoryTrans, InventoryTrans>();

@@ -45,7 +45,8 @@
                             <div class="col-md-3 pb-1">
                                 <div class="form-group row float-md-right">
                                     <div>
-                                        <input asp-for="SearchToDate" class="form-control" />
+                                        <input   asp-for="SearchToDate" class="form-control" />
+ 
                                     </div>
                                     <div>
                                         <label asp-for="SearchToDate" class="control-label"></label>
@@ -55,11 +56,11 @@
                             <div class="col-md-3 pb-1">
                                 <div class="form-group row float-md-right">
                                     <div>
-                                        <input asp-for="SearchFromDate" class="form-control" />
+                                        <input   asp-for="SearchFromDate" class="form-control" />
                                     </div>
 
                                     <div>
-                                        <label asp-for="SearchFromDate" class="control-label"></label>
+                                        <label  asp-for="SearchFromDate" class="control-label"></label>
                                     </div>
                                 </div>
                             </div>
@@ -92,6 +93,9 @@
                 <th>
                     @Html.DisplayNameFor(m => m.BillHeader.Customer.CompanyName)
                 </th>
+                <th>
+                    @Html.DisplayNameFor(m => m.BillHeader.Id)
+                </th>
             </tr>
 
             @if (Model.BillHeaderList.Count() == 0)
@@ -103,65 +107,68 @@
             {
                 @foreach (var item in Model.BillHeaderList)
                 {
-                    <tr>
-                        <td style="width:250px;">
-                            <div class="btn-group" role="group">
-                                <form method="post">
-                                    @if (item.Status == SD.OpenBill)
-                                    {
-                                        <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-info" title="تسديد" asp-page="../Billings/MakePayment" type="submit" asp-route-BhId="@item.Id" name="Payment">
-                                            @localizer.Get("") <i class="fas fa-money-check-alt"></i>
-                                        </a>
-                                    }
-                                    <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-primary" title="التفاصيل" asp-page="../Billings/Details" type="submit" asp-route-BhId="@item.Id" name="Details">
-                                        @localizer.Get("") <i class="far fa-clipboard"></i>
-                                    </a>
-                                    @*@if (User.IsInRole(SD.AdminEndUser))
-                                        {
-                                            <a asp-route-culture="@Request.RouteValues["culture"]" data-toggle="modal" title="اغلاق" data-target="#Ask" class="btn btn-danger" asp-page-handler="CloseBillManually" asp-route-HeaderId="@item.Id" type="submit" name="Close">
-                                                @localizer.Get("") <i class="fas fa-window-close"></i>
-                                            </a>
+        <tr>
+            <td style="width:250px;">
+                <div class="btn-group" role="group">
+                    <form method="post">
+                        @if (item.Status == SD.OpenBill)
+                        {
+                            <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-info" title="تسديد" asp-page="../Billings/MakePayment" type="submit" asp-route-BhId="@item.Id" name="Payment">
+                                @localizer.Get("") <i class="fas fa-money-check-alt"></i>
+                            </a>
+                        }
+                        <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-primary" title="التفاصيل" asp-page="../Billings/Details" type="submit" asp-route-BhId="@item.Id" name="Details">
+                            @localizer.Get("") <i class="far fa-clipboard"></i>
+                        </a>
+                        @*@if (User.IsInRole(SD.AdminEndUser))
+                    {
+                        <a asp-route-culture="@Request.RouteValues["culture"]" data-toggle="modal" title="اغلاق" data-target="#Ask" class="btn btn-danger" asp-page-handler="CloseBillManually" asp-route-HeaderId="@item.Id" type="submit" name="Close">
+                            @localizer.Get("") <i class="fas fa-window-close"></i>
+                        </a>
 
 
-                                            <div class="modal fade" id="Ask" role="dialog" method="post">
-                                                <div class="modal-dialog">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <button class="close" data-dismiss="modal">&times;</button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <p class="alert alert-danger">@localizer.Get("هل انت متأكد؟")</p>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <input asp-route-culture="@Request.RouteValues["culture"]" type="submit" class="btn btn-info" value="@localizer.Get("نعم")" />
-                                                        </div>
-                                                    </div>
+                        <div class="modal fade" id="Ask" role="dialog" method="post">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button class="close" data-dismiss="modal">&times;</button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p class="alert alert-danger">@localizer.Get("هل انت متأكد؟")</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <input asp-route-culture="@Request.RouteValues["culture"]" type="submit" class="btn btn-info" value="@localizer.Get("نعم")" />
+                                    </div>
+                                </div>
 
-                                                </div>
-                                            </div>
-                                        }*@
-
-                                </form>
                             </div>
-                        </td>
+                        </div>
+                    }*@
+
+                    </form>
+                </div>
+            </td>
 
 
-                        <td>
-                            @Html.DisplayFor(m => item.CreatedDataTime)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(m => item.Status)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(m => item.PaidAmt)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(m => item.TotalNetAmt)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(m => item.Customer.CompanyName)
-                        </td>
-                    </tr>
+            <td>
+                @Html.DisplayFor(m => item.CreatedDataTime)
+            </td>
+            <td>
+                @Html.DisplayFor(m => item.Status)
+            </td>
+            <td>
+                @Html.DisplayFor(m => item.PaidAmt)
+            </td>
+            <td>
+                @Html.DisplayFor(m => item.TotalNetAmt)
+            </td>
+            <td>
+                @Html.DisplayFor(m => item.Customer.CompanyName)
+            </td>
+            <td>
+                @Html.DisplayFor(m => item.Id)
+            </td>
+        </tr>
 
                 }
 

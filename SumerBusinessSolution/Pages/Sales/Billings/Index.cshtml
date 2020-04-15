@@ -98,6 +98,9 @@
                 <th>
                     @Html.DisplayNameFor(m => m.BillHeader.Customer.CompanyName)
                 </th>
+                <th>
+                    @Html.DisplayNameFor(m => m.BillHeader.Id)
+                </th>
             </tr>
 
             @if (Model.BillHeaderList.Count() == 0)
@@ -109,43 +112,46 @@
             {
                 @foreach (var item in Model.BillHeaderList)
                 {
-                    <tr>
-                        <td style="width:150px;">
-                            <div class="btn-group" role="group">
-                                <form method="post">
-                                    @if (item.Status == SD.OpenBill)
-                                    {
-                                        <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-info" asp-page="MakePayment" type="submit" title="تسديد" asp-route-BhId="@item.Id" name="Payment">
-                                            @localizer.Get("") <i class="fas fa-money-check-alt"></i>
-                                        </a>
-                                    }
+        <tr>
+            <td style="width:150px;">
+                <div class="btn-group" role="group">
+                    <form method="post">
+                        @if (item.Status == SD.OpenBill)
+                        {
+                            <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-info" asp-page="MakePayment" type="submit" title="تسديد" asp-route-BhId="@item.Id" name="Payment">
+                                @localizer.Get("") <i class="fas fa-money-check-alt"></i>
+                            </a>
+                        }
 
-                                    <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-primary" asp-page="Details" type="submit" title="التفاصيل" asp-route-BhId="@item.Id" name="Details">
-                                        @localizer.Get("") <i class="far fa-clipboard"></i>
-                                    </a>
-
-
-                                </form>
-                            </div>
-                        </td>
+                        <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-primary" asp-page="Details" type="submit" title="التفاصيل" asp-route-BhId="@item.Id" name="Details">
+                            @localizer.Get("") <i class="far fa-clipboard"></i>
+                        </a>
 
 
-                        <td>
-                            @Html.DisplayFor(m => item.CreatedDataTime)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(m => item.Status)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(m => item.PaidAmt)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(m => item.TotalNetAmt)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(m => item.Customer.CompanyName)
-                        </td>
-                    </tr>
+                    </form>
+                </div>
+            </td>
+
+
+            <td>
+                @Html.DisplayFor(m => item.CreatedDataTime)
+            </td>
+            <td>
+                @Html.DisplayFor(m => item.Status)
+            </td>
+            <td>
+                @Html.DisplayFor(m => item.PaidAmt)
+            </td>
+            <td>
+                @Html.DisplayFor(m => item.TotalNetAmt)
+            </td>
+            <td>
+                @Html.DisplayFor(m => item.Customer.CompanyName)
+            </td>
+            <td>
+                @Html.DisplayFor(m => item.Id)
+            </td>
+        </tr>
 
                 }
 

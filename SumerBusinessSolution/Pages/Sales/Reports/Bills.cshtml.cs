@@ -12,7 +12,7 @@ using SumerBusinessSolution.Data;
 using SumerBusinessSolution.Models;
 using SumerBusinessSolution.Transactions;
 using Microsoft.AspNetCore.Localization;
-
+using System.Globalization;
 
 namespace SumerBusinessSolution
 {
@@ -44,19 +44,19 @@ namespace SumerBusinessSolution
             public string StatusMessage { get; set; }
 
         [DataType(DataType.Date)]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy/MM/dd}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         [Display(Name = "من")]
-        public DateTime SearchFromDate { get; set; }
+        public DateTime SearchFromDate  { get; set; }
 
         [DataType(DataType.Date)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy/MM/dd}")]
         [Display(Name = "الى")]
-        public DateTime SearchToDate { get; set; }
+        public string SearchToDate  { get; set; }
 
         public  IActionResult  OnGet(string CustomerName = null, DateTime? SearchFromDate = null, DateTime? SearchToDate = null)
-            {
-          
-              
+        {
+            
+            CultureInfo culture = new CultureInfo("pt-BR");    
 
             StringBuilder Param = new StringBuilder();
 

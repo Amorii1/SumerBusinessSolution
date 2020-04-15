@@ -15,6 +15,7 @@ namespace SumerBusinessSolution.Services
         {
             var assemblyName = new AssemblyName(typeof(CommonResources).GetTypeInfo().Assembly.FullName);
             localizer = factory.Create(nameof(CommonResources), assemblyName.Name);
+            
         }
 
         public string Get(string key)
