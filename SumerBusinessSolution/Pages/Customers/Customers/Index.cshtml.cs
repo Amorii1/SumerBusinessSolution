@@ -9,15 +9,18 @@ using Microsoft.EntityFrameworkCore;
 using SumerBusinessSolution.Utility;
 using SumerBusinessSolution.Data;
 using SumerBusinessSolution.Models;
+using SumerBusinessSolution.Transactions;
 
 namespace SumerBusinessSolution.Pages.Customers.Customers
 {
     public class IndexModel : PageModel
     {
         private readonly ApplicationDbContext _db;
-        public IndexModel(ApplicationDbContext db)
+        private readonly ICustomerTrans _CustTrans;
+        public IndexModel(ApplicationDbContext db, ICustomerTrans CustTrans)
         {
             _db = db;
+            _CustTrans = CustTrans; 
         }
 
 
@@ -27,7 +30,10 @@ namespace SumerBusinessSolution.Pages.Customers.Customers
         [BindProperty]
         public  List<Customer> CustomerList { get; set; }
 
-     
+        [TempData]
+        public string StatusMessage { get; set; }
+
+
         public async Task<IActionResult> OnGet(string CustomerName = null)
         {
             StringBuilder Param = new StringBuilder();
@@ -50,6 +56,12 @@ namespace SumerBusinessSolution.Pages.Customers.Customers
             return Page();
         }
 
+        public IActionResult OnPostDeleteCustomer(int CustId)
+        {
+            StatusMessage = _CustTrans.DeleteCustomer(CustId).GetAwaiter().GetResult();
+            return RedirectToPage("/Customers/Customers/Index");
+        }
+
         public JsonResult OnGetSearchCustomer(string term)
         {
             if (term == null)
@@ -61,5 +73,7 @@ namespace SumerBusinessSolution.Pages.Customers.Customers
                                               select P.CompanyName;
             return new JsonResult(lstCustomers);
         }
+
+       
     }
 }

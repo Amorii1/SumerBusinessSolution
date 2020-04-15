@@ -35,6 +35,10 @@ namespace SumerBusinessSolution.Utility
         // Warehouse Types
         public const string ShowRoom = "Show Room";
         public const string StoreRoom = "Store Room";
+
+        // Sales Types -- to be added later to PricingType table 
+        public const string WholePrice = "جملة";
+        public const string RetailPrice = "مفرد";
     }
 }
 

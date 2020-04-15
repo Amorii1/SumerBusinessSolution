@@ -48,9 +48,9 @@ namespace SumerBusinessSolution.Transactions
     
         }
         // this function Deactivates a customer
-        public async Task<string> CreateCustomer(int CustId)
+        public async Task<string> DeactivateCustomer(int CustId)
         {
-              Customer = await _db.Customer.FirstOrDefaultAsync(cu => cu.Id == CustId);
+            Customer = await _db.Customer.FirstOrDefaultAsync(cu => cu.Id == CustId);
 
             Customer.Status = SD.InactiveCustomer;
 
@@ -58,6 +58,18 @@ namespace SumerBusinessSolution.Transactions
 
             return "تمت العملية بنجاح";
         }
+
+        public async Task<string> DeleteCustomer(int CustId)
+        {
+            Customer = await _db.Customer.FirstOrDefaultAsync(cu => cu.Id == CustId);
+
+            _db.Remove(Customer);
+
+            await _db.SaveChangesAsync();
+
+            return "تم حذف الزبون بنجاح";
+        }
+
 
         // Helper functions //
 

@@ -9,5 +9,7 @@ namespace SumerBusinessSolution.Transactions
     public interface ICustomerTrans
     {
         Task<string> CreateCustomer(Customer NewCust);
+        Task<string> DeactivateCustomer(int CustId);
+        Task<string> DeleteCustomer(int CustId);
     }
 }

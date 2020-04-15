@@ -59,8 +59,8 @@ namespace SumerBusinessSolution.Pages.Customers.Customers
 
                 StatusMessage = _CustTrans.CreateCustomer(Customer).GetAwaiter().GetResult() ;
 
-              
-                return Page();  
+
+            return RedirectToPage("Create");
             }
         }
     }

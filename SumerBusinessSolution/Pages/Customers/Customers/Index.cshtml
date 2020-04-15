@@ -82,24 +82,20 @@
 
                     @if (User.IsInRole(SD.AdminEndUser))
                     {
-                        <td style="width:150px;">
+                        <td style="width:170px;">
                             <div class="btn-group" role="group">
                                 <form method="post">
+                                    <button asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-danger text-white" asp-page-handler="DeleteCustomer" asp-route-CustId="@item.Id" type="submit" title="حذف" name="Delete">
+                                        @localizer.Get("") <i class="fas fa-trash-alt"></i>
+                                    </button>
 
-
-                                    <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-primary text-white" asp-page="../Accounts/CustAccDetails" asp-route-CustId="@item.Id" type="submit" title=@localizer.Get("حسابات الزبون") name="AccDetails">
-                                        @localizer.Get("") <i class="fas fa-file-invoice-dollar"></i>
-                                    </a>
-
-                                    @*<a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-success text-white" asp-page="/sales/Billings/CustBills" asp-route-CustId="@item.Id" type="submit" title="فواتير الزبون" name="CustomerBills">
-                                            @localizer.Get("فواتير الزبون") <i class="fas fa-file-invoice-dollar"></i>
-                                        </a>*@
-
-                                    <a asp-page="Edit" asp-route-CustId="@item.Id" asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-success text-white " type="submit" title="@localizer.Get("تعديل الحساب")">
+                                    <a asp-page="Edit" asp-route-CustId="@item.Id" asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-success text-white " type="submit" title="@localizer.Get("تعديل معلومات الزبون")">
                                         <i class="fas fa-user-edit"></i>
                                         @localizer.Get("")
                                     </a>
-
+                                    <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-primary text-white" asp-page="../Accounts/CustAccDetails" asp-route-CustId="@item.Id" type="submit" title=@localizer.Get("حسابات الزبون") name="AccDetails">
+                                        @localizer.Get("") <i class="fas fa-file-invoice-dollar"></i>
+                                    </a>
 
                                 </form>
                             </div>

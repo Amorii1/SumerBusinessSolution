@@ -225,20 +225,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <script>
     function RemoveRow(r) {
         var i = r.parentNode.parentNode.rowIndex;
@@ -328,8 +314,14 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
     <script>
-        $(document).ready(function () {
-
+   
+           $(document).ready(function () {
+            $(window).keydown(function (event) {
+                if (event.keyCode == 13) {
+                    event.preventDefault();
+                    return false;
+                }
+            });
         });
     </script>
 }

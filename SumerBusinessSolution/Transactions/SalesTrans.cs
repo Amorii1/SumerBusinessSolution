@@ -23,14 +23,14 @@ namespace SumerBusinessSolution.Transactions
         }
 
         public InvStockQty InvStockQty { get; set; }
-        public Warehouse StoreRoom { get; set; }
+        public Warehouse ShowRoom { get; set; }
         
         // this function will create a bill for the first time
         public async Task<string> CreateBill(BillHeader Header, List<BillItems> BillItems)
         {
             try
             {
-                StoreRoom = _db.Warehouse.Include(wh => wh.WhType).FirstOrDefault(wh => wh.WhType.Type == "StoreRoom"); 
+                ShowRoom = _db.Warehouse.Include(wh => wh.WhType).FirstOrDefault(wh => wh.WhType.Type == "Showroom"); 
 
                 Header.CreatedById = GetLoggedInUserId();
                 Header.CreatedDataTime = DateTime.Now;
@@ -42,11 +42,11 @@ namespace SumerBusinessSolution.Transactions
                 {
                     item.ProdId = _db.ProdInfo.FirstOrDefault(pr => pr.ProdCode == item.ProdInfo.ProdCode).Id;
                     // first check if qty enough in the store room before proceeding
-                    bool CheckQty = CheckQtyInWh(item.ProdId??0, StoreRoom.Id, item.Qty);
+                    bool CheckQty = CheckQtyInWh(item.ProdId??0, ShowRoom.Id, item.Qty);
 
                     if(CheckQty == false)
                     {
-                        return "لا توجد كمية كافية للبيع";
+                        return "Error! لا توجد كمية كافية للبيع";
                     }
 
                     TotalAmt += item.TotalAmt;
@@ -95,10 +95,10 @@ namespace SumerBusinessSolution.Transactions
                     };
 
                     // decrease stock qty of that item 
-                    DecreaseStockQty(Bill.ProdId??0, StoreRoom.Id, Bill.Qty);
+                    DecreaseStockQty(Bill.ProdId??0, ShowRoom.Id, Bill.Qty);
 
                     // create inv transaction 
-                    CreateInvTransaction(Bill.ProdId??0, StoreRoom.Id, Bill.Qty ,SD.Sales);
+                    CreateInvTransaction(Bill.ProdId??0, ShowRoom.Id, Bill.Qty ,SD.Sales);
                     _db.BillItems.Add(Bill);
 
                 }
@@ -112,7 +112,7 @@ namespace SumerBusinessSolution.Transactions
 
             catch
             {
-                return "حصل خطأ لم يتم اضافة الفاتورة";
+                return "Error! حصل خطأ لم يتم اضافة الفاتورة";
             }
         }
 
@@ -238,7 +238,7 @@ namespace SumerBusinessSolution.Transactions
         {
             try
             {
-                StoreRoom = _db.Warehouse.Include(wh => wh.WhType).FirstOrDefault(wh => wh.WhType.Type == "StoreRoom");
+                ShowRoom = _db.Warehouse.Include(wh => wh.WhType).FirstOrDefault(wh => wh.WhType.Type == "StoreRoom");
 
                 ExternalHeader.CreatedById = GetLoggedInUserId();
                 ExternalHeader.CreatedDataTime = DateTime.Now;

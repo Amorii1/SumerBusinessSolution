@@ -14,75 +14,122 @@
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
-    <div class="border backgroundWhite">
-        <partial name="_StatusMessage" model="Model.StatusMessage" />
+<div class="border backgroundWhite">
+    <partial name="_StatusMessage" model="Model.StatusMessage" />
 
-        @*<h2 class="text-info">اضافة مادة جديدة</h2>*@
-        <h2 class="text-info  text-md-right">@localizer.Get("دفع حسابات الزبون")</h2>
+    @*<h2 class="text-info">اضافة مادة جديدة</h2>*@
+    <h2 class="text-info  text-md-right">@localizer.Get("دفع حسابات الزبون")</h2>
 
-        <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="CustAcc.Customer.Id" />
+    <form method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="CustAcc.Customer.Id" />
 
-            <div class="row form-group">
-                <div class="col-md-5 offset-md-5">
-                    <input asp-for="CustAcc.Customer.CompanyName" class="form-control  text-md-right" disabled />
-                </div>
-                <div class="col-md-2">
-                    <label asp-for="CustAcc.Customer.CompanyName"> </label>
-                </div>
-                <span asp-validation-for="CustAcc.Customer.CompanyName" class="text-danger"></span>
+        <div class="row form-group">
+            <div class="col-md-5 offset-md-5">
+                <input asp-for="CustAcc.Customer.CompanyName" class="form-control  text-md-right" disabled />
             </div>
-
-            <div class="row form-group">
-                <div class="col-md-5 offset-md-5">
-                    <input asp-for="CustAcc.Paid" class="form-control  text-md-right" disabled />
-                </div>
-                <div class="col-md-2">
-                    <label asp-for="CustAcc.Paid"> </label>
-                </div>
-                <span asp-validation-for="CustAcc.Paid" class="text-danger"></span>
+            <div class="col-md-2">
+                <label asp-for="CustAcc.Customer.CompanyName"> </label>
             </div>
+            <span asp-validation-for="CustAcc.Customer.CompanyName" class="text-danger"></span>
+        </div>
 
-            <div class="row form-group">
-                <div class="col-md-5 offset-md-5">
-                    <input asp-for="CustAcc.Debt" class="form-control  text-md-right" disabled/>
-                </div>
-                <div class="col-md-2">
-                    <label asp-for="CustAcc.Debt"> </label>
-                </div>
-                <span asp-validation-for="CustAcc.Debt" class="text-danger"></span>
+        <div class="row form-group">
+            <div class="col-md-5 offset-md-5">
+                <input asp-for="CustAcc.Paid" class="form-control  text-md-right" disabled />
             </div>
+            <div class="col-md-2">
+                <label asp-for="CustAcc.Paid"> </label>
+            </div>
+            <span asp-validation-for="CustAcc.Paid" class="text-danger"></span>
+        </div>
 
+        <div class="row form-group">
+            <div class="col-md-5 offset-md-5">
+                <input id="debt" asp-for="CustAcc.Debt" class="form-control  text-md-right" disabled />
+            </div>
+            <div class="col-md-2">
+                <label asp-for="CustAcc.Debt"> </label>
+            </div>
+            <span asp-validation-for="CustAcc.Debt" class="text-danger"></span>
+        </div>
+
+        @if (Model.CustAcc.Debt == 0)
+        {
             <div class="row form-group">
                 <div class="col-md-5 offset-md-5">
-                    <input asp-for="NewPayment" class="form-control  text-md-right" />
+                    <input id="newPayment" asp-for="NewPayment" class="form-control  text-md-right" disabled="disabled" />
                 </div>
                 <div class="col-md-2">
                     <label asp-for="NewPayment"> </label>
                 </div>
                 <span asp-validation-for="NewPayment" class="text-danger"></span>
             </div>
-
-            <div class=" form-group row">
+        }
+        else
+        {
+            <div class="row form-group">
                 <div class="col-md-5 offset-md-5">
-                    <div class="row">
-                        <div class="col-md-6">
+                    <input id="newPayment" asp-for="NewPayment" class="form-control  text-md-right" />
+                </div>
+                <div class="col-md-2">
+                    <label asp-for="NewPayment"> </label>
+                </div>
+                <span asp-validation-for="NewPayment" class="text-danger"></span>
+            </div>
+        }
 
-                            @*<a asp-page="../Accounts/CustAccDetails" asp-route-culture="@Request.RouteValues["culture"]" asp-route="" class="btn btn-secondary form-control">
+
+        <div class=" form-group row">
+            <div class="col-md-5 offset-md-5">
+                <div class="row">
+                    <div class="col-md-6">
+
+                        @*<a asp-page="../Accounts/CustAccDetails" asp-route-culture="@Request.RouteValues["culture"]" asp-route="" class="btn btn-secondary form-control">
                                 @localizer.Get("الغاء")
                             </a>*@
 
-                        </div>
-                        <div class="col-md-6">
-                            @*<input type="submit" class="btn btn-info form-control" value="حفظ" />*@
-                            <input asp-route-culture="@Request.RouteValues["culture"]" type="submit" class="btn btn-info form-control" value="@localizer.Get("حفظ")" />
-                        </div>
-
+                    </div>
+                    <div class="col-md-6">
+                        @*<input type="submit" class="btn btn-info form-control" value="حفظ" />*@
+                        <button asp-route-culture="@Request.RouteValues["culture"]" type="submit" class="btn btn-info form-control" value="@localizer.Get("حفظ")" onclick="return ValidateInput()">
+                            @localizer.Get("حفظ")
+                        </button>
                     </div>
 
                 </div>
-            </div>
 
-        </form>
-    </div>
+            </div>
+        </div>
+
+    </form>
+</div>
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    <script>
+        function ValidateInput() {
+            var debt = document.getElementById("debt").value;
+            var newPayment = document.getElementById("newPayment").value;
+            if (newPayment > debt) {
+                swal("Error!", "المبلغ المدفوع اعلى من ديون الزبون", "error");
+
+                return false
+            }
+        }
+    </script>
+
+    <script>
+
+        $(document).ready(function () {
+            $(window).keydown(function (event) {
+                if (event.keyCode == 13) {
+                    event.preventDefault();
+                    return false;
+                }
+            });
+        });
+    </script>
+}

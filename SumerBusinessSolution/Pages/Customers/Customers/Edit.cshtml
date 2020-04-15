@@ -18,7 +18,7 @@
 
 <div class="border backgroundWhite">
     @*<h2 class="text-info">اضافة مادة جديدة</h2>*@
-    <h2 class="text-info  text-md-right">@localizer.Get("تعديل حساب الزبون")</h2>
+    <h2 class="text-info  text-md-right">@localizer.Get("تعديل معلومات الزبون")</h2>
 
     <partial name="_StatusMessage" model="Model.StatusMessage" />
     <form method="post">
@@ -71,9 +71,9 @@
 
                     <div class="col-md-6">
                         @*<a asp-page="Index" class="btn btn-success form-control">الرجوع</a>*@
-                      
-                            <input asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-secondary form-control" type="button" value="@localizer.Get("الغاء")" onclick="history.back()">
-                        
+
+                        <input asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-secondary form-control" type="button" value="@localizer.Get("الغاء")" onclick="history.back()">
+
                     </div>
                     <div class="col-md-6">
                         @*<input type="submit" class="btn btn-info form-control" value="حفظ" />*@
@@ -90,8 +90,23 @@
 
 
 
+ 
 
-@section Scripts {
+@section Scripts{
     @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script language="javascript">
+
+
+        $(document).ready(function () {
+            $(window).keydown(function (event) {
+                if (event.keyCode == 13) {
+                    event.preventDefault();
+                    return false;
+                }
+            });
+        });
+    </script>
 }
+
 
