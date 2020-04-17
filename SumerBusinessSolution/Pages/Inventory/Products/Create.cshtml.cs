@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
 using System.Security.Claims;
@@ -43,12 +44,14 @@ namespace SumerBusinessSolution.Pages.Inventory.Products
         public IList<TempProdImg> AddPhoto { get; set; }
 
         [BindProperty]
+        [Display(Name = "الكمية")]
         public double OpenQty { get; set; }
 
         [BindProperty]
         public List<Warehouse> WarehouseList { get; set; }
 
         [BindProperty]
+        [Display(Name = "المخزن")]
         public int SelectedWarehouse { get; set; }
 
         [TempData]

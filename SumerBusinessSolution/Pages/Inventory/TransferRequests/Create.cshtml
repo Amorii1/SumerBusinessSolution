@@ -33,6 +33,8 @@
             <div class="col-md-2">
                 <label asp-for="@Model.FromWhId"> </label>
             </div>
+            <span asp-validation-for="FromWhId" class="text-danger"></span>
+            <span asp-validation-for="@Model.FromWhId" class="text-danger"></span>
         </div>
         <div class="row form-group">
 
@@ -45,6 +47,8 @@
             <div class="col-md-2">
                 <label asp-for="@Model.ToWhId"> </label>
             </div>
+            <span asp-validation-for="ToWhId" class="text-danger"></span>
+            <span asp-validation-for="@Model.ToWhId" class="text-danger"></span>
         </div>
         <div class="row form-group">
 
@@ -54,6 +58,8 @@
             <div class="col-md-2">
                 <label asp-for="@Model.Note"> </label>
             </div>
+            <span asp-validation-for="Note" class="text-danger"></span>
+            <span asp-validation-for="@Model.Note" class="text-danger"></span>
         </div>
 
         <table dir="rtl" id="dataTable" class=" text-md-center table table-striped border table-responsive-md table-responsive-lg">
@@ -79,18 +85,21 @@
                 {
 
 
-                    <tr>
-                        <td onclick="bindAutocomplete(this)">@Html.TextBoxFor(a => Model.InvT[j].ProdInfo.ProdCode) </td>
-                        <td>@Html.TextBoxFor(a => Model.InvT[j].Qty)</td>
-                        <td>@Html.TextBoxFor(a => Model.InvT[j].Note)</td>
-                        <td>
-                            @if (j > 0)
-                            {
-                                <a href="#" id="removeThis" class="remove">Remove</a>
+        <tr>
+            <td onclick="bindAutocomplete(this)">@Html.TextBoxFor(a => Model.InvT[j].ProdInfo.ProdCode) </td>
+            <td>@Html.TextBoxFor(a => Model.InvT[j].Qty)</td>
+            <td>@Html.TextBoxFor(a => Model.InvT[j].Note)</td>
+            <td>
+                @if (j > 0)
+                {
+                    <a href="#" id="removeThis" class="remove">Remove</a>
 
-                            }
-                        </td>
-                    </tr>
+                }
+            </td>
+            <span asp-validation-for="@Model.InvT[j].ProdInfo.ProdCode" class="text-danger"></span>
+            <span asp-validation-for="@Model.InvT[j].Qty" class="text-danger"></span>
+            <span asp-validation-for="@Model.InvT[j].Note" class="text-danger"></span>
+        </tr>
                     j++;
 
                 }
@@ -98,7 +107,7 @@
             }
         </table>
         <div class=" form-group row">
-            <div class="col-md-5 offset-md-5">
+            <div class="col-md-7 offset-md-5">
                 <div class="row">
 
                     <div class="col-md-6">
@@ -108,7 +117,7 @@
 
                     </div>
                     <div class="col-md-6">
-                        <input asp-route-culture="@Request.RouteValues["culture"]" type="submit" class="btn btn-info form-control" value="@localizer.Get("ارسال")" />
+                        <input asp-route-culture="@Request.RouteValues["culture"]" type="submit" class="btn btn-info form-control" value="@localizer.Get("ارسال الطلب")" />
 
                     </div>
                 </div>

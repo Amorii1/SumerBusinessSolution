@@ -107,7 +107,7 @@
         </form>*@
 
         <div>
-            <table class="table table-striped border table-responsive-md table-responsive-lg">
+            <table class="table table-striped border table-responsive-md table-responsive-lg text-md-center">
                 <tr class="table-secondary">
 
                     <th></th>
@@ -148,7 +148,7 @@
                 <img src="~/images/car.png" width="40" /> &nbsp; تفاصيل
             </a>*@
 
-                    <a class="btn btn-info" asp-route-culture="@Request.RouteValues["culture"]" asp-page="../Transactions/ProdTrans" asp-route-TransId="@item.Id" title="تفاصيل العملية"><i class="far fa-clipboard"></i>@localizer.Get("")</a>
+                    <a class="btn btn-info" asp-route-culture="@Request.RouteValues["culture"]" asp-page="../Transactions/ProdTrans" asp-route-TransId="@item.Id" title="تفاصيل العملية"><i class="fas fa-receipt"></i>@localizer.Get("")</a>
 
                 </td>
                 <td>

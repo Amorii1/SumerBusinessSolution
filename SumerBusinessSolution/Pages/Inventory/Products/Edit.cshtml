@@ -14,7 +14,8 @@
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
-@*<partial name="_StatusMessage" model="Model.StatusMessage" />*@
+
+<partial name="_StatusMessage" model="Model.StatusMessage" />
 
 <div class="border backgroundWhite">
     @*<h2 class="text-info">تحديث معلومات المنتج</h2>*@
@@ -63,22 +64,22 @@
 
             </div>
         </div>
-        
-            <div class="row form-group">
+
+        <div class="row form-group">
 
 
 
-                <div class="col-md-5 offset-md-5">
-                    <input type="file" asp-for="img" class="form-control p-md-1">
-                    <img style="height: 200px; width: 100%; display: block; border-radius:3px;" src="~/img/@Model.ProdInfo.ImgFile">
-
-                </div>
-                <div class="col-md-2">
-                    <label asp-for="ProdInfo.ImgFile"></label>
-                </div>
+            <div class="col-md-5 offset-md-5">
+                <input type="file" asp-for="img" class="form-control p-md-1">
+                <img style="height: 200px; width: 100%; display: block; border-radius:3px;" src="~/img/@Model.ProdInfo.ImgFile">
 
             </div>
-          
+            <div class="col-md-2">
+                <label asp-for="ProdInfo.ImgFile"></label>
+            </div>
+
+        </div>
+
         @if (User.IsInRole(SD.AdminEndUser))
         {
             <div class="row form-group">
@@ -126,7 +127,7 @@
 
                         @*<a asp-page="Index" asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-success form-control">@localizer.Get("رجوع")</a>*@
 
-                        <input asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-secondary form-control" type="button" value="@localizer.Get("الغاء")" onclick="history.back()">
+                        <input asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-secondary form-control" type="button" value="@localizer.Get("رجوع")" onclick="history.back()">
 
 
                     </div>

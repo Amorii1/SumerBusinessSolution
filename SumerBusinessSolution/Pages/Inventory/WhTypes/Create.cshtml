@@ -20,6 +20,8 @@
     <div class="border backgroundWhite">
         @*<h2 class="text-info">أضافة  نوع مخزن جديد</h2>*@
         <partial name="_StatusMessage" model="Model.StatusMessage" />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
         <h2 class="text-info text-md-right">@localizer.Get("اضافة نوع مخزن جديد")</h2>
 
         <form method="post">
@@ -49,7 +51,7 @@
 
                         <div class="col-md-6">
                             @*<a asp-page="../Warehouses/Index" class="btn btn-success form-control">رجوع </a>*@
-                            <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="../Warehouses/Index" class="btn btn-secondary form-control">@localizer.Get("رجوع") </a>
+                            <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="Index" class="btn btn-secondary form-control">@localizer.Get("رجوع") </a>
 
                         </div>
                         <div class="col-md-6">

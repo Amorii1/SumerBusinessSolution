@@ -30,6 +30,7 @@
             <div class="col-md-2">
                 <label asp-for="ProductInfo.ProdCode"> </label>
             </div>
+            <span asp-validation-for="ProductInfo.ProdCode" class="text-danger"></span>
         </div>
         <div class="row form-group">
 
@@ -39,6 +40,7 @@
             <div class="col-md-2">
                 <label asp-for="ProductInfo.ProdName"></label>
             </div>
+            <span asp-validation-for="ProductInfo.ProdName" class="text-danger"></span>
         </div>
         <div class="row form-group">
 
@@ -48,6 +50,7 @@
             <div class="col-md-2">
                 <label asp-for="ProductInfo.ProdDescription"></label>
             </div>
+            <span asp-validation-for="ProductInfo.ProdDescription" class="text-danger"></span>
         </div>
         <div class="custom-file">
             <div class="row form-group">
@@ -59,6 +62,7 @@
                 <div class="col-md-2">
                     <label asp-for="ProductInfo.ImgFile"></label>
                 </div>
+                <span asp-validation-for="ProductInfo.ImgFile" class="text-danger"></span>
             </div>
         </div>
         <br />
@@ -73,62 +77,66 @@
             </div>
         </div>*@
 
-        <div class="row form-group">
+    <div class="row form-group">
 
-            <div class="col-md-5  offset-md-5">
-                <input asp-for="ProductInfo.CostPrice" class="form-control  text-md-right" />
-            </div>
-            <div class="col-md-2">
-                <label asp-for="ProductInfo.CostPrice"></label>
-            </div>
+        <div class="col-md-5  offset-md-5">
+            <input asp-for="ProductInfo.CostPrice" class="form-control  text-md-right" />
         </div>
+        <div class="col-md-2">
+            <label asp-for="ProductInfo.CostPrice"></label>
+        </div>
+        <span asp-validation-for="ProductInfo.CostPrice" class="text-danger"></span>
+    </div>
 
-        <div class="row form-group">
+    <div class="row form-group">
 
-            <div class="col-md-5  offset-md-5">
-                <input asp-for="ProductInfo.RetailPrice" class="form-control  text-md-right" />
-            </div>
-            <div class="col-md-2">
-                <label asp-for="ProductInfo.RetailPrice"></label>
-            </div>
+        <div class="col-md-5  offset-md-5">
+            <input asp-for="ProductInfo.RetailPrice" class="form-control  text-md-right" />
         </div>
-        <div class="row form-group">
+        <div class="col-md-2">
+            <label asp-for="ProductInfo.RetailPrice"></label>
+        </div>
+        <span asp-validation-for="ProductInfo.RetailPrice" class="text-danger"></span>
+    </div>
+    <div class="row form-group">
 
-            <div class="col-md-5  offset-md-5">
-                <input asp-for="ProductInfo.WholePrice" class="form-control  text-md-right" />
-            </div>
-            <div class="col-md-2">
-                <label asp-for="ProductInfo.WholePrice"></label>
-            </div>
+        <div class="col-md-5  offset-md-5">
+            <input asp-for="ProductInfo.WholePrice" class="form-control  text-md-right" />
         </div>
-        <div class="form-group row">
-            <div class="col-md-5 offset-md-5">
-                <select whList="myList" asp-for="SelectedWarehouse"
-                        asp-items="@(new SelectList(Model.WarehouseList, "Id", "WhName"))"
-                        class="form-control text-md-right">
-                </select>
-            </div>
-            <div class="col-md-2">
-                <label asp-for="SelectedWarehouse"></label>
-            </div>
- 
+        <div class="col-md-2">
+            <label asp-for="ProductInfo.WholePrice"></label>
         </div>
-        <div class="form-group row">
-            <div class="col-md-5  offset-md-5">
-                <input asp-for="OpenQty" class="form-control  text-md-right" />
-            </div>
-            <div class="col-md-2">
-                <label asp-for="OpenQty"></label>
-            </div>
+        <span asp-validation-for="ProductInfo.WholePrice" class="text-danger"></span>
+    </div>
+    <div class="form-group row">
+        <div class="col-md-5 offset-md-5">
+            <select whList="myList" asp-for="SelectedWarehouse"
+                    asp-items="@(new SelectList(Model.WarehouseList, "Id", "WhName"))"
+                    class="form-control text-md-right">
+            </select>
         </div>
+        <div class="col-md-2">
+            <label asp-for="SelectedWarehouse"></label>
+        </div>
+        <span asp-validation-for="SelectedWarehouse" class="text-danger"></span>
+    </div>
+    <div class="form-group row">
+        <div class="col-md-5  offset-md-5">
+            <input asp-for="OpenQty" class="form-control  text-md-right" />
+        </div>
+        <div class="col-md-2">
+            <label asp-for="OpenQty"></label>
+        </div>
+        <span asp-validation-for="OpenQty" class="text-danger"></span>
+    </div>
 
             <div class=" form-group row">
                 <div class="col-md-5 offset-md-5">
                     <div class="row">
 
                         <div class="col-md-6">
-                            @*<a asp-page="Index" class="btn btn-success form-control">الرجوع</a>*@
-                            <input asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-secondary form-control" type="button" value="@localizer.Get("الغاء")" onclick="history.back()">
+                            <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="Index" class="btn btn-secondary form-control">رجوع</a>
+                            
 
                         </div>
                         <div class="col-md-6">

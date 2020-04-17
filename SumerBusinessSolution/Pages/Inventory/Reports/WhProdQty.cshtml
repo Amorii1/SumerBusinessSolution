@@ -61,7 +61,7 @@
 
 
     <div>
-        <table class="table table-striped border table-responsive-md table-responsive-lg">
+        <table class="table table-striped border table-responsive-md table-responsive-lg text-md-center">
             <tr class="table-secondary">
 
                 <th></th>
@@ -90,7 +90,7 @@
 
             <td>
                 <a  class="btn btn-info" asp-route-culture="@Request.RouteValues["culture"]" title="العمليات التجارية للمنتج" asp-page="../Transactions/ProdTrans" asp-route-ProdId="@item.ProdId" asp-route-WhId="@item.WhId">
-                    <i class="far fa-clipboard"></i>@localizer.Get("")
+                    <i class="fas fa-receipt"></i>@localizer.Get("")
                 </a>
 
             </td>

@@ -12,6 +12,7 @@
     <form method="post" enctype="multipart/form-data">
 
         <input type="hidden" asp-for="WhType.Id" />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
         <div class="row form-group">
 

@@ -57,11 +57,11 @@ namespace SumerBusinessSolution.Pages.Inventory.Products
 
             if (UpdateStk == true)
             {
-                StatusMessage = "Product Qty updated";
+                StatusMessage = "تم تحديث كمية المنتج";
             }
             else
             {
-                StatusMessage = "Error! Qty not updated";
+                StatusMessage = "Error! لم يتم تحديث الكمية";
             }
 
             return RedirectToPage("/inventory/Products/UpdateProdStkQty", new { StkId = StkId });
