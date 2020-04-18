@@ -14,88 +14,91 @@
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
-    <div class="  border backgroundWhite">
-        <h2 class="text-info  text-md-right">@localizer.Get("تحديث كمية المنتج")</h2>
+<div class="  border backgroundWhite">
+    <h2 class="text-info  text-md-right">@localizer.Get("تحديث كمية المنتج")</h2>
 
-        <partial name="_StatusMessage" model="Model.StatusMessage" />
+    <partial name="_StatusMessage" model="Model.StatusMessage" />
 
-        <form method="post" enctype="multipart/form-data">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for=" InvStkQty.ProdInfo.Id" />
+    <form method="post" enctype="multipart/form-data">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for=" InvStkQty.ProdInfo.Id" />
 
 
-            <div class="row form-group">
+        <div class="row form-group">
 
-                <div class="col-md-5 offset-md-5">
-                    <input asp-for="InvStkQty.ProdInfo.ProdCode" class="form-control text-md-right" disabled />
-                </div>
-                <div class="col-md-2">
-                    <label asp-for="InvStkQty.ProdInfo.ProdCode"></label>
-                </div>
+            <div class="col-md-5 offset-md-5">
+                <input asp-for="InvStkQty.ProdInfo.ProdCode" class="form-control text-md-right" disabled />
             </div>
-
-            <div class="row form-group">
-
-                <div class="col-md-5 offset-md-5">
-                    <input asp-for="InvStkQty.ProdInfo.ProdName" class="form-control text-md-right" disabled />
-                </div>
-                <div class="col-md-2">
-                    <label asp-for="InvStkQty.ProdInfo.ProdName"></label>
-
-                </div>
+            <div class="col-md-2">
+                <label asp-for="InvStkQty.ProdInfo.ProdCode"></label>
             </div>
-            <div class="row form-group">
+        </div>
 
-                <div class="col-md-5 offset-md-5">
-                    <input asp-for="InvStkQty.Warehouse.WhName" class="form-control text-md-right" disabled />
-                </div>
-                <div class="col-md-2">
-                    <label asp-for="InvStkQty.Warehouse.WhName"></label>
+        <div class="row form-group">
 
-                </div>
+            <div class="col-md-5 offset-md-5">
+                <input asp-for="InvStkQty.ProdInfo.ProdName" class="form-control text-md-right" disabled />
             </div>
-            <div class="row form-group">
-                <div class="col-md-5 offset-md-5">
-                    <input asp-for="InvStkQty.Qty" class="form-control text-md-right" disabled />
-                </div>
-                <div class="col-md-2">
-                    <label asp-for="InvStkQty.Qty"></label>
-
-                </div>
+            <div class="col-md-2">
+                <label asp-for="InvStkQty.ProdInfo.ProdName"></label>
 
             </div>
-            <div class="row form-group">
-                <div class="col-md-5 offset-md-5">
-                    <input asp-for="NewQty" class="form-control text-md-right" />
-                </div>
-                <div class="col-md-2">
-                    @*<label>الكميه الجديده</label>*@
-                    <label asp-for="NewQty"></label>
-                </div>
-                <span asp-validation-for="NewQty" class="text-danger"></span>
+        </div>
+        <div class="row form-group">
+
+            <div class="col-md-5 offset-md-5">
+                <input asp-for="InvStkQty.Warehouse.WhName" class="form-control text-md-right" disabled />
+            </div>
+            <div class="col-md-2">
+                <label asp-for="InvStkQty.Warehouse.WhName"></label>
+
+            </div>
+        </div>
+        <div class="row form-group">
+            <div class="col-md-5 offset-md-5">
+                <input asp-for="InvStkQty.Qty" class="form-control text-md-right" disabled />
+            </div>
+            <div class="col-md-2">
+                <label asp-for="InvStkQty.Qty"></label>
+
             </div>
 
-            <div class=" form-group row">
-                <div class="col-md-5 offset-md-5">
-                    <div class="row">
+        </div>
+        <div class="row form-group">
+            <div class="col-md-5 offset-md-5">
+                <input asp-for="NewQty" class="form-control text-md-right" />
+            </div>
+            <div class="col-md-2">
+                @*<label>الكميه الجديده</label>*@
+                <label asp-for="NewQty"></label>
+            </div>
+            <span asp-validation-for="NewQty" class="text-danger"></span>
+        </div>
 
-                        <div class="col-md-6">
-                            @*<a asp-page="Index" class="btn btn-success form-control"> رجوع </a>*@
-                            <a asp-page="/Inventory/Reports/ProdInWhQty" asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-secondary form-control">@localizer.Get("رجوع")</a>
+        <div class=" form-group row">
+            <div class="col-md-5 offset-md-5">
+                <div class="row">
 
-                        </div>
-                        <div class="col-md-6">
-                            @*<input type="submit" class="btn btn-info form-control" value="تحديث" />*@
-                            <input type="submit" asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-info form-control" value="@localizer.Get("تحديث")" />
+                    <div class="col-md-6">
+                        @*<a asp-page="Index" class="btn btn-success form-control"> رجوع </a>*@
+                        <a asp-page="/Inventory/Reports/ProdInWhQty" asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-secondary form-control">@localizer.Get("رجوع")</a>
 
-                        </div>
                     </div>
+                    <div class="col-md-6">
+                        @*<input type="submit" class="btn btn-info form-control" value="تحديث" />*@
+                        <input type="submit" asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-info form-control" value="@localizer.Get("تحديث")" />
 
+                    </div>
                 </div>
+
             </div>
+        </div>
 
 
 
-        </form>
+    </form>
 
-    </div>
+</div>
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

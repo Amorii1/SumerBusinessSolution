@@ -71,23 +71,23 @@
 
                 foreach (var i in Model.InvT)
                 {
-        <tr>
-            <td onclick="bindAutocomplete(this)">@Html.TextBoxFor(a => Model.InvT[j].ProdInfo.ProdCode) </td>
-            <td>@Html.TextBoxFor(a => Model.InvT[j].Qty)</td>
-            <td>@Html.TextBoxFor(a => Model.InvT[j].Note)</td>
-            <td>
-                @if (j > 0)
-                {
-                    <a href="#" id="removeThis" class="remove">Remove</a>
+                    <tr>
+                        <td onclick="bindAutocomplete(this)">@Html.TextBoxFor(a => Model.InvT[j].ProdInfo.ProdCode) </td>
+                        <td>@Html.TextBoxFor(a => Model.InvT[j].Qty)</td>
+                        <td>@Html.TextBoxFor(a => Model.InvT[j].Note)</td>
+                        <td>
+                            @if (j > 0)
+                            {
+                                <a href="#" id="removeThis" class="remove">Remove</a>
 
-                }
-            </td>
+                            }
+                        </td>
 
-            <span asp-validation-for="@Model.InvT[j].ProdInfo.ProdCode" class="text-danger"></span>
-            <span asp-validation-for="@Model.InvT[j].Qty" class="text-danger"></span>
-            <span asp-validation-for="@Model.InvT[j].Note" class="text-danger"></span>
-           
-        </tr>
+                        <span asp-validation-for="@Model.InvT[j].ProdInfo.ProdCode" class="text-danger"></span>
+                        <span asp-validation-for="@Model.InvT[j].Qty" class="text-danger"></span>
+                        <span asp-validation-for="@Model.InvT[j].Note" class="text-danger"></span>
+
+                    </tr>
                     j++;
 
                 }
@@ -188,7 +188,10 @@
             });
         });
     </script>
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+
+
 
 
 

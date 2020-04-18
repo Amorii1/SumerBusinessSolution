@@ -34,19 +34,19 @@
                 </tr>
             </table>*@
 
-    <div class="row form-group">
+        <div class="row form-group">
 
-        <div class="col-md-5 offset-md-5">
-            <select asp-for="@Model.WhId"
-                    asp-items="@(new SelectList(Model.WarehouseList, "Id", "WhName"))"
-                    class="form-control ">
-            </select>
+            <div class="col-md-5 offset-md-5">
+                <select asp-for="@Model.WhId"
+                        asp-items="@(new SelectList(Model.WarehouseList, "Id", "WhName"))"
+                        class="form-control ">
+                </select>
+            </div>
+            <div class="col-md-2">
+                <label asp-for="@Model.WhId"> </label>
+            </div>
+            <span asp-validation-for="@Model.WhId" class="text-danger"></span>
         </div>
-        <div class="col-md-2">
-            <label asp-for="@Model.WhId"> </label>
-        </div>
-        <span asp-validation-for="@Model.WhId" class="text-danger"></span>
-    </div>
 
 
         <table dir="rtl" id="dataTable" class=" text-md-center table table-striped border table-responsive-md table-responsive-lg">
@@ -71,25 +71,25 @@
                 {
 
 
-        <tr>
-            @*float a= (float)((ArrayList)paredes[i])[0];*@
-            @*<td>@Html.TextBoxFor(a => a[j].ContactName)</td>*@
+                    <tr>
+                        @*float a= (float)((ArrayList)paredes[i])[0];*@
+                        @*<td>@Html.TextBoxFor(a => a[j].ContactName)</td>*@
 
-            <td onclick="bindAutocomplete(this)">@Html.TextBoxFor(a => Model.InG[j].ProdInfo.ProdCode) </td>
-            <td>@Html.TextBoxFor(a => Model.InG[j].Qty)</td>
-            <td>@Html.TextBoxFor(a => Model.InG[j].Note)</td>
-            <td>
-                @if (j > 0)
-                {
+                        <td onclick="bindAutocomplete(this)">@Html.TextBoxFor(a => Model.InG[j].ProdInfo.ProdCode) </td>
+                        <td>@Html.TextBoxFor(a => Model.InG[j].Qty)</td>
+                        <td>@Html.TextBoxFor(a => Model.InG[j].Note)</td>
+                        <td>
+                            @if (j > 0)
+                            {
 
-                    // <input type="button" value="Delete" onclick="deleteRow(this)">
-                    <a href="#" id="removeThis" class="remove">Remove</a>
+                                // <input type="button" value="Delete" onclick="deleteRow(this)">
+                                <a href="#" id="removeThis" class="remove">Remove</a>
 
-                }
-            </td>
-            <span asp-validation-for="@Model.InG[j].ProdInfo.ProdCode" class="text-danger"></span>
-            <span asp-validation-for="@Model.InG[j].Qty" class="text-danger"></span>
-        </tr>
+                            }
+                        </td>
+                        <span asp-validation-for="@Model.InG[j].ProdInfo.ProdCode" class="text-danger"></span>
+                        <span asp-validation-for="@Model.InG[j].Qty" class="text-danger"></span>
+                    </tr>
                     j++;
 
                 }
@@ -230,15 +230,16 @@
 
         });
 
-        $(document).ready(function() {
-  $(window).keydown(function(event){
-    if(event.keyCode == 13) {
-      event.preventDefault();
-      return false;
-    }
-  });
-});
+        $(document).ready(function () {
+            $(window).keydown(function (event) {
+                if (event.keyCode == 13) {
+                    event.preventDefault();
+                    return false;
+                }
+            });
+        });
     </script>
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
 
 
