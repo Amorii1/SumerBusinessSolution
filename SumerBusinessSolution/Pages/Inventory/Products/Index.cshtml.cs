@@ -27,7 +27,8 @@ namespace SumerBusinessSolution.Pages.Inventory.Products
 
         public IList<ProdInfo> ProdInfo { get; set; }
         public ProdListViewModel ProductListVM { get; set; }
-
+        [TempData]
+        public string StatusMessage { get; set; }
         public async Task<IActionResult> OnGet(string SearchProdCode = null, string SearchProdName = null)
         {
             ProdInfo = await _db.ProdInfo.ToListAsync();

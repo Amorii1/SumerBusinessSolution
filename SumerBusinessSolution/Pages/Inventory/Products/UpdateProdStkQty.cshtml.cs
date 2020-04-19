@@ -42,17 +42,24 @@ namespace SumerBusinessSolution.Pages.Inventory.Products
         [TempData]
         public string StatusMessage { get; set; }
 
-        public void OnGet(int? StkId)
+        [TempData]
+        public int TmpStkId { get; set; }
+
+        public void OnGet(int StkId)
         {
-            InvStkQty = _db.InvStockQty.Include(stk => stk.ProdInfo).Include(stk => stk.Warehouse)
+            InvStkQty = _db.InvStockQty
+                .Include(stk => stk.ProdInfo)
+                .Include(stk => stk.Warehouse)
                 .FirstOrDefault(stk => stk.Id == StkId);
- 
+            TmpStkId = StkId;
+
+
         }
 
-        public async Task<IActionResult> OnPost(int StkId)
+        public async Task<IActionResult> OnPost()
         {
 
-            bool UpdateStk = _InveTrans.UpdateProdStkQty(StkId, NewQty).GetAwaiter().GetResult();
+            bool UpdateStk = _InveTrans.UpdateProdStkQty(TmpStkId, NewQty).GetAwaiter().GetResult();
              string searchProdCodew = InvStkQty.ProdInfo.ProdCode;
 
             if (UpdateStk == true)
@@ -64,7 +71,7 @@ namespace SumerBusinessSolution.Pages.Inventory.Products
                 StatusMessage = "Error! لم يتم تحديث الكمية";
             }
 
-            return RedirectToPage("/inventory/Products/UpdateProdStkQty", new { StkId = StkId });
+            return RedirectToPage("/inventory/Products/UpdateProdStkQty", new { StkId = TmpStkId});
         }
     }
 }

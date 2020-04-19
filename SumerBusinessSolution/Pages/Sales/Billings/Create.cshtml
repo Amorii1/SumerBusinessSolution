@@ -19,7 +19,9 @@
 
 <div class=" border backgroundWhite">
     <h2 class="text-info  text-md-right">@localizer.Get("انشاء فاتورة جديدة")</h2>
-
+    <button type="button" class="btn btn-primary" data-toggle="ajax-modal" data-url="@Url.Page("Create", "CreateCustomerModalPartial")">
+        Add contact
+    </button>
 
     <form method="post">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -46,7 +48,7 @@
             <div class="col-md-5 offset-md-5">
                 <select id="PriceType" asp-for="@Model.SelectedWh"
                         asp-items="@(new SelectList(Model.WarehouseList, "Id","WhName"))"
-                         class="form-control" dir="rtl">
+                        class="form-control" dir="rtl">
                 </select>
             </div>
             <div class="col-md-2">

@@ -10,6 +10,8 @@ using SumerBusinessSolution.Utility;
 using SumerBusinessSolution.Data;
 using SumerBusinessSolution.Models;
 using SumerBusinessSolution.Transactions;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace SumerBusinessSolution.Pages.Sales.Billings
 {
@@ -184,6 +186,15 @@ namespace SumerBusinessSolution.Pages.Sales.Billings
                                               where (P.CompanyName.Contains(term))
                                               select P.CompanyName;
             return new JsonResult(lstCustomers);
+        }
+
+        public PartialViewResult OnGetCreateCustomerModalPartial()
+        {
+            return new PartialViewResult
+            {
+                ViewName = "_CreateNewCustomer",
+                ViewData = new ViewDataDictionary<_CreateNewCustomerModel>(ViewData, new  ModelStateDictionary { })
+            };
         }
     }
 

@@ -3,6 +3,23 @@
 
 // Write your Javascript code.
 
+//$(function () {
+//    $('button[data-toggle="ajax-modal"]').click(function (event) {
+//        alert('button clicked');
+//    });
+//});
+
+$(function () {
+    $('button[data-toggle="ajax-modal"]').click(function (event) {
+        // url to Razor Pages handler which returns modal HTML
+        var url = '/sales/billings/create?handler=CreateCustomerModalPartial';
+        $.get(url).done(function (data) {
+            // append HTML to document, find modal and show it
+            $(document).append(data).find('.modal').modal('show');
+        });
+    });
+});
+
 $(function () {
 
     $('[data-toggle="tooltip"]').tooltip();
