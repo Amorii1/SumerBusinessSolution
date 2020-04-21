@@ -30,12 +30,12 @@ namespace SumerBusinessSolution.Pages.Inventory.IncomingGoods
 
 
         [DataType(DataType.Date)]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy/MM/dd}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyyMMdd}")]
         [Display(Name = "من")]
         public DateTime SearchFromDate { get; set; }
 
         [DataType(DataType.Date)]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy/MM/dd}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyyMMdd}")]
         [Display(Name = "الى")]
         public DateTime SearchToDate { get; set; }
 

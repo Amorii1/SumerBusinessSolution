@@ -58,7 +58,12 @@ namespace SumerBusinessSolution
                             ShortDatePattern = "dd/MM/yyyy"
                         }
                     },
-                    new CultureInfo("en"),
+                    new CultureInfo("en"){
+                     DateTimeFormat =
+                        {
+                            ShortDatePattern = "dd/MM/yyyy"
+                        }
+                    },
         
             };
                 options.DefaultRequestCulture = new RequestCulture(culture: "ar", uiCulture: "ar");

@@ -14,8 +14,10 @@
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
+<partial name="_StatusMessage" model="Model.StatusMessage" />
+
+
 <div class="border backgroundWhite">
-    <partial name="_StatusMessage" model="Model.StatusMessage" />
     @*<h2 class="text-info">حركة المواد</h2>*@
     <h2 class="text-info text-md-right">@localizer.Get("نقل المادة")</h2>
 

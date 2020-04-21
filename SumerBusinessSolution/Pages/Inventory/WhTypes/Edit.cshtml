@@ -1,10 +1,22 @@
 ﻿@page
 @model SumerBusinessSolution.EditModel
+@using SumerBusinessSolution.Utility
+@using Microsoft.AspNetCore.Localization
+@using System.ComponentModel.DataAnnotations;
+@*@inject IHtmlLocalizer<IndexModel> htmlLocalizer*@ @*for html lozcalization*@
+@*@inject IStringLocalizer<IndexModel> localizer*@
+@*First Method*@
+@inject Services.CommonLocalizationService localizer
+@*Second and the easier Method*@
+
 @{
     ViewData["Title"] = "Edit";
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
-@inject Services.CommonLocalizationService localizer
+
+<partial name="_StatusMessage" model="Model.StatusMessage" />
+
+
 <div class="border backgroundWhite">
     @*<h2 class="text-info">تحديث معلومات المنتج</h2>*@
     <h2 class="text-info text-md-right">@localizer.Get("تعديل نوع المخزن")</h2>
