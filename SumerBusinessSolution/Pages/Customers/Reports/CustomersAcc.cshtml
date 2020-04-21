@@ -66,6 +66,9 @@
                         @Html.DisplayNameFor(m => m.CustAcc.Paid)
                     </th>
                     <th>
+                        @Html.DisplayNameFor(m => m.CustAcc.Id)
+                    </th>
+                    <th>
                         @Html.DisplayNameFor(m => m.Customer.CompanyName)
                     </th>
                 </tr>
@@ -106,6 +109,9 @@
                 </td>
                 <td>
                     @Html.DisplayFor(m => item.Paid)
+                </td>
+                <td>
+                    @Html.DisplayFor(m => item.Id)
                 </td>
                 <td>
                     @Html.DisplayFor(m => item.Customer.CompanyName)

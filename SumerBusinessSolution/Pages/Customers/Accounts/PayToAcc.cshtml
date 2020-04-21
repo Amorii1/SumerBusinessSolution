@@ -33,6 +33,15 @@
             </div>
             <span asp-validation-for="CustAcc.Customer.CompanyName" class="text-danger"></span>
         </div>
+        <div class="row form-group">
+            <div class="col-md-5 offset-md-5">
+                <input asp-for="CustAcc.Id" class="form-control  text-md-right" disabled />
+            </div>
+            <div class="col-md-2">
+                <label asp-for="CustAcc.Id"> </label>
+            </div>
+            <span asp-validation-for="CustAcc.Id" class="text-danger"></span>
+        </div>
 
         <div class="row form-group">
             <div class="col-md-5 offset-md-5">
@@ -86,8 +95,8 @@
                     <div class="col-md-6">
 
                         @*<a asp-page="../Accounts/CustAccDetails" asp-route-culture="@Request.RouteValues["culture"]" asp-route="" class="btn btn-secondary form-control">
-                                @localizer.Get("الغاء")
-                            </a>*@
+                            @localizer.Get("الغاء")
+                        </a>*@
 
                     </div>
                     <div class="col-md-6">

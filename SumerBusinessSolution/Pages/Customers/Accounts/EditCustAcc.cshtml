@@ -30,8 +30,15 @@
             <div class="col-md-2">
                 <label asp-for="CustAcc.Customer.CompanyName"> </label>
             </div>
-            <span asp-validation-for="Customer.CompanyName" class="text-danger"></span>
-        </div>
+         </div>
+        <div class="row form-group">
+            <div class="col-md-5 offset-md-5">
+                <input asp-for="CustAcc.Id" class="form-control  text-md-right" disabled />
+            </div>
+            <div class="col-md-2">
+                <label asp-for="CustAcc.Id"> </label>
+            </div>
+         </div>
 
         <div class="row form-group">
             <div class="col-md-5 offset-md-5">
@@ -40,8 +47,7 @@
             <div class="col-md-2">
                 <label asp-for="CustAcc.Paid"> </label>
             </div>
-            <span asp-validation-for="CustAcc.Paid" class="text-danger"></span>
-        </div>
+         </div>
 
         <div class="row form-group">
             <div class="col-md-5 offset-md-5">
@@ -50,8 +56,7 @@
             <div class="col-md-2">
                 <label asp-for="CustAcc.Debt"> </label>
             </div>
-            <span asp-validation-for="CustAcc.Debt" class="text-danger"></span>
-        </div>
+         </div>
 
         <h3 class="text-info  text-md-right">@localizer.Get("القيم الجديدة")</h3>
 
@@ -85,7 +90,7 @@
                 <div class="row">
                     <div class="col-md-6">
                         @*<a asp-page="../Accounts/CustAccDetails" asp-route-culture="@Request.RouteValues["culture"]" asp-route="" class="btn btn-secondary form-control">
-                            @localizer.Get("الغاء")</a>*@
+                        @localizer.Get("الغاء")</a>*@
 
                     </div>
 
