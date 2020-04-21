@@ -44,17 +44,14 @@
                             </div>
                             <div class="col-md-10 pb-1">
                                 @Html.Editor("CustomerName", new { htmlAttributes = new { @class = "form-control text-md-right", placeholder = @localizer.Get("اسم الزبون....") } })
-
                             </div>
-
+                
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </form>
-
-
     <div>
 
         <table class="table table-striped border table-responsive-md table-responsive-lg">
@@ -66,7 +63,7 @@
                     @Html.DisplayNameFor(m => m.Customer.PhoneNo)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(m => m.Customer.Address)
+                    @Html.DisplayNameFor(m => m.CustAcc.Id)
                 </th>
                 <th>
                     @Html.DisplayNameFor(m => m.Customer.ContactName)
@@ -74,53 +71,55 @@
                 <th>
                     @Html.DisplayNameFor(m => m.Customer.CompanyName)
                 </th>
+
             </tr>
 
-            @foreach (var item in Model.CustomerList)
+            @foreach (var item in Model.CustAccList)
             {
-                <tr>
+        <tr>
 
-                    @if (User.IsInRole(SD.AdminEndUser))
-                    {
-                        <td style="width:170px;">
-                            <div class="btn-group" role="group">
-                                <form method="post">
-                                    <button asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-danger text-white" asp-page-handler="DeleteCustomer" asp-route-CustId="@item.Id" type="submit" title="حذف" name="Delete">
-                                        @localizer.Get("") <i class="fas fa-trash-alt"></i>
-                                    </button>
+            @if (User.IsInRole(SD.AdminEndUser))
+            {
+                <td style="width:170px;">
+                    <div class="btn-group" role="group">
+                        <form method="post">
+                            <button asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-danger text-white" asp-page-handler="DeleteCustomer" asp-route-CustId="@item.Customer.Id" type="submit" title="حذف" name="Delete">
+                                @localizer.Get("") <i class="fas fa-trash-alt"></i>
+                            </button>
 
-                                    <a asp-page="Edit" asp-route-CustId="@item.Id" asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-success text-white " type="submit" title="@localizer.Get("تعديل معلومات الزبون")">
-                                        <i class="fas fa-user-edit"></i>
-                                        @localizer.Get("")
-                                    </a>
-                                    <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-primary text-white" asp-page="../Accounts/CustAccDetails" asp-route-CustId="@item.Id" type="submit" title=@localizer.Get("حسابات الزبون") name="AccDetails">
-                                        @localizer.Get("") <i class="fas fa-file-invoice-dollar"></i>
-                                    </a>
+                            <a asp-page="Edit" asp-route-CustId="@item.Customer.Id" asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-success text-white " type="submit" title="@localizer.Get("تعديل معلومات الزبون")">
+                                <i class="fas fa-user-edit"></i>
+                                @localizer.Get("")
+                            </a>
+                            <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-primary text-white" asp-page="../Accounts/CustAccDetails" asp-route-CustId="@item.Customer.Id" type="submit" title=@localizer.Get("حسابات الزبون") name="AccDetails">
+                                @localizer.Get("") <i class="fas fa-file-invoice-dollar"></i>
+                            </a>
 
-                                </form>
-                            </div>
-                        </td>
+                        </form>
+                    </div>
+                </td>
 
-                    }
-                    else
-                    {
-                        <td> </td>
-                    }
+            }
+            else
+            {
+                <td> </td>
+            }
 
 
-                    <td>
-                        @Html.DisplayFor(m => item.PhoneNo)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(m => item.Address)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(m => item.ContactName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(m => item.CompanyName)
-                    </td>
-                </tr>
+            <td>
+                @Html.DisplayFor(m => item.Customer.PhoneNo)
+            </td>
+            <td>
+                @Html.DisplayFor(m => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(m => item.Customer.ContactName)
+            </td>
+            <td>
+                @Html.DisplayFor(m => item.Customer.CompanyName)
+            </td>
+
+        </tr>
 
 
 

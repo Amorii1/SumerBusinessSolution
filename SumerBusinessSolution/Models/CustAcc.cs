@@ -10,9 +10,12 @@ namespace SumerBusinessSolution.Models
     //Customer Account
     public class CustAcc
     {
+        [Display(Name = "رقم الحساب")]
         public int Id { get; set; }
 
-       
+        //[Display(Name = "رقم الحساب")]
+        //public int AccNo { get; set; }
+
         public int CustId { get; set; }
         [Display(Name = "الرصيد")]
 

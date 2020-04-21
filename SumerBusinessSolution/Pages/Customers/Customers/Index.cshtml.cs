@@ -28,7 +28,10 @@ namespace SumerBusinessSolution.Pages.Customers.Customers
         public  Customer  Customer  { get; set; }
 
         [BindProperty]
-        public  List<Customer> CustomerList { get; set; }
+        public CustAcc CustAcc { get; set; }
+
+        [BindProperty]
+        public List<CustAcc> CustAccList { get; set; }
 
         [TempData]
         public string StatusMessage { get; set; }
@@ -44,14 +47,15 @@ namespace SumerBusinessSolution.Pages.Customers.Customers
             Param.Append("&CustomerName=");
             if (CustomerName != null)
             {
-                CustomerList = await _db.Customer
-                    .Where(cus => cus.Status == SD.ActiveCustomer & cus.CompanyName == CustomerName).ToListAsync();
-
+                CustAccList = await _db.CustAcc
+                    .Include(acc=> acc.Customer)
+                    .Where(acc => acc.Customer.Status == SD.ActiveCustomer & acc.Customer.CompanyName == CustomerName).ToListAsync();
             }
             else
             {
-                CustomerList = await _db.Customer.Where(cus => cus.Status == SD.ActiveCustomer).ToListAsync();
-
+                CustAccList = await _db.CustAcc
+                        .Include(acc => acc.Customer)
+                        .Where(acc => acc.Customer.Status == SD.ActiveCustomer).ToListAsync();
             }
             return Page();
         }

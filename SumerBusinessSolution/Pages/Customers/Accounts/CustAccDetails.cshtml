@@ -32,6 +32,15 @@
             </div>
             <span asp-validation-for="Customer.CompanyName" class="text-danger"></span>
         </div>
+        <div class="row form-group">
+            <div class="col-md-5 offset-md-5">
+                <input asp-for="CustAcc.Id" class="form-control  text-md-right" disabled />
+            </div>
+            <div class="col-md-2">
+                <label asp-for="CustAcc.Id"> </label>
+            </div>
+            <span asp-validation-for="CustAcc.Id" class="text-danger"></span>
+        </div>
 
         <div class="row form-group">
             <div class="col-md-5 offset-md-5">
