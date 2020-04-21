@@ -54,7 +54,7 @@
 
         <div>
 
-            <table class="table table-striped border table-responsive-md table-responsive-lg">
+            <table class="table table-striped border table-responsive-md table-responsive-lg text-md-center">
                 <tr class="table-secondary">
 
                     <th></th>
@@ -89,7 +89,7 @@
 
                             @if (User.IsInRole(SD.AdminEndUser))
                             {
-                                <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-success text-white" asp-page="../Accounts/EditCustAcc" asp-route-CustId="@item.Id" type="submit" title="تعديل الحسابات" name="AccDetails">
+                                <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-success text-white" asp-page="../Accounts/EditCustAcc" asp-route-CustId="@item.Id" type="submit" title="تعديل الحسابات" name="EditCustAcc">
                                     @localizer.Get("") <i class="fas fa-edit"></i>
                                 </a>
                             }
@@ -147,6 +147,9 @@
                 </td>
                 <td>
                     @Html.DisplayFor(m => item.Paid)
+                </td>
+                <td>
+                    @Html.DisplayFor(m => item.Id)
                 </td>
                 <td>
                     @Html.DisplayFor(m => item.Customer.CompanyName)
