@@ -34,7 +34,7 @@ namespace SumerBusinessSolution
 
         public IActionResult OnGet()
         {
-            RoleAuth = _db.RoleAuth.FirstOrDefault(ro => ro.RoleName == SD.SupervisorEndUser);
+            RoleAuth = _db.RoleAuth.FirstOrDefault(ro => ro.RoleName == SD.SupervisorUser);
             SuperAppTransReq = RoleAuth.AppTransReq;
             SuperCreateTrans = RoleAuth.CreateTrans;
             return Page();
@@ -43,7 +43,7 @@ namespace SumerBusinessSolution
 
         public async Task<IActionResult> OnPost()
         {
-            RoleAuth = _db.RoleAuth.FirstOrDefault(ro => ro.RoleName == SD.SupervisorEndUser);
+            RoleAuth = _db.RoleAuth.FirstOrDefault(ro => ro.RoleName == SD.SupervisorUser);
             RoleAuth.AppTransReq = SuperAppTransReq;
             RoleAuth.CreateTrans = SuperCreateTrans;
 

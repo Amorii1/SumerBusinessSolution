@@ -8,10 +8,10 @@ namespace SumerBusinessSolution.Utility
     public static class SD
     {
         // User Roles
-        public const string AdminEndUser = "Admin";
-        public const string SupervisorEndUser = "Supervisor";
-        public const string StoreEndUser = "Store User";
-
+        public const string AdminUser = "Admin";
+        public const string SupervisorUser = "Supervisor";
+        public const string BnasStoreUser = "Bnas User"; // Bnas Branch user
+        public const string YaseenStoreUser = "Yaseen User"; // Yaseen branch user
         // Transactions Types
         public const string Incoming = "مواد واردة";
         public const string OpenBalance = "كمية اولية";
@@ -39,6 +39,10 @@ namespace SumerBusinessSolution.Utility
         // Sales Types -- to be added later to PricingType table 
         public const string WholePrice = "جملة";
         public const string RetailPrice = "مفرد";
+
+        // Payment Terms 
+        public const string COD = "نقدا";  // COD = Cash On Delivery
+        public const string Postpaid = "اجل";
     }
 }
 

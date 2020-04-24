@@ -12,7 +12,7 @@ using SumerBusinessSolution.Models;
  
 namespace SumerBusinessSolution
 {
-    [Authorize(Roles = SD.AdminEndUser)]
+    [Authorize(Roles = SD.AdminUser)]
     public class EditModel : PageModel
     {
         private readonly ApplicationDbContext _db;

@@ -13,6 +13,7 @@
     ViewData["Title"] = "Details";
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
+
 <style>
     table {
         border: 3px solid black;
@@ -53,9 +54,6 @@
         <div id="tabledata">
             <input type="hidden" asp-for="BillHeader.Id" />
 
-            @*<div>
-                    <p class="text-md-center" style="font-size:200px;">LOGO</p>
-                </div>*@
             <br />
             <div class="pl-md-5 offset-md-4">
                 <img src="~/image/Bnas Logo.jpeg" style="width:250px;height:250px;" />
@@ -274,7 +272,7 @@
                         </div>
                     }
 
-                    @if (User.IsInRole(SD.AdminEndUser) && (Model.BillHeader.Status == SD.OpenBill))
+                    @if (User.IsInRole(SD.AdminUser) && (Model.BillHeader.Status == SD.OpenBill))
                     {
                         <div class="col-md-3">
                             <a asp-route-culture="@Request.RouteValues["culture"]" data-toggle="modal" data-target="#Ask" class="btn btn-danger" asp-page-handler="CloseBillManually" asp-route-HeaderId="@Model.BillHeader.Id" type="submit" name="Close">
@@ -330,6 +328,7 @@
 
 
 <script type="text/javascript">
+ 
     $('#print').click(function () {
 
         var w = document.getElementById("tabledata").offsetWidth;

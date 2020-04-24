@@ -67,7 +67,7 @@
                 <li> <a class="nav-link  text-md-right text-dark" asp-area="" asp-page="/inventory/incominggoods/index"> المواد الواردة <i class="fas fa-truck-loading"></i></a></li>
                 <li><a class="nav-link  text-md-right text-dark" asp-area="" asp-page="/inventory/transfer/index"> نقل المواد  <i class="fas fa-exchange-alt"></i></a></li>
 
-                @if (User.IsInRole(SD.AdminEndUser))
+                @if (User.IsInRole(SD.AdminUser))
                 {
                     <li><a class="nav-link  text-md-right text-dark" asp-area="" asp-page="/inventory/transfer/create"> نقل جديد  <i class="fas fa-exchange-alt"></i></a></li>
                 }
@@ -88,7 +88,7 @@
 
 
             </ul>
-            @if (User.IsInRole(SD.SupervisorEndUser) || User.IsInRole(SD.StoreEndUser) || User.IsInRole(SD.AdminEndUser))
+            @if (User.IsInRole(SD.SupervisorUser) || User.IsInRole(SD.BnasStoreUser) || User.IsInRole(SD.YaseenStoreUser) || User.IsInRole(SD.AdminUser))
             {
                 <a href="../identity/account/Logout" class="btn btn-info form-control">@localizer.Get("تسجيل الخروج") <i class="fas fa-sign-out-alt"></i></a>
             }
@@ -128,7 +128,7 @@
                             </tbody>
                         </table>
                     </div>
-                    @if (User.IsInRole(SD.AdminEndUser))
+                    @if (User.IsInRole(SD.AdminUser))
                     {
                         <a href="#" class="float" id="notification" style="margin-left:60px!important"
                            role="button"
@@ -155,7 +155,7 @@
     <script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
     <script src="~/lib/jquery-ui/jquery-ui.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-    @if (User.IsInRole(SD.AdminEndUser))
+    @if (User.IsInRole(SD.AdminUser))
     {
         <script>
             enableNotifications();

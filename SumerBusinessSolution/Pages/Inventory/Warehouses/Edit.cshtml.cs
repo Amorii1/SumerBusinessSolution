@@ -12,7 +12,7 @@ using SumerBusinessSolution.Utility;
 
 namespace SumerBusinessSolution.Pages.Inventory.Warehouses
 {
-    [Authorize(Roles = SD.AdminEndUser)]
+    [Authorize(Roles = SD.AdminUser)]
     public class EditModel : PageModel
     {
 

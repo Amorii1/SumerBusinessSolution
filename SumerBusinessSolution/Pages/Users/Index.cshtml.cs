@@ -15,7 +15,7 @@ using SumerBusinessSolution.Models.ViewModels;
 namespace SumerBusinessSolution.Pages.Users
 {
 
-   [Authorize(Roles = SD.AdminEndUser)]
+   [Authorize(Roles = SD.AdminUser)]
 
   //[Authorize(Roles =SD.SupervisorEndUser)]
 

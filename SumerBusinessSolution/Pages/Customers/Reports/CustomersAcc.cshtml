@@ -87,7 +87,7 @@
                         <form method="post">
 
 
-                            @if (User.IsInRole(SD.AdminEndUser))
+                            @if (User.IsInRole(SD.AdminUser))
                             {
                                 <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-success text-white" asp-page="../Accounts/EditCustAcc" asp-route-CustId="@item.Id" type="submit" title="تعديل الحسابات" name="AccDetails">
                                     @localizer.Get("") <i class="fas fa-edit"></i>
@@ -125,7 +125,7 @@
                 <td>
                     <div class="btn-group" role="group">
                         <form method="post">
-                            @if (User.IsInRole(SD.AdminEndUser))
+                            @if (User.IsInRole(SD.AdminUser))
                             {
                                 <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-success text-white" asp-page="../Accounts/EditCustAcc" asp-route-CustId="@item.Id" type="submit" title="تعديل الحسابات" name="AccDetails">
                                     @localizer.Get("") <i class="fas fa-edit"></i>

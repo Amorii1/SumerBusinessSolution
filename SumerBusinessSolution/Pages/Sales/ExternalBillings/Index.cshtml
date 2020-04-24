@@ -13,7 +13,7 @@
     ViewData["Title"] = "Index";
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
-    <partial name="_StatusMessage" model="Model.StatusMessage" />
+<partial name="_StatusMessage" model="Model.StatusMessage" />
 <div class=" backgroundWhite">
     <div class="row">
 
@@ -52,8 +52,8 @@
 
                             </div>
                             @*<div class="col-md-5 pb-1">
-            @Html.Editor("searchCreateDateTime", new { htmlAttributes = new { @class = "form-control text-md-right", placeholder = @localizer.Get("تاريخ الطلب....") } })
-        </div>*@
+                                    @Html.Editor("searchCreateDateTime", new { htmlAttributes = new { @class = "form-control text-md-right", placeholder = @localizer.Get("تاريخ الطلب....") } })
+                                </div>*@
 
 
                         </div>
@@ -70,7 +70,9 @@
             <tr class="table-secondary">
 
                 <th></th>
-
+                <th>
+                    @Html.DisplayNameFor(m => m.ExternalBillItems.IsExternal)
+                </th>
                 <th>
                     @Html.DisplayNameFor(m => m.ExternalBillHeader.CreatedDataTime)
                 </th>
@@ -112,37 +114,24 @@
                                     <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-primary" asp-page="Details" type="submit" title="التفاصيل" asp-route-BhId="@item.Id" name="Details">
                                         @localizer.Get("") <i class="far fa-clipboard"></i>
                                     </a>
-                                    @*@if (User.IsInRole(SD.AdminEndUser) & item.Status == SD.OpenBill)
-                                    {
-                                        <button asp-route-culture="@Request.RouteValues["culture"]" data-toggle="modal" data-target="#Ask" class="btn btn-danger" title="اغلاق" asp-page-handler="CloseBillManually" asp-route-ExternalHeaderId="@item.Id" type="submit" name="Close">
-                                            @localizer.Get("") <i class="fas fa-window-close"></i>
-                                        </button>
-
-
-
-                                        <div class="modal fade" id="Ask" role="dialog" method="post">
-                                            <div class="modal-dialog">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <button class="close" data-dismiss="modal">&times;</button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <p class="alert alert-danger">@localizer.Get("هل انت متأكد؟")</p>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <input asp-route-culture="@Request.RouteValues["culture"]" type="submit" class="btn btn-info" value="@localizer.Get("نعم")" />
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                    }*@
-
                                 </form>
                             </div>
                         </td>
-
-
+                        @if (item.HasExternalProd == true)
+                        {
+                            <td class="bg-danger">
+                                @Html.DisplayFor(m => item.HasExternalProd)
+                            </td>
+                        }
+                        else
+                        {
+                            <td>
+                                @Html.DisplayFor(m => item.HasExternalProd)
+                            </td>
+                        }
+                        @*<td>
+                                @Html.DisplayFor(m => item.IsExternal)
+                            </td>*@
                         <td>
                             @Html.DisplayFor(m => item.CreatedDataTime)
                         </td>

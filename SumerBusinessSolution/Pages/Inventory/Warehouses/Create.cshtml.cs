@@ -15,7 +15,7 @@ using SumerBusinessSolution.Models;
 namespace SumerBusinessSolution.Pages.Inventory.Warehouses
 {
     [Authorize]
-    [Authorize(Roles = SD.AdminEndUser)]
+    [Authorize(Roles = SD.AdminUser)]
     public class Create : PageModel
     {
         private readonly ApplicationDbContext _db;

@@ -202,26 +202,35 @@
 
                 @foreach (var item in Model.ExternalBillItemsList)
                 {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(m => item.Note)
-                        </td>
+            <tr>
+                <td>
+                    @Html.DisplayFor(m => item.Note)
+                </td>
 
-                        <td>
-                            @Html.DisplayFor(m => item.TotalAmt)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(m => item.UnitPrice)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(m => item.Qty)
-                        </td>
+                <td>
+                    @Html.DisplayFor(m => item.TotalAmt)
+                </td>
+                <td>
+                    @Html.DisplayFor(m => item.UnitPrice)
+                </td>
+                <td>
+                    @Html.DisplayFor(m => item.Qty)
+                </td>
+                @if (item.IsExternal == true)
+                {
+                    <td>
+                        @Html.DisplayFor(m => item.ProdName)
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        @Html.DisplayFor(m => item.ProdInfo.ProdName)
+                    </td>
+                }
 
-                        <td>
-                            @Html.DisplayFor(m => item.ProdName)
-                        </td>
-                        <td>@{RowNo++;} @RowNo</td>
-                    </tr>
+                <td>@{RowNo++;} @RowNo</td>
+            </tr>
 
                 }
 
@@ -247,7 +256,7 @@
                         </div>
                     }
 
-                    @if (User.IsInRole(SD.AdminEndUser) && (Model.ExternalBillHeader.Status == SD.OpenBill))
+                    @if (User.IsInRole(SD.AdminUser) && (Model.ExternalBillHeader.Status == SD.OpenBill))
                     {
                         <div class="col-md-3">
                             <a asp-route-culture="@Request.RouteValues["culture"]" data-toggle="modal" data-target="#Ask" class="btn btn-danger" asp-page-handler="CloseBillManually" asp-route-BhId="@Model.ExternalBillHeader.Id" type="submit" name="Close">

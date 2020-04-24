@@ -34,7 +34,7 @@
         <h4 class="text-center">@localizer.Get("تقارير المخازن")</h4>
         </a>
     </div>
-    @if (User.IsInRole(SD.AdminEndUser))
+    @if (User.IsInRole(SD.AdminUser))
     {
         <div class="column" style="padding-left:80px;">
             <a  asp-route-culture="@Request.RouteValues["culture"]" asp-page="/inventory/reports/InvTransactions">

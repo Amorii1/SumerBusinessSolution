@@ -16,7 +16,7 @@ using SumerBusinessSolution.Utility;
 
 namespace SumerBusinessSolution.Pages.Inventory.IncomingGoods
 {
-   [Authorize(Roles = SD.AdminEndUser)]
+   [Authorize(Roles = SD.AdminUser)]
 
    [Authorize]
     public class CreateModel : PageModel

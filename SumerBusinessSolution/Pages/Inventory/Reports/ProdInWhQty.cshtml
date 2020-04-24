@@ -87,7 +87,7 @@
 
             <td>
 
-                @if (User.IsInRole(SD.AdminEndUser))
+                @if (User.IsInRole(SD.AdminUser))
                 {
                     @*<a asp-page="../Products/UpdateProdStkQty" asp-route-StkId="@item.Id" style="text-decoration:none;">
                     <img src="~/images/car.png" width="40" /> &nbsp; تحديث الكميه

@@ -10,10 +10,13 @@ using SumerBusinessSolution.Data;
 using SumerBusinessSolution.Models;
 using SumerBusinessSolution.Transactions;
 using Microsoft.AspNetCore.Localization;
-
+using Microsoft.AspNetCore.Authorization;
+using SumerBusinessSolution.Utility;
 
 namespace SumerBusinessSolution.Pages.Sales.ExternalBillings
 {
+    [Authorize(Roles = SD.YaseenStoreUser)]
+    [Authorize(Roles = SD.AdminUser)]
     public class MakePaymentModel : PageModel 
     {
 

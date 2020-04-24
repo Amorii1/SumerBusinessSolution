@@ -7,24 +7,19 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using SumerBusinessSolution.Data;
 using SumerBusinessSolution.Models;
-using SumerBusinessSolution.Transactions;
-using Microsoft.AspNetCore.Localization;
-using System.ComponentModel.DataAnnotations;
 
-
-namespace SumerBusinessSolution.Pages.Sales.Billings
-{ 
-    public class DetailsModel : PageModel
+namespace SumerBusinessSolution
+{
+    public class PrintBillModel : PageModel
     {
 
         private readonly ApplicationDbContext _db;
-        private readonly ISalesTrans _SalesTrans;
 
         //private readonly IServiceScopeFactory _serviceScopeFactory;
-        public DetailsModel(ApplicationDbContext db, ISalesTrans SalesTrans)
+        public PrintBillModel(ApplicationDbContext db)
         {
             _db = db;
-            _SalesTrans = SalesTrans;
+ 
         }
         [BindProperty]
         public BillHeader BillHeader { get; set; }
@@ -40,8 +35,9 @@ namespace SumerBusinessSolution.Pages.Sales.Billings
         public async Task<ActionResult> OnGet(int BhId)
         {
 
-            BillItemsList = await _db.BillItems.Include(bill=> bill.BillHeader).Include(bill=> bill.BillHeader.Customer).Include(bill=> bill.ProdInfo).Include(bill=> bill.BillHeader.ApplicationUser).Where(bill => bill.HeaderId == BhId).ToListAsync();
-            if(BillItemsList.Count() > 0)
+            BillItemsList = await _db.BillItems
+                .Include(bill => bill.BillHeader).Include(bill => bill.BillHeader.Customer).Include(bill => bill.ProdInfo).Include(bill => bill.BillHeader.ApplicationUser).Where(bill => bill.HeaderId == BhId).ToListAsync();
+            if (BillItemsList.Count() > 0)
             {
                 BillHeader = BillItemsList[0].BillHeader;
             }
@@ -51,13 +47,6 @@ namespace SumerBusinessSolution.Pages.Sales.Billings
         {
 
         }
-
-        public IActionResult OnPostCloseBillManually(int HeaderId)
-        {
-
-            StatusMessage = _SalesTrans.CloseBillManually(HeaderId).GetAwaiter().GetResult();
-
-            return RedirectToPage("/Sales/Billings/Index");
-        }
     }
 }
+ 

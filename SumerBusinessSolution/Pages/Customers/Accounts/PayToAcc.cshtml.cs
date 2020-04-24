@@ -14,7 +14,7 @@ using SumerBusinessSolution.Transactions;
 
 namespace SumerBusinessSolution.Pages.Customers.Accounts
 {
-    [Authorize(Roles = SD.AdminEndUser)]
+    [Authorize(Roles = SD.AdminUser)]
     public class PayToAccModel : PageModel
     {
         private readonly ApplicationDbContext _db;

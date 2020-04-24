@@ -16,6 +16,10 @@ namespace SumerBusinessSolution.Models
         [Display(Name = "الحالة")]
         [Required]
         public string Status { get; set; }
+
+        [Display(Name = "الية الدفع")]
+        public string PaymentTerms { get; set; }
+
         [Display(Name = "المبلغ الكلي")]
         public double TotalAmt { get; set; }
         [Display(Name = "التخفيض")]

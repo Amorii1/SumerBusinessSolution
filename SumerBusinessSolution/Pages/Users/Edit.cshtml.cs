@@ -14,7 +14,7 @@ using SumerBusinessSolution.Models;
 
 namespace SumerBusinessSolution.Pages.Users
 {
-    [Authorize(Roles = SD.AdminEndUser)]
+    [Authorize(Roles = SD.AdminUser)]
 
   //[Authorize(Roles = SD.SupervisorEndUser)]
     public class EditModel : PageModel
@@ -45,7 +45,7 @@ namespace SumerBusinessSolution.Pages.Users
             //var user = await _userManager.FindByIdAsync(id);
             //var roles = _db.Roles.FirstOrDefault(r => r.) //await _userManager.GetRolesAsync(user);
             //string userRole = roles.Select(r=> r)
-            SelectedRole = SD.AdminEndUser;
+            SelectedRole = SD.AdminUser;
 
             if (ApplicationUser == null)
             {

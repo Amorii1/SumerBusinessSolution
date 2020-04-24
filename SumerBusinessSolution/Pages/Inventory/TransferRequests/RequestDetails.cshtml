@@ -197,7 +197,7 @@
                             </button>
                         </div>
 
-                        @if (User.IsInRole(SD.AdminEndUser) || (User.IsInRole(SD.SupervisorEndUser) & Model.RoleAuth.AppTransReq == true))
+                        @if (User.IsInRole(SD.AdminUser) || (User.IsInRole(SD.SupervisorUser) & Model.RoleAuth.AppTransReq == true))
                         {
                             <div class="col-md-3">
 

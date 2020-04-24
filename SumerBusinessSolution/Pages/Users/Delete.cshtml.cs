@@ -12,7 +12,7 @@ using SumerBusinessSolution.Models;
 
 namespace SumerBusinessSolution.Pages.Users
 {
-    [Authorize(Roles = SD.AdminEndUser)]
+    [Authorize(Roles = SD.AdminUser)]
     public class DeleteModel : PageModel
     {
  

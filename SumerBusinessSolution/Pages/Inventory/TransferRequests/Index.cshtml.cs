@@ -93,7 +93,7 @@ namespace SumerBusinessSolution.Inventory.TransferRequests
             }
 
 
-            RoleAuth = _db.RoleAuth.FirstOrDefault(ro => ro.RoleName == SD.SupervisorEndUser);
+            RoleAuth = _db.RoleAuth.FirstOrDefault(ro => ro.RoleName == SD.SupervisorUser);
 
             return Page();
 

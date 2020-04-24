@@ -1,0 +1,255 @@
+﻿@page
+@model SumerBusinessSolution.Pages.Sales.ExternalBillings.CreateOldModel
+@using SumerBusinessSolution.Utility
+@using Microsoft.AspNetCore.Localization
+@using System.ComponentModel.DataAnnotations;
+@*@inject IHtmlLocalizer<IndexModel> htmlLocalizer*@ @*for html lozcalization*@
+@*@inject IStringLocalizer<IndexModel> localizer*@
+@*First Method*@
+@inject Services.CommonLocalizationService localizer
+@*Second and the easier Method*@
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<div class=" border backgroundWhite">
+    <h2 class="text-info  text-md-right">@localizer.Get("انشاء فاتورة خارجية جديدة")</h2>
+
+
+    <form method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="row form-group">
+
+            <div class="col-md-5 offset-md-5">
+                <select asp-for="a => @Model.ExternalBillHeader.CustId"
+                        asp-items="@(new SelectList(Model.Customer, "Id", "CompanyName"))"
+                        class="form-control ">
+                </select>
+            </div>
+            <div class="col-md-2">
+                <label asp-for="@Model.ExternalBillHeader.CustId"> </label>
+            </div>
+        </div>
+        @*<table>
+            <tr>
+                <td>
+                    <select asp-for="a => @Model.BillHeader.CustId"
+                            asp-items="@(new SelectList(Model.Customer, "Id", "CompanyName"))"
+                            class="form-control ">
+                    </select>
+                </td>
+
+            </tr>
+            <tr>
+                <td>
+                    <select id="PriceType" asp-for="@Model.PricingType.PriceType"
+                            asp-items="@(new SelectList(Model.UnitPriceTypesList, "Id","PriceType"))"
+                            class="form-control ">
+                    </select>
+
+                </td>
+
+            </tr>
+        </table>*@
+
+
+        <table id="dataTable" dir="rtl" class="table table-striped border table-responsive-md table-responsive-lg">
+            <tr class="table-secondary">
+                @*<table id="dataTable" border="0" cellpadding="0" cellspacing="0">
+                <tr>*@
+                <th>
+                    @Html.DisplayNameFor(a => Model.Bi[0].ProdName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(a => Model.Bi[0].Qty)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(a => Model.Bi[0].UnitPrice)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(a => Model.Bi[0].TotalAmt)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(a => Model.Bi[0].Note)
+                </th>
+
+                @*<th>Prod Code</th>
+                <th>Qty</th>
+                <th>Unit Price</th>
+                <th>Total </th>
+                <th>Note</th>*@
+                <th><a href="#" title="اضافة" id="addNew">   <i class="fas fa-plus"></i></a></th>
+            </tr>
+            @if (Model.Bi != null && Model.Bi.Count > 0)
+            {
+
+                int j = 0;
+
+                foreach (var i in Model.Bi)
+                {
+
+
+                    <tr>
+                        @*float a= (float)((ArrayList)paredes[i])[0];*@
+                        @*<td>@Html.TextBoxFor(a => a[j].ContactName)</td>*@
+
+                        <td>@Html.TextBoxFor(a => Model.Bi[j].ProdName) </td>
+                        <td>@Html.TextBoxFor(a => Model.Bi[j].Qty)</td>
+                        <td oninput="bindTotal(this)" onclick="bindTotal(this)">@Html.TextBoxFor(a => Model.Bi[j].UnitPrice)</td>
+                        <td>@Html.TextBoxFor(a => Model.Bi[j].TotalAmt)</td>
+                        <td>@Html.TextBoxFor(a => Model.Bi[j].Note)</td>
+                        <td>
+                            @if (j > 0)
+                            {
+
+                                // <input type="button" value="Delete" onclick="deleteRow(this)">
+                                <a href="#" id="removeThis" class="remove">Remove</a>
+
+                            }
+                        </td>
+                    </tr>
+                    j++;
+
+                }
+
+            }
+        </table>
+
+        <div class="row form-group">
+
+            <div class="col-md-5 offset-md-5">
+                <input type="text" asp-for="a => @Model.ExternalBillHeader.PaidAmt" class="form-control text-md-right" />
+
+            </div>
+            <div class="col-md-2">
+                <label asp-for="@Model.ExternalBillHeader.PaidAmt"> </label>
+            </div>
+        </div>
+
+        <div class="row form-group">
+
+            <div class="col-md-5 offset-md-5">
+                <input type="text" asp-for="a => @Model.ExternalBillHeader.Discount" class="form-control text-md-right" />
+            </div>
+            <div class="col-md-2">
+                <label asp-for="@Model.ExternalBillHeader.Discount"> </label>
+            </div>
+        </div>
+        <div class="row form-group">
+
+            <div class="col-md-5 offset-md-5">
+                <input type="text" asp-for="a => @Model.ExternalBillHeader.Note" class="form-control text-md-right" />
+
+            </div>
+            <div class="col-md-2">
+                <label asp-for="@Model.ExternalBillHeader.Note"> </label>
+            </div>
+        </div>
+
+        <div class=" form-group row">
+            <div class="col-md-5 offset-md-5">
+                <div class="row">
+
+                    <div class="col-md-6">
+                        @*<a asp-page="Index" class="btn btn-success form-control">الرجوع</a>*@
+
+                        <input asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-secondary form-control" type="button" value="@localizer.Get("الغاء")" onclick="history.back()">
+
+                    </div>
+                    <div class="col-md-6">
+                        @*<input type="submit" class="btn btn-info form-control" value="حفظ" />*@
+                        <input asp-route-culture="@Request.RouteValues["culture"]" type="submit" class="btn btn-info form-control" value="@localizer.Get("انشاء")" />
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        @*<input type="submit" value="Save Bulk Data" />*@
+    </form>
+
+</div>
+
+
+
+
+
+
+    <script>
+        function RemoveRow(r) {
+            var i = r.parentNode.parentNode.rowIndex;
+            document.getElementById("dataTable").deleteRow(i);
+        }
+
+    </script>
+
+
+    @* Here I will add Jquery Code for validation / dynamically add new rows / Remove rows etc *@
+
+    @section Scripts{
+        <script language="javascript">
+            $(document).ready(function () {
+
+                //1. Add new row
+                $("#addNew").click(function (e) {
+                    e.preventDefault();
+                    var $tableBody = $("#dataTable");
+                    var $trLast = $tableBody.find("tr:last");
+
+                    var $trNew = $trLast.clone();
+                    $trNew.find(':text').val('');
+
+                    var suffix = $trNew.find(':input:first').attr('name').match(/\d+/);
+                    $trNew.find("td:last").html('<a href="#" id="removeThis" onclick="return RemoveRow(this)" class="remove">Remove</a>');
+
+
+                    $.each($trNew.find(':input'), function (i, val) {
+                        // Replaced Name
+                        var oldN = $(this).attr('name');
+                        var newN = oldN.replace('[' + suffix + ']', '[' + (parseInt(suffix) + 1) + ']');
+                        $(this).attr('name', newN);
+                        //Replaced value
+                        var type = $(this).attr('type');
+                        if (type.toLowerCase() == "text") {
+                            $(this).attr('value', '');
+                        }
+
+                        // If you have another Type then replace with default value
+                        $(this).removeClass("input-validation-error");
+
+                    });
+                    $trLast.after($trNew);
+
+                });
+            });
+ 
+
+         
+
+            function bindTotal(t) {
+
+                    const val =  t.parentElement.children[1].children[0].value //t.children[0].value
+                    const price = t.parentElement.children[2].children[0].value
+
+                t.parentElement.children[3].children[0].value = val * price
+
+                console.log(val);
+            }
+
+        </script>
+
+        <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+        <script>
+            $(document).ready(function () {
+
+            });
+        </script>
+    }
+

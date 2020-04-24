@@ -16,6 +16,11 @@ namespace SumerBusinessSolution.Models
         [Display(Name = "الحالة")]
         [Required]
         public string Status { get; set; }
+
+        [Display(Name = "الية الدفع")]
+        public string PaymentTerms { get; set; }
+
+     
         [Display(Name = "المبلغ الكلي")]
         public double TotalAmt { get; set; }
         [Display(Name = "التخفيض")]
@@ -32,6 +37,10 @@ namespace SumerBusinessSolution.Models
         public string CreatedById { get; set; }
         [Display(Name = "الملاحظات")]
         public string Note { get; set; }
+
+        // in case this bill contains external item(item bought from outside and has no effect on inventory)
+        [Display(Name = "مواد خارجية")]
+        public bool HasExternalProd { get; set; }
 
         [ForeignKey("CreatedById")]
         public virtual ApplicationUser ApplicationUser { get; set; }

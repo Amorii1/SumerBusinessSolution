@@ -19,7 +19,7 @@
     <div class="row">
 
 
-        @if (User.IsInRole(SD.AdminEndUser))
+        @if (User.IsInRole(SD.AdminUser))
         {
             <div class="col-md-6">
                 <a asp-area="Identity" asp-route-culture="@Request.RouteValues["culture"]" title="مستخدم جديد" asp-page="/Account/Register" class="btn btn-info"> <i class="fas fa-plus"></i></a>
@@ -80,7 +80,7 @@
 
 
 
-        @if (User.IsInRole(SD.AdminEndUser))
+        @if (User.IsInRole(SD.AdminUser))
         {
             <td style="width:150px;">
                 <div class="btn-group" role="group">

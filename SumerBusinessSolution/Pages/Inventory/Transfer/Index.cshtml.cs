@@ -117,7 +117,7 @@ namespace SumerBusinessSolution.Inventory.Transfer
                     }
                 }
             }
-            RoleAuth = _db.RoleAuth.FirstOrDefault(ro => ro.RoleName == SD.SupervisorEndUser);
+            RoleAuth = _db.RoleAuth.FirstOrDefault(ro => ro.RoleName == SD.SupervisorUser);
 
             return Page();
         }

@@ -14,8 +14,11 @@ namespace SumerBusinessSolution.Models
         public int Id { get; set; }
 
         public int HeaderId { get; set; }
-        [Display(Name = "اسم المنتج") ]
+       
 
+        public int? ProdId { get; set; }
+
+        [Display(Name = "اسم المنتج")]
         public string ProdName { get; set; }
 
         [Required]
@@ -27,8 +30,16 @@ namespace SumerBusinessSolution.Models
         [Required]
         [Display(Name = "المبلغ الكلي")]
         public double TotalAmt { get; set; }
+
+        [Display(Name = "مادة خارجية")]
+        public bool IsExternal { get; set; }
+
         [Display(Name = "الملاحظات")]
         public string Note { get; set; }
+
+
+        [ForeignKey("ProdId")]
+        public virtual ProdInfo ProdInfo { get; set; }
 
         [ForeignKey("HeaderId")]
         public virtual ExternalBillHeader ExternalBillHeader { get; set; }

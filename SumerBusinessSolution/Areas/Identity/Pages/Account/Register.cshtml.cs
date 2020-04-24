@@ -21,7 +21,7 @@ namespace SumerBusinessSolution.Areas.Identity.Pages.Account
 {
     
     [Authorize]
-    [Authorize(Roles = SD.AdminEndUser)]
+    [Authorize(Roles = SD.AdminUser)]
  
     public class RegisterModel : PageModel
     {
@@ -124,19 +124,23 @@ namespace SumerBusinessSolution.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
 
-                    if (!await _roleManager.RoleExistsAsync(SD.AdminEndUser))
+                    if (!await _roleManager.RoleExistsAsync(SD.AdminUser))
                     {
-                        await _roleManager.CreateAsync(new IdentityRole(SD.AdminEndUser));
+                        await _roleManager.CreateAsync(new IdentityRole(SD.AdminUser));
                     }
 
-                    if (!await _roleManager.RoleExistsAsync(SD.SupervisorEndUser))
+                    if (!await _roleManager.RoleExistsAsync(SD.SupervisorUser))
                     {
-                        await _roleManager.CreateAsync(new IdentityRole(SD.SupervisorEndUser));
+                        await _roleManager.CreateAsync(new IdentityRole(SD.SupervisorUser));
                     }
 
-                    if (!await _roleManager.RoleExistsAsync(SD.StoreEndUser))
+                    if (!await _roleManager.RoleExistsAsync(SD.BnasStoreUser))
                     {
-                        await _roleManager.CreateAsync(new IdentityRole(SD.StoreEndUser));
+                        await _roleManager.CreateAsync(new IdentityRole(SD.BnasStoreUser));
+                    }
+                    if (!await _roleManager.RoleExistsAsync(SD.YaseenStoreUser))
+                    {
+                        await _roleManager.CreateAsync(new IdentityRole(SD.YaseenStoreUser));
                     }
 
 
@@ -155,17 +159,21 @@ namespace SumerBusinessSolution.Areas.Identity.Pages.Account
                     //await _signInManager.SignInAsync(user, isPersistent: false);
                     //return LocalRedirect(returnUrl);
 
-                    if (SelectedRole == SD.AdminEndUser)
+                    if (SelectedRole == SD.AdminUser)
                     {
-                        await _userManager.AddToRoleAsync(user, SD.AdminEndUser);
+                        await _userManager.AddToRoleAsync(user, SD.AdminUser);
                     }
-                    else if (SelectedRole == SD.SupervisorEndUser)
+                    else if (SelectedRole == SD.SupervisorUser)
                     {
-                        await _userManager.AddToRoleAsync(user, SD.SupervisorEndUser);
+                        await _userManager.AddToRoleAsync(user, SD.SupervisorUser);
                     }
-                    else if(SelectedRole == SD.StoreEndUser)
+                    else if(SelectedRole == SD.BnasStoreUser)
                     {
-                        await _userManager.AddToRoleAsync(user, SD.StoreEndUser);
+                        await _userManager.AddToRoleAsync(user, SD.BnasStoreUser);
+                    }
+                    else if (SelectedRole == SD.YaseenStoreUser)
+                    {
+                        await _userManager.AddToRoleAsync(user, SD.YaseenStoreUser);
                     }
 
                     //if (Input.IsAdmin)

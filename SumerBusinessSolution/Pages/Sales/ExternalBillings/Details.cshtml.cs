@@ -10,10 +10,13 @@ using SumerBusinessSolution.Models;
 using SumerBusinessSolution.Transactions;
 using Microsoft.AspNetCore.Localization;
 using System.ComponentModel.DataAnnotations;
-
+using Microsoft.AspNetCore.Authorization;
+using SumerBusinessSolution.Utility;
 
 namespace SumerBusinessSolution.Pages.Sales.ExternalBillings
-{ 
+{
+    [Authorize(Roles = SD.YaseenStoreUser)]
+    [Authorize(Roles = SD.AdminUser)]
     public class DetailsModel : PageModel
     {
 
@@ -54,7 +57,12 @@ namespace SumerBusinessSolution.Pages.Sales.ExternalBillings
 
 
 
-            ExternalBillItemsList = await _db.ExternalBillItems.Include(bill=> bill.ExternalBillHeader).Include(bill=> bill.ExternalBillHeader.Customer).Include(bill=> bill.ExternalBillHeader.ApplicationUser).Where(bill => bill.ExternalBillHeader.Id == BhId).ToListAsync();
+            ExternalBillItemsList = await _db.ExternalBillItems
+                .Include(bill=> bill.ExternalBillHeader)
+                .Include(bill=> bill.ExternalBillHeader.Customer)
+                .Include(bill=> bill.ExternalBillHeader.ApplicationUser)
+                .Include(bill=> bill.ProdInfo)
+                .Where(bill => bill.ExternalBillHeader.Id == BhId).ToListAsync();
             if(ExternalBillItemsList.Count() > 0)
             {
                 ExternalBillHeader = ExternalBillItemsList[0].ExternalBillHeader;

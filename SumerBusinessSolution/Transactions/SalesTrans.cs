@@ -227,14 +227,139 @@ namespace SumerBusinessSolution.Transactions
 
         }
 
-     
+
         // External Billing
 
         // this function will create an external bill.. external bill is a bill issues for a customers
         // for purchasing items that do not belong to the company. basically it is supplied by another or a 
         // third party company. creating external bills will have no effect on Inventory at all
 
-        public async Task<string> CreateExternalBill(ExternalBillHeader ExternalHeader, List<ExternalBillItems> ExternalBill)
+        public async Task<string> CreateExternalBill(ExternalBillHeader ExternalHeader, List<ExternalBillItems> ExternalBill, int WhId)
+        {
+            try
+            {
+                //  ShowRoom = WhId; //_db.Warehouse.Include(wh => wh.WhType).FirstOrDefault(wh => wh.WhType.Type == "Showroom"); 
+
+                ExternalHeader.CreatedById = GetLoggedInUserId();
+                ExternalHeader.CreatedDataTime = DateTime.Now;
+
+                double TotalAmt = 0;
+                int ProdId;
+                // getting the unit price of each item in the bill items 
+                foreach (ExternalBillItems item in ExternalBill)
+                {
+                    ProdId = 0;
+                    try
+                    {
+                        ProdId = _db.ProdInfo.FirstOrDefault(pr => pr.ProdCode == item.ProdInfo.ProdCode).Id;
+                    }
+                    catch
+                    {
+
+                    }
+
+                    if (ProdId > 0)
+                    {
+                        item.ProdId = ProdId;
+                        item.IsExternal = false;
+                        // first check if qty enough in the store room before proceeding
+                        bool CheckQty = CheckQtyInWh(item.ProdId ?? 0, WhId, item.Qty);
+                       // ExternalHeader.HasExternalProd = false;
+                        if (CheckQty == false)
+                        {
+                            return "Error! لا توجد كمية كافية للبيع";
+                        }
+                    }
+                    else
+                    {
+                        // to indicase if the product of this line is an external product
+                        // which means its bought from another shop and has no effect on 
+                        // inventory 
+                        item.IsExternal = true;
+                        ExternalHeader.HasExternalProd = true;
+                    }
+                    TotalAmt += item.TotalAmt;
+                }
+
+                // price before discount
+                ExternalHeader.TotalAmt = TotalAmt;
+
+                // incase there is a discount
+                TotalAmt = TotalAmt - ExternalHeader.Discount;
+                ExternalHeader.TotalNetAmt = TotalAmt;
+
+                if (TotalAmt == ExternalHeader.PaidAmt)
+                {
+                    ExternalHeader.Status = SD.Completed;
+                }
+                else
+                {
+                    ExternalHeader.Status = SD.OpenBill;
+                }
+
+
+                _db.ExternalBillHeader.Add(ExternalHeader);
+
+                await _db.SaveChangesAsync();
+
+                // updatinga customer Acc 
+                double DebtAmt = ExternalHeader.TotalNetAmt - ExternalHeader.PaidAmt;
+                UpdateCustomerAcc(ExternalHeader.CustId ?? 0, ExternalHeader.PaidAmt, DebtAmt, "New");
+
+                // add a new payment to bill payments table 
+                AddExternalBillPayment(ExternalHeader.CustId ?? 0, ExternalHeader.Id, ExternalHeader.PaidAmt);
+
+
+                // Creating Bill items
+                foreach (ExternalBillItems item in ExternalBill)
+                {
+
+                    ExternalBillItems Bill = new ExternalBillItems
+                    {
+                        HeaderId = ExternalHeader.Id,
+                       // ProdId = item.ProdId,
+                        Qty = item.Qty,
+                        UnitPrice = item.UnitPrice,
+                        TotalAmt = item.UnitPrice * item.Qty,
+                        // IsExternal = false,
+                        Note = item.Note
+                    };
+
+                    if(item.IsExternal == false)
+                    {
+                        Bill.ProdId = item.ProdId;
+                        Bill.IsExternal = false;
+                        // decrease stock qty of that item 
+                        DecreaseStockQty(Bill.ProdId ?? 0, WhId, Bill.Qty);
+
+                        // create inv transaction 
+                        CreateInvTransaction(Bill.ProdId ?? 0, WhId, Bill.Qty, SD.Sales);
+                        _db.ExternalBillItems.Add(Bill);
+                    }
+                    else
+                    {
+                        Bill.ProdName = item.ProdInfo.ProdCode;
+                        Bill.IsExternal = true;
+                        //Bill.ProdName = Bill.ProdId.ToString();
+                        _db.ExternalBillItems.Add(Bill);
+                    }
+
+                }
+
+
+                await _db.SaveChangesAsync();
+
+
+                return "تمت اضافة فاتورة مبيعات جديدة";
+            }
+
+            catch (Exception x)
+            {
+                return "Error! حصل خطأ لم يتم اضافة الفاتورة";
+            }
+        }
+
+        public async Task<string> CreateExternalBillOLD(ExternalBillHeader ExternalHeader, List<ExternalBillItems> ExternalBill, int WhId)
         {
             try
             {

@@ -51,11 +51,15 @@ namespace SumerBusinessSolution.Pages.Sales.Billings
 
         public List<PricingType> UnitPriceTypesList { get; set; }
 
+      
+        [Display(Name = "الية الدفع")]
+        public List<string> PaymentTermsList = new List<string>();
+
         [BindProperty]
         public PricingType PricingType { get; set; }
 
         [BindProperty]
-        public string Selected { get; set; }
+        public string COD { get; set; }
 
         [BindProperty]
         public string CustomerName { get; set; }
@@ -63,17 +67,20 @@ namespace SumerBusinessSolution.Pages.Sales.Billings
         public InvStockQty InvStockQty { get; set; }
         public ActionResult OnGet()
         {
+            COD = SD.COD;
             Bi = new List<BillItems> { new BillItems { ProdId = 0, Qty = 0, UnitPrice = 0, TotalAmt = 0, Note = "" } };
             
             WarehouseList = _db.Warehouse.Where(wh=> wh.WhType.Type.ToLower() == SD.ShowRoom.ToLower()).ToList();
             Customer = _db.Customer.Where(cus => cus.Status == SD.ActiveCustomer).ToList();
 
             UnitPriceTypesList = _db.PricingType.ToList();
+            // List<string> PaymentTermsList = new List<string>();
  
-            //UnitPriceTypesList.Add(SD.WholePrice);
-            // UnitPriceTypesList.Add(SD.RetailPrice);
+            PaymentTermsList.Add(SD.COD);
+            PaymentTermsList.Add(SD.Postpaid);
 
            
+
 
             return Page();
         }
@@ -82,15 +89,13 @@ namespace SumerBusinessSolution.Pages.Sales.Billings
             Customer Customer = _db.Customer.FirstOrDefault(c=> c.CompanyName == CustomerName);
             BillHeader.CustId = Customer.Id;
             StatusMessage = _SalesTrans.CreateBill(BillHeader, Bi, SelectedWh).GetAwaiter().GetResult();
-
-
             //_db.SaveChanges();
 
             ModelState.Clear();
 
             // }
             // }
-            return RedirectToPage("/Sales/Billings/Create");
+            return RedirectToPage("/Sales/Billings/PrintBill", new { BhId = BillHeader.Id});
         }
 
         public JsonResult OnGetSearchNow(string term)

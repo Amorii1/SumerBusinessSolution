@@ -15,7 +15,7 @@ using System.ComponentModel.DataAnnotations;
 namespace SumerBusinessSolution.Pages.Inventory.Reports
 {
     [Authorize]
-    [Authorize(Roles = SD.AdminEndUser)]
+    [Authorize(Roles = SD.AdminUser)]
     public class InvTransactionsModel : PageModel
     {
         private readonly ApplicationDbContext _db;

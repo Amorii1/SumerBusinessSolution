@@ -10,7 +10,8 @@ namespace SumerBusinessSolution.Transactions
     {
         Task<string> CreateBill(BillHeader Header, List<BillItems> BillItems, int WhId);
 
-        Task<string> CreateExternalBill(ExternalBillHeader Header, List<ExternalBillItems> BillItems);
+        Task<string> CreateExternalBill(ExternalBillHeader Header, List<ExternalBillItems> BillItems, int WhId);
+
         Task<string> MakePaymentOnBill(int HeaderId, double NewPaymentAmt);
 
         Task<string> MakePaymentOnExternalBill(int ExternalHeaderId, double NewPaymentAmt);

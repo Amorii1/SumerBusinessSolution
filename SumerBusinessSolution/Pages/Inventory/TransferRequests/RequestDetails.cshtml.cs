@@ -53,7 +53,7 @@ namespace SumerBusinessSolution
                 .Include(tr => tr.InvTransferHeader.ApplicationUser)
                 .Where(tr => tr.HeaderId == ReqId).ToList().OrderBy(tr => tr.InvTransferHeader.CreatedDateTime);
 
-            RoleAuth = _db.RoleAuth.FirstOrDefault(ro => ro.RoleName == SD.SupervisorEndUser);
+            RoleAuth = _db.RoleAuth.FirstOrDefault(ro => ro.RoleName == SD.SupervisorUser);
 
             return Page();
 

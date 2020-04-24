@@ -181,7 +181,7 @@
                                 <form method="post">
 
 
-                                    @if (User.IsInRole(SD.AdminEndUser) || (User.IsInRole(SD.SupervisorEndUser) & Model.RoleAuth.AppTransReq == true))
+                                    @if (User.IsInRole(SD.AdminUser) || (User.IsInRole(SD.SupervisorUser) & Model.RoleAuth.AppTransReq == true))
                                     {
                                         <button asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-info text-white" asp-page-handler="ApproveTransferRequests" asp-route-ReqId="@item.Id" type="submit" title="قبول" name="Accept">
                                             @localizer.Get("") <i class="fas fa-check"></i>

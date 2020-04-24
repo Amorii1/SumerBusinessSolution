@@ -13,7 +13,7 @@ using SumerBusinessSolution.Transactions;
 
 namespace SumerBusinessSolution.Pages.Inventory.Transfer
 {
-    [Authorize(Roles =SD.AdminEndUser)]
+    [Authorize(Roles =SD.AdminUser)]
     public class CreateModel : PageModel
     {
         private readonly ApplicationDbContext _db;

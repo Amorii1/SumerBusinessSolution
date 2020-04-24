@@ -4,19 +4,21 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using SumerBusinessSolution.Data;
 using SumerBusinessSolution.Models;
 using SumerBusinessSolution.Transactions;
+using SumerBusinessSolution.Utility;
 
 namespace SumerBusinessSolution.Pages.Sales.ExternalBillings
 {
+    [Authorize(Roles = SD.YaseenStoreUser)]
+    [Authorize(Roles = SD.AdminUser)]
     public class CustBillsModel : PageModel
     {
-
-
         private readonly ApplicationDbContext _db;
         private readonly ISalesTrans _SalesTrans;
 
