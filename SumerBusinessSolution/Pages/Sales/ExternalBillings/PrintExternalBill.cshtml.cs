@@ -12,8 +12,7 @@ using SumerBusinessSolution.Utility;
 
 namespace SumerBusinessSolution
 {
-    [Authorize(Roles = SD.YaseenStoreUser)]
-    [Authorize(Roles = SD.AdminUser)]
+    [Authorize]
     public class PrintExternalBillModel : PageModel
     {
         private readonly ApplicationDbContext _db;

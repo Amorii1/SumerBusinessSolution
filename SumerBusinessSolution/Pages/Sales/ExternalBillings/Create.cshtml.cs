@@ -14,9 +14,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace SumerBusinessSolution.Pages.Sales.ExternalBillings
 {
-    [Authorize(Roles =SD.YaseenStoreUser)]
-    [Authorize(Roles = SD.AdminUser)]
-
+    [Authorize]
     public class CreateModel : PageModel
     {
         private readonly ApplicationDbContext _db;

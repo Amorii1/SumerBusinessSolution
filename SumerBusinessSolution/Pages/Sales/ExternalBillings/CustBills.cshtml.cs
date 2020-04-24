@@ -15,8 +15,7 @@ using SumerBusinessSolution.Utility;
 
 namespace SumerBusinessSolution.Pages.Sales.ExternalBillings
 {
-    [Authorize(Roles = SD.YaseenStoreUser)]
-    [Authorize(Roles = SD.AdminUser)]
+    [Authorize]
     public class CustBillsModel : PageModel
     {
         private readonly ApplicationDbContext _db;

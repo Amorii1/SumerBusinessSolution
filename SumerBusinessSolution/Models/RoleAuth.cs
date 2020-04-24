@@ -18,8 +18,8 @@ namespace SumerBusinessSolution.Models
         // Approve Transfar Requests
         public bool AppTransReq { get; set; }
 
-        // Create Transfer
-        public bool CreateTrans { get; set; }
+        // Create incoming goods
+        public bool CreateInGoods { get; set; }
 
     }
 }

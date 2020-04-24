@@ -29,14 +29,18 @@ namespace SumerBusinessSolution
         public bool SuperAppTransReq { get; set; }
 
         [BindProperty]
-        public bool SuperCreateTrans { get; set; }
+        public bool SuperCreateIG { get; set; }
 
 
         public IActionResult OnGet()
         {
             RoleAuth = _db.RoleAuth.FirstOrDefault(ro => ro.RoleName == SD.SupervisorUser);
-            SuperAppTransReq = RoleAuth.AppTransReq;
-            SuperCreateTrans = RoleAuth.CreateTrans;
+            if(RoleAuth != null)
+            {
+                SuperAppTransReq = RoleAuth.AppTransReq;
+                SuperCreateIG = RoleAuth.CreateInGoods;
+            }
+           
             return Page();
 
         }
@@ -44,8 +48,12 @@ namespace SumerBusinessSolution
         public async Task<IActionResult> OnPost()
         {
             RoleAuth = _db.RoleAuth.FirstOrDefault(ro => ro.RoleName == SD.SupervisorUser);
-            RoleAuth.AppTransReq = SuperAppTransReq;
-            RoleAuth.CreateTrans = SuperCreateTrans;
+            if(RoleAuth != null)
+            {
+                RoleAuth.AppTransReq = SuperAppTransReq;
+                RoleAuth.CreateInGoods = SuperCreateIG;
+            }
+       
 
 
             await _db.SaveChangesAsync();

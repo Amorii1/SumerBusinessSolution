@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using SumerBusinessSolution.Data;
 using SumerBusinessSolution.Models;
+using SumerBusinessSolution.Utility;
 
 namespace SumerBusinessSolution.Pages.Inventory.IncomingGoods
 {
@@ -28,6 +29,8 @@ namespace SumerBusinessSolution.Pages.Inventory.IncomingGoods
         public ProdInfo ProdInfo { get; set; }
         public Warehouse Warehouse { get; set; }
 
+        [BindProperty]
+        public RoleAuth RoleAuth { get; set; }
 
         [DataType(DataType.Date)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy/MM/dd}")]
@@ -105,6 +108,8 @@ namespace SumerBusinessSolution.Pages.Inventory.IncomingGoods
                     }
                 }
             }
+            RoleAuth = _db.RoleAuth.FirstOrDefault(ro => ro.RoleName == SD.SupervisorUser);
+
             return Page();
         }
 

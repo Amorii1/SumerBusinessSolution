@@ -16,8 +16,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace SumerBusinessSolution.Pages.Sales.ExternalBillings
 {
-    [Authorize(Roles = SD.YaseenStoreUser)]
-    [Authorize(Roles = SD.AdminUser)]
+    [Authorize]
     public class IndexModel : PageModel
     {
 
