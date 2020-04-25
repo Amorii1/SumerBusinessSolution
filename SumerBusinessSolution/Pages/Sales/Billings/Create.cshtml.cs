@@ -18,13 +18,15 @@ namespace SumerBusinessSolution.Pages.Sales.Billings
     public class CreateModel : PageModel
     {
         private readonly ApplicationDbContext _db;
+        private readonly ICustomerTrans _CustTrans;
 
         private readonly ISalesTrans _SalesTrans;
         //private readonly IServiceScopeFactory _serviceScopeFactory;
-        public CreateModel(ApplicationDbContext db, ISalesTrans SalesTrans)
+        public CreateModel(ApplicationDbContext db, ISalesTrans SalesTrans, ICustomerTrans CustTrans)
         {
             _db = db;
             _SalesTrans = SalesTrans;
+            _CustTrans = CustTrans;
         }
 
         [TempData]
@@ -44,14 +46,20 @@ namespace SumerBusinessSolution.Pages.Sales.Billings
         public int SelectedWh { get; set; }
 
         [BindProperty]
-        public IList<Customer> Customer { get; set; }
+        public IList<Customer> CustomerList { get; set; }
+
+        [BindProperty]
+        public Customer Customer { get; set; }
+
+        //[BindProperty]
+        //public IList<Customer> CustomerList { get; set; }
 
         public List<BillItems> Bi { get; set; }
 
 
         public List<PricingType> UnitPriceTypesList { get; set; }
 
-      
+
         [Display(Name = "الية الدفع")]
         public List<string> PaymentTermsList = new List<string>();
 
@@ -69,24 +77,24 @@ namespace SumerBusinessSolution.Pages.Sales.Billings
         {
             COD = SD.COD;
             Bi = new List<BillItems> { new BillItems { ProdId = 0, Qty = 0, UnitPrice = 0, TotalAmt = 0, Note = "" } };
-            
-            WarehouseList = _db.Warehouse.Where(wh=> wh.WhType.Type.ToLower() == SD.ShowRoom.ToLower()).ToList();
-            Customer = _db.Customer.Where(cus => cus.Status == SD.ActiveCustomer).ToList();
+
+            WarehouseList = _db.Warehouse.Where(wh => wh.WhType.Type.ToLower() == SD.ShowRoom.ToLower()).ToList();
+            CustomerList = _db.Customer.Where(cus => cus.Status == SD.ActiveCustomer).ToList();
 
             UnitPriceTypesList = _db.PricingType.ToList();
             // List<string> PaymentTermsList = new List<string>();
- 
+
             PaymentTermsList.Add(SD.COD);
             PaymentTermsList.Add(SD.Postpaid);
 
-           
+
 
 
             return Page();
         }
         public ActionResult OnPost(List<BillItems> Bi)
         {
-            Customer Customer = _db.Customer.FirstOrDefault(c=> c.CompanyName == CustomerName);
+            Customer Customer = _db.Customer.FirstOrDefault(c => c.CompanyName == CustomerName);
             BillHeader.CustId = Customer.Id;
             StatusMessage = _SalesTrans.CreateBill(BillHeader, Bi, SelectedWh).GetAwaiter().GetResult();
             //_db.SaveChanges();
@@ -95,7 +103,7 @@ namespace SumerBusinessSolution.Pages.Sales.Billings
 
             // }
             // }
-            return RedirectToPage("/Sales/Billings/PrintBill", new { BhId = BillHeader.Id});
+            return RedirectToPage("/Sales/Billings/PrintBill", new { BhId = BillHeader.Id });
         }
 
         public JsonResult OnGetSearchNow(string term)
@@ -122,14 +130,14 @@ namespace SumerBusinessSolution.Pages.Sales.Billings
             {
                 return new JsonResult("Not Found");
             }
- 
+
             IQueryable<double> unitPrice = null;
-   
-                  unitPrice = from P in _db.ProdInfo
-                                               where (P.ProdCode.Contains(term))
-                                               select P.WholePrice;
+
+            unitPrice = from P in _db.ProdInfo
+                        where (P.ProdCode.Contains(term))
+                        select P.WholePrice;
             //}
-            
+
             return new JsonResult(unitPrice);
 
         }
@@ -193,15 +201,21 @@ namespace SumerBusinessSolution.Pages.Sales.Billings
             return new JsonResult(lstCustomers);
         }
 
-        public PartialViewResult OnGetCreateCustomerModalPartial()
+        public IActionResult OnPostCreateCustomer()
         {
-            return new PartialViewResult
+            try
             {
-                ViewName = "_CreateNewCustomer",
-                ViewData = new ViewDataDictionary<_CreateNewCustomerModel>(ViewData, new  ModelStateDictionary { })
-            };
+                StatusMessage = _CustTrans.CreateCustomer(Customer).GetAwaiter().GetResult();
+            }
+            catch
+            {
+
+            }
+
+            return RedirectToPage("/Sales/Billings/Create");
         }
+ 
     }
 
 }
- 
+

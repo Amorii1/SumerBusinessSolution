@@ -18,13 +18,16 @@ namespace SumerBusinessSolution.Pages.Sales.ExternalBillings
     public class CreateModel : PageModel
     {
         private readonly ApplicationDbContext _db;
+        private readonly ICustomerTrans _CustTrans;
+
 
         private readonly ISalesTrans _SalesTrans;
         //private readonly IServiceScopeFactory _serviceScopeFactory;
-        public CreateModel(ApplicationDbContext db, ISalesTrans SalesTrans)
+        public CreateModel(ApplicationDbContext db, ISalesTrans SalesTrans, ICustomerTrans CustTrans)
         {
             _db = db;
             _SalesTrans = SalesTrans;
+            _CustTrans = CustTrans;
         }
 
         [TempData]
@@ -44,7 +47,10 @@ namespace SumerBusinessSolution.Pages.Sales.ExternalBillings
         public int SelectedWh { get; set; }
 
         [BindProperty]
-        public IList<Customer> Customer { get; set; }
+        public IList<Customer> CustomerList { get; set; }
+
+        [BindProperty]
+        public Customer Customer { get; set; }
 
         public List<ExternalBillItems> Bi { get; set; }
 
@@ -70,7 +76,7 @@ namespace SumerBusinessSolution.Pages.Sales.ExternalBillings
             Bi = new List<ExternalBillItems> { new ExternalBillItems { ProdId = 0, Qty = 0, UnitPrice = 0, TotalAmt = 0, Note = "" } };
 
             WarehouseList = _db.Warehouse.Where(wh => wh.WhType.Type.ToLower() == SD.ShowRoom.ToLower()).ToList();
-            Customer = _db.Customer.Where(cus => cus.Status == SD.ActiveCustomer).ToList();
+            CustomerList = _db.Customer.Where(cus => cus.Status == SD.ActiveCustomer).ToList();
 
             UnitPriceTypesList = _db.PricingType.ToList();
             PaymentTermsList.Add(SD.COD);
@@ -183,7 +189,20 @@ namespace SumerBusinessSolution.Pages.Sales.ExternalBillings
                                               select P.CompanyName;
             return new JsonResult(lstCustomers);
         }
- 
+
+        public IActionResult OnPostCreateCustomer()
+        {
+            try
+            {
+                StatusMessage = _CustTrans.CreateCustomer(Customer).GetAwaiter().GetResult();
+            }
+            catch
+            {
+
+            }
+            return RedirectToPage("/Sales/ExternalBillings/Create");
+        }
+
     }
 
 

@@ -16,18 +16,17 @@ namespace SumerBusinessSolution.Pages.Customers.Customers
     [Authorize(Roles = SD.AdminUser)]
     public class CreateModel : PageModel
     {
-            private readonly ApplicationDbContext _db;
+        private readonly ApplicationDbContext _db;
         private readonly ICustomerTrans _CustTrans;
 
-            public CreateModel(ApplicationDbContext db, ICustomerTrans CustTrans)
-            {
-                _db = db;
+        public CreateModel(ApplicationDbContext db, ICustomerTrans CustTrans)
+        {
+            _db = db;
             _CustTrans = CustTrans;
-            }
+        }
 
         [BindProperty]
-
-            public Customer Customer { get; set; }
+        public Customer Customer { get; set; }
 
         [TempData]
         public string StatusMessage { get; set; }
@@ -46,22 +45,21 @@ namespace SumerBusinessSolution.Pages.Customers.Customers
 
 
         public IActionResult OnGet()
-            {
-                return Page();
-            }
+        {
+            return Page();
+        }
 
-            public async Task<IActionResult> OnPostAsync()
-            {
-                //if (!ModelState.IsValid)
-                //{
-                //    return Page();
-                //}
+        public async Task<IActionResult> OnPostAsync()
+        {
+            //if (!ModelState.IsValid)
+            //{
+            //    return Page();
+            //}
 
-                StatusMessage = _CustTrans.CreateCustomer(Customer).GetAwaiter().GetResult() ;
+            StatusMessage = _CustTrans.CreateCustomer(Customer).GetAwaiter().GetResult();
 
 
             return RedirectToPage("Create");
-            }
         }
     }
- 
+}

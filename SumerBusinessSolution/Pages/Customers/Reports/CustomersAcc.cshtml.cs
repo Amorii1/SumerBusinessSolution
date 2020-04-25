@@ -46,11 +46,13 @@ namespace SumerBusinessSolution
 
             if(CustomerName != null)
             {
-                CustAccList = await _db.CustAcc.Include(cus => cus.Customer).Where(u => u.Customer.CompanyName.ToLower().Contains(CustomerName.ToLower())).ToListAsync();
+                CustAccList = await _db.CustAcc.Include(cus => cus.Customer)
+                    .Where(u => u.Customer.CompanyName.ToLower().Contains(CustomerName.ToLower())).ToListAsync();
             }
             else
             {
-                CustAccList = await _db.CustAcc.Include(cus => cus.Customer).Where(cus => cus.Customer.Status == SD.ActiveCustomer).ToListAsync();
+                CustAccList = await _db.CustAcc.Include(cus => cus.Customer)
+                    .Where(cus => cus.Customer.Status == SD.ActiveCustomer).ToListAsync();
 
             }
 
