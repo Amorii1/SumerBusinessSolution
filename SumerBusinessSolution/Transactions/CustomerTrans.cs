@@ -61,13 +61,21 @@ namespace SumerBusinessSolution.Transactions
 
         public async Task<string> DeleteCustomer(int CustId)
         {
-            Customer = await _db.Customer.FirstOrDefaultAsync(cu => cu.Id == CustId);
+            try
+            {
+                Customer = await _db.Customer.FirstOrDefaultAsync(cu => cu.Id == CustId);
 
-            _db.Remove(Customer);
+                _db.Remove(Customer);
 
-            await _db.SaveChangesAsync();
+                await _db.SaveChangesAsync();
 
-            return "تم حذف الزبون بنجاح";
+                return "تم حذف الزبون بنجاح";
+            }
+            catch
+            {
+                return "Error! لا يمكن حذف هذا الزبون لوجود عمليات تجارية من قبل الزبون";
+            }
+        
         }
 
 

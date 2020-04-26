@@ -20,12 +20,12 @@ namespace SumerBusinessSolution.Pages.Customers.Customers
         public IndexModel(ApplicationDbContext db, ICustomerTrans CustTrans)
         {
             _db = db;
-            _CustTrans = CustTrans; 
+            _CustTrans = CustTrans;
         }
 
 
         [BindProperty]
-        public  Customer  Customer  { get; set; }
+        public Customer Customer { get; set; }
 
         [BindProperty]
         public CustAcc CustAcc { get; set; }
@@ -48,7 +48,7 @@ namespace SumerBusinessSolution.Pages.Customers.Customers
             if (CustomerName != null)
             {
                 CustAccList = await _db.CustAcc
-                    .Include(acc=> acc.Customer)
+                    .Include(acc => acc.Customer)
                     .Where(acc => acc.Customer.Status == SD.ActiveCustomer & acc.Customer.CompanyName == CustomerName).ToListAsync();
             }
             else
@@ -62,7 +62,9 @@ namespace SumerBusinessSolution.Pages.Customers.Customers
 
         public IActionResult OnPostDeleteCustomer(int CustId)
         {
+
             StatusMessage = _CustTrans.DeleteCustomer(CustId).GetAwaiter().GetResult();
+
             return RedirectToPage("/Customers/Customers/Index");
         }
 
@@ -78,6 +80,6 @@ namespace SumerBusinessSolution.Pages.Customers.Customers
             return new JsonResult(lstCustomers);
         }
 
-       
+
     }
 }
