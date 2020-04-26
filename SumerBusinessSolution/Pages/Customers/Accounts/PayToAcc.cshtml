@@ -14,8 +14,10 @@
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
+<partial name="_StatusMessage" model="Model.StatusMessage" />
+
+
 <div class="border backgroundWhite">
-    <partial name="_StatusMessage" model="Model.StatusMessage" />
 
     @*<h2 class="text-info">اضافة مادة جديدة</h2>*@
     <h2 class="text-info  text-md-right">@localizer.Get("دفع حسابات الزبون")</h2>
@@ -95,8 +97,8 @@
                     <div class="col-md-6">
 
                         @*<a asp-page="../Accounts/CustAccDetails" asp-route-culture="@Request.RouteValues["culture"]" asp-route="" class="btn btn-secondary form-control">
-                            @localizer.Get("الغاء")
-                        </a>*@
+                                @localizer.Get("رجوع")
+                            </a>*@
 
                     </div>
                     <div class="col-md-6">

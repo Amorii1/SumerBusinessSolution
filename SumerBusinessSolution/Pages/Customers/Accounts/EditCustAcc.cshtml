@@ -14,10 +14,12 @@
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
+<partial name="_StatusMessage" model="Model.StatusMessage" />
+
+
 <div class="border backgroundWhite">
     @*<h2 class="text-info">اضافة مادة جديدة</h2>*@
     <h2 class="text-info  text-md-right">@localizer.Get("تعديل حسابات الزبون")</h2>
-    <partial name="_StatusMessage" model="Model.StatusMessage" />
 
     <form method="post">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -30,7 +32,7 @@
             <div class="col-md-2">
                 <label asp-for="CustAcc.Customer.CompanyName"> </label>
             </div>
-         </div>
+        </div>
         <div class="row form-group">
             <div class="col-md-5 offset-md-5">
                 <input asp-for="CustAcc.Id" class="form-control  text-md-right" disabled />
@@ -38,7 +40,7 @@
             <div class="col-md-2">
                 <label asp-for="CustAcc.Id"> </label>
             </div>
-         </div>
+        </div>
 
         <div class="row form-group">
             <div class="col-md-5 offset-md-5">
@@ -47,7 +49,7 @@
             <div class="col-md-2">
                 <label asp-for="CustAcc.Paid"> </label>
             </div>
-         </div>
+        </div>
 
         <div class="row form-group">
             <div class="col-md-5 offset-md-5">
@@ -56,7 +58,7 @@
             <div class="col-md-2">
                 <label asp-for="CustAcc.Debt"> </label>
             </div>
-         </div>
+        </div>
 
         <h3 class="text-info  text-md-right">@localizer.Get("القيم الجديدة")</h3>
 
@@ -90,7 +92,7 @@
                 <div class="row">
                     <div class="col-md-6">
                         @*<a asp-page="../Accounts/CustAccDetails" asp-route-culture="@Request.RouteValues["culture"]" asp-route="" class="btn btn-secondary form-control">
-                        @localizer.Get("الغاء")</a>*@
+                            @localizer.Get("رجوع")</a>*@
 
                     </div>
 
@@ -108,6 +110,7 @@
     </form>
 </div>
 @section Scripts{
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     <script language="javascript">
 
 
@@ -121,7 +124,6 @@
         });
     </script>
 }
-
 
 
 
