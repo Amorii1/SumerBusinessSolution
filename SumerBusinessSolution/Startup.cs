@@ -86,6 +86,7 @@ namespace SumerBusinessSolution
 
             //services.AddTransient<IReqNote, ReqNote>();
             //services.AddTransient(typeof(IReqNote), typeof(ReqNote));
+            services.AddScoped<IDbInitializar, DbInitializar>();
 
             services.AddHttpContextAccessor();
 
@@ -109,7 +110,7 @@ namespace SumerBusinessSolution
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IInventoryTrans InvTrans, ICustomerTrans CustTrans, ISalesTrans SalesTrans)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IInventoryTrans InvTrans, ICustomerTrans CustTrans, ISalesTrans SalesTrans, IDbInitializar dbIni)
         {
             if (env.IsDevelopment())
             {
@@ -126,7 +127,7 @@ namespace SumerBusinessSolution
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseRouting();
-
+            dbIni.Initializar();
             var localizationOptions = app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>().Value;
             app.UseRequestLocalization(localizationOptions);
 
