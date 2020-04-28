@@ -1,6 +1,14 @@
 ﻿@page
 @model SumerBusinessSolution.PrintExternalBillModel
+@using SumerBusinessSolution.Utility
+@using Microsoft.AspNetCore.Localization
+@using System.ComponentModel.DataAnnotations;
+@*@inject IHtmlLocalizer<IndexModel> htmlLocalizer*@ @*for html lozcalization*@
+@*@inject IStringLocalizer<IndexModel> localizer*@
+@*First Method*@
 @inject Services.CommonLocalizationService localizer
+@*Second and the easier Method*@
+
 @{
     ViewData["Title"] = "PrintExternalBill";
     Layout = "~/Pages/Shared/_Layout.cshtml";
@@ -131,47 +139,88 @@
 
                 @foreach (var item in Model.ExternalItemsList)
                 {
-            <tr>
-                <td>
-                    @Html.DisplayFor(m => item.Note)
-                </td>
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(m => item.Note)
+                        </td>
 
-                <td>
-                    @Html.DisplayFor(m => item.TotalAmt)
-                </td>
-                <td>
-                    @Html.DisplayFor(m => item.UnitPrice)
-                </td>
-                <td>
-                    @Html.DisplayFor(m => item.Qty)
-                </td>
-                @if (item.IsExternal == true)
-                {
-                    <td>
-                        @Html.DisplayFor(m => item.ProdName)
-                    </td>
-                }
-                else
-                {
-                    <td>
-                        @Html.DisplayFor(m => item.ProdInfo.ProdName)
-                    </td>
-                }
+                        <td>
+                            @Html.DisplayFor(m => item.TotalAmt)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.UnitPrice)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.Qty)
+                        </td>
+                        @if (item.IsExternal == true)
+                        {
+                            <td>
+                                @Html.DisplayFor(m => item.ProdName)
+                            </td>
+                        }
+                        else
+                        {
+                            <td>
+                                @Html.DisplayFor(m => item.ProdInfo.ProdName)
+                            </td>
+                        }
 
 
-                <td>@{RowNo++;} @RowNo</td>
-            </tr>
+                        <td>@{RowNo++;} @RowNo</td>
+                    </tr>
 
                 }
 
 
 
             </table>
+
+
+            @*THE COMPANY INFO CODE BELOW*@
+
+            <div class="row col-md-12">
+
+                <div id="field" class="row pt-md-2  col-md-5 form-control form-group offset-md-1">
+                    <h4 class=" text-dark font-weight-bold text-md-right">@Model.CompanyInfo.PhoneNo/@Model.CompanyInfo.PhoneNo02</h4>
+                </div>
+
+                <div id="field" class="row pt-md-2 col-md-4 form-control form-group offset-md-1">
+                    <h4 class=" text-dark font-weight-bold text-md-right">@Model.CompanyInfo.AddressAr</h4>
+                </div>
+
+            </div>
+            <div class="row col-md-12">
+
+                <div id="field" class="row pt-md-2  col-md-5 form-control form-group offset-md-1">
+                    <h4 class=" text-dark font-weight-bold text-md-right">@Model.CompanyInfo.Email</h4>
+                </div>
+
+                <div id="field" class="row pt-md-2 col-md-4 form-control form-group offset-md-1">
+                    <h4 class=" text-dark font-weight-bold text-md-right">@Model.CompanyInfo.AddressEn</h4>
+                </div>
+
+            </div>
+
+
         </div>
         <br />
         <br />
         <br />
+        <div class="form-group row">
+            <div class="col-md-5 offset-md-5">
+                <div class="row">
+                    <div class="col-md-6">
 
+                        @*<input asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-secondary form-control" type="button" value="@localizer.Get("رجوع")" onclick="history.back()">*@
+                        <a asp-page="Index" class="btn btn-secondary form-control" asp-route-culture="@Request.RouteValues["culture"]"> رجوع</a>
+
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
     </form>
 </div>
 

@@ -1,6 +1,13 @@
 ﻿@page
 @model SumerBusinessSolution.PrintBillModel
+@using SumerBusinessSolution.Utility
+@using Microsoft.AspNetCore.Localization
+@using System.ComponentModel.DataAnnotations;
+@*@inject IHtmlLocalizer<IndexModel> htmlLocalizer*@ @*for html lozcalization*@
+@*@inject IStringLocalizer<IndexModel> localizer*@
+@*First Method*@
 @inject Services.CommonLocalizationService localizer
+@*Second and the easier Method*@
 @{
     ViewData["Title"] = "PrintBill";
     Layout = "~/Pages/Shared/_Layout.cshtml";
@@ -53,17 +60,17 @@
             </div>
             <br />
             <div class="row col-md-12">
-       
+
 
                 <div id="field" class="row pt-md-2 col-md-3 form-control form-group offset-md-1">
                     <h4 class=" text-dark font-weight-bold text-md-right">@Model.BillHeader.Id &nbsp; : رقم الفاتورة</h4>
                 </div>
- 
+
 
                 <div id="field" class="row pt-md-2 col-md-3 form-control form-group offset-md-1">
                     <h4 class=" text-dark font-weight-bold text-md-right">@Model.BillHeader.Customer.CompanyName &nbsp; : اسم الزبون</h4>
                 </div>
- 
+
                 <div id="field" class="row pt-md-2 col-md-3 form-control form-group offset-md-1">
                     <h4 class=" text-dark font-weight-bold text-md-right">@Model.BillHeader.ApplicationUser.FirstName &nbsp; : اسم الموظف</h4>
                 </div>
@@ -73,16 +80,16 @@
 
 
             <div class="row col-md-12">
-  
+
 
                 <div id="field" class="row pt-md-2 col-md-3 form-control form-group offset-md-1">
                     <h4 class=" text-dark font-weight-bold text-md-right">@Model.BillHeader.TotalAmt &nbsp; : المبلغ الكلي</h4>
                 </div>
- 
+
                 <div id="field" class="row pt-md-2 col-md-3 form-control form-group offset-md-1">
                     <h4 class=" text-dark font-weight-bold text-md-right">@Model.BillHeader.Discount &nbsp; : التخفيض</h4>
                 </div>
- 
+
                 <div id="field" class="row pt-md-2 col-md-3 form-control form-group offset-md-1">
                     <h4 class=" text-dark font-weight-bold text-md-right">@Model.BillHeader.TotalNetAmt &nbsp; : المبلغ الاجمالي</h4>
                 </div>
@@ -93,17 +100,17 @@
 
 
             <div class="row col-md-12">
- 
+
                 <div id="field" class="row pt-md-2  col-md-5 form-control form-group offset-md-1">
                     <h4 class=" text-dark font-weight-bold text-md-right">@Model.BillHeader.CreatedDataTime &nbsp; : تاريخ الفاتورة</h4>
                 </div>
- 
+
                 <div id="field" class="row pt-md-2 col-md-4 form-control form-group offset-md-1">
                     <h4 class=" text-dark font-weight-bold text-md-right"> حالة الفاتورة  : @Model.BillHeader.Status</h4>
                 </div>
 
             </div>
- 
+
             <div id="field" class="row pt-md-2 col-md-10 form-control form-group offset-md-1">
                 <h4 class=" text-dark font-weight-bold text-md-right">@Model.BillHeader.PaidAmt &nbsp; : المبلغ المدفوع</h4>
             </div>
@@ -167,11 +174,53 @@
 
 
             </table>
+
+
+
+            @*THE COMPANY INFO CODE BELOW*@
+
+            <div class="row col-md-12">
+
+                <div id="field" class="row pt-md-2  col-md-5 form-control form-group offset-md-1">
+                    <h4 class=" text-dark font-weight-bold text-md-right">@Model.CompanyInfo.PhoneNo/@Model.CompanyInfo.PhoneNo02</h4>
+                </div>
+
+                <div id="field" class="row pt-md-2 col-md-4 form-control form-group offset-md-1">
+                    <h4 class=" text-dark font-weight-bold text-md-right">@Model.CompanyInfo.AddressAr</h4>
+                </div>
+
+            </div>
+            <div class="row col-md-12">
+
+                <div id="field" class="row pt-md-2  col-md-5 form-control form-group offset-md-1">
+                    <h4 class=" text-dark font-weight-bold text-md-right">@Model.CompanyInfo.Email</h4>
+                </div>
+
+                <div id="field" class="row pt-md-2 col-md-4 form-control form-group offset-md-1">
+                    <h4 class=" text-dark font-weight-bold text-md-right">@Model.CompanyInfo.AddressEn</h4>
+                </div>
+
+            </div>
+
         </div>
         <br />
         <br />
         <br />
- 
+
+        <div class="form-group row">
+            <div class="col-md-5 offset-md-5">
+                <div class="row">
+                    <div class="col-md-6">
+
+                        @*<input asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-secondary form-control" type="button" value="@localizer.Get("رجوع")" onclick="history.back()">*@
+                        <a asp-page="Index" class="btn btn-secondary form-control" asp-route-culture="@Request.RouteValues["culture"]"> رجوع</a>
+
+                    </div>
+                  
+
+                </div>
+            </div>
+        </div>
     </form>
 </div>
 

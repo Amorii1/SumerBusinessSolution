@@ -25,6 +25,7 @@
                 @localizer.Get("اضافة زبون جديد")
             </a>
         </div>
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
         <div class="modal fade" id="customerModal" role="dialog" method="post">
             <div class="modal-dialog">
@@ -34,46 +35,48 @@
                         <a href="#" class="close" data-dismiss="modal">&times;</a>
                     </div>
                     <div class="modal-body">
-                   
-                            <div class="row form-group">
-                                <div class="col-md-5 offset-md-5">
-                                    <input asp-for="Customer.CompanyName" class="form-control  text-md-right" />
-                                </div>
-                                <div class="col-md-2">
-                                    <label asp-for="Customer.CompanyName"> </label>
-                                </div>
-                                <span asp-validation-for="Customer.CompanyName" class="text-danger"></span>
-                            </div>
 
-                            <div class="row form-group">
-                                <div class="col-md-5 offset-md-5">
-                                    <input asp-for="Customer.ContactName" class="form-control  text-md-right" />
-                                </div>
-                                <div class="col-md-2">
-                                    <label asp-for="Customer.ContactName"> </label>
-                                </div>
-                                <span asp-validation-for="Customer.ContactName" class="text-danger"></span>
+                        <div class="row form-group">
+                            <div class="col-md-5 offset-md-5">
+                                <input asp-for="Customer.CompanyName" class="form-control  text-md-right" />
                             </div>
+                            <div class="col-md-2">
+                                <label asp-for="Customer.CompanyName"> </label>
+                            </div>
+                            <span asp-validation-for="Customer.CompanyName" class="text-danger"></span>
+                        </div>
 
-                            <div class="row form-group">
-                                <div class="col-md-5 offset-md-5">
-                                    <input asp-for="Customer.Address" class="form-control  text-md-right" />
-                                </div>
-                                <div class="col-md-2">
-                                    <label asp-for="Customer.Address"> </label>
-                                </div>
+                        <div class="row form-group">
+                            <div class="col-md-5 offset-md-5">
+                                <input asp-for="Customer.ContactName" class="form-control  text-md-right" />
                             </div>
+                            <div class="col-md-2">
+                                <label asp-for="Customer.ContactName"> </label>
+                            </div>
+                            <span asp-validation-for="Customer.ContactName" class="text-danger"></span>
+                        </div>
 
-                            <div class="row form-group">
-                                <div class="col-md-5 offset-md-5">
-                                    <input asp-for="Customer.PhoneNo" class="form-control  text-md-right" />
-                                </div>
-                                <div class="col-md-2">
-                                    <label asp-for="Customer.PhoneNo"> </label>
-                                </div>
-                                <span asp-validation-for="Customer.PhoneNo" class="text-danger"></span>
+                        <div class="row form-group">
+                            <div class="col-md-5 offset-md-5">
+                                <input asp-for="Customer.Address" class="form-control  text-md-right" />
                             </div>
-                
+                            <div class="col-md-2">
+                                <label asp-for="Customer.Address"> </label>
+                            </div>
+                            <span asp-validation-for="Customer.Address" class="text-danger"></span>
+
+                        </div>
+
+                        <div class="row form-group">
+                            <div class="col-md-5 offset-md-5">
+                                <input asp-for="Customer.PhoneNo" class="form-control  text-md-right" />
+                            </div>
+                            <div class="col-md-2">
+                                <label asp-for="Customer.PhoneNo"> </label>
+                            </div>
+                            <span asp-validation-for="Customer.PhoneNo" class="text-danger"></span>
+                        </div>
+
                     </div>
                     <div class="modal-footer">
                         <a href="#" class="btn btn-danger" data-dismiss="modal">Cancel</a>
@@ -202,7 +205,7 @@
                 }
             </table>
 
-            <div class="row form-group">
+            <div class="row form-group text-success">
 
                 <div class="col-md-5 offset-md-5">
                     <input id="paidAmt" type="text" asp-for="a => @Model.BillHeader.PaidAmt" class="form-control text-md-right" />
@@ -213,7 +216,7 @@
                 </div>
             </div>
 
-            <div class="row form-group">
+            <div class="row form-group text-warning">
 
                 <div class="col-md-5 offset-md-5">
                     <input id="discount" type="text" asp-for="a => @Model.BillHeader.Discount" class="form-control text-md-right" />
