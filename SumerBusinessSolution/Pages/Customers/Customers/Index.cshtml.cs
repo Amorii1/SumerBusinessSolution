@@ -64,7 +64,7 @@ namespace SumerBusinessSolution.Pages.Customers.Customers
         {
 
             StatusMessage = _CustTrans.DeleteCustomer(CustId).GetAwaiter().GetResult();
-
+            //return Page();
             return RedirectToPage("/Customers/Customers/Index");
         }
 

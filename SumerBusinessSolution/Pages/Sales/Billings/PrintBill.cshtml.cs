@@ -30,8 +30,8 @@ namespace SumerBusinessSolution
         
             // THE COMPANY INFO CODE BELOW
 
-
-        public CompanyInfo CompanyInfo { get; }
+        [BindProperty]
+        public CompanyInfo CompanyInfo { get; set; }
         public List<BillItems> BillItemsList { get; set; }
 
         [TempData]
@@ -46,6 +46,18 @@ namespace SumerBusinessSolution
             {
                 BillHeader = BillItemsList[0].BillHeader;
             }
+
+            try
+            {
+                CompanyInfo = _db.CompanyInfo.FirstOrDefault();
+            }
+            catch
+            {
+
+            }
+
+            
+
             return Page();
         }
         public void OnPost()

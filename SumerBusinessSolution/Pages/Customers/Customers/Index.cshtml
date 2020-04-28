@@ -84,9 +84,15 @@
                         <td style="width:170px;">
                             <div class="btn-group" role="group">
                                 <form method="post">
-                                    <button asp-route-culture="@Request.RouteValues["culture"]" data-toggle="modal" data-target="#Ask" class="btn btn-danger text-white" asp-page-handler="DeleteCustomer" asp-route-CustId="@item.Customer.Id" type="submit" title="حذف" name="Delete">
+                                    @*<div class="col-md-6">
+            <a asp-page="Index" asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-secondary form-control">@localizer.Get("رجوع")</a>
+        </div>*@
+                                    <button asp-page="Index" asp-route-culture="@Request.RouteValues["culture"]" data-toggle="modal" data-target="#Ask" class="btn btn-danger text-white" asp-page-handler="DeleteCustomer" asp-route-CustId="@item.Customer.Id" type="submit" title="حذف" name="Delete">
                                         @localizer.Get("") <i class="fas fa-trash-alt"></i>
                                     </button>
+
+                       
+
                                     <a asp-page="Edit" asp-route-CustId="@item.Customer.Id" asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-success text-white " type="submit" title="@localizer.Get("تعديل معلومات الزبون")">
                                         <i class="fas fa-user-edit"></i>
                                         @localizer.Get("")
@@ -94,6 +100,7 @@
                                     <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-primary text-white" asp-page="../Accounts/CustAccDetails" asp-route-CustId="@item.Customer.Id" type="submit" title=@localizer.Get("حسابات الزبون") name="AccDetails">
                                         @localizer.Get("") <i class="fas fa-file-invoice-dollar"></i>
                                     </a>
+
                                     <div class="modal fade" id="Ask" role="dialog" method="post">
                                         <div class="modal-dialog">
                                             <div class="modal-content">

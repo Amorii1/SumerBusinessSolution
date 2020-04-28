@@ -35,24 +35,32 @@ namespace SumerBusinessSolution
 
         public async Task<IActionResult> OnPost()
         {
-            CompanyInfo CompanyInfoFromDB = await _db.CompanyInfo.FirstOrDefaultAsync(ci => ci.Id == 1);
-
-  
-            if (!ModelState.IsValid)
+            try
             {
-                return Page();
+
+                CompanyInfo CompanyInfoFromDB = await _db.CompanyInfo.FirstOrDefaultAsync(ci => ci.Id == 1);
+
+
+                if (!ModelState.IsValid)
+                {
+                    return Page();
+                }
+
+                CompanyInfoFromDB.CompanyNameEn = CompanyInfo.CompanyNameEn;
+                CompanyInfoFromDB.CompanyNameAr = CompanyInfo.CompanyNameAr;
+                CompanyInfoFromDB.AddressEn = CompanyInfo.AddressEn;
+                CompanyInfoFromDB.AddressAr = CompanyInfo.AddressAr;
+                CompanyInfoFromDB.Email = CompanyInfo.Email;
+                CompanyInfoFromDB.PhoneNo = CompanyInfo.PhoneNo;
+                CompanyInfoFromDB.PhoneNo02 = CompanyInfo.PhoneNo02;
+                CompanyInfoFromDB.Note = CompanyInfo.Note;
+
+                await _db.SaveChangesAsync();
             }
+            catch
+            {
 
-            CompanyInfoFromDB.CompanyNameEn = CompanyInfo.CompanyNameEn;
-            CompanyInfoFromDB.CompanyNameAr = CompanyInfo.CompanyNameAr;
-            CompanyInfoFromDB.AddressEn = CompanyInfo.AddressEn;
-            CompanyInfoFromDB.AddressAr = CompanyInfo.AddressAr;
-            CompanyInfoFromDB.Email = CompanyInfo.Email;
-            CompanyInfoFromDB.PhoneNo = CompanyInfo.PhoneNo;
-            CompanyInfoFromDB.PhoneNo02 = CompanyInfo.PhoneNo02;
-            CompanyInfoFromDB.Note = CompanyInfo.Note;
-
-            await _db.SaveChangesAsync();
+            }
 
            // _reqNote.SendMessage("Ahmed", "New request for you!!").GetAwaiter().GetResult();
 
