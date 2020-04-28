@@ -18,13 +18,24 @@
 
 
 <div class=" border backgroundWhite">
-    <h2 class="text-info  text-md-right">@localizer.Get("انشاء فاتورة جديدة")</h2>
     <form method="post">
-        <div class="col-md-3">
-            <a asp-route-culture="@Request.RouteValues["culture"]" data-toggle="modal" data-target="#customerModal" class="btn btn-info" asp-page-handler="CreateCustomer" type="submit" name="CreateCustomer">
-                @localizer.Get("اضافة زبون جديد")
-            </a>
+        <div class="row">
+
+            <div class="col-md-3">
+                <a asp-route-culture="@Request.RouteValues["culture"]" data-toggle="modal" data-target="#customerModal" class="btn btn-info" asp-page-handler="CreateCustomer" type="submit" name="CreateCustomer">
+                    @localizer.Get("زبون جديد") <i class="fas fa-plus"></i>
+
+                </a>
+            </div>
+           
+
+            <div class="col-md-5 offset-md-4">
+                <h2 class="text-info  text-md-right">@localizer.Get("انشاء فاتورة جديدة")</h2>
+            </div>
+
         </div>
+
+       
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
         <div class="modal fade" id="customerModal" role="dialog" method="post">
@@ -79,7 +90,7 @@
 
                     </div>
                     <div class="modal-footer">
-                        <a href="#" class="btn btn-danger" data-dismiss="modal">Cancel</a>
+                        <a href="#" class="btn btn-danger" data-dismiss="modal">الغاء</a>
                         <input asp-route-culture="@Request.RouteValues["culture"]" type="submit" asp-page-handler="CreateCustomer" class="btn btn-success" value="@localizer.Get("اضافة")" />
                     </div>
                 </div>

@@ -31,6 +31,8 @@ namespace SumerBusinessSolution.Pages.Sales.Billings
 
         [BindProperty]
         public BillItems BillItems { get; set; }
+        [BindProperty]
+ 
 
         public List<BillItems> BillItemsList { get; set; }
 

@@ -59,7 +59,7 @@
 
 
     <div class="column" style="padding-left:80px;">
-        <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="/Inventory/reports/Index">
+        <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="reports">
             <img src="~/img/statistics.png" style="width:120px;height:120px;" />
             @*<p class="text-center">التقارير</p>*@
             <h4 class="text-center">@localizer.Get("التقارير")</h4>
@@ -85,14 +85,7 @@
 
             </a>
         </div>
-        <div class="column" style="padding-left:80px;">
-            <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="settings">
-                <img src="~/img/settings.png" style="width:140px;height:120px;" />
-                @*<p class="text-center">المخازن</p>*@
-                <h4 class="text-center">@localizer.Get("الاعدادات")</h4>
 
-            </a>
-        </div>
 
 
     }
@@ -107,21 +100,14 @@
 
             </a>
         </div>
-        <div class="column" style="padding-left:80px;">
-            <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="settings">
-                <img src="~/img/settings.png" style="width:140px;height:120px;" />
-                @*<p class="text-center">المخازن</p>*@
-                <h4 class="text-center">@localizer.Get("الاعدادات")</h4>
 
-            </a>
-        </div>
     }
     else
     { <div class="column" style="padding-left:80px;">
             <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="/Sales/Billings/Index">
                 <img src="~/img/bills.png" style="width:160px;height:120px;" />
                 @*<p class="text-center">المخازن</p>*@
-                <h4 class="text-center">@localizer.Get("الفواتير")</h4>
+                <h4 class="text-center">@localizer.Get("فواتير البناس")</h4>
 
             </a>
         </div>
@@ -129,7 +115,7 @@
             <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="/Sales/ExternalBillings/Index">
                 <img src="~/img/bills.png" style="width:160px;height:120px;" />
                 @*<p class="text-center">المخازن</p>*@
-                <h4 class="text-center">@localizer.Get("الفواتير الخارجية")</h4>
+                <h4 class="text-center">@localizer.Get("فواتير الياسين")</h4>
 
             </a>
         </div>
@@ -138,13 +124,7 @@
 
 
 </div>
-@if (User.IsInRole(SD.YaseenStoreUser))
-{ }
-else
-@if (User.IsInRole(SD.BnasStoreUser))
-{ }
-else
-    {
+
         <br />
         <div class="row" style="padding-left:120px; padding-right:100px;">
 
@@ -166,4 +146,4 @@ else
         </div>
 
         @*<div class="float-md-right">  <vc:culture-switcher /> </div>*@
-    }
+    
