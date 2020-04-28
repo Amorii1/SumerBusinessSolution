@@ -99,6 +99,7 @@ namespace SumerBusinessSolution.Data
             _db.WhType.Add(ShowRoom);
             _db.WhType.Add(StoreRoom);
 
+            
             // save all changes
             _db.SaveChangesAsync();
         }
