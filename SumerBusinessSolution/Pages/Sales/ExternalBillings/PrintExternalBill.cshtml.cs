@@ -29,6 +29,9 @@ namespace SumerBusinessSolution
         [BindProperty]
         public ExternalBillItems ExternalBillItems { get; set; }
 
+        // THE COMPANY INFO CODE BELOW
+
+        public CompanyInfo CompanyInfo { get; }
         public List<ExternalBillItems> ExternalItemsList { get; set; }
 
         [TempData]

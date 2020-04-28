@@ -27,6 +27,11 @@ namespace SumerBusinessSolution
         [BindProperty]
         public BillItems BillItems { get; set; }
 
+        
+            // THE COMPANY INFO CODE BELOW
+
+
+        public CompanyInfo CompanyInfo { get; }
         public List<BillItems> BillItemsList { get; set; }
 
         [TempData]
