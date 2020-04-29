@@ -20,6 +20,15 @@
     @if (User.IsInRole(SD.AdminUser))
     {
         <div class="column" style="padding-left:80px;">
+            <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="CompanyDetails/Index">
+
+                <img src="~/img/office.PNG" style="width:120px;height:115px;" />
+                <h4 class="text-center"> @localizer.Get("معلومات الشركة")</h4>
+
+            </a>
+        </div>
+
+        <div class="column" style="padding-left:80px;">
             <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="GeneralSettings/UserAuthorization">
                 <img src="~/img/application.png" style="width:120px;height:120px;" />
                 <h4 class="text-center"> @localizer.Get("الصلاحيات")</h4>
@@ -42,5 +51,6 @@
 
         </a>
     </div>
-    
+
+
 </div>

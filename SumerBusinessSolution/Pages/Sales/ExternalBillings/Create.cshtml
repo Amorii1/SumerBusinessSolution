@@ -36,7 +36,8 @@
         </div>
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-        <div class="modal fade" id="customerModal" role="dialog" method="post">
+        <div class="modal fade" id="customerModal" role="dialog" method="post" dir="rtl">
+
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -46,52 +47,52 @@
                     <div class="modal-body">
 
                         <div class="row form-group">
-                            <div class="col-md-5 offset-md-5">
-                                <input asp-for="Customer.CompanyName" class="form-control  text-md-right" />
-                            </div>
-                            <div class="col-md-2">
+                            <div class="col-md-3">
                                 <label asp-for="Customer.CompanyName"> </label>
+                            </div>
+                            <div class="col-md-5 ">
+                                <input asp-for="Customer.CompanyName" class="form-control  text-md-right" />
                             </div>
                             <span asp-validation-for="Customer.CompanyName" class="text-danger"></span>
                         </div>
 
                         <div class="row form-group">
-                            <div class="col-md-5 offset-md-5">
-                                <input asp-for="Customer.ContactName" class="form-control  text-md-right" />
-                            </div>
-                            <div class="col-md-2">
+                            <div class="col-md-3">
                                 <label asp-for="Customer.ContactName"> </label>
+                            </div>
+                            <div class="col-md-5 ">
+                                <input asp-for="Customer.ContactName" class="form-control  text-md-right" />
                             </div>
                             <span asp-validation-for="Customer.ContactName" class="text-danger"></span>
                         </div>
 
                         <div class="row form-group">
-                            <div class="col-md-5 offset-md-5">
-                                <input asp-for="Customer.Address" class="form-control  text-md-right" />
-                            </div>
-                            <div class="col-md-2">
+                            <div class="col-md-3">
                                 <label asp-for="Customer.Address"> </label>
                             </div>
+                            <div class="col-md-5 ">
+                                <input asp-for="Customer.Address" class="form-control  text-md-right" />
+                            </div>
                             <span asp-validation-for="Customer.Address" class="text-danger"></span>
-
                         </div>
 
                         <div class="row form-group">
-                            <div class="col-md-5 offset-md-5">
-                                <input asp-for="Customer.PhoneNo" class="form-control  text-md-right" />
-                            </div>
-                            <div class="col-md-2">
+                            <div class="col-md-3">
                                 <label asp-for="Customer.PhoneNo"> </label>
+                            </div>
+                            <div class="col-md-5">
+                                <input asp-for="Customer.PhoneNo" class="form-control  text-md-right" />
                             </div>
                             <span asp-validation-for="Customer.PhoneNo" class="text-danger"></span>
                         </div>
 
                     </div>
-                    <div class="modal-footer">
+                    <div class="modal-footer" dir="ltr">
                         <a href="#" class="btn btn-danger" data-dismiss="modal">الغاء</a>
                         <input asp-route-culture="@Request.RouteValues["culture"]" type="submit" asp-page-handler="CreateCustomer" class="btn btn-success" value="@localizer.Get("اضافة")" />
                     </div>
                 </div>
+
 
             </div>
         </div>
@@ -322,7 +323,7 @@
                           else {
                                t.parentElement.children[2].children[0].value = json[0]
                           }
-                          
+
                       }
                       else {
                           const obj = await fetch(`${window.location.href}?handler=ProdUnitPriceRetail&term=${t.children[0].value}`)
@@ -333,7 +334,7 @@
                           else {
                                t.parentElement.children[2].children[0].value = json[0]
                           }
-                          
+
                       }
                 }
 
@@ -391,8 +392,8 @@
 
                 return false
             }
-              if (paymentTerms == cod && paidAmt == 0) {
-                 swal("Error!", "يرجى ادخال المبلغ المدفوع", "error");
+            if (paymentTerms == cod && paidAmt == 0) {
+                swal("Error!", "يرجى ادخال المبلغ المدفوع", "error");
 
                 return false
             }

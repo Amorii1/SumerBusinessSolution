@@ -37,7 +37,10 @@ namespace SumerBusinessSolution.Pages.Sales.ExternalBillings
         [BindProperty]
         public ExternalBillItems ExternalBillItems { get; set; }
 
-        public List<ExternalBillItems> ExternalBillItemsList { get; set; } 
+        public List<ExternalBillItems> ExternalBillItemsList { get; set; }
+
+        [BindProperty]
+        public CompanyInfo CompanyInfo { get; set; }
 
         //[BindProperty]
         //public string CompanyName { get; set; }
@@ -65,6 +68,15 @@ namespace SumerBusinessSolution.Pages.Sales.ExternalBillings
             if(ExternalBillItemsList.Count() > 0)
             {
                 ExternalBillHeader = ExternalBillItemsList[0].ExternalBillHeader;
+            }
+
+            try
+            {
+                CompanyInfo = _db.CompanyInfo.FirstOrDefault();
+            }
+            catch
+            {
+
             }
 
             return Page();
