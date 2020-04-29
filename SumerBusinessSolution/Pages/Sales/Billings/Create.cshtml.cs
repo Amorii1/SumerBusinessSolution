@@ -103,7 +103,15 @@ namespace SumerBusinessSolution.Pages.Sales.Billings
 
             // }
             // }
-            return RedirectToPage("/Sales/Billings/PrintBill", new { BhId = BillHeader.Id });
+            if(BillHeader.Id != 0)
+            {
+                return RedirectToPage("/Sales/Billings/PrintBill", new { BhId = BillHeader.Id });
+
+            }
+            else
+            {
+                return RedirectToPage("/Sales/Billings/Create");
+            }
         }
 
         public JsonResult OnGetSearchNow(string term)

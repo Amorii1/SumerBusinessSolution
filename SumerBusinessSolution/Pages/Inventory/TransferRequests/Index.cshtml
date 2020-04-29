@@ -183,26 +183,59 @@
 
                                     @if (User.IsInRole(SD.AdminUser) || (User.IsInRole(SD.SupervisorUser) & Model.RoleAuth.AppTransReq == true))
                                     {
-                                        <button asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-info text-white" asp-page-handler="ApproveTransferRequests" asp-route-ReqId="@item.Id" type="submit" title="قبول" name="Accept">
+                                        <btn data-toggle="modal" data-target="#Ask1" asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-info text-white" asp-page-handler="ApproveTransferRequests" asp-route-ReqId="@item.Id" type="submit" title="قبول" name="Accept">
                                             @localizer.Get("") <i class="fas fa-check"></i>
-                                        </button>
+                                        </btn>
+                                        <div class="modal fade" id="Ask1" role="dialog" method="post">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button class="close" data-dismiss="modal">&times;</button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <p class="alert alert-danger">@localizer.Get("هل انت متأكد؟")</p>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <input asp-route-culture="@Request.RouteValues["culture"]" type="submit" class="btn btn-info" value="@localizer.Get("نعم")" />
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
 
 
-                                        <button asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-danger text-white" asp-page-handler="RejectTransferRequests" asp-route-ReqId="@item.Id" type="submit" title="رفض" name="Reject">
+                                        <btn data-toggle="modal" data-target="#Ask2" asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-danger text-white" asp-page-handler="RejectTransferRequests" asp-route-ReqId="@item.Id" type="submit" title="رفض" name="Reject">
                                             @localizer.Get("") <i class="fas fa-window-close"></i>
-                                        </button>
+                                        </btn>
+                                        <div class="modal fade" id="Ask2" role="dialog" method="post">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button class="close" data-dismiss="modal">&times;</button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <p class="alert alert-danger">@localizer.Get("هل انت متأكد؟")</p>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <input asp-route-culture="@Request.RouteValues["culture"]" type="submit" class="btn btn-info" value="@localizer.Get("نعم")" />
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
                                     }
                                     @*else if (User.IsInRole(SD.SupervisorEndUser) & Model.RoleAuth.AppTransReq == true)
-                                        {
-                                            <button asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-success text-white" asp-page-handler="ApproveTransferRequests" asp-route-ReqId="@item.Id" type="submit" title="Approve" name="Accept">
-                                                @localizer.Get("") <i class="fas fa-check"></i>
-                                            </button>
+        {
+            <button asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-success text-white" asp-page-handler="ApproveTransferRequests" asp-route-ReqId="@item.Id" type="submit" title="Approve" name="Accept">
+                @localizer.Get("") <i class="fas fa-check"></i>
+            </button>
 
 
-                                            <button asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-warning text-white" asp-page-handler="RejectTransferRequests" asp-route-ReqId="@item.Id" type="submit" title="Reject" name="Reject">
-                                                @localizer.Get("") <i class="fas fa-window-close"></i>
-                                            </button>
-                                        }*@
+            <button asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-warning text-white" asp-page-handler="RejectTransferRequests" asp-route-ReqId="@item.Id" type="submit" title="Reject" name="Reject">
+                @localizer.Get("") <i class="fas fa-window-close"></i>
+            </button>
+        }*@
 
 
                                     <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-primary text-white" asp-page="RequestDetails" asp-route-ReqId="@item.Id" type="submit" title="تفاصيل الطلب" name="Details">

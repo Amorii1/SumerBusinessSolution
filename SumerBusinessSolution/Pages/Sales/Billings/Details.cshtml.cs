@@ -31,8 +31,13 @@ namespace SumerBusinessSolution.Pages.Sales.Billings
 
         [BindProperty]
         public BillItems BillItems { get; set; }
+        [BindProperty]
+ 
 
         public List<BillItems> BillItemsList { get; set; }
+
+        [BindProperty]
+        public CompanyInfo CompanyInfo { get; set; }
 
         [TempData]
         public string StatusMessage { get; set; }
@@ -45,6 +50,16 @@ namespace SumerBusinessSolution.Pages.Sales.Billings
             {
                 BillHeader = BillItemsList[0].BillHeader;
             }
+
+            try
+            {
+                CompanyInfo = _db.CompanyInfo.FirstOrDefault();
+            }
+            catch
+            {
+
+            }
+
             return Page();
         }
         public void OnPost()

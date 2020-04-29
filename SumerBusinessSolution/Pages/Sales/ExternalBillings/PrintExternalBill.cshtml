@@ -59,6 +59,31 @@
                 <img src="~/image/Bnas Logo.jpeg" style="width:250px;height:250px;" />
             </div>
             <br />
+            <div style="border: 2.7px solid black;   border-radius: 25px;">
+                <div class="row col-md-12 pt-md-3">
+
+                    <div class="row pt-md-2  col-md-5 form-control form-group offset-md-1">
+                        <h4 class=" text-dark font-weight-bold text-md-right">@Model.CompanyInfo.PhoneNo/@Model.CompanyInfo.PhoneNo02</h4>
+                    </div>
+
+                    <div class="row pt-md-2 col-md-5 form-control form-group offset-md-1">
+                        <h4 class=" text-dark font-weight-bold text-md-right">@Model.CompanyInfo.AddressAr</h4>
+                    </div>
+
+                </div>
+                <div class="row col-md-12">
+
+                    <div class="row pt-md-2  col-md-5 form-control form-group offset-md-1">
+                        <h4 class=" text-dark font-weight-bold text-md-right">@Model.CompanyInfo.Email</h4>
+                    </div>
+
+                    <div class="row pt-md-2 col-md-5 form-control form-group offset-md-1">
+                        <h4 class=" text-dark font-weight-bold text-md-right">@Model.CompanyInfo.AddressEn</h4>
+                    </div>
+
+                </div>
+            </div>
+            <hr />
             <div class="row col-md-12">
 
 
@@ -68,7 +93,7 @@
 
 
                 <div id="field" class="row pt-md-2 col-md-3 form-control form-group offset-md-1">
-                    <h4 class=" text-dark font-weight-bold text-md-right">@Model.ExternalBillHeader.Customer.CompanyName &nbsp; : اسم الزبون</h4>
+                    <h4 class=" text-dark font-weight-bold text-md-right"> اسم الزبون : @Model.ExternalBillHeader.Customer.CompanyName </h4>
                 </div>
 
                 <div id="field" class="row pt-md-2 col-md-3 form-control form-group offset-md-1">
@@ -76,41 +101,20 @@
                 </div>
 
             </div>
-
-
-
             <div class="row col-md-12">
-
-
-                <div id="field" class="row pt-md-2 col-md-3 form-control form-group offset-md-1">
-                    <h4 class=" text-dark font-weight-bold text-md-right">@Model.ExternalBillHeader.TotalAmt &nbsp; : المبلغ الكلي</h4>
-                </div>
-
-                <div id="field" class="row pt-md-2 col-md-3 form-control form-group offset-md-1">
-                    <h4 class=" text-dark font-weight-bold text-md-right">@Model.ExternalBillHeader.Discount &nbsp; : التخفيض</h4>
-                </div>
-
-                <div id="field" class="row pt-md-2 col-md-3 form-control form-group offset-md-1">
-                    <h4 class=" text-dark font-weight-bold text-md-right">@Model.ExternalBillHeader.TotalNetAmt &nbsp; : المبلغ الاجمالي</h4>
-                </div>
-
             </div>
             <div class="row col-md-12">
 
-                <div id="field" class="row pt-md-2  col-md-5 form-control form-group offset-md-1">
-                    <h4 class=" text-dark font-weight-bold text-md-right">@Model.ExternalBillHeader.CreatedDataTime &nbsp; : تاريخ الفاتورة</h4>
+                <div id="field" class="row pt-md-2  col-md-6 form-control form-group offset-md-1">
+                    <h4 class=" text-dark font-weight-bold text-md-right">@Model.ExternalBillHeader.CreatedDataTime &nbsp; : التاريخ</h4>
                 </div>
 
-                <div id="field" class="row pt-md-2 col-md-4 form-control form-group offset-md-1">
-                    <h4 class=" text-dark font-weight-bold text-md-right"> حالة الفاتورة  : @Model.ExternalBillHeader.Status</h4>
+                <div id="field" class="row pt-md-2 col-md-2 form-control form-group offset-md-1">
+                    <h4 class=" text-dark font-weight-bold text-md-right"> الدفع  : @Model.ExternalBillHeader.PaymentTerms</h4>
                 </div>
 
             </div>
-
-            <div id="field" class="row pt-md-2 col-md-10 form-control form-group offset-md-1">
-                <h4 class=" text-dark font-weight-bold text-md-right">@Model.ExternalBillHeader.PaidAmt &nbsp; : المبلغ المدفوع</h4>
-            </div>
-
+ 
             <br />
             <br />
 
@@ -175,32 +179,27 @@
 
 
             </table>
-
-
-            @*THE COMPANY INFO CODE BELOW*@
-
             <div class="row col-md-12">
 
-                <div id="field" class="row pt-md-2  col-md-5 form-control form-group offset-md-1">
-                    <h4 class=" text-dark font-weight-bold text-md-right">@Model.CompanyInfo.PhoneNo/@Model.CompanyInfo.PhoneNo02</h4>
+
+                <div id="field" class="row pt-md-2 col-md-3 form-control form-group offset-md-1">
+                    <h4 class=" text-dark font-weight-bold text-md-right">@Model.ExternalBillHeader.TotalAmt &nbsp; : المبلغ الكلي</h4>
                 </div>
 
-                <div id="field" class="row pt-md-2 col-md-4 form-control form-group offset-md-1">
-                    <h4 class=" text-dark font-weight-bold text-md-right">@Model.CompanyInfo.AddressAr</h4>
+                <div id="field" class="row pt-md-2 col-md-3 form-control form-group offset-md-1">
+                    <h4 class=" text-dark font-weight-bold text-md-right">@Model.ExternalBillHeader.Discount &nbsp; : التخفيض</h4>
+                </div>
+
+                <div id="field" class="row pt-md-2 col-md-3 form-control form-group offset-md-1">
+                    <h4 class=" text-dark font-weight-bold text-md-right">@Model.ExternalBillHeader.TotalNetAmt &nbsp; : المبلغ الاجمالي</h4>
                 </div>
 
             </div>
-            <div class="row col-md-12">
-
-                <div id="field" class="row pt-md-2  col-md-5 form-control form-group offset-md-1">
-                    <h4 class=" text-dark font-weight-bold text-md-right">@Model.CompanyInfo.Email</h4>
-                </div>
-
-                <div id="field" class="row pt-md-2 col-md-4 form-control form-group offset-md-1">
-                    <h4 class=" text-dark font-weight-bold text-md-right">@Model.CompanyInfo.AddressEn</h4>
-                </div>
-
+            <div id="field" class="row pt-md-2 col-md-10 form-control form-group offset-md-1">
+                <h4 class=" text-dark font-weight-bold text-md-right">@Model.ExternalBillHeader.PaidAmt &nbsp; : المبلغ المدفوع</h4>
             </div>
+
+
 
 
         </div>

@@ -31,7 +31,7 @@ namespace SumerBusinessSolution
 
         // THE COMPANY INFO CODE BELOW
 
-        public CompanyInfo CompanyInfo { get; }
+        public CompanyInfo CompanyInfo { get; set; }
         public List<ExternalBillItems> ExternalItemsList { get; set; }
 
         [TempData]
@@ -50,6 +50,15 @@ namespace SumerBusinessSolution
             {
                 ExternalBillHeader = ExternalItemsList[0].ExternalBillHeader;
             }
+            try
+            {
+                CompanyInfo = _db.CompanyInfo.FirstOrDefault();
+            }
+            catch
+            {
+
+            }
+
             return Page();
         }
         public void OnPost()
