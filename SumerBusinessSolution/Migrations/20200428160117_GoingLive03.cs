@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SumerBusinessSolution.Migrations
 {
-    public partial class sumernew : Migration
+    public partial class GoingLive03 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -47,6 +47,55 @@ namespace SumerBusinessSolution.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CompanyInfo",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CompanyNameEn = table.Column<string>(nullable: true),
+                    CompanyNameAr = table.Column<string>(nullable: true),
+                    AddressEn = table.Column<string>(nullable: true),
+                    AddressAr = table.Column<string>(nullable: true),
+                    PhoneNo = table.Column<string>(nullable: true),
+                    PhoneNo02 = table.Column<string>(nullable: true),
+                    Email = table.Column<string>(nullable: true),
+                    Note = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CompanyInfo", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PricingType",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PriceType = table.Column<string>(nullable: true),
+                    Notes = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PricingType", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RoleAuth",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    RoleName = table.Column<string>(nullable: true),
+                    AppTransReq = table.Column<bool>(nullable: false),
+                    CreateInGoods = table.Column<bool>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RoleAuth", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -219,6 +268,7 @@ namespace SumerBusinessSolution.Migrations
                     ProdCategory = table.Column<string>(nullable: true),
                     RetailPrice = table.Column<double>(nullable: false),
                     WholePrice = table.Column<double>(nullable: false),
+                    CostPrice = table.Column<double>(nullable: false),
                     CreatedById = table.Column<string>(nullable: false),
                     CreatedDateTime = table.Column<DateTime>(nullable: false)
                 },
@@ -244,7 +294,8 @@ namespace SumerBusinessSolution.Migrations
                     WhLocation = table.Column<string>(nullable: true),
                     TypeId = table.Column<int>(nullable: false),
                     CreatedById = table.Column<string>(nullable: false),
-                    CreatedDateTime = table.Column<DateTime>(nullable: false)
+                    CreatedDateTime = table.Column<DateTime>(nullable: false),
+                    Active = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -271,11 +322,12 @@ namespace SumerBusinessSolution.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CustId = table.Column<int>(nullable: true),
                     Status = table.Column<string>(nullable: false),
+                    PaymentTerms = table.Column<string>(nullable: true),
                     TotalAmt = table.Column<double>(nullable: false),
                     Discount = table.Column<double>(nullable: false),
                     TotalNetAmt = table.Column<double>(nullable: false),
                     PaidAmt = table.Column<double>(nullable: false),
-                    CraetedDataTime = table.Column<DateTime>(nullable: false),
+                    CreatedDataTime = table.Column<DateTime>(nullable: false),
                     CreatedById = table.Column<string>(nullable: false),
                     Note = table.Column<string>(nullable: true)
                 },
@@ -315,6 +367,41 @@ namespace SumerBusinessSolution.Migrations
                         principalTable: "Customer",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ExternalBillHeader",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CustId = table.Column<int>(nullable: true),
+                    Status = table.Column<string>(nullable: false),
+                    PaymentTerms = table.Column<string>(nullable: true),
+                    TotalAmt = table.Column<double>(nullable: false),
+                    Discount = table.Column<double>(nullable: false),
+                    TotalNetAmt = table.Column<double>(nullable: false),
+                    PaidAmt = table.Column<double>(nullable: false),
+                    CreatedDataTime = table.Column<DateTime>(nullable: false),
+                    CreatedById = table.Column<string>(nullable: false),
+                    Note = table.Column<string>(nullable: true),
+                    HasExternalProd = table.Column<bool>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ExternalBillHeader", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ExternalBillHeader_AspNetUsers_CreatedById",
+                        column: x => x.CreatedById,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ExternalBillHeader_Customer_CustId",
+                        column: x => x.CustId,
+                        principalTable: "Customer",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -512,6 +599,98 @@ namespace SumerBusinessSolution.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "BillPayment",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    BillHeaderId = table.Column<int>(nullable: false),
+                    CustId = table.Column<int>(nullable: true),
+                    PaidAmt = table.Column<double>(nullable: false),
+                    CreatedById = table.Column<string>(nullable: true),
+                    CreatedDateTime = table.Column<DateTime>(nullable: false),
+                    Note = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BillPayment", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_BillPayment_BillHeader_BillHeaderId",
+                        column: x => x.BillHeaderId,
+                        principalTable: "BillHeader",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_BillPayment_Customer_CustId",
+                        column: x => x.CustId,
+                        principalTable: "Customer",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ExternalBillItems",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    HeaderId = table.Column<int>(nullable: false),
+                    ProdId = table.Column<int>(nullable: true),
+                    ProdName = table.Column<string>(nullable: true),
+                    Qty = table.Column<double>(nullable: false),
+                    UnitPrice = table.Column<double>(nullable: false),
+                    TotalAmt = table.Column<double>(nullable: false),
+                    IsExternal = table.Column<bool>(nullable: false),
+                    Note = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ExternalBillItems", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ExternalBillItems_ExternalBillHeader_HeaderId",
+                        column: x => x.HeaderId,
+                        principalTable: "ExternalBillHeader",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ExternalBillItems_ProdInfo_ProdId",
+                        column: x => x.ProdId,
+                        principalTable: "ProdInfo",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ExternalBillPayment",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ExternalBillHeaderId = table.Column<int>(nullable: false),
+                    CustId = table.Column<int>(nullable: true),
+                    PaidAmt = table.Column<double>(nullable: false),
+                    CreatedById = table.Column<string>(nullable: true),
+                    CreatedDateTime = table.Column<DateTime>(nullable: false),
+                    Note = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ExternalBillPayment", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ExternalBillPayment_Customer_CustId",
+                        column: x => x.CustId,
+                        principalTable: "Customer",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_ExternalBillPayment_ExternalBillHeader_ExternalBillHeaderId",
+                        column: x => x.ExternalBillHeaderId,
+                        principalTable: "ExternalBillHeader",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "InvTransfer",
                 columns: table => new
                 {
@@ -600,6 +779,16 @@ namespace SumerBusinessSolution.Migrations
                 column: "ProdId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_BillPayment_BillHeaderId",
+                table: "BillPayment",
+                column: "BillHeaderId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BillPayment_CustId",
+                table: "BillPayment",
+                column: "CustId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_CustAcc_CustId",
                 table: "CustAcc",
                 column: "CustId");
@@ -608,6 +797,36 @@ namespace SumerBusinessSolution.Migrations
                 name: "IX_Customer_CreatedById",
                 table: "Customer",
                 column: "CreatedById");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ExternalBillHeader_CreatedById",
+                table: "ExternalBillHeader",
+                column: "CreatedById");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ExternalBillHeader_CustId",
+                table: "ExternalBillHeader",
+                column: "CustId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ExternalBillItems_HeaderId",
+                table: "ExternalBillItems",
+                column: "HeaderId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ExternalBillItems_ProdId",
+                table: "ExternalBillItems",
+                column: "ProdId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ExternalBillPayment_CustId",
+                table: "ExternalBillPayment",
+                column: "CustId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ExternalBillPayment_ExternalBillHeaderId",
+                table: "ExternalBillPayment",
+                column: "ExternalBillHeaderId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_IncomingGood_CreatedById",
@@ -721,7 +940,19 @@ namespace SumerBusinessSolution.Migrations
                 name: "BillItems");
 
             migrationBuilder.DropTable(
+                name: "BillPayment");
+
+            migrationBuilder.DropTable(
+                name: "CompanyInfo");
+
+            migrationBuilder.DropTable(
                 name: "CustAcc");
+
+            migrationBuilder.DropTable(
+                name: "ExternalBillItems");
+
+            migrationBuilder.DropTable(
+                name: "ExternalBillPayment");
 
             migrationBuilder.DropTable(
                 name: "IncomingGood");
@@ -736,7 +967,13 @@ namespace SumerBusinessSolution.Migrations
                 name: "InvTransfer");
 
             migrationBuilder.DropTable(
+                name: "PricingType");
+
+            migrationBuilder.DropTable(
                 name: "ProdImg");
+
+            migrationBuilder.DropTable(
+                name: "RoleAuth");
 
             migrationBuilder.DropTable(
                 name: "TempProdImg");
@@ -746,6 +983,9 @@ namespace SumerBusinessSolution.Migrations
 
             migrationBuilder.DropTable(
                 name: "BillHeader");
+
+            migrationBuilder.DropTable(
+                name: "ExternalBillHeader");
 
             migrationBuilder.DropTable(
                 name: "InvTransferHeader");
