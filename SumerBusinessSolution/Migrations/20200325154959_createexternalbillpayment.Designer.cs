@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SumerBusinessSolution.Data;
 
 namespace SumerBusinessSolution.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200325154959_createexternalbillpayment")]
+    partial class createexternalbillpayment
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -247,9 +249,6 @@ namespace SumerBusinessSolution.Migrations
                     b.Property<double>("PaidAmt")
                         .HasColumnType("float");
 
-                    b.Property<string>("PaymentTerms")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Status")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -294,9 +293,6 @@ namespace SumerBusinessSolution.Migrations
                     b.Property<double>("UnitPrice")
                         .HasColumnType("float");
 
-                    b.Property<int>("WhId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("HeaderId");
@@ -338,42 +334,6 @@ namespace SumerBusinessSolution.Migrations
                     b.HasIndex("CustId");
 
                     b.ToTable("BillPayment");
-                });
-
-            modelBuilder.Entity("SumerBusinessSolution.Models.CompanyInfo", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("AddressAr")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("AddressEn")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CompanyNameAr")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CompanyNameEn")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Note")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNo")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNo02")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("CompanyInfo");
                 });
 
             modelBuilder.Entity("SumerBusinessSolution.Models.CustAcc", b =>
@@ -458,17 +418,11 @@ namespace SumerBusinessSolution.Migrations
                     b.Property<double>("Discount")
                         .HasColumnType("float");
 
-                    b.Property<bool>("HasExternalProd")
-                        .HasColumnType("bit");
-
                     b.Property<string>("Note")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<double>("PaidAmt")
                         .HasColumnType("float");
-
-                    b.Property<string>("PaymentTerms")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Status")
                         .IsRequired()
@@ -499,14 +453,8 @@ namespace SumerBusinessSolution.Migrations
                     b.Property<int>("HeaderId")
                         .HasColumnType("int");
 
-                    b.Property<bool>("IsExternal")
-                        .HasColumnType("bit");
-
                     b.Property<string>("Note")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("ProdId")
-                        .HasColumnType("int");
 
                     b.Property<string>("ProdName")
                         .HasColumnType("nvarchar(max)");
@@ -523,8 +471,6 @@ namespace SumerBusinessSolution.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("HeaderId");
-
-                    b.HasIndex("ProdId");
 
                     b.ToTable("ExternalBillItems");
                 });
@@ -650,9 +596,6 @@ namespace SumerBusinessSolution.Migrations
 
                     b.Property<double>("Qty")
                         .HasColumnType("float");
-
-                    b.Property<int>("RefTransId")
-                        .HasColumnType("int");
 
                     b.Property<string>("TransType")
                         .IsRequired()
@@ -792,9 +735,6 @@ namespace SumerBusinessSolution.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<double>("CostPrice")
-                        .HasColumnType("float");
-
                     b.Property<string>("CreatedById")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
@@ -842,7 +782,7 @@ namespace SumerBusinessSolution.Migrations
                     b.Property<bool>("AppTransReq")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("CreateInGoods")
+                    b.Property<bool>("CreateTrans")
                         .HasColumnType("bit");
 
                     b.Property<string>("RoleName")
@@ -874,9 +814,6 @@ namespace SumerBusinessSolution.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<bool>("Active")
-                        .HasColumnType("bit");
 
                     b.Property<string>("CreatedById")
                         .IsRequired()
@@ -1067,10 +1004,6 @@ namespace SumerBusinessSolution.Migrations
                         .HasForeignKey("HeaderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("SumerBusinessSolution.Models.ProdInfo", "ProdInfo")
-                        .WithMany()
-                        .HasForeignKey("ProdId");
                 });
 
             modelBuilder.Entity("SumerBusinessSolution.Models.ExternalBillPayment", b =>

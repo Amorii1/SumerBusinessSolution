@@ -15,26 +15,30 @@ namespace SumerBusinessSolution.Models
         //[Required]
         public int? ProdId { get; set; }
 
-       // [Required]
+        // [Required]
         public int? WhId { get; set; }
 
         [Required]
-       [Display(Name = "الكمية")]
+        [Display(Name = "الكمية")]
 
         public double Qty { get; set; }
 
         [Required]
-      [Display(Name = "نوع العملية")]
+        [Display(Name = "نوع العملية")]
 
         public string TransType { get; set; }
-      
+
+        [Display(Name = "رقم العملية")]
+
+        public int RefTransId { get; set; }
+
         [Required]
         [Display(Name = "معرف المنشئ")]
         public string CreatedById { get; set; }
 
 
         [Required]
-      [Display(Name = "تاريخ العملية")]
+        [Display(Name = "تاريخ العملية")]
 
         public DateTime CreatedDateTime { get; set; }
 

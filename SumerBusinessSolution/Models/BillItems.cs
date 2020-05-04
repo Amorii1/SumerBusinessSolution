@@ -18,6 +18,10 @@ namespace SumerBusinessSolution.Models
         [Required]
         [Display(Name = "الكمية")]
         public double Qty { get; set; }
+
+        [Display(Name = "المخزن")]
+        public int WhId { get; set; }
+
         [Display(Name = "سعر المنتج")]
         public double UnitPrice { get; set; }
 

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SumerBusinessSolution.Data;
 
 namespace SumerBusinessSolution.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200421173743_updatingexternalheadertable")]
+    partial class updatingexternalheadertable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -247,9 +249,6 @@ namespace SumerBusinessSolution.Migrations
                     b.Property<double>("PaidAmt")
                         .HasColumnType("float");
 
-                    b.Property<string>("PaymentTerms")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Status")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -293,9 +292,6 @@ namespace SumerBusinessSolution.Migrations
 
                     b.Property<double>("UnitPrice")
                         .HasColumnType("float");
-
-                    b.Property<int>("WhId")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -466,9 +462,6 @@ namespace SumerBusinessSolution.Migrations
 
                     b.Property<double>("PaidAmt")
                         .HasColumnType("float");
-
-                    b.Property<string>("PaymentTerms")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Status")
                         .IsRequired()
@@ -650,9 +643,6 @@ namespace SumerBusinessSolution.Migrations
 
                     b.Property<double>("Qty")
                         .HasColumnType("float");
-
-                    b.Property<int>("RefTransId")
-                        .HasColumnType("int");
 
                     b.Property<string>("TransType")
                         .IsRequired()
@@ -842,7 +832,7 @@ namespace SumerBusinessSolution.Migrations
                     b.Property<bool>("AppTransReq")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("CreateInGoods")
+                    b.Property<bool>("CreateTrans")
                         .HasColumnType("bit");
 
                     b.Property<string>("RoleName")

@@ -14,6 +14,10 @@ namespace SumerBusinessSolution.Transactions
 
         Task<string> MakePaymentOnBill(int HeaderId, double NewPaymentAmt);
 
+        Task<string> EditBill(int HeaderId, double NewPaidAmt, double NewDiscount);
+
+        Task<string> DeleteBill(int HeaderId);
+
         Task<string> MakePaymentOnExternalBill(int ExternalHeaderId, double NewPaymentAmt);
         Task<string> CloseBillManually(int HeaderId);
         Task<string> CloseExternalBillManually(int ExternalHeaderId);

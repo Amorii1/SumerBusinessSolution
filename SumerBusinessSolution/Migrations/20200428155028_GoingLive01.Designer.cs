@@ -10,8 +10,8 @@ using SumerBusinessSolution.Data;
 namespace SumerBusinessSolution.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200428160117_GoingLive03")]
-    partial class GoingLive03
+    [Migration("20200428155028_GoingLive01")]
+    partial class GoingLive01
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

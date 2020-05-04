@@ -24,13 +24,13 @@ namespace SumerBusinessSolution.Transactions
 
         public InvStockQty InvStockQty { get; set; }
         public Warehouse ShowRoom { get; set; }
-        
+
         // this function will create a bill for the first time
         public async Task<string> CreateBill(BillHeader Header, List<BillItems> BillItems, int WhId)
         {
             try
             {
-              //  ShowRoom = WhId; //_db.Warehouse.Include(wh => wh.WhType).FirstOrDefault(wh => wh.WhType.Type == "Showroom"); 
+                //  ShowRoom = WhId; //_db.Warehouse.Include(wh => wh.WhType).FirstOrDefault(wh => wh.WhType.Type == "Showroom"); 
 
                 Header.CreatedById = GetLoggedInUserId();
                 Header.CreatedDataTime = DateTime.Now;
@@ -42,9 +42,9 @@ namespace SumerBusinessSolution.Transactions
                 {
                     item.ProdId = _db.ProdInfo.FirstOrDefault(pr => pr.ProdCode == item.ProdInfo.ProdCode).Id;
                     // first check if qty enough in the store room before proceeding
-                    bool CheckQty = CheckQtyInWh(item.ProdId??0, WhId, item.Qty);
+                    bool CheckQty = CheckQtyInWh(item.ProdId ?? 0, WhId, item.Qty);
 
-                    if(CheckQty == false)
+                    if (CheckQty == false)
                     {
                         return "Error! لا توجد كمية كافية للبيع";
                     }
@@ -59,7 +59,7 @@ namespace SumerBusinessSolution.Transactions
                 TotalAmt = TotalAmt - Header.Discount;
                 Header.TotalNetAmt = TotalAmt;
 
-                if(TotalAmt == Header.PaidAmt)
+                if (TotalAmt == Header.PaidAmt)
                 {
                     Header.Status = SD.Completed;
                 }
@@ -67,7 +67,7 @@ namespace SumerBusinessSolution.Transactions
                 {
                     Header.Status = SD.OpenBill;
                 }
-                
+
 
                 _db.BillHeader.Add(Header);
 
@@ -89,21 +89,22 @@ namespace SumerBusinessSolution.Transactions
                         HeaderId = Header.Id,
                         ProdId = item.ProdId,
                         Qty = item.Qty,
+                        WhId = WhId,
                         UnitPrice = item.UnitPrice,
                         TotalAmt = item.UnitPrice * item.Qty,
                         Note = item.Note
                     };
 
                     // decrease stock qty of that item 
-                    DecreaseStockQty(Bill.ProdId??0, WhId, Bill.Qty);
+                    DecreaseStockQty(Bill.ProdId ?? 0, WhId, Bill.Qty);
 
                     // create inv transaction 
-                    CreateInvTransaction(Bill.ProdId??0, WhId, Bill.Qty ,SD.Sales);
+                    CreateInvTransaction(Bill.ProdId ?? 0, WhId, Bill.Qty, Header.Id, SD.Sales);
                     _db.BillItems.Add(Bill);
 
                 }
-                
-            
+
+
                 await _db.SaveChangesAsync();
 
 
@@ -116,21 +117,20 @@ namespace SumerBusinessSolution.Transactions
             }
         }
 
-      
-    
+
         public async Task<string> MakePaymentOnBill(int HeaderId, double NewPaymentAmt)
         {
             try
             {
-                BillHeader Header =  _db.BillHeader.FirstOrDefault(h => h.Id == HeaderId);
+                BillHeader Header = _db.BillHeader.FirstOrDefault(h => h.Id == HeaderId);
 
                 CustAcc Acc = _db.CustAcc.FirstOrDefault(ac => ac.CustId == Header.CustId);
-                
+
                 // updating bill header will the payment
                 Header.PaidAmt += NewPaymentAmt;
 
                 // if the bill paid all, change status to completed
-                if(Header.TotalNetAmt == Header.PaidAmt)
+                if (Header.TotalNetAmt == Header.PaidAmt)
                 {
                     Header.Status = SD.Completed;
                 }
@@ -141,32 +141,30 @@ namespace SumerBusinessSolution.Transactions
                 UpdateCustomerAcc(Header.CustId ?? 0, NewPaymentAmt, NewPaymentAmt, "Old");
 
                 // add a new payment to bill payments table 
-                AddBillPayment(Header.CustId??0, Header.Id, NewPaymentAmt);
- 
+                AddBillPayment(Header.CustId ?? 0, Header.Id, NewPaymentAmt);
+
                 await _db.SaveChangesAsync();
 
                 return "تمت عملية الدفع";
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return "لم تتم عملية الدفع";
             }
         }
 
-        
-     
         public async Task<string> MakePaymentToAcc(int CustId, double NewPaymentAmt)
         {
             try
-            { 
+            {
                 CustAcc Acc = _db.CustAcc.FirstOrDefault(ac => ac.CustId == CustId);
 
-            
+
                 // updating customer Acc
                 //Acc.Paid += PaidAmt;
                 //Acc.Debt -= PaidAmt;
                 UpdateCustomerAcc(CustId, NewPaymentAmt, NewPaymentAmt, "Old");
-  
+
                 await _db.SaveChangesAsync();
 
                 return "تمت عملية الدفع";
@@ -188,14 +186,109 @@ namespace SumerBusinessSolution.Transactions
 
                 return "تم اغلاق الفاتورة بنجاح";
             }
-           catch
+            catch
             {
                 return "حصل خطأ لم يتم اغلاق الفاتورة";
             }
 
         }
 
-       
+
+        public async Task<string> DeleteBill(int HeaderId)
+        {
+            try
+            {
+
+
+                BillHeader Header = _db.BillHeader.FirstOrDefault(h => h.Id == HeaderId);
+                List<BillItems> BillItemList = _db.BillItems.Where(i => i.HeaderId == HeaderId).ToList();
+
+                // reverting customer Acc 
+                double DebtAmt = Header.TotalNetAmt - Header.PaidAmt;
+                RevertCustomerAcc(Header.CustId ?? 0, Header.PaidAmt, DebtAmt);
+
+                // remove bill payment of bill payments table 
+                DeleteBillPayment(Header.Id);
+
+                // Creating Bill items
+                foreach (BillItems Item in BillItemList)
+                {
+
+                    // revert stock qty of that item 
+                    RevertStockQty(Item.ProdId ?? 0, Item.WhId, Item.Qty);
+
+
+                    //   _db.BillItems.Add(Bill);
+
+                }
+                // remove inv transaction list from InvTransaction Table
+                DeleteInvTransaction(HeaderId, SD.Sales);
+
+                // removing bill item list
+                _db.BillItems.RemoveRange(BillItemList);
+
+                //remove header
+                _db.BillHeader.RemoveRange(Header);
+
+                await _db.SaveChangesAsync();
+
+
+                return "تم حذف الفاتورة";
+            }
+
+            catch
+            {
+                return "Error! حصل خطأ لم يتم حذف الفاتورة";
+            }
+        }
+
+        // Edit bill 
+        public async Task<string> EditBill(int HeaderId, double NewPaidAmt, double NewDiscount)
+        {
+            try
+            {
+                BillHeader Header = _db.BillHeader.FirstOrDefault(h => h.Id == HeaderId);
+                double OldPayment = Header.PaidAmt;
+                double OldDiscount = Header.Discount;
+
+                double NewDebt = Header.TotalNetAmt - NewPaidAmt;
+                double OldDebt = Header.TotalNetAmt - Header.PaidAmt;
+                //updating bill payment 
+                if (NewPaidAmt > 0)
+                {
+                    // updating paid amt
+                    Header.PaidAmt = NewPaidAmt;
+
+                    // updating customer's acc
+                }
+
+                //updating bill discount
+                if (NewDiscount > 0)
+                {
+                    Header.TotalNetAmt += OldDiscount;
+                    Header.TotalNetAmt -= NewDiscount;
+
+                    Header.Discount = NewDiscount;
+                    NewDebt -= NewDiscount;
+                }
+
+                await _db.SaveChangesAsync();
+
+                // updatinga customer Acc 
+                double DebtAmt = Header.TotalNetAmt - Header.PaidAmt;
+                UpdateCustAccOnBillEdit(Header.CustId ?? 0, NewPaidAmt, OldPayment, NewDebt, OldDebt);
+
+                await _db.SaveChangesAsync();
+
+
+                return "تمت عملية التعديل على الفاتورة";
+            }
+
+            catch
+            {
+                return "Error! حصل خطأ لم تتم عملية التعديل على الفاتورة";
+            }
+        }
 
 
         // this function will update customer account manually, only for admin
@@ -264,7 +357,7 @@ namespace SumerBusinessSolution.Transactions
                         item.IsExternal = false;
                         // first check if qty enough in the store room before proceeding
                         bool CheckQty = CheckQtyInWh(item.ProdId ?? 0, WhId, item.Qty);
-                       // ExternalHeader.HasExternalProd = false;
+                        // ExternalHeader.HasExternalProd = false;
                         if (CheckQty == false)
                         {
                             return "Error! لا توجد كمية كافية للبيع";
@@ -317,7 +410,7 @@ namespace SumerBusinessSolution.Transactions
                     ExternalBillItems Bill = new ExternalBillItems
                     {
                         HeaderId = ExternalHeader.Id,
-                       // ProdId = item.ProdId,
+                        // ProdId = item.ProdId,
                         Qty = item.Qty,
                         UnitPrice = item.UnitPrice,
                         TotalAmt = item.UnitPrice * item.Qty,
@@ -325,7 +418,7 @@ namespace SumerBusinessSolution.Transactions
                         Note = item.Note
                     };
 
-                    if(item.IsExternal == false)
+                    if (item.IsExternal == false)
                     {
                         Bill.ProdId = item.ProdId;
                         Bill.IsExternal = false;
@@ -333,7 +426,7 @@ namespace SumerBusinessSolution.Transactions
                         DecreaseStockQty(Bill.ProdId ?? 0, WhId, Bill.Qty);
 
                         // create inv transaction 
-                        CreateInvTransaction(Bill.ProdId ?? 0, WhId, Bill.Qty, SD.Sales);
+                        CreateInvTransaction(Bill.ProdId ?? 0, WhId, Bill.Qty, ExternalHeader.Id, SD.Sales);
                         _db.ExternalBillItems.Add(Bill);
                     }
                     else
@@ -477,7 +570,7 @@ namespace SumerBusinessSolution.Transactions
 
                 // add a new payment to bill payments table 
                 AddExternalBillPayment(ExternalHeader.CustId ?? 0, ExternalHeader.Id, NewPaymentAmt);
-   
+
                 await _db.SaveChangesAsync();
 
                 return "تمت عملية الدفع";
@@ -508,20 +601,58 @@ namespace SumerBusinessSolution.Transactions
             Acc.Paid += Paid;
 
             // if new means new bill and will add more debit (in case customer didnt make full payment)
-            if(Status == "New")
+            if (Status == "New")
             {
                 Acc.Debt += Debt;
             }
+
             else // this will be used when a customer makes a new payment on existing bill, so debt will be minus
             {
-                if(Acc.Debt > 0)
+                if (Acc.Debt > 0)
                 {
                     Acc.Debt -= Debt;
 
                 }
-                
+
             }
-            
+
+        }
+
+        // this function will be used to update customer acc when a bill is edited 
+        private void UpdateCustAccOnBillEdit(int CustId, double NewPayment, double OldPayment, double NewDebt, double OldDebt)
+        {
+            CustAcc Acc = _db.CustAcc.FirstOrDefault(cu => cu.CustId == CustId);
+
+            // update new payment
+            if (NewPayment > 0)
+            {
+                Acc.Paid -= OldPayment;
+                Acc.Paid += NewPayment;
+            }
+
+            //update new debt
+            if (NewDebt > 0)
+            {
+                Acc.Debt += OldDebt;
+                Acc.Debt -= NewDebt;
+            }
+
+
+
+        }
+
+        // Revert customer acc, when bill is cancelled
+        private void RevertCustomerAcc(int CustId, double Paid, double Debt)
+        {
+            CustAcc Acc = _db.CustAcc.FirstOrDefault(cu => cu.CustId == CustId);
+
+            if (Acc != null)
+            {
+                // reverting both amount of customer's account
+                Acc.Paid -= Paid;
+                Acc.Debt -= Debt;
+            }
+
         }
 
 
@@ -554,8 +685,20 @@ namespace SumerBusinessSolution.Transactions
                 CreatedById = GetLoggedInUserId()
             };
             _db.BillPayment.Add(NewPayment);
-          
+
         }
+
+
+        // will delete bill payment when a bill is deleted
+        private void DeleteBillPayment(int BillHeaderId)
+        {
+            BillPayment Payment = _db.BillPayment.FirstOrDefault(p => p.BillHeaderId == BillHeaderId);
+            if (Payment != null)
+            {
+                _db.BillPayment.Remove(Payment);
+            }
+        }
+
 
         // this function will update External bill payment table
         private void AddExternalBillPayment(int CustId, int ExternalBillHeaderId, double Paid)
@@ -579,13 +722,25 @@ namespace SumerBusinessSolution.Transactions
             InvStockQty = _db.InvStockQty.FirstOrDefaultAsync(inv => inv.ProdId == ProdId & inv.WhId == WhId).GetAwaiter().GetResult();
             if (InvStockQty != null)
             {
-                    InvStockQty.Qty -= Qty;
+                InvStockQty.Qty -= Qty;
             }
 
         }
 
+        // reverting stock qty when a bill is cancelled
+        private void RevertStockQty(int ProdId, int WhId, double Qty)
+        {
+            InvStockQty = _db.InvStockQty.FirstOrDefaultAsync(inv => inv.ProdId == ProdId & inv.WhId == WhId).GetAwaiter().GetResult();
+            if (InvStockQty != null)
+            {
+                InvStockQty.Qty += Qty;
+            }
+
+        }
+
+
         // add a sale transaction inside invTransaction table 
-        private void CreateInvTransaction(int ProdId, int? WhId, double Qty, string TransType)
+        private void CreateInvTransaction(int ProdId, int? WhId, double Qty, int RefTransId, string TransType)
         {
             InvTransaction InvTrans = new InvTransaction
             {
@@ -593,11 +748,23 @@ namespace SumerBusinessSolution.Transactions
                 WhId = WhId,
                 Qty = Qty,
                 TransType = TransType,
+                RefTransId = RefTransId,
                 CreatedById = GetLoggedInUserId(),
                 CreatedDateTime = DateTime.Now
             };
             _db.InvTransaction.Add(InvTrans);
         }
 
+        // remove inventory trans list when bill is deleted
+        private void DeleteInvTransaction(int RefTransId, string TransType)
+        {
+            List<InvTransaction> TransList = _db.InvTransaction
+                 .Where(t => t.RefTransId == RefTransId & t.TransType == TransType).ToList();
+
+            if (TransList.Count > 0)
+            {
+                _db.InvTransaction.RemoveRange(TransList);
+            }
+        }
     }
 }
