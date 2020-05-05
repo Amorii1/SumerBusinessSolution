@@ -55,7 +55,7 @@
     </form>
     <div>
 
-        <table class="table table-striped border table-responsive-md table-responsive-lg text-md-center">
+        <table class="text-md-center table table-striped border table-responsive-md table-responsive-lg">
             <tr class="table-secondary">
 
                 <th></th>
@@ -85,13 +85,13 @@
                             <div class="btn-group" role="group">
                                 <form method="post">
                                     @*<div class="col-md-6">
-            <a asp-page="Index" asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-secondary form-control">@localizer.Get("رجوع")</a>
-        </div>*@
+                                        <a asp-page="Index" asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-secondary form-control">@localizer.Get("رجوع")</a>
+                                    </div>*@
                                     <button asp-page="Index" asp-route-culture="@Request.RouteValues["culture"]" data-toggle="modal" data-target="#Ask" class="btn btn-danger text-white" asp-page-handler="DeleteCustomer" asp-route-CustId="@item.Customer.Id" type="submit" title="حذف" name="Delete">
                                         @localizer.Get("") <i class="fas fa-trash-alt"></i>
                                     </button>
 
-                       
+
 
                                     <a asp-page="Edit" asp-route-CustId="@item.Customer.Id" asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-success text-white " type="submit" title="@localizer.Get("تعديل معلومات الزبون")">
                                         <i class="fas fa-user-edit"></i>
