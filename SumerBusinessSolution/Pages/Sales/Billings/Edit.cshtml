@@ -7,215 +7,331 @@
 @using SumerBusinessSolution.Utility
 @inject Services.CommonLocalizationService localizer
 
-<div class="border backgroundWhite">
-    @*<h2 class="text-info">المواد الواردة </h2>*@
-    <h2 class="text-info text-md-right">  @localizer.Get("تفاصيل الفاتورة")</h2>
+<partial name="_StatusMessage" model="Model.StatusMessage" />
 
+
+<div class=" border backgroundWhite">
     <form method="post">
-        <div id="tabledata">
-            <input type="hidden" asp-for="BillHeader.Id" />
-
-            <br />
-            <div class="pl-md-5 offset-md-4">
-                <img src="~/image/Bnas Logo.jpeg" style="width:250px;height:250px;" />
-            </div>
-            <br />
-            <div style="border: 2.7px solid black;   border-radius: 25px;">
-                <div class="row col-md-12 pt-md-3">
-
-                    <div class="row pt-md-2  col-md-5 form-control form-group offset-md-1">
-                        <h4 class=" text-dark font-weight-bold text-md-right">@Model.CompanyInfo.PhoneNo/@Model.CompanyInfo.PhoneNo02</h4>
-                    </div>
-
-                    <div class="row pt-md-2 col-md-5 form-control form-group offset-md-1">
-                        <h4 class=" text-dark font-weight-bold text-md-right">@Model.CompanyInfo.AddressAr</h4>
-                    </div>
-
-                </div>
-                <div class="row col-md-12">
-
-                    <div class="row pt-md-2  col-md-5 form-control form-group offset-md-1">
-                        <h4 class=" text-dark font-weight-bold text-md-right">@Model.CompanyInfo.Email</h4>
-                    </div>
-
-                    <div class="row pt-md-2 col-md-5 form-control form-group offset-md-1">
-                        <h4 class=" text-dark font-weight-bold text-md-right">@Model.CompanyInfo.AddressEn</h4>
-                    </div>
-
-                </div>
-            </div>
-            <hr />
-
-            <div class="row col-md-12">
-
-
-                <div id="field" class="row pt-md-2 col-md-3 form-control form-group offset-md-1">
-                    <h4 class=" text-dark font-weight-bold text-md-right">@Model.BillHeader.Id &nbsp; : رقم الفاتورة</h4>
-                </div>
-
-                <div id="field" class="row pt-md-2 col-md-3 form-control form-group offset-md-1">
-                    <h4 class=" text-dark font-weight-bold text-md-right"> اسم الزبون&nbsp;: @Model.BillHeader.Customer.CompanyName </h4>
-                </div>
-
-                <div id="field" class="row pt-md-2 col-md-3 form-control form-group offset-md-1">
-                    <h4 class=" text-dark font-weight-bold text-md-right">@Model.BillHeader.ApplicationUser.FirstName &nbsp; : اسم الموظف</h4>
-                </div>
-
-            </div>
-            <div class="row col-md-12">
-
-                <div id="field" class="row pt-md-2  col-md-6 form-control form-group offset-md-1">
-                    <h4 class=" text-dark font-weight-bold text-md-right">@Model.BillHeader.CreatedDataTime &nbsp; : التاريخ</h4>
-                </div>
-
-                <div id="field" class="row pt-md-2 col-md-2 form-control form-group offset-md-1">
-                    <h4 class=" text-dark font-weight-bold text-md-right"> الدفع  : @Model.BillHeader.PaymentTerms</h4>
-                </div>
-
-            </div>
-
-
-            <br />
-            <br />
-
-            <table class="table table-striped table-responsive-md table-responsive-lg ">
-                <tr>
-
-                    <th>
-                        @Html.DisplayNameFor(m => m.BillItems.Note)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(m => m.BillItems.TotalAmt)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(m => m.BillItems.UnitPrice)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(m => m.BillItems.Qty)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(m => m.BillItems.ProdInfo.ProdCode)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(m => m.BillItems.ProdInfo.ProdName)
-                    </th>
-                    <th>ت</th>
-
-                </tr>
-                @{int RowNo = 0;}
-
-                @foreach (var item in Model.BillItemsList)
-                {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(m => item.Note)
-                        </td>
-
-                        <td>
-                            @Html.DisplayFor(m => item.TotalAmt)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(m => item.UnitPrice)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(m => item.Qty)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(m => item.ProdInfo.ProdCode)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(m => item.ProdInfo.ProdName)
-                        </td>
-                        <td>@{RowNo++;} @RowNo</td>
-                    </tr>
-                }
-
-            </table>
-
-            <div class="row col-md-12">
-
-
-                <div id="field" class="row pt-md-2 col-md-3 form-control form-group offset-md-1">
-                    <h4 class=" text-dark font-weight-bold text-md-right">@Model.BillHeader.TotalAmt &nbsp; : المبلغ الكلي</h4>
-                </div>
-
-
-
-                <div id="field" class="row pt-md-2 col-md-3 form-control form-group offset-md-1">
-                    <h4 class=" text-dark font-weight-bold text-md-right">@Model.BillHeader.Discount &nbsp; : التخفيض</h4>
-                </div>
-
-
-                <div id="field" class="row pt-md-2 col-md-3 form-control form-group offset-md-1">
-                    <h4 class=" text-dark font-weight-bold text-md-right">@Model.BillHeader.TotalNetAmt &nbsp; : المبلغ الاجمالي</h4>
-                </div>
-
-            </div>
-            <div id="field" class="row pt-md-2 col-md-10 form-control form-group offset-md-1" style="padding-bottom:10px;">
-                <h4 class=" text-dark font-weight-bold text-md-right">@Model.BillHeader.PaidAmt &nbsp; : المبلغ المدفوع</h4>
-            </div>
-
-            <div class="row form-group text-success">
-
-                <div class="col-md-5 offset-md-5">
-                    <input id="paidAmt" type="text" asp-for="a => @Model.NewPaidAmt" class="form-control text-md-right" />
-
-                </div>
-                <div class="col-md-2">
-                    <label asp-for="@Model.NewPaidAmt"> </label>
-                </div>
-            </div>
-
-            <div class="row form-group text-warning">
-                <div class="col-md-5 offset-md-5">
-                    <input id="discount" type="text" asp-for="a => @Model.NewDiscount" class="form-control text-md-right" />
-                </div>
-                <div class="col-md-2">
-                    <label asp-for="@Model.NewDiscount"> </label>
-                </div>
-            </div>
-
-        </div>
-        <br />
-        <br />
-        <br />
-
-        <div class="form-group row">
-            <div class="col-md-5 offset-md-5">
-                <div class="row">
-                    <div class="col-md-6">
-                        <a asp-page="Index" class="btn btn-secondary form-control" asp-route-culture="@Request.RouteValues["culture"]"> رجوع</a>
-
-                    </div>
-
-                    @if (User.IsInRole(SD.AdminUser) && (Model.BillHeader.Status == SD.OpenBill))
-                    {
-                        <div class="col-md-3">
-                            <a asp-route-culture="@Request.RouteValues["culture"]" data-toggle="modal" data-target="#Ask" class="btn btn-danger" asp-page-handler="EditBill" asp-route-HeaderId="@Model.BillHeader.Id" type="submit" name="Close">
-                                @localizer.Get("حفظ")
-                            </a>
-                        </div>
-                        <div class="modal fade" id="Ask" role="dialog" method="post">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button class="close" data-dismiss="modal">&times;</button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <p class="alert alert-danger">@localizer.Get("هل انت متأكد؟")</p>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <input asp-route-culture="@Request.RouteValues["culture"]" type="submit" asp-page-handler="EditBill" asp-route-HeaderId="@Model.BillHeader.Id" class="btn btn-info" value="@localizer.Get("نعم")" />
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                    }
-                </div>
+        <div class="row">
+            <div class="col-md-5 offset-md-4">
+                <h2 class="text-info  text-md-right">@localizer.Get("تعديل الفاتورة")</h2>
             </div>
         </div>
+
+
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
     </form>
+    <form method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="PricingType.Id" />
+        <input type="hidden" asp-for="BillHeader.Id" />
+        <input type="hidden" asp-for="CustomerId" />
+        <input type="hidden" asp-for="WhId" />
+
+
+
+        <input id="cod" type="hidden" asp-for="COD" />
+        <div class="row form-group">
+
+
+            <div class="col-md-5 offset-md-5">
+                <input type="text" id="CustName" asp-for="@Model.CustomerName" class="form-control text-md-right" disabled="disabled" />
+            </div>
+            <div class="col-md-2">
+                <label asp-for="@Model.BillHeader.CustId"> </label>
+            </div>
+        </div>
+        <div class="row form-group">
+            <div class="col-md-5 offset-md-5">
+                <input type="text" asp-for="@Model.SelectedWh" class="form-control text-md-right" disabled="disabled" />
+            </div>
+            <div class="col-md-2">
+                <label asp-for="@Model.SelectedWh"> </label>
+            </div>
+        </div>
+        <div class="row form-group">
+
+            <div class="col-md-5 offset-md-5">
+                <select id="PriceType" asp-for="@Model.PricingType.PriceType"
+                        asp-items="@(new SelectList(Model.UnitPriceTypesList, "Id","PriceType"))"
+                        class="form-control" dir="rtl">
+                </select>
+            </div>
+            <div class="col-md-2">
+                <label asp-for="@Model.PricingType.PriceType"> </label>
+            </div>
+        </div>
+        <div class="row form-group">
+            <div class="col-md-5 offset-md-5">
+                <select id="paymentTerms" asp-for="@Model.BillHeader.PaymentTerms"
+                        asp-items="@(new SelectList(Model.PaymentTermsList,"Id"))"
+                        class="form-control" dir="rtl">
+                </select>
+            </div>
+            <div class="col-md-2">
+                <label asp-for="@Model.BillHeader.PaymentTerms"> </label>
+            </div>
+        </div>
+
+        <table id="dataTable" dir="rtl" class=" text-md-center table table-striped border table-responsive-md table-responsive-lg">
+            <tr class="table-secondary">
+                @*<table id="dataTable" border="0" cellpadding="0" cellspacing="0">
+                    <tr>*@
+                <th>
+                    @Html.DisplayNameFor(a => Model.Bi[0].ProdInfo.ProdCode)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(a => Model.Bi[0].Qty)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(a => Model.Bi[0].UnitPrice)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(a => Model.Bi[0].TotalAmt)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(a => Model.Bi[0].Note)
+                </th>
+
+                @*<th>Prod Code</th>
+                    <th>Qty</th>
+                    <th>Unit Price</th>
+                    <th>Total </th>
+                    <th>Note</th>*@
+                <th><a href="#" title="اضافة" id="addNew">   <i class="fas fa-plus"></i></a></th>
+            </tr>
+            @if (Model.Bi != null && Model.Bi.Count > 0)
+            {
+
+                int j = 0;
+
+                foreach (var i in Model.Bi)
+                {
+
+
+                    <tr>
+                        @*float a= (float)((ArrayList)paredes[i])[0];*@
+                        @*<td>@Html.TextBoxFor(a => a[j].ContactName)</td>*@
+
+                        <td onclick="bindAutocomplete(this); bindPrice(this)" onchange="bindPrice(this)">@Html.TextBoxFor(a => Model.Bi[j].ProdInfo.ProdCode) </td>
+                        <td oninput="bindTotal(this)" onclick="bindTotal(this)">@Html.TextBoxFor(a => Model.Bi[j].Qty)</td>
+                        <td>@Html.TextBoxFor(a => Model.Bi[j].UnitPrice)</td>
+                        <td>@Html.TextBoxFor(a => Model.Bi[j].TotalAmt)</td>
+                        <td>@Html.TextBoxFor(a => Model.Bi[j].Note)</td>
+                        <td>
+                            @if (j > 0)
+                            {
+
+                                // <input type="button" value="Delete" onclick="deleteRow(this)">
+                                <a href="#" id="removeThis" onclick="return RemoveRow(this)" title="الغاء" class="remove"><i class="fas fa-window-close"></i></a>
+
+                            }
+                        </td>
+                    </tr>
+                    j++;
+
+                }
+
+            }
+        </table>
+
+        <div class="row form-group text-success">
+
+            <div class="col-md-5 offset-md-5">
+                <input id="paidAmt" type="text" asp-for="@Model.BillHeader.PaidAmt" class="form-control text-md-right" />
+
+            </div>
+            <div class="col-md-2">
+                <label asp-for="@Model.BillHeader.PaidAmt"> </label>
+            </div>
+        </div>
+
+        <div class="row form-group text-warning">
+
+            <div class="col-md-5 offset-md-5">
+                <input id="discount" type="text" asp-for="a => @Model.BillHeader.Discount" class="form-control text-md-right" />
+            </div>
+            <div class="col-md-2">
+                <label asp-for="@Model.BillHeader.Discount"> </label>
+            </div>
+        </div>
+        <div class="row form-group">
+
+            <div class="col-md-5 offset-md-5">
+                <input type="text" asp-for="a => @Model.BillHeader.Note" class="form-control text-md-right" />
+
+            </div>
+            <div class="col-md-2">
+                <label asp-for="@Model.BillHeader.Note"> </label>
+            </div>
+        </div>
+        <div class=" form-group row">
+            <div class="col-md-5 offset-md-5">
+                <div class="row">
+
+                    <div class="col-md-6">
+                        @*<a asp-page="Index" class="btn btn-success form-control">الرجوع</a>*@
+
+                        <a asp-page="Index" asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-secondary form-control">
+                            @localizer.Get("رجوع")
+                        </a>
+
+                    </div>
+                    <div class="col-md-6">
+                        @*<input type="submit" class="btn btn-info form-control" value="حفظ" />*@
+                        <input asp-route-culture="@Request.RouteValues["culture"]" type="submit" class="btn btn-info form-control" value="@localizer.Get("انشاء")" onclick="return ValidateInput()" />
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        @*<input type="submit" value="Save Bulk Data" />*@
+    </form>
+
 </div>
+
+
+
+@*@using (Html.BeginForm("BulkData", "Save", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+
+    }*@
+
+
+
+<script>
+    function RemoveRow(r) {
+        var i = r.parentNode.parentNode.rowIndex;
+        document.getElementById("dataTable").deleteRow(i);
+    }
+
+</script>
+
+@* Here I will add Jquery Code for validation / dynamically add new rows / Remove rows etc *@
+
+@section Scripts{
+    <script language="javascript">
+            $(document).ready(function () {
+
+                //1. Add new row
+                $("#addNew").click(function (e) {
+                    e.preventDefault();
+                    var $tableBody = $("#dataTable");
+                    var $trLast = $tableBody.find("tr:last");
+
+                    var $trNew = $trLast.clone();
+                    $trNew.find(':text').val('');
+
+                    var suffix = $trNew.find(':input:first').attr('name').match(/\d+/);
+                    $trNew.find("td:last").html('<a href="#" id="removeThis" onclick="return RemoveRow(this)" title="الغاء" class="remove"><i class="fas fa-window-close"></i></a>');
+
+
+                    $.each($trNew.find(':input'), function (i, val) {
+                        // Replaced Name
+                        var oldN = $(this).attr('name');
+                        var newN = oldN.replace('[' + suffix + ']', '[' + (parseInt(suffix) + 1) + ']');
+                        $(this).attr('name', newN);
+                        //Replaced value
+                        var type = $(this).attr('type');
+                        if (type.toLowerCase() == "text") {
+                            $(this).attr('value', '');
+                        }
+
+                        // If you have another Type then replace with default value
+                        $(this).removeClass("input-validation-error");
+
+                    });
+                    $trLast.after($trNew);
+
+                });
+
+
+
+            });
+
+            function bindAutocomplete(t) {
+                $(t.children[0]).autocomplete({
+
+                        source: '@Url.Page("Edit", "SearchNow")'
+                    });
+
+            }
+
+        async function bindPrice(t) {
+            console.log("HERE");
+                      if (document.getElementById("PriceType").value == 1) {
+                          const obj = await fetch(`${window.location.href.split('?')[0]}?handler=ProdUnitPriceWhole&term=${t.children[0].value}`)
+                          const json = await obj.json()
+                           t.parentElement.children[2].children[0].value = json[0]
+                      }
+                      else {
+                                                     const obj = await fetch(`${window.location.href.split('?')[0]}?handler=ProdUnitPriceRetail&term=${t.children[0].value}`)
+                          const json = await obj.json()
+                           t.parentElement.children[2].children[0].value = json[0]
+                      }
+
+
+                       console.log(document.getElementById("PriceType").value)
+
+                }
+
+                function bindTotal(t) {
+                    const val = t.children[0].value
+                    const price = t.parentElement.children[2].children[0].value
+
+                    t.parentElement.children[3].children[0].value = val * price
+            }
+
+    </script>
+    <script type="text/javascript" src="~/js/jquery.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <script>
+
+        $(document).ready(function () {
+            $(window).keydown(function (event) {
+                if (event.keyCode == 13) {
+                    event.preventDefault();
+                    return false;
+                }
+            });
+        });
+    </script>
+
+
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script>
+        function ValidateInput() {
+            var companyName = document.getElementById("CustName").value;
+            var paymentTerms = document.getElementById("paymentTerms").value;
+            var paidAmt = document.getElementById("paidAmt").value;
+            var cod = document.getElementById("cod").value;
+            if (companyName == "") {
+                swal("Error!", "يرجى ادخال اسم الزبون", "error");
+
+                return false
+            }
+            if (paymentTerms == cod && paidAmt == 0) {
+                swal("Error!", "يرجى ادخال المبلغ المدفوع", "error");
+
+                return false
+            }
+
+        }
+        window.onload = function iniVals() {
+            // document.getElementById("discount").value = 0;
+            // document.getElementById("paidAmt").value = 0;
+
+        }
+    </script>
+
+}
 

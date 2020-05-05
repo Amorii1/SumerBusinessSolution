@@ -8,7 +8,7 @@ namespace SumerBusinessSolution.Transactions
 {
     public interface ISalesTrans
     {
-        Task<string> CreateBill(BillHeader Header, List<BillItems> BillItems, int WhId);
+        Task<string> CreateBill(BillHeader Header, List<BillItems> BillItems, int WhId, string Type);
 
         Task<string> CreateExternalBill(ExternalBillHeader Header, List<ExternalBillItems> BillItems, int WhId);
 

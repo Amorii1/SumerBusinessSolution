@@ -96,7 +96,7 @@ namespace SumerBusinessSolution.Pages.Sales.Billings
         {
             Customer Customer = _db.Customer.FirstOrDefault(c => c.CompanyName == CustomerName);
             BillHeader.CustId = Customer.Id;
-            StatusMessage = _SalesTrans.CreateBill(BillHeader, Bi, SelectedWh).GetAwaiter().GetResult();
+            StatusMessage = _SalesTrans.CreateBill(BillHeader, Bi, SelectedWh, "New").GetAwaiter().GetResult();
             //_db.SaveChanges();
 
             ModelState.Clear();

@@ -26,12 +26,11 @@ namespace SumerBusinessSolution.Transactions
         public Warehouse ShowRoom { get; set; }
 
         // this function will create a bill for the first time
-        public async Task<string> CreateBill(BillHeader Header, List<BillItems> BillItems, int WhId)
+        public async Task<string> CreateBill(BillHeader Header, List<BillItems> BillItems, int WhId, string Type)
         {
             try
             {
-                //  ShowRoom = WhId; //_db.Warehouse.Include(wh => wh.WhType).FirstOrDefault(wh => wh.WhType.Type == "Showroom"); 
-
+                Header.Id = new int();
                 Header.CreatedById = GetLoggedInUserId();
                 Header.CreatedDataTime = DateTime.Now;
 
@@ -94,7 +93,7 @@ namespace SumerBusinessSolution.Transactions
                         TotalAmt = item.UnitPrice * item.Qty,
                         Note = item.Note
                     };
-
+               
                     // decrease stock qty of that item 
                     DecreaseStockQty(Bill.ProdId ?? 0, WhId, Bill.Qty);
 

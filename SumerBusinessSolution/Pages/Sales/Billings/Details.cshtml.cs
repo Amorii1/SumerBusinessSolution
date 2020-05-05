@@ -87,5 +87,19 @@ namespace SumerBusinessSolution.Pages.Sales.Billings
 
             return RedirectToPage("/Sales/Billings/Index");
         }
+
+        //public async Task<IActionResult> OnPostEditBill(int BhId)
+        //{
+        //    BillItemsList = await _db.BillItems
+        //   .Include(bill => bill.BillHeader)
+        //   .Include(bill => bill.BillHeader.Customer)
+        //   .Include(bill => bill.ProdInfo)
+        //   .Include(bill => bill.BillHeader.ApplicationUser)
+        //   .Where(bill => bill.HeaderId == BhId).ToListAsync();
+ 
+        //    return RedirectToPage("/Sales/Billings/Edit", new { Bi = BillItemsList, BhId } );
+        //}
+
+
     }
 }
