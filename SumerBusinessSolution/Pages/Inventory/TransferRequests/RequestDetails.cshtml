@@ -214,7 +214,7 @@
                                         <p class="alert alert-danger">@localizer.Get("هل انت متأكد؟")</p>
                                     </div>
                                     <div class="modal-footer">
-                                        <input asp-route-culture="@Request.RouteValues["culture"]" type="submit" class="btn btn-info" value="@localizer.Get("نعم")" />
+                                        <input asp-route-culture="@Request.RouteValues["culture"]" type="submit" asp-page-handler="RejectTransferRequests" asp-route-ReqId="@Model.InvTransferHeader.Id" class="btn btn-info" value="@localizer.Get("نعم")" />
                                     </div>
                                 </div>
 
@@ -237,7 +237,7 @@
                                                 <p class="alert alert-danger">@localizer.Get("هل انت متأكد؟")</p>
                                             </div>
                                             <div class="modal-footer">
-                                                <input asp-route-culture="@Request.RouteValues["culture"]" type="submit" class="btn btn-info" value="@localizer.Get("نعم")" />
+                                                <input asp-route-culture="@Request.RouteValues["culture"]" type="submit" asp-page-handler="ApproveTransferRequests" asp-route-ReqId="@Model.InvTransferHeader.Id"  class="btn btn-info" value="@localizer.Get("نعم")" />
                                             </div>
                                         </div>
 

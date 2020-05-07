@@ -42,8 +42,12 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h3 class="modal-title text-info"> اضافة زبون جديد</h3>
-                        <a href="#" class="close" data-dismiss="modal">&times;</a>
+                        <div class="col-md-6">
+                            <h3 class="modal-title text-info text-md-right"> اضافة زبون جديد</h3>
+                        </div>
+                        <div class="col-md-6">
+                            <a href="#" class="close float-md-left" data-dismiss="modal">&times;</a>
+                        </div>
                     </div>
                     <div class="modal-body">
 
@@ -89,8 +93,9 @@
 
                     </div>
                     <div class="modal-footer" dir="ltr">
+
                         <a href="#" class="btn btn-danger" data-dismiss="modal">الغاء</a>
-                        <input asp-route-culture="@Request.RouteValues["culture"]" type="submit" asp-page-handler="CreateCustomer" class="btn btn-success" value="@localizer.Get("اضافة")" />
+                        <input asp-route-culture="@Request.RouteValues["culture"]" type="submit" asp-page-handler="CreateCustomer" class="btn btn-info" value="@localizer.Get("اضافة")" />
                     </div>
                 </div>
 

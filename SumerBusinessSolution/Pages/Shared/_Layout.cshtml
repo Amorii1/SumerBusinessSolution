@@ -60,7 +60,13 @@
 
 
     <div class="wrapper">
+        <div class="hamburger">
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+        </div>
         <div class="sidebar">
+
             <a asp-page="/Index"> <h2>BNAS FOR LIGHTING</h2></a>
             <ul>
                 <li> <a class="nav-link  text-md-right text-dark" asp-area="" asp-page="/Index"> الرئيسية <i class="fas fa-home"></i></a></li>
@@ -96,23 +102,23 @@
                 }
                 @*<li> <a class="nav-link  text-md-right  text-md-right text-dark" asp-area="" asp-page="/inventory/products/index"> المنتجات <i class="fas fa-boxes"></i></a></li>*@
                 <li> <a class="nav-link  text-md-right text-dark" asp-area="" asp-page="/Reports"> التقارير<i class="fas fa-file-alt"></i></a></li>
-             
-                    <li> <a class="nav-link  text-md-right text-dark" asp-area="" asp-page="/settings"> الاعدادات <i class="fas fa-cogs"></i> </a></li>
-                
-                    @*<li> <a class="nav-link  text-md-right text-dark" asp-area="" asp-page="/inventory/warehouses/index"> المخازن<i class="fas fa-warehouse"></i></a></li>
-            <li> <a class="nav-link  text-md-right text-dark" asp-area="" asp-page="/users/index"> الاعضاء<i class="fas fa-users"></i> </a></li>*@
+
+                <li> <a class="nav-link  text-md-right text-dark" asp-area="" asp-page="/settings"> الاعدادات <i class="fas fa-cogs"></i> </a></li>
+
+                @*<li> <a class="nav-link  text-md-right text-dark" asp-area="" asp-page="/inventory/warehouses/index"> المخازن<i class="fas fa-warehouse"></i></a></li>
+                <li> <a class="nav-link  text-md-right text-dark" asp-area="" asp-page="/users/index"> الاعضاء<i class="fas fa-users"></i> </a></li>*@
 
 
-                </ul>
+            </ul>
             @if (User.IsInRole(SD.SupervisorUser) || User.IsInRole(SD.BnasStoreUser) || User.IsInRole(SD.YaseenStoreUser) || User.IsInRole(SD.AdminUser))
             {
                 <a href="../identity/account/Logout" class="btn btn-info form-control">@localizer.Get("تسجيل الخروج") <i class="fas fa-sign-out-alt"></i></a>
             }
             @*<div class="social_media">
-                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
-                </div>*@
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+            </div>*@
         </div>
 
 
@@ -127,6 +133,7 @@
                     @*<a href="#" class="float" onclick="history.back()">
                         <i class="fas fa-chevron-circle-left my-float"></i>
                     </a>*@
+
                     <div id="notification-content" style="display:none">
                         <table class="table table-bordered">
                             <thead>
@@ -146,7 +153,7 @@
                     </div>
                     @if (User.IsInRole(SD.AdminUser))
                     {
-                        <a href="#" class="float" id="notification" style="margin-left:60px!important"
+                        <a href="#" class="float" id="notification" style="margin-left:20px!important"
                            role="button"
                            data-html="true"
                            data-toggle="popover"
@@ -171,6 +178,8 @@
     <script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
     <script src="~/lib/jquery-ui/jquery-ui.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/navbar.js" asp-append-version="true"></script>
+
     @if (User.IsInRole(SD.AdminUser))
     {
         <script>
