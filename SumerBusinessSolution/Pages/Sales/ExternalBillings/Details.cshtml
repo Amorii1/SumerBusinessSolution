@@ -214,6 +214,70 @@
         <div class="form-group row">
             <div class="col-md-5 offset-md-5">
                 <div class="row">
+                    @if (Model.ExternalBillHeader.Status == SD.OpenBill)
+                    {
+                        <div class="col-md-3">
+                            <a asp-route-BhId="@Model.ExternalBillHeader.Id" asp-page="MakePayment" asp-route-culture="@Request.RouteValues["culture"]" type="submit" class="btn btn-info form-control">
+                                @localizer.Get("تسديد")
+                            </a>
+                        </div>
+                    }
+
+                    @if (User.IsInRole(SD.AdminUser) && (Model.ExternalBillHeader.Status == SD.OpenBill))
+                    {
+                        <div class="col-md-3">
+                            <a asp-route-culture="@Request.RouteValues["culture"]" data-toggle="modal" data-target="#Close" class="btn btn-danger" asp-page-handler="CloseBillManually" asp-route-HeaderId="@Model.ExternalBillHeader.Id" type="submit" name="Close">
+                                @localizer.Get("اغلاق")
+                            </a>
+                        </div>
+                        <div class="modal fade" id="Close" role="dialog" method="post">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button class="close" data-dismiss="modal">&times;</button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p class="alert alert-danger">@localizer.Get("هل انت متأكد؟")</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <input asp-route-culture="@Request.RouteValues["culture"]" type="submit" asp-page-handler="CloseBillManually" asp-route-BhId="@Model.ExternalBillHeader.Id" class="btn btn-info" value="@localizer.Get("نعم")" />
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <a asp-route-culture="@Request.RouteValues["culture"]" data-toggle="modal" data-target="#Delete" class="btn btn-dark" asp-page-handler="DeleteBill" asp-route-BhId="@Model.ExternalBillHeader.Id" type="submit" name="DeleteBill">
+                                @localizer.Get("حذف")
+                            </a>
+                        </div>
+                        <div class="modal fade" id="Delete" role="dialog" method="post">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button class="close" data-dismiss="modal">&times;</button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p class="alert alert-danger">@localizer.Get("هل انت متأكد؟")</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <input asp-route-culture="@Request.RouteValues["culture"]" type="submit" asp-page-handler="DeleteBill" asp-route-BhId="@Model.ExternalBillHeader.Id" class="btn btn-info" value="@localizer.Get("نعم")" />
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <a asp-route-BhId="@Model.ExternalBillHeader.Id" asp-page="Edit" asp-route-culture="@Request.RouteValues["culture"]" type="submit" class="btn btn-info form-control">
+                                @localizer.Get("تعديل")
+                            </a>
+                        </div>
+
+                    }
+
+
                     <div class="col-md-6">
 
                         @*<input asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-secondary form-control" type="button" value="@localizer.Get("رجوع")" onclick="history.back()">*@

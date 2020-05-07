@@ -26,7 +26,7 @@ namespace SumerBusinessSolution.Transactions
         public Warehouse ShowRoom { get; set; }
 
         // this function will create a bill for the first time
-        public async Task<string> CreateBill(BillHeader Header, List<BillItems> BillItems, int WhId, string Type)
+        public async Task<string> CreateBill(BillHeader Header, List<BillItems> BillItems, int WhId, string Type, int? OldBhId)
         {
             try
             {
@@ -106,6 +106,12 @@ namespace SumerBusinessSolution.Transactions
 
                 await _db.SaveChangesAsync();
 
+
+                // if this function being used to edit an exisiting bill, then the old bill will be deleted 
+                if(Type == "Edit")
+                {
+                    DeleteBill(OldBhId??0).GetAwaiter().GetResult();
+                }
 
                 return "تمت اضافة فاتورة مبيعات جديدة";
             }
@@ -241,55 +247,6 @@ namespace SumerBusinessSolution.Transactions
             }
         }
 
-        // Edit bill 
-        public async Task<string> EditBill(int HeaderId, double NewPaidAmt, double NewDiscount)
-        {
-            try
-            {
-                BillHeader Header = _db.BillHeader.FirstOrDefault(h => h.Id == HeaderId);
-                double OldPayment = Header.PaidAmt;
-                double OldDiscount = Header.Discount;
-
-                double NewDebt = Header.TotalNetAmt - NewPaidAmt;
-                double OldDebt = Header.TotalNetAmt - Header.PaidAmt;
-                //updating bill payment 
-                if (NewPaidAmt > 0)
-                {
-                    // updating paid amt
-                    Header.PaidAmt = NewPaidAmt;
-
-                    // updating customer's acc
-                }
-
-                //updating bill discount
-                if (NewDiscount > 0)
-                {
-                    Header.TotalNetAmt += OldDiscount;
-                    Header.TotalNetAmt -= NewDiscount;
-
-                    Header.Discount = NewDiscount;
-                    NewDebt -= NewDiscount;
-                }
-
-                await _db.SaveChangesAsync();
-
-                // updatinga customer Acc 
-                double DebtAmt = Header.TotalNetAmt - Header.PaidAmt;
-                UpdateCustAccOnBillEdit(Header.CustId ?? 0, NewPaidAmt, OldPayment, NewDebt, OldDebt);
-
-                await _db.SaveChangesAsync();
-
-
-                return "تمت عملية التعديل على الفاتورة";
-            }
-
-            catch
-            {
-                return "Error! حصل خطأ لم تتم عملية التعديل على الفاتورة";
-            }
-        }
-
-
         // this function will update customer account manually, only for admin
         public async Task<string> UpdateCustomerAccManually(int CustId, double Payment, double Debt)
         {
@@ -326,12 +283,11 @@ namespace SumerBusinessSolution.Transactions
         // for purchasing items that do not belong to the company. basically it is supplied by another or a 
         // third party company. creating external bills will have no effect on Inventory at all
 
-        public async Task<string> CreateExternalBill(ExternalBillHeader ExternalHeader, List<ExternalBillItems> ExternalBill, int WhId)
+        public async Task<string> CreateExternalBill(ExternalBillHeader ExternalHeader, List<ExternalBillItems> ExternalBill, int WhId, string Type, int? OldBhId)
         {
             try
             {
-                //  ShowRoom = WhId; //_db.Warehouse.Include(wh => wh.WhType).FirstOrDefault(wh => wh.WhType.Type == "Showroom"); 
-
+                ExternalHeader.Id = new int();
                 ExternalHeader.CreatedById = GetLoggedInUserId();
                 ExternalHeader.CreatedDataTime = DateTime.Now;
 
@@ -412,6 +368,7 @@ namespace SumerBusinessSolution.Transactions
                         // ProdId = item.ProdId,
                         Qty = item.Qty,
                         UnitPrice = item.UnitPrice,
+                        WhId = WhId,
                         TotalAmt = item.UnitPrice * item.Qty,
                         // IsExternal = false,
                         Note = item.Note
@@ -440,6 +397,12 @@ namespace SumerBusinessSolution.Transactions
 
 
                 await _db.SaveChangesAsync();
+
+                if (Type == "Edit")
+                {
+                    DeleteExternalBill(OldBhId ?? 0).GetAwaiter().GetResult();
+                }
+
 
 
                 return "تمت اضافة فاتورة مبيعات جديدة";
@@ -539,7 +502,7 @@ namespace SumerBusinessSolution.Transactions
             }
             catch
             {
-                return "حصل خطأ لم يتم اغلاق الفاتورة";
+                return "Error! حصل خطأ لم يتم اغلاق الفاتورة";
             }
 
         }
@@ -577,6 +540,52 @@ namespace SumerBusinessSolution.Transactions
             catch (Exception ex)
             {
                 return "لم تتم عملية الدفع";
+            }
+        }
+
+        public async Task<string> DeleteExternalBill(int HeaderId)
+        {
+            try
+            {
+
+                ExternalBillHeader ExternalHeader = _db.ExternalBillHeader.FirstOrDefault(h => h.Id == HeaderId);
+                List<ExternalBillItems> BillItemList = _db.ExternalBillItems.Where(i => i.HeaderId == HeaderId).ToList();
+
+                // reverting customer Acc 
+                double DebtAmt = ExternalHeader.TotalNetAmt - ExternalHeader.PaidAmt;
+                RevertCustomerAcc(ExternalHeader.CustId ?? 0, ExternalHeader.PaidAmt, DebtAmt);
+
+                // remove bill payment of bill payments table 
+                DeleteBillPayment(ExternalHeader.Id);
+
+                // Creating Bill items
+                foreach(ExternalBillItems Item in BillItemList)
+                {
+                    if(Item.IsExternal == false)
+                    {
+                        // revert stock qty of that item 
+                        RevertStockQty(Item.ProdId ?? 0, Item.WhId, Item.Qty);
+
+                    }
+                }
+                // remove inv transaction list from InvTransaction Table
+                DeleteInvTransaction(HeaderId, SD.Sales);
+
+                // removing bill item list
+                _db.ExternalBillItems.RemoveRange(BillItemList);
+
+                //remove header
+                _db.ExternalBillHeader.RemoveRange(ExternalHeader);
+
+                await _db.SaveChangesAsync();
+
+
+                return "تم حذف الفاتورة";
+            }
+
+            catch
+            {
+                return "Error! حصل خطأ لم يتم حذف الفاتورة";
             }
         }
 

@@ -6,23 +6,21 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using SumerBusinessSolution.Utility;
 using SumerBusinessSolution.Data;
 using SumerBusinessSolution.Models;
 using SumerBusinessSolution.Transactions;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
+using SumerBusinessSolution.Utility;
 
-namespace SumerBusinessSolution.Pages.Sales.Billings
+namespace SumerBusinessSolution.Pages.Sales.ExternalBillings
 {
-    public class CreateModel : PageModel
+    public class EditModel : PageModel
     {
         private readonly ApplicationDbContext _db;
         private readonly ICustomerTrans _CustTrans;
 
         private readonly ISalesTrans _SalesTrans;
         //private readonly IServiceScopeFactory _serviceScopeFactory;
-        public CreateModel(ApplicationDbContext db, ISalesTrans SalesTrans, ICustomerTrans CustTrans)
+        public EditModel(ApplicationDbContext db, ISalesTrans SalesTrans, ICustomerTrans CustTrans)
         {
             _db = db;
             _SalesTrans = SalesTrans;
@@ -33,7 +31,7 @@ namespace SumerBusinessSolution.Pages.Sales.Billings
         public string StatusMessage { get; set; }
 
         [BindProperty]
-        public BillHeader BillHeader { get; set; }
+        public ExternalBillHeader ExternalBillHeader { get; set; }
 
         [BindProperty]
         public string ProdCode { get; set; }
@@ -43,7 +41,10 @@ namespace SumerBusinessSolution.Pages.Sales.Billings
 
         [BindProperty]
         [Display(Name = "المخزن")]
-        public int SelectedWh { get; set; }
+        public string SelectedWh { get; set; }
+
+        [BindProperty]
+        public int WhId { get; set; }
 
         [BindProperty]
         public IList<Customer> CustomerList { get; set; }
@@ -54,11 +55,10 @@ namespace SumerBusinessSolution.Pages.Sales.Billings
         //[BindProperty]
         //public IList<Customer> CustomerList { get; set; }
 
-        public List<BillItems> Bi { get; set; }
+        public List<ExternalBillItems> Bi { get; set; }
 
 
         public List<PricingType> UnitPriceTypesList { get; set; }
-
 
         [Display(Name = "الية الدفع")]
         public List<string> PaymentTermsList = new List<string>();
@@ -71,43 +71,60 @@ namespace SumerBusinessSolution.Pages.Sales.Billings
 
         [BindProperty]
         public string CustomerName { get; set; }
+        public int CustomerId { get; set; }
 
         public InvStockQty InvStockQty { get; set; }
-        public ActionResult OnGet()
+        public ActionResult OnGet(int BhId)
         {
-            COD = SD.COD;
-            Bi = new List<BillItems> { new BillItems { ProdId = 0, Qty = 0, UnitPrice = 0, TotalAmt = 0, Note = "" } };
+            try
+            {
+                COD = SD.COD;
+                Bi = _db.ExternalBillItems
+               .Include(bill => bill.ExternalBillHeader)
+               .Include(bill => bill.ExternalBillHeader.Customer)
+               .Include(bill => bill.ProdInfo)
+               .Include(bill => bill.ExternalBillHeader.ApplicationUser)
+               .Where(bill => bill.HeaderId == BhId).ToList();
 
-            WarehouseList = _db.Warehouse.Where(wh => wh.WhType.Type.ToLower() == SD.ShowRoom.ToLower()).ToList();
-            CustomerList = _db.Customer.Where(cus => cus.Status == SD.ActiveCustomer).ToList();
+                ExternalBillItems BillItem = Bi[0];
 
-            UnitPriceTypesList = _db.PricingType.ToList();
-            // List<string> PaymentTermsList = new List<string>();
+                ExternalBillHeader = BillItem.ExternalBillHeader;
 
-            PaymentTermsList.Add(SD.COD);
-            PaymentTermsList.Add(SD.Postpaid);
+                CustomerName = BillItem.ExternalBillHeader.Customer.CompanyName;
+                CustomerId = BillItem.ExternalBillHeader.Customer.Id;
+                Warehouse Wh = _db.Warehouse.FirstOrDefault(wh => wh.Id == BillItem.WhId);
+                SelectedWh = Wh.WhName;
+                WhId = Wh.Id;
 
+                UnitPriceTypesList = _db.PricingType.ToList();
+
+                PaymentTermsList.Add(SD.COD);
+                PaymentTermsList.Add(SD.Postpaid);
+            }
+            catch
+            {
+
+            }
             return Page();
         }
-        public ActionResult OnPost(List<BillItems> Bi)
+        public ActionResult OnPost(List<ExternalBillItems> Bi, int CustomerId, int WhId)
         {
-            Customer Customer = _db.Customer.FirstOrDefault(c => c.CompanyName == CustomerName);
-            BillHeader.CustId = Customer.Id;
-            StatusMessage = _SalesTrans.CreateBill(BillHeader, Bi, SelectedWh, "New", null).GetAwaiter().GetResult();
-            //_db.SaveChanges();
+            ExternalBillHeader.CustId = CustomerId;
+            int BhId = ExternalBillHeader.Id;
 
+            // creating new bill (will create a new bill similar to the older one, after that the old one will be deleted)
+            StatusMessage = _SalesTrans.CreateExternalBill(ExternalBillHeader, Bi, WhId, "Edit", BhId).GetAwaiter().GetResult();
+
+ 
             ModelState.Clear();
 
-            // }
-            // }
-            if(BillHeader.Id != 0)
+            if (ExternalBillHeader.Id != 0)
             {
-                return RedirectToPage("/Sales/Billings/PrintBill", new { BhId = BillHeader.Id });
-
+                return RedirectToPage("/Sales/ExternalBillings/PrintExternalBill", new { BhId = ExternalBillHeader.Id });
             }
             else
             {
-                return RedirectToPage("/Sales/Billings/Create");
+                return RedirectToPage("/Sales/ExternalBillings/Create");
             }
         }
 
@@ -120,16 +137,11 @@ namespace SumerBusinessSolution.Pages.Sales.Billings
             IQueryable<string> lstProdCode = from P in _db.ProdInfo
                                              where (P.ProdCode.Contains(term))
                                              select P.ProdCode;
-
-            //int x = Bi.Count();
-
-            //Bi[0].UnitPrice =  500;
-
             return new JsonResult(lstProdCode);
 
         }
 
-        public JsonResult OnGetProdUnitPriceWhole(string term)
+        public JsonResult OnGetProdUnitPriceWhole(int BhId, string term)
         {
             if (term == null)
             {
@@ -147,7 +159,7 @@ namespace SumerBusinessSolution.Pages.Sales.Billings
 
         }
 
-        public JsonResult OnGetProdUnitPriceRetail(string term)
+        public JsonResult OnGetProdUnitPriceRetail(int BhId, string term)
         {
             if (term == null)
             {
@@ -194,33 +206,7 @@ namespace SumerBusinessSolution.Pages.Sales.Billings
             }
         }
 
-        public JsonResult OnGetSearchCustomer(string term)
-        {
-            if (term == null)
-            {
-                return new JsonResult("Not Found");
-            }
-            IQueryable<string> lstCustomers = from P in _db.Customer
-                                              where (P.CompanyName.Contains(term))
-                                              select P.CompanyName;
-            return new JsonResult(lstCustomers);
-        }
-
-        public IActionResult OnPostCreateCustomer()
-        {
-            try
-            {
-                StatusMessage = _CustTrans.CreateCustomer(Customer).GetAwaiter().GetResult();
-            }
-            catch
-            {
-
-            }
-
-            return RedirectToPage("/Sales/Billings/Create");
-        }
- 
+       
     }
 
 }
-

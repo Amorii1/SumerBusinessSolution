@@ -115,11 +115,9 @@ namespace SumerBusinessSolution.Pages.Sales.Billings
             BillHeader.CustId = CustomerId;
             int BhId = BillHeader.Id;
 
-            // creating new bill
-            StatusMessage = _SalesTrans.CreateBill(BillHeader, Bi, WhId, "Edit").GetAwaiter().GetResult();
+            // creating new bill (will create a new bill similar to the older one, after that the old one will be deleted)
+            StatusMessage = _SalesTrans.CreateBill(BillHeader, Bi, WhId, "Edit", BhId).GetAwaiter().GetResult();
 
-            // Delete old bill
-            _SalesTrans.DeleteBill(BhId).GetAwaiter().GetResult();
  
             ModelState.Clear();
 

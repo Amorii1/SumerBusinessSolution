@@ -90,7 +90,7 @@ namespace SumerBusinessSolution.Pages.Sales.ExternalBillings
         {
             Customer Customer = _db.Customer.FirstOrDefault(c => c.CompanyName == CustomerName);
             ExternalBillHeader.CustId = Customer.Id;
-            StatusMessage = _SalesTrans.CreateExternalBill(ExternalBillHeader, Bi, SelectedWh).GetAwaiter().GetResult();
+            StatusMessage = _SalesTrans.CreateExternalBill(ExternalBillHeader, Bi, SelectedWh, "New", null).GetAwaiter().GetResult();
  
             ModelState.Clear();
 

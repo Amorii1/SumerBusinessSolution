@@ -90,6 +90,14 @@ namespace SumerBusinessSolution.Pages.Sales.ExternalBillings
             return RedirectToPage("/Sales/ExternalBillings/Index");
         }
 
+        public IActionResult OnPostDeleteBill(int BhId)
+        {
+
+            StatusMessage = _SalesTrans.DeleteExternalBill(BhId).GetAwaiter().GetResult();
+
+            return RedirectToPage("/Sales/ExternalBillings/Index");
+        }
+
         public void OnPost()
         {
             //StatusMessage = _SalesTrans.MakePaymentOnBill(HeaderId, NewPayment).GetAwaiter().GetResult();
