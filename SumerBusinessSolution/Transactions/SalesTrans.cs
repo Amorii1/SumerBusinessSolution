@@ -93,7 +93,7 @@ namespace SumerBusinessSolution.Transactions
                         TotalAmt = item.UnitPrice * item.Qty,
                         Note = item.Note
                     };
-               
+
                     // decrease stock qty of that item 
                     DecreaseStockQty(Bill.ProdId ?? 0, WhId, Bill.Qty);
 
@@ -108,9 +108,11 @@ namespace SumerBusinessSolution.Transactions
 
 
                 // if this function being used to edit an exisiting bill, then the old bill will be deleted 
-                if(Type == "Edit")
+                if (Type == "Edit")
                 {
-                    DeleteBill(OldBhId??0).GetAwaiter().GetResult();
+                    DeleteBill(OldBhId ?? 0).GetAwaiter().GetResult();
+                    return "تم التعديل على الفاتورة";
+
                 }
 
                 return "تمت اضافة فاتورة مبيعات جديدة";
@@ -299,7 +301,17 @@ namespace SumerBusinessSolution.Transactions
                     ProdId = 0;
                     try
                     {
-                        ProdId = _db.ProdInfo.FirstOrDefault(pr => pr.ProdCode == item.ProdInfo.ProdCode).Id;
+                        if (Type == "Edit")
+                        {
+                            ProdId = _db.ProdInfo.FirstOrDefault(pr => pr.ProdName == item.ProdInfo.ProdName).Id;
+
+                        }
+                        else
+                        {
+                            ProdId = _db.ProdInfo.FirstOrDefault(pr => pr.ProdCode == item.ProdInfo.ProdCode).Id;
+
+                        }
+
                     }
                     catch
                     {
@@ -387,7 +399,15 @@ namespace SumerBusinessSolution.Transactions
                     }
                     else
                     {
-                        Bill.ProdName = item.ProdInfo.ProdCode;
+                        if (Type == "Edit")
+                        {
+                            Bill.ProdName = item.ProdName;
+                        }
+                        else
+                        {
+                            Bill.ProdName = item.ProdInfo.ProdCode;
+                        }
+
                         Bill.IsExternal = true;
                         //Bill.ProdName = Bill.ProdId.ToString();
                         _db.ExternalBillItems.Add(Bill);
@@ -401,15 +421,25 @@ namespace SumerBusinessSolution.Transactions
                 if (Type == "Edit")
                 {
                     DeleteExternalBill(OldBhId ?? 0).GetAwaiter().GetResult();
+                    return "تم التعديل على الفاتورة";
+
                 }
-
-
 
                 return "تمت اضافة فاتورة مبيعات جديدة";
             }
 
             catch (Exception x)
             {
+                try
+                {
+                    _db.ExternalBillHeader.Remove(ExternalHeader);
+                    _db.ExternalBillItems.RemoveRange(ExternalBill);
+                    _db.SaveChanges();
+                }
+                catch
+                {
+
+                }
                 return "Error! حصل خطأ لم يتم اضافة الفاتورة";
             }
         }
@@ -559,9 +589,9 @@ namespace SumerBusinessSolution.Transactions
                 DeleteBillPayment(ExternalHeader.Id);
 
                 // Creating Bill items
-                foreach(ExternalBillItems Item in BillItemList)
+                foreach (ExternalBillItems Item in BillItemList)
                 {
-                    if(Item.IsExternal == false)
+                    if (Item.IsExternal == false)
                     {
                         // revert stock qty of that item 
                         RevertStockQty(Item.ProdId ?? 0, Item.WhId, Item.Qty);

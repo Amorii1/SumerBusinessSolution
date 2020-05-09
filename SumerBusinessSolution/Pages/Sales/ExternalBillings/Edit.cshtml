@@ -122,7 +122,7 @@
 
                         }
                         <td oninput="bindTotal(this)" onclick="bindTotal(this)">@Html.TextBoxFor(a => Model.Bi[j].Qty)</td>
-                        <td>@Html.TextBoxFor(a => Model.Bi[j].UnitPrice)</td>
+                        <td oninput="bindNewTotal(this)">@Html.TextBoxFor(a => Model.Bi[j].UnitPrice)</td>
                         <td>@Html.TextBoxFor(a => Model.Bi[j].TotalAmt)</td>
                         <td>@Html.TextBoxFor(a => Model.Bi[j].Note)</td>
                         <td>
@@ -266,16 +266,31 @@
 
         async function bindPrice(t) {
 
-                      if (document.getElementById("PriceType").value == 1) {
-                          const obj = await fetch(`${window.location.href.split('?')[0]}?handler=ProdUnitPriceWhole&term=${t.children[0].value}`)
-                          const json = await obj.json()
-                           t.parentElement.children[2].children[0].value = json[0]
-                      }
-                      else {
-                                                     const obj = await fetch(`${window.location.href.split('?')[0]}?handler=ProdUnitPriceRetail&term=${t.children[0].value}`)
-                          const json = await obj.json()
-                           t.parentElement.children[2].children[0].value = json[0]
-                      }
+            if (document.getElementById("PriceType").value == 1) {
+                const obj = await fetch(`${window.location.href.split('?')[0]}?handler=ProdUnitPriceWhole&term=${t.children[0].value}`)
+                const json = await obj.json()
+                t.parentElement.children[2].children[0].value = json[0]
+
+                if (json[0] == undefined) {
+                    t.parentElement.children[2].children[0].value = 0
+                }
+                else {
+                    t.parentElement.children[2].children[0].value = json[0]
+                }
+
+            }
+            else {
+                const obj = await fetch(`${window.location.href.split('?')[0]}?handler=ProdUnitPriceRetail&term=${t.children[0].value}`)
+                const json = await obj.json()
+
+                if (json[0] == undefined) {
+                    t.parentElement.children[2].children[0].value = 0
+                }
+                else {
+                    t.parentElement.children[2].children[0].value = json[0]
+                }
+                // t.parentElement.children[2].children[0].value = json[0]
+            }
 
 
                        console.log(document.getElementById("PriceType").value)
@@ -287,6 +302,13 @@
                     const price = t.parentElement.children[2].children[0].value
 
                     t.parentElement.children[3].children[0].value = val * price
+        }
+
+             function bindNewTotal(t) {
+                    const price = t.children[0].value
+                    const qty = t.parentElement.children[1].children[0].value
+
+                    t.parentElement.children[3].children[0].value = qty * price
             }
 
     </script>
