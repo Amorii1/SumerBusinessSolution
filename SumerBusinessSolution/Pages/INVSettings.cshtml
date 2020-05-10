@@ -16,8 +16,8 @@
 
 <br />
 <br />
-<div class="row" style="padding-left:230px; padding-right:100px;">
-    <div class="column" style="padding-left:80px;">
+<div class="row" style=" padding-right:100px;">
+    <div class="column" style="padding-left:156px;">
         <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="Inventory/WhTypes/Index">
             <img src="~/img/inventory.png" style="width:120px;height:120px;" />
             <h4 class="text-center"> @localizer.Get("انواع المخازن")</h4>
@@ -25,7 +25,7 @@
         </a>
     </div>
 
-    <div class="column" style="padding-left:80px;">
+    <div class="column" style="padding-left:156px;">
         <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="Inventory/Warehouses/Index">
             <img src="~/img/warehouse.png" style="width:120px;height:120px;" />
             <h4 class="text-center"> @localizer.Get("المخازن")</h4>
@@ -33,7 +33,7 @@
         </a>
     </div>
 
-    <div class="column" style="padding-left:80px;">
+    <div class="column" style="padding-left:156px;">
         <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="Inventory/Products/Index">
             <img src="~/img/lamp.png" style="width:120px;height:120px;" />
             <h4 class="text-center"> @localizer.Get("المنتجات")</h4>

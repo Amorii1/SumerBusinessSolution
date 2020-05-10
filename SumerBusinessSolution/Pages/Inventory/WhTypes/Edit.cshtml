@@ -14,27 +14,29 @@
         <input type="hidden" asp-for="WhType.Id" />
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-        <div class="row form-group">
+        <div dir="rtl" class="row form-group">
 
+
+            <div class="col-md-2">
+                <label asp-for="WhType.Type"></label>
+            </div>
             <div class="col-md-5 offset-md-5">
                 <input asp-for="WhType.Type" class="form-control text-md-right" />
                 <span asp-validation-for="WhType.Type" class="text-danger"> </span>
-            </div>
-            <div class="col-md-2">
-                <label asp-for="WhType.Type"></label>
             </div>
         </div>
 
         <div class=" form-group row">
             <div class="col-md-5 offset-md-5">
                 <div class="row">
-                    <div class="col-md-6">
-                        <input asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-secondary form-control" type="button" value="@localizer.Get("رجوع")" onclick="history.back()">
-                    </div>
+
                     <div class="col-md-6">
                         @*<input type="submit" class="btn btn-info form-control" value="تحديث" />*@
                         <input asp-route-culture="@Request.RouteValues["culture"]" type="submit" class="btn btn-info form-control" value="@localizer.Get("حفظ")" />
 
+                    </div>
+                    <div class="col-md-6">
+                        <input asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-secondary form-control" type="button" value="@localizer.Get("رجوع")" onclick="history.back()">
                     </div>
                 </div>
             </div>

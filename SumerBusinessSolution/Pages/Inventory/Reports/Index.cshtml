@@ -15,9 +15,9 @@
 
 <br />
 <br />
-<div class="row" style="padding-left:200px;">
+<div class="row" style="padding-right:100px;">
 
-    <div class="column" style="padding-left:80px;">
+    <div class="column" style="padding-left:146px;">
         <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="/inventory/reports/ProdInWhQty">
 
             <img src="~/img/quantity.png" style="width:120px;height:120px;" />
@@ -27,7 +27,7 @@
         </a>
     </div>
 
-    <div class="column" style="padding-left:80px;">
+    <div class="column" style="padding-left:146px;">
         <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="/inventory/reports/WhProdQty">
             <img src="~/img/stock.png" style="width:120px;height:120px;" />
             @*<p class="text-center">المخازن</p>*@
@@ -36,7 +36,7 @@
     </div>
     @if (User.IsInRole(SD.AdminUser))
     {
-        <div class="column" style="padding-left:80px;">
+        <div class="column" style="padding-left:146px;">
             <a  asp-route-culture="@Request.RouteValues["culture"]" asp-page="/inventory/reports/InvTransactions">
                 <img src="~/img/lamp.png" style="width:120px;height:120px;" />
                 @*<p class="text-center">العمليات تجارية</p>*@
