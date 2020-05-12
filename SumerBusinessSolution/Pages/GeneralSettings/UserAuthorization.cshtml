@@ -27,16 +27,17 @@
             <div class="col-md-5 offset-md-5">
                 <div class="row">
 
+
+                    <div class="col-md-6">
+                        @*<input type="submit" class="btn btn-info form-control" value="حفظ" />*@
+                        <input asp-route-culture="@Request.RouteValues["culture"]" type="submit" class="btn btn-info form-control" value="@localizer.Get("حفظ")" />
+
+                    </div>
                     <div class="col-md-6">
                         @*<a asp-page="Index" class="btn btn-success form-control">الرجوع</a>*@
                         <a asp-page="/Settings" asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-secondary form-control">
                             @localizer.Get("رجوع")
                         </a>
-
-                    </div>
-                    <div class="col-md-6">
-                        @*<input type="submit" class="btn btn-info form-control" value="حفظ" />*@
-                        <input asp-route-culture="@Request.RouteValues["culture"]" type="submit" class="btn btn-info form-control" value="@localizer.Get("حفظ")" />
 
                     </div>
                 </div>

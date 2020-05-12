@@ -31,7 +31,12 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12">
-                            <div class="row" style="margin-top:10px;">
+                            <div dir="rtl" class="row" style="margin-top:10px;">
+
+                                <div class="col-md-10 pb-1">
+                                    @Html.Editor("CustomerName", new { htmlAttributes = new { @class = "form-control text-md-right", placeholder = @localizer.Get("اسم الزبون....") } })
+
+                                </div>
                                 <div class="col-md-2 text-md-right pb-1">
 
                                     <button asp-route-culture="@Request.RouteValues["culture"]" type="submit" title="بحث" name="submit" value="search" class="btn btn-info form-control">
@@ -39,11 +44,6 @@
                                     </button>
 
                                 </div>
-                                <div class="col-md-10 pb-1">
-                                    @Html.Editor("CustomerName", new { htmlAttributes = new { @class = "form-control text-md-right", placeholder = @localizer.Get("اسم الزبون....") } })
-
-                                </div>
-                               
                             </div>
                         </div>
                     </div>

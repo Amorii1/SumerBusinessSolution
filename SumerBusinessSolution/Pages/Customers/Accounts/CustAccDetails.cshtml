@@ -23,41 +23,45 @@
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <input type="hidden" asp-for="CustAcc.Customer.Id" />
 
-        <div class="row form-group">
-            <div class="col-md-5 offset-md-5">
-                <input asp-for="Customer.CompanyName" class="form-control  text-md-right" disabled />
-            </div>
+        <div dir="rtl" class="row form-group">
+
             <div class="col-md-2">
                 <label asp-for="Customer.CompanyName"> </label>
             </div>
+            <div class="col-md-5 offset-md-5">
+                <input asp-for="Customer.CompanyName" class="form-control  text-md-right" disabled />
+            </div>
             <span asp-validation-for="Customer.CompanyName" class="text-danger"></span>
         </div>
-        <div class="row form-group">
-            <div class="col-md-5 offset-md-5">
-                <input asp-for="CustAcc.Id" class="form-control  text-md-right" disabled />
-            </div>
+        <div dir="rtl" class="row form-group">
+
             <div class="col-md-2">
                 <label asp-for="CustAcc.Id"> </label>
+            </div>
+            <div class="col-md-5 offset-md-5">
+                <input asp-for="CustAcc.Id" class="form-control  text-md-right" disabled />
             </div>
             <span asp-validation-for="CustAcc.Id" class="text-danger"></span>
         </div>
 
-        <div class="row form-group text-success">
-            <div class="col-md-5 offset-md-5">
-                <input asp-for="CustAcc.Paid" class="form-control  text-md-right" disabled />
-            </div>
+        <div dir="rtl" class="row form-group text-success">
+
             <div class="col-md-2">
                 <label asp-for="CustAcc.Paid"> </label>
+            </div>
+            <div class="col-md-5 offset-md-5">
+                <input asp-for="CustAcc.Paid" class="form-control  text-md-right" disabled />
             </div>
             <span asp-validation-for="CustAcc.Paid" class="text-danger"></span>
         </div>
 
-        <div class="row form-group text-danger">
-            <div class="col-md-5 offset-md-5">
-                <input asp-for="CustAcc.Debt" class="form-control  text-md-right" disabled />
-            </div>
+        <div dir="rtl" class="row form-group text-danger">
+
             <div class="col-md-2">
                 <label asp-for="CustAcc.Debt"> </label>
+            </div>
+            <div class="col-md-5 offset-md-5">
+                <input asp-for="CustAcc.Debt" class="form-control  text-md-right" disabled />
             </div>
             <span asp-validation-for="CustAcc.Debt" class="text-danger"></span>
         </div>
@@ -67,9 +71,15 @@
         <div class=" form-group row">
             <div class="col-md-6 offset-md-5">
                 <div class="row">
-                    <div class="col-md-3">
 
-                        <input asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-secondary form-control" type="button" value="@localizer.Get("رجوع")" onclick="history.back()">
+
+                    <div class="col-md-4">
+                        @*<a asp-page="Index" class="btn btn-success form-control">الرجوع</a>*@
+                        <a asp-page="../Accounts/PayToAcc" asp-route-culture="@Request.RouteValues["culture"]" asp-route-CustId="@Model.Customer.Id" class="btn btn-info form-control">@localizer.Get("تسديد الديون")</a>
+
+                    </div>
+                    <div class="col-md-3">
+                        <a asp-page="/Sales/Billings/CustBills" asp-route-culture="@Request.RouteValues["culture"]" asp-route-CustId="@Model.Customer.Id" class="btn btn-primary form-control">@localizer.Get("الفواتير")</a>
 
                     </div>
                     @if (User.IsInRole(SD.AdminUser))
@@ -78,13 +88,9 @@
                             <a asp-page="../Accounts/EditCustAcc" asp-route-culture="@Request.RouteValues["culture"]" asp-route-CustId="@Model.Customer.Id" class="btn btn-success form-control">@localizer.Get("تعديل")</a>
                         </div>
                     }
-                    <div class="col-md-4">
-                        @*<a asp-page="Index" class="btn btn-success form-control">الرجوع</a>*@
-                        <a asp-page="../Accounts/PayToAcc" asp-route-culture="@Request.RouteValues["culture"]" asp-route-CustId="@Model.Customer.Id" class="btn btn-info form-control">@localizer.Get("تسديد الديون")</a>
-
-                    </div>
                     <div class="col-md-3">
-                        <a asp-page="/Sales/Billings/CustBills" asp-route-culture="@Request.RouteValues["culture"]" asp-route-CustId="@Model.Customer.Id" class="btn btn-primary form-control">@localizer.Get("الفواتير")</a>
+
+                        <input asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-secondary form-control" type="button" value="@localizer.Get("رجوع")" onclick="history.back()">
 
                     </div>
                 </div>

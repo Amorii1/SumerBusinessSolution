@@ -24,14 +24,14 @@
     <form method="post" asp-route-returnUrl="@Model.ReturnUrl" enctype="multipart/form-data">
 
         <div asp-validation-summary="All" class="text-danger"></div>
-        <div class="row form-group">
-            <div class="col-md-5 offset-md-5">
-                <input asp-for="Input.UserName" class="form-control text-md-right" />
-            </div>
+        <div dir="rtl" class="row form-group">
+
             <div class="col-md-2">
                 <label asp-for="Input.UserName"></label>
             </div>
-
+            <div class="col-md-5 offset-md-5">
+                <input asp-for="Input.UserName" class="form-control text-md-right" />
+            </div>
             <span asp-validation-for="Input.UserName" class="text-danger"></span>
         </div>
         @*<div class="row form-group">
@@ -44,53 +44,55 @@
 
             <span asp-validation-for="Input.Email" class="text-danger"></span>
         </div>*@
-        <div class="form-group row">
-            <div class="col-md-5 offset-md-5">
-                <input asp-for="Input.FirstName" class="form-control text-md-right" />
-            </div>
-            <div class="col-md-2">
-                <label asp-for="Input.FirstName"></label>
-            </div>
-            <span asp-validation-for="Input.FirstName" class="text-danger"></span>
+    <div dir="rtl" class="form-group row">
+
+        <div class="col-md-2">
+            <label asp-for="Input.FirstName"></label>
         </div>
 
-        <div class="form-group row">
-            <div class="col-md-5 offset-md-5">
-                <input asp-for="Input.LastName" class="form-control text-md-right" />
-            </div>
-            <div class="col-md-2">
-                <label asp-for="Input.LastName"></label>
-            </div>
+        <div class="col-md-5 offset-md-5">
+            <input asp-for="Input.FirstName" class="form-control text-md-right" />
+        </div>
+        <span asp-validation-for="Input.FirstName" class="text-danger"></span>
+    </div>
 
-            <span asp-validation-for="Input.LastName" class="text-danger"></span>
+    <div dir="rtl" class="form-group row">
+
+        <div class="col-md-2">
+            <label asp-for="Input.LastName"></label>
+        </div>
+        <div class="col-md-5 offset-md-5">
+            <input asp-for="Input.LastName" class="form-control text-md-right" />
+        </div>
+        <span asp-validation-for="Input.LastName" class="text-danger"></span>
+    </div>
+
+    <div dir="rtl" class="form-group row">
+
+        <div class="col-md-2">
+            <label asp-for="Input.PhoneNumber"></label>
+        </div>
+        <div class="col-md-5 offset-md-5">
+            <input asp-for="Input.PhoneNumber" class="form-control text-md-right" />
+        </div>
+        <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
+    </div>
+
+    <div dir="rtl" class="row form-group">
+        <div class="col-md-2">
+            <label asp-for="@Model.SelectedRole"> </label>
+        </div>
+        <div class="col-md-5 offset-md-5">
+            <select asp-for="SelectedRole"
+                    class="form-control ">
+                <option>@SD.AdminUser</option>
+                <option>@SD.SupervisorUser</option>
+                <option>@SD.BnasStoreUser</option>
+                <option>@SD.YaseenStoreUser</option>
+            </select>
         </div>
 
-        <div class="form-group row">
-            <div class="col-md-5 offset-md-5">
-                <input asp-for="Input.PhoneNumber" class="form-control text-md-right" />
-            </div>
-            <div class="col-md-2">
-                <label asp-for="Input.PhoneNumber"></label>
-            </div>
-
-            <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
-        </div>
-
-        <div class="row form-group">
-
-            <div class="col-md-5 offset-md-5">
-                <select asp-for="SelectedRole"
-                        class="form-control ">
-                    <option>@SD.AdminUser</option>
-                    <option>@SD.SupervisorUser</option>
-                    <option>@SD.BnasStoreUser</option>
-                    <option>@SD.YaseenStoreUser</option>
-                </select>
-            </div>
-            <div class="col-md-2">
-                <label asp-for="@Model.SelectedRole"> </label>
-            </div>
-        </div>
+    </div>
 
         @*<div class="form-group row">
             <div class="col-md-5 offset-md-5">
@@ -112,36 +114,39 @@
             <span asp-validation-for="Input.IsSupervisor" class="text-danger"></span>
         </div>*@
 
-        <div class="form-group row">
-            <div class="col-md-5 offset-md-5">
-                <input asp-for="Input.Password" class="form-control text-md-right" />
-            </div>
-            <div class="col-md-2">
-                <label asp-for="Input.Password"></label>
-            </div>
-            <span asp-validation-for="Input.Password" class="text-danger"></span>
+    <div dir="rtl" class="form-group row">
+
+        <div class="col-md-2">
+            <label asp-for="Input.Password"></label>
         </div>
-        <div class="form-group row">
-            <div class="col-md-5 offset-md-5">
-                <input asp-for="Input.ConfirmPassword" class="form-control text-md-right" />
-            </div>
-            <div class="col-md-2">
-                <label asp-for="Input.ConfirmPassword"></label>
-            </div>
-            <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+        <div class="col-md-5 offset-md-5">
+            <input asp-for="Input.Password" class="form-control text-md-right" />
         </div>
+        <span asp-validation-for="Input.Password" class="text-danger"></span>
+    </div>
+    <div dir="rtl" class="form-group row">
+
+        <div class="col-md-2">
+            <label asp-for="Input.ConfirmPassword"></label>
+        </div>
+        <div class="col-md-5 offset-md-5">
+            <input asp-for="Input.ConfirmPassword" class="form-control text-md-right" />
+        </div>
+        <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+    </div>
 
         <div class=" form-group row">
             <div class="col-md-5 offset-md-5">
                 <div class="row">
 
+
+                    <div class="col-md-6">
+                        <input type="submit" asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-info form-control" value="تسجيل" />
+                    </div>
                     <div class="col-md-6">
 
                         <input asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-secondary form-control" type="button" value="رجوع" onclick="history.back()">
 
-                    </div>
-                    <div class="col-md-6">
-                        <input type="submit" asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-info form-control" value="تسجيل" />
                     </div>
                 </div>
             </div>
