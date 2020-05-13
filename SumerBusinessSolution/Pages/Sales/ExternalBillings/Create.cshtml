@@ -19,18 +19,19 @@
 
 <div class=" border backgroundWhite">
     <form method="post">
-        <div class="row">
+        <div dir="rtl" class="row">
 
+
+
+
+            <div class="col-md-5 offset-md-4">
+                <h2 class="text-info  text-md-right">@localizer.Get("انشاء فاتورة جديدة")</h2>
+            </div>
             <div class="col-md-3">
                 <a asp-route-culture="@Request.RouteValues["culture"]" data-toggle="modal" data-target="#customerModal" class="btn btn-info" asp-page-handler="CreateCustomer" type="submit" name="CreateCustomer">
                     @localizer.Get("زبون جديد") <i class="fas fa-plus"></i>
 
                 </a>
-            </div>
-
-
-            <div class="col-md-5 offset-md-4">
-                <h2 class="text-info  text-md-right">@localizer.Get("انشاء فاتورة جديدة")</h2>
             </div>
 
         </div>
@@ -106,51 +107,55 @@
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <input type="hidden" asp-for="PricingType.Id" />
         <input id="cod" type="hidden" asp-for="COD" />
-        <div class="row form-group">
+        <div dir="rtl" class="row form-group">
+
+            <div class="col-md-2">
+                <label asp-for="@Model.ExternalBillHeader.CustId"> </label>
+            </div>
 
             <div class="col-md-5 offset-md-5">
                 <input type="text" id="CustName" asp-for="@Model.CustomerName" class="form-control text-md-right" />
             </div>
-            <div class="col-md-2">
-                <label asp-for="@Model.ExternalBillHeader.CustId"> </label>
-            </div>
         </div>
-        <div class="row form-group">
+        <div dir="rtl" class="row form-group">
 
+
+            <div class="col-md-2">
+                <label asp-for="@Model.SelectedWh"> </label>
+            </div>
             <div class="col-md-5 offset-md-5">
                 <select id="WhName" asp-for="@Model.SelectedWh"
                         asp-items="@(new SelectList(Model.WarehouseList, "Id","WhName"))"
                         class="form-control" dir="rtl">
                 </select>
             </div>
-            <div class="col-md-2">
-                <label asp-for="@Model.SelectedWh"> </label>
-            </div>
         </div>
-        <div class="row form-group">
+        <div dir="rtl" class="row form-group">
 
+
+            <div class="col-md-2">
+                <label asp-for="@Model.PricingType.PriceType"> </label>
+            </div>
             <div class="col-md-5 offset-md-5">
                 <select id="PriceType" asp-for="@Model.PricingType.PriceType"
                         asp-items="@(new SelectList(Model.UnitPriceTypesList, "Id","PriceType"))"
                         class="form-control" dir="rtl">
                 </select>
             </div>
-            <div class="col-md-2">
-                <label asp-for="@Model.PricingType.PriceType"> </label>
-            </div>
         </div>
-        <div class="row form-group">
+        <div dir="rtl" class="row form-group">
+
+            <div class="col-md-2">
+                <label asp-for="@Model.ExternalBillHeader.PaymentTerms"> </label>
+            </div>
             <div class="col-md-5 offset-md-5">
                 <select id="paymentTerms" asp-for="@Model.ExternalBillHeader.PaymentTerms"
                         asp-items="@(new SelectList(Model.PaymentTermsList,"Id"))"
                         class="form-control" dir="rtl">
                 </select>
             </div>
-            <div class="col-md-2">
-                <label asp-for="@Model.ExternalBillHeader.PaymentTerms"> </label>
-            </div>
         </div>
-        <table id="dataTable" dir="rtl" class=" text-md-center table table-striped border table-responsive-md table-responsive-lg">
+        <table id="dataTable" dir="rtl" class=" text-md-center table table-striped border table-responsive-md table-responsive-lg text-md-center">
             <tr class="table-secondary">
                 <th>
                     @Html.DisplayNameFor(a => Model.Bi[0].ProdInfo.ProdCode)
@@ -201,48 +206,52 @@
             }
         </table>
 
-        <div class="row form-group text-success">
+        <div dir="rtl" class="row form-group text-success">
 
+
+            <div class="col-md-2">
+                <label asp-for="@Model.ExternalBillHeader.PaidAmt"> </label>
+            </div>
             <div class="col-md-5 offset-md-5">
                 <input id="paidAmt" type="text" asp-for="a => @Model.ExternalBillHeader.PaidAmt" class="form-control text-md-right" />
 
             </div>
-            <div class="col-md-2">
-                <label asp-for="@Model.ExternalBillHeader.PaidAmt"> </label>
-            </div>
         </div>
 
-        <div class="row form-group text-warning">
+        <div dir="rtl" class="row form-group text-warning">
 
-            <div class="col-md-5 offset-md-5">
-                <input id="discount" type="text" asp-for="a => @Model.ExternalBillHeader.Discount" class="form-control text-md-right" />
-            </div>
+
             <div class="col-md-2">
                 <label asp-for="@Model.ExternalBillHeader.Discount"> </label>
             </div>
+            <div class="col-md-5 offset-md-5">
+                <input id="discount" type="text" asp-for="a => @Model.ExternalBillHeader.Discount" class="form-control text-md-right" />
+            </div>
         </div>
-        <div class="row form-group">
+        <div dir="rtl" class="row form-group">
+
+            <div class="col-md-2">
+                <label asp-for="@Model.ExternalBillHeader.Note"> </label>
+            </div>
 
             <div class="col-md-5 offset-md-5">
                 <input type="text" asp-for="a => @Model.ExternalBillHeader.Note" class="form-control text-md-right" />
 
-            </div>
-            <div class="col-md-2">
-                <label asp-for="@Model.ExternalBillHeader.Note"> </label>
             </div>
         </div>
         <div class=" form-group row">
             <div class="col-md-5 offset-md-5">
                 <div class="row">
 
+
+                    <div class="col-md-6">
+                        <input asp-route-culture="@Request.RouteValues["culture"]" type="submit" class="btn btn-info form-control" value="@localizer.Get("انشاء")" onclick="return ValidateInput()" />
+                    </div>
                     <div class="col-md-6">
                         <a asp-page="Index" asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-secondary form-control">
                             @localizer.Get("رجوع")
                         </a>
 
-                    </div>
-                    <div class="col-md-6">
-                        <input asp-route-culture="@Request.RouteValues["culture"]" type="submit" class="btn btn-info form-control" value="@localizer.Get("انشاء")" onclick="return ValidateInput()" />
                     </div>
                 </div>
 
