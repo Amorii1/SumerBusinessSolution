@@ -23,42 +23,46 @@
     <form method="post">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-        <div class="row form-group">
-            <div class="col-md-5 offset-md-5">
-                <input asp-for="Customer.CompanyName" class="form-control  text-md-right" />
-            </div>
+        <div dir="rtl" class="row form-group">
+
             <div class="col-md-2">
                 <label asp-for="Customer.CompanyName"> </label>
+            </div>
+            <div class="col-md-5 offset-md-5">
+                <input asp-for="Customer.CompanyName" class="form-control  text-md-right" />
             </div>
             <span asp-validation-for="Customer.CompanyName" class="text-danger"></span>
         </div>
 
-        <div class="row form-group">
-            <div class="col-md-5 offset-md-5">
-                <input asp-for="Customer.ContactName" class="form-control  text-md-right" />
-            </div>
+        <div dir="rtl" class="row form-group">
+
             <div class="col-md-2">
                 <label asp-for="Customer.ContactName"> </label>
+            </div>
+            <div class="col-md-5 offset-md-5">
+                <input asp-for="Customer.ContactName" class="form-control  text-md-right" />
             </div>
             <span asp-validation-for="Customer.ContactName" class="text-danger"></span>
         </div>
 
-        <div class="row form-group">
-            <div class="col-md-5 offset-md-5">
-                <input asp-for="Customer.Address" class="form-control  text-md-right" />
-            </div>
+        <div dir="rtl" class="row form-group">
+
             <div class="col-md-2">
                 <label asp-for="Customer.Address"> </label>
+            </div>
+            <div class="col-md-5 offset-md-5">
+                <input asp-for="Customer.Address" class="form-control  text-md-right" />
             </div>
             <span asp-validation-for="Customer.Address" class="text-danger"></span>
         </div>
 
-        <div class="row form-group">
-            <div class="col-md-5 offset-md-5">
-                <input asp-for="Customer.PhoneNo" class="form-control  text-md-right" />
-            </div>
+        <div dir="rtl" class="row form-group">
+
             <div class="col-md-2">
                 <label asp-for="Customer.PhoneNo"> </label>
+            </div>
+            <div class="col-md-5 offset-md-5">
+                <input asp-for="Customer.PhoneNo" class="form-control  text-md-right" />
             </div>
             <span asp-validation-for="Customer.PhoneNo" class="text-danger"></span>
         </div>
@@ -67,16 +71,17 @@
             <div class="col-md-5 offset-md-5">
                 <div class="row">
 
+
+                    <div class="col-md-6">
+                        @*<input type="submit" class="btn btn-info form-control" value="حفظ" />*@
+                        <input asp-route-culture="@Request.RouteValues["culture"]" type="submit" class="btn btn-info form-control" value="@localizer.Get("اضافة")" />
+
+                    </div>
                     <div class="col-md-6">
                         @*<a asp-page="Index" class="btn btn-success form-control">الرجوع</a>*@
                         <a asp-page="Index" asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-secondary form-control">
                             @localizer.Get("رجوع")
                         </a>
-
-                    </div>
-                    <div class="col-md-6">
-                        @*<input type="submit" class="btn btn-info form-control" value="حفظ" />*@
-                        <input asp-route-culture="@Request.RouteValues["culture"]" type="submit" class="btn btn-info form-control" value="@localizer.Get("اضافة")" />
 
                     </div>
                 </div>

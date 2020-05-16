@@ -25,53 +25,56 @@
         <input type="hidden" asp-for="BillHeader.Id" />
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-        <div class="form-group row">
+        <div dir="rtl" class="form-group row">
 
-            <div class="col-md-5 offset-md-5">
-                <input type="text" id="ProdInfo" asp-for="HeaderId" class="form-control text-md-right" disabled />
-            </div>
+
             <div class="col-md-2 ">
                 <label asp-for="HeaderId"></label>
+            </div>
+            <div class="col-md-5 offset-md-5">
+                <input type="text" id="ProdInfo" asp-for="HeaderId" class="form-control text-md-right" disabled />
             </div>
         </div>
 
 
 
-        <div class="form-group row">
+        <div dir="rtl" class="form-group row">
 
+
+            <div class="col-md-2">
+                <label asp-for="CompanyName"></label>
+            </div>
             <div class="col-md-5 offset-md-5">
                 <input asp-for="CompanyName" class="form-control  text-md-right" disabled />
 
 
             </div>
-            <div class="col-md-2">
-                <label asp-for="CompanyName"></label>
-            </div>
         </div>
-        <div class="form-group row">
+        <div dir="rtl" class="form-group row">
 
+
+
+            <div class="col-md-2">
+                <label asp-for="TotalNetAmt"></label>
+            </div>
             <div class="col-md-5 offset-md-5">
                 @*<textarea placeholder="ملاحظات" asp-for="Note" class="form-control"></textarea>*@
                 <input id="totalNetAmt" asp-for="TotalNetAmt" class="form-control  text-md-right" disabled />
 
             </div>
+        </div>
+        <div dir="rtl" class="form-group row">
+
+
 
             <div class="col-md-2">
-                <label asp-for="TotalNetAmt"></label>
+                <label asp-for="PaidAmt"></label>
             </div>
-        </div>
-        <div class="form-group row">
-
             <div class="col-md-5 offset-md-5">
                 @*<textarea placeholder="ملاحظات" asp-for="Note" class="form-control"></textarea>*@
                 <input id="paidAmt" asp-for="PaidAmt" class="form-control  text-md-right" disabled />
 
             </div>
-
-            <div class="col-md-2">
-                <label asp-for="PaidAmt"></label>
-            </div>
-           
         </div>
 
         @*<div class="form-group row">
@@ -86,47 +89,49 @@
             </div>
         </div>*@
 
-        <div class="form-group row text-danger">
-            <div class="col-md-5 offset-md-5">
-                <input id="balanceAmt" asp-for="BalanceAmt" class="form-control  text-md-right" disabled />
+    <div dir="rtl" class="form-group row text-danger">
 
-            </div>
 
-            <div class="col-md-2 text-danger">
-                <label asp-for="BalanceAmt"></label>
-            </div>
+        <div class="col-md-2 text-danger">
+            <label asp-for="BalanceAmt"></label>
         </div>
-
-        <div class="form-group row text-success">
-            <div class="col-md-5 offset-md-5">
-                @*<textarea placeholder="ملاحظات" asp-for="Note" class="form-control"></textarea>*@
-                <input id="newPayment" asp-for="NewPayment" class="form-control  text-md-right" />
-
-            </div>
-
-            <div class="col-md-2">
-                <label asp-for="NewPayment"></label>
-            </div>
-            <span asp-validation-for="NewPayment" class="text-danger"></span>
+        <div class="col-md-5 offset-md-5">
+            <input id="balanceAmt" asp-for="BalanceAmt" class="form-control  text-md-right" disabled />
 
         </div>
+    </div>
+
+    <div dir="rtl" class="form-group row text-success">
+
+        <div class="col-md-2">
+            <label asp-for="NewPayment"></label>
+        </div>
+        <div class="col-md-5 offset-md-5">
+            @*<textarea placeholder="ملاحظات" asp-for="Note" class="form-control"></textarea>*@
+            <input id="newPayment" asp-for="NewPayment" class="form-control  text-md-right" />
+
+        </div>
+
+        <span asp-validation-for="NewPayment" class="text-danger"></span>
+
+    </div>
 
 
         <div class="form-group row">
             <div class="col-md-5 offset-md-5">
                 <div class="row">
+
+                    <div class="col-md-6">
+                        @*<button type="submit" class="btn btn-info form-control" onclick="return ValidateInput()">حفظ</button>*@
+                        <button asp-route-culture="@Request.RouteValues["culture"]" type="submit" class="btn btn-info form-control" asp-route-HeaderId="@Model.HeaderId" onclick="return ValidateInput()">  @localizer.Get("حفظ")</button>
+
+                    </div>
                     <div class="col-md-6">
                         <a asp-page="Index" asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-secondary form-control">رجوع</a>
 
                         @*<input asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-secondary form-control" type="button" value="@localizer.Get("رجوع")" onclick="history.back()">*@
 
                     </div>
-                    <div class="col-md-6">
-                        @*<button type="submit" class="btn btn-info form-control" onclick="return ValidateInput()">حفظ</button>*@
-                        <button asp-route-culture="@Request.RouteValues["culture"]" type="submit" class="btn btn-info form-control" asp-route-HeaderId="@Model.HeaderId" onclick="return ValidateInput()">  @localizer.Get("حفظ")</button>
-
-                    </div>
-
                 </div>
             </div>
         </div>

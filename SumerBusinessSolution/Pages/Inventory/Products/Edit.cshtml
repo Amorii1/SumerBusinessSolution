@@ -26,32 +26,39 @@
         <input type="hidden" asp-for="ProdInfo.Id" />
         <input type="hidden" asp-for="ProdInfo.CreatedById" />
 
-        <div class="row form-group">
+        <div dir="rtl" class="row form-group">
 
+
+            <div class="col-md-2">
+                <label asp-for="ProdInfo.ProdCode"></label>
+            </div>
             <div class="col-md-5 offset-md-5">
                 <input asp-for="ProdInfo.ProdCode" class="form-control text-md-right" />
                 <span asp-validation-for="ProdInfo.ProdCode" class="text-danger"> </span>
             </div>
-            <div class="col-md-2">
-                <label asp-for="ProdInfo.ProdCode"></label>
-            </div>
         </div>
 
 
-        <div class="row form-group">
+        <div dir="rtl" class="row form-group">
 
+
+            <div class="col-md-2">
+                <label asp-for="ProdInfo.ProdName"></label>
+
+            </div>
             <div class="col-md-5 offset-md-5">
                 <input asp-for="ProdInfo.ProdName" class="form-control text-md-right" />
                 <span asp-validation-for="ProdInfo.ProdName" class="text-danger"> </span>
 
             </div>
+        </div>
+        <div dir="rtl" class="row form-group">
+
+
             <div class="col-md-2">
-                <label asp-for="ProdInfo.ProdName"></label>
+                <label asp-for="ProdInfo.ProdDescription"></label>
 
             </div>
-        </div>
-        <div class="row form-group">
-
             <div class="col-md-5 offset-md-5">
 
                 <textarea asp-for="ProdInfo.ProdDescription" class="form-control text-md-right"></textarea>
@@ -59,81 +66,81 @@
                 <span asp-validation-for="ProdInfo.ProdDescription" class="text-danger"> </span>
 
             </div>
-            <div class="col-md-2">
-                <label asp-for="ProdInfo.ProdDescription"></label>
-
-            </div>
         </div>
 
-        <div class="row form-group">
+        <div dir="rtl" class="row form-group">
 
 
 
+
+            <div class="col-md-2">
+                <label asp-for="ProdInfo.ImgFile"></label>
+            </div>
             <div class="col-md-5 offset-md-5">
                 <input type="file" asp-for="img" class="form-control p-md-1">
                 <img style="height: 200px; width: 100%; display: block; border-radius:3px;" src="~/img/@Model.ProdInfo.ImgFile">
 
             </div>
-            <div class="col-md-2">
-                <label asp-for="ProdInfo.ImgFile"></label>
-            </div>
-
         </div>
 
         @if (User.IsInRole(SD.AdminUser))
         {
-            <div class="row form-group">
-                <div class="col-md-5 offset-md-5">
-                    <input asp-for="ProdInfo.CostPrice" class="form-control text-md-right" />
-                </div>
-                <div class="col-md-2">
-                    <label asp-for="ProdInfo.CostPrice"></label>
-                </div>
-            </div>
+    <div dir="rtl" class="row form-group">
+
+        <div class="col-md-2">
+            <label asp-for="ProdInfo.CostPrice"></label>
+        </div>
+        <div class="col-md-5 offset-md-5">
+            <input asp-for="ProdInfo.CostPrice" class="form-control text-md-right" />
+        </div>
+    </div>
         }
 
 
-        <div class="row form-group">
+    <div dir="rtl" class="row form-group">
 
-            <div class="col-md-5 offset-md-5">
-                <input asp-for="ProdInfo.WholePrice" class="form-control text-md-right" />
-                <span asp-validation-for="ProdInfo.WholePrice" class="text-danger"> </span>
 
-            </div>
-            <div class="col-md-2">
-                <label asp-for="ProdInfo.WholePrice"></label>
+        <div class="col-md-2">
+            <label asp-for="ProdInfo.WholePrice"></label>
 
-            </div>
         </div>
-        <div class="row form-group">
+        <div class="col-md-5 offset-md-5">
+            <input asp-for="ProdInfo.WholePrice" class="form-control text-md-right" />
+            <span asp-validation-for="ProdInfo.WholePrice" class="text-danger"> </span>
 
-            <div class="col-md-5 offset-md-5">
-                <input asp-for="ProdInfo.RetailPrice" class="form-control text-md-right" />
-                <span asp-validation-for="ProdInfo.RetailPrice" class="text-danger"> </span>
-
-            </div>
-            <div class="col-md-2">
-                <label asp-for="ProdInfo.RetailPrice"></label>
-
-            </div>
         </div>
+    </div>
+    <div dir="rtl" class="row form-group">
+
+
+        <div class="col-md-2">
+            <label asp-for="ProdInfo.RetailPrice"></label>
+
+        </div>
+        <div class="col-md-5 offset-md-5">
+            <input asp-for="ProdInfo.RetailPrice" class="form-control text-md-right" />
+            <span asp-validation-for="ProdInfo.RetailPrice" class="text-danger"> </span>
+
+        </div>
+    </div>
 
 
         <div class=" form-group row">
             <div class="col-md-5 offset-md-5">
                 <div class="row">
 
+
+                    <div class="col-md-6">
+                        @*<input type="submit" class="btn btn-info form-control" value="تحديث" />*@
+                        <input asp-route-culture="@Request.RouteValues["culture"]" type="submit" class="btn btn-info form-control" value="@localizer.Get("حفظ")" />
+
+                    </div>
                     <div class="col-md-6">
 
                         @*<a asp-page="Index" asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-success form-control">@localizer.Get("رجوع")</a>*@
 
                         <input asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-secondary form-control" type="button" value="@localizer.Get("رجوع")" onclick="history.back()">
 
-
-                    </div>
-                    <div class="col-md-6">
-                        @*<input type="submit" class="btn btn-info form-control" value="تحديث" />*@
-                        <input asp-route-culture="@Request.RouteValues["culture"]" type="submit" class="btn btn-info form-control" value="@localizer.Get("حفظ")" />
 
                     </div>
                 </div>

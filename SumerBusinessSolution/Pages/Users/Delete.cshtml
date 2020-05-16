@@ -23,26 +23,26 @@
     <form method="post">
         <input asp-for="ApplicationUser.Id" hidden />
         <div class="form-group">
-            <div class="row">
-                <div class="col-md-5 offset-md-5">
-                    <input asp-for="ApplicationUser.FirstName" disabled class="form-control text-md-right" />
-                </div>
+            <div dir="rtl" class="row">
+
                 <div class="col-md-2">
                     <label asp-for="ApplicationUser.FirstName"></label>
                 </div>
-
+                <div class="col-md-5 offset-md-5">
+                    <input asp-for="ApplicationUser.FirstName" disabled class="form-control text-md-right" />
+                </div>
             </div>
         </div>
 
         <div class="form-group">
-            <div class="row">
-                <div class="col-md-5 offset-md-5">
-                    <input asp-for="ApplicationUser.UserName" disabled class="form-control text-md-right" />
-                </div>
+            <div dir="rtl" class="row">
+
                 <div class="col-md-2">
                     <label>اسم الدخول</label>
                 </div>
-
+                <div class="col-md-5 offset-md-5">
+                    <input asp-for="ApplicationUser.UserName" disabled class="form-control text-md-right" />
+                </div>
             </div>
         </div>
          
@@ -52,7 +52,7 @@
                 <div class="row">
                     <div class="col-md-6">
                         @*<a asp-page="Index" class="btn btn-success form-control">رجوع</a>*@
-                        <a asp-page="Index" asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-secondary form-control">@localizer.Get("رحوع")</a>
+                        <a asp-page="Index" asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-secondary form-control">@localizer.Get("رجوع")</a>
 
                     </div>
                     <div class="col-md-6">

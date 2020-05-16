@@ -26,68 +26,74 @@
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <input type="hidden" asp-for="CustAcc.Customer.Id" />
 
-        <div class="row form-group">
-            <div class="col-md-5 offset-md-5">
-                <input asp-for="CustAcc.Customer.CompanyName" class="form-control  text-md-right" disabled />
-            </div>
+        <div dir="rtl" class="row form-group">
+
             <div class="col-md-2">
                 <label asp-for="CustAcc.Customer.CompanyName"> </label>
             </div>
+            <div class="col-md-5 offset-md-5">
+                <input asp-for="CustAcc.Customer.CompanyName" class="form-control  text-md-right" disabled />
+            </div>
             <span asp-validation-for="CustAcc.Customer.CompanyName" class="text-danger"></span>
         </div>
-        <div class="row form-group">
-            <div class="col-md-5 offset-md-5">
-                <input asp-for="CustAcc.Id" class="form-control  text-md-right" disabled />
-            </div>
+        <div dir="rtl" class="row form-group">
+
             <div class="col-md-2">
                 <label asp-for="CustAcc.Id"> </label>
+            </div>
+            <div class="col-md-5 offset-md-5">
+                <input asp-for="CustAcc.Id" class="form-control  text-md-right" disabled />
             </div>
             <span asp-validation-for="CustAcc.Id" class="text-danger"></span>
         </div>
 
-        <div class="row form-group">
-            <div class="col-md-5 offset-md-5">
-                <input asp-for="CustAcc.Paid" class="form-control  text-md-right" disabled />
-            </div>
+        <div dir="rtl" class="row form-group">
+
             <div class="col-md-2">
                 <label asp-for="CustAcc.Paid"> </label>
+            </div>
+            <div class="col-md-5 offset-md-5">
+                <input asp-for="CustAcc.Paid" class="form-control  text-md-right" disabled />
             </div>
             <span asp-validation-for="CustAcc.Paid" class="text-danger"></span>
         </div>
 
-        <div class="row form-group">
-            <div class="col-md-5 offset-md-5">
-                <input id="debt" asp-for="CustAcc.Debt" class="form-control  text-md-right" disabled />
-            </div>
+        <div dir="rtl" class="row form-group">
+
             <div class="col-md-2">
                 <label asp-for="CustAcc.Debt"> </label>
+            </div>
+            <div class="col-md-5 offset-md-5">
+                <input id="debt" asp-for="CustAcc.Debt" class="form-control  text-md-right" disabled />
             </div>
             <span asp-validation-for="CustAcc.Debt" class="text-danger"></span>
         </div>
 
         @if (Model.CustAcc.Debt == 0)
         {
-            <div class="row form-group">
-                <div class="col-md-5 offset-md-5">
-                    <input id="newPayment" asp-for="NewPayment" class="form-control  text-md-right" disabled="disabled" />
-                </div>
-                <div class="col-md-2">
-                    <label asp-for="NewPayment"> </label>
-                </div>
-                <span asp-validation-for="NewPayment" class="text-danger"></span>
-            </div>
+    <div dir="rtl" class="row form-group">
+
+        <div class="col-md-2">
+            <label asp-for="NewPayment"> </label>
+        </div>
+        <div class="col-md-5 offset-md-5">
+            <input id="newPayment" asp-for="NewPayment" class="form-control  text-md-right" disabled="disabled" />
+        </div>
+        <span asp-validation-for="NewPayment" class="text-danger"></span>
+    </div>
         }
         else
         {
-            <div class="row form-group">
-                <div class="col-md-5 offset-md-5">
-                    <input id="newPayment" asp-for="NewPayment" class="form-control  text-md-right" />
-                </div>
-                <div class="col-md-2">
-                    <label asp-for="NewPayment"> </label>
-                </div>
-                <span asp-validation-for="NewPayment" class="text-danger"></span>
-            </div>
+    <div dir="rtl" class="row form-group">
+
+        <div class="col-md-2">
+            <label asp-for="NewPayment"> </label>
+        </div>
+        <div class="col-md-5 offset-md-5">
+            <input id="newPayment" asp-for="NewPayment" class="form-control  text-md-right" />
+        </div>
+        <span asp-validation-for="NewPayment" class="text-danger"></span>
+    </div>
         }
 
 
@@ -95,18 +101,19 @@
             <div class="col-md-5 offset-md-5">
                 <div class="row">
                     <div class="col-md-6">
-
-                        <a asp-page="../Customers/index" asp-route-culture="@Request.RouteValues["culture"]"  class="btn btn-secondary form-control">
-                                @localizer.Get("رجوع")
-                            </a>
-
-                    </div>
-                    <div class="col-md-6">
                         @*<input type="submit" class="btn btn-info form-control" value="حفظ" />*@
                         <button asp-route-culture="@Request.RouteValues["culture"]" type="submit" class="btn btn-info form-control" value="@localizer.Get("حفظ")" onclick="return ValidateInput()">
                             @localizer.Get("حفظ")
                         </button>
                     </div>
+                    <div class="col-md-6">
+
+                        <a asp-page="../Customers/index" asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-secondary form-control">
+                            @localizer.Get("رجوع")
+                        </a>
+
+                    </div>
+
 
                 </div>
 

@@ -22,45 +22,49 @@
 
     <form method="post" enctype="multipart/form-data">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        <div class="row form-group">
+        <div dir="rtl" class="row form-group">
 
-            <div class="col-md-5 offset-md-5">
-                <input asp-for="ProductInfo.ProdCode" class="form-control  text-md-right" />
-            </div>
+
             <div class="col-md-2">
                 <label asp-for="ProductInfo.ProdCode"> </label>
             </div>
+            <div class="col-md-5 offset-md-5">
+                <input asp-for="ProductInfo.ProdCode" class="form-control  text-md-right" />
+            </div>
             <span asp-validation-for="ProductInfo.ProdCode" class="text-danger"></span>
         </div>
-        <div class="row form-group">
+        <div dir="rtl" class="row form-group">
 
-            <div class="col-md-5  offset-md-5">
-                <input asp-for="ProductInfo.ProdName" class="form-control  text-md-right" />
-            </div>
+
             <div class="col-md-2">
                 <label asp-for="ProductInfo.ProdName"></label>
             </div>
+            <div class="col-md-5  offset-md-5">
+                <input asp-for="ProductInfo.ProdName" class="form-control  text-md-right" />
+            </div>
             <span asp-validation-for="ProductInfo.ProdName" class="text-danger"></span>
         </div>
-        <div class="row form-group">
+        <div dir="rtl" class="row form-group">
 
-            <div class="col-md-5  offset-md-5">
-                <textarea asp-for="ProductInfo.ProdDescription" class="form-control  text-md-right"></textarea>
-            </div>
+
             <div class="col-md-2">
                 <label asp-for="ProductInfo.ProdDescription"></label>
+            </div>
+            <div class="col-md-5  offset-md-5">
+                <textarea asp-for="ProductInfo.ProdDescription" class="form-control  text-md-right"></textarea>
             </div>
             <span asp-validation-for="ProductInfo.ProdDescription" class="text-danger"></span>
         </div>
         <div class="custom-file">
-            <div class="row form-group">
+            <div dir="rtl" class="row form-group">
 
 
-                <div class="col-md-5  offset-md-5">
-                    <input type="file" asp-for="img" class="form-control p-md-1 ">
-                </div>
+
                 <div class="col-md-2">
                     <label asp-for="ProductInfo.ImgFile"></label>
+                </div>
+                <div class="col-md-5  offset-md-5">
+                    <input type="file" asp-for="img" class="form-control p-md-1 ">
                 </div>
                 <span asp-validation-for="ProductInfo.ImgFile" class="text-danger"></span>
             </div>
@@ -77,71 +81,77 @@
                 </div>
             </div>*@
 
-        <div class="row form-group">
+    <div dir="rtl" class="row form-group">
 
-            <div class="col-md-5  offset-md-5">
-                <input asp-for="ProductInfo.CostPrice" class="form-control  text-md-right" />
-            </div>
-            <div class="col-md-2">
-                <label asp-for="ProductInfo.CostPrice"></label>
-            </div>
-            <span asp-validation-for="ProductInfo.CostPrice" class="text-danger"></span>
-        </div>
 
-        <div class="row form-group">
+        <div class="col-md-2">
+            <label asp-for="ProductInfo.CostPrice"></label>
+        </div>
+        <div class="col-md-5  offset-md-5">
+            <input asp-for="ProductInfo.CostPrice" class="form-control  text-md-right" />
+        </div>
+        <span asp-validation-for="ProductInfo.CostPrice" class="text-danger"></span>
+    </div>
 
-            <div class="col-md-5  offset-md-5">
-                <input asp-for="ProductInfo.RetailPrice" class="form-control  text-md-right" />
-            </div>
-            <div class="col-md-2">
-                <label asp-for="ProductInfo.RetailPrice"></label>
-            </div>
-            <span asp-validation-for="ProductInfo.RetailPrice" class="text-danger"></span>
-        </div>
-        <div class="row form-group">
+    <div dir="rtl" class="row form-group">
 
-            <div class="col-md-5  offset-md-5">
-                <input asp-for="ProductInfo.WholePrice" class="form-control  text-md-right" />
-            </div>
-            <div class="col-md-2">
-                <label asp-for="ProductInfo.WholePrice"></label>
-            </div>
-            <span asp-validation-for="ProductInfo.WholePrice" class="text-danger"></span>
+
+        <div class="col-md-2">
+            <label asp-for="ProductInfo.RetailPrice"></label>
         </div>
-        <div class="form-group row">
-            <div class="col-md-5 offset-md-5">
-                <select whList="myList" asp-for="SelectedWarehouse"
-                        asp-items="@(new SelectList(Model.WarehouseList, "Id", "WhName"))"
-                        class="form-control text-md-right">
-                </select>
-            </div>
-            <div class="col-md-2">
-                <label asp-for="SelectedWarehouse"></label>
-            </div>
-            <span asp-validation-for="SelectedWarehouse" class="text-danger"></span>
+        <div class="col-md-5  offset-md-5">
+            <input asp-for="ProductInfo.RetailPrice" class="form-control  text-md-right" />
         </div>
-        <div class="form-group row">
-            <div class="col-md-5  offset-md-5">
-                <input asp-for="OpenQty" class="form-control  text-md-right" />
-            </div>
-            <div class="col-md-2">
-                <label asp-for="OpenQty"></label>
-            </div>
-            <span asp-validation-for="OpenQty" class="text-danger"></span>
+        <span asp-validation-for="ProductInfo.RetailPrice" class="text-danger"></span>
+    </div>
+    <div dir="rtl" class="row form-group">
+
+
+        <div class="col-md-2">
+            <label asp-for="ProductInfo.WholePrice"></label>
         </div>
+        <div class="col-md-5  offset-md-5">
+            <input asp-for="ProductInfo.WholePrice" class="form-control  text-md-right" />
+        </div>
+        <span asp-validation-for="ProductInfo.WholePrice" class="text-danger"></span>
+    </div>
+    <div dir="rtl" class="form-group row">
+
+        <div class="col-md-2">
+            <label asp-for="SelectedWarehouse"></label>
+        </div>
+        <div class="col-md-5 offset-md-5">
+            <select whList="myList" asp-for="SelectedWarehouse"
+                    asp-items="@(new SelectList(Model.WarehouseList, "Id", "WhName"))"
+                    class="form-control text-md-right">
+            </select>
+        </div>
+        <span asp-validation-for="SelectedWarehouse" class="text-danger"></span>
+    </div>
+    <div dir="rtl" class="form-group row">
+
+        <div class="col-md-2">
+            <label asp-for="OpenQty"></label>
+        </div>
+        <div class="col-md-5  offset-md-5">
+            <input asp-for="OpenQty" class="form-control  text-md-right" />
+        </div>
+        <span asp-validation-for="OpenQty" class="text-danger"></span>
+    </div>
 
         <div class=" form-group row">
             <div class="col-md-5 offset-md-5">
                 <div class="row">
 
-                    <div class="col-md-6">
-                        <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="Index" class="btn btn-secondary form-control">رجوع</a>
 
-
-                    </div>
                     <div class="col-md-6">
                         @*<input type="submit" class="btn btn-info form-control" value="حفظ" />*@
                         <input asp-route-culture="@Request.RouteValues["culture"]" type="submit" class="btn btn-info form-control" value="@localizer.Get("اضافة")" />
+
+                    </div>
+                    <div class="col-md-6">
+                        <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="Index" class="btn btn-secondary form-control">رجوع</a>
+
 
                     </div>
                 </div>

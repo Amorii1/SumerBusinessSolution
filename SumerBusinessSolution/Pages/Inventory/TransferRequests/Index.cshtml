@@ -17,16 +17,16 @@
 <partial name="_StatusMessage" model="Model.StatusMessage" />
 
 <div class=" backgroundWhite">
-    <div class="row">
+    <div dir="rtl" class="row">
 
-        <div class="col-md-6 ">
-            <a asp-route-culture="@Request.RouteValues["culture"]" title="طلب نقل جديد" asp-page="Create" class="btn btn-info"> <i class="fas fa-plus"></i></a>
-        </div>
 
         <div class="col-md-6 text-right">
             @*<h2 class="text-info"> طلبات حركه المنتجات </h2>*@
             <h2 class="text-info"> @localizer.Get("طلبات نقل المواد")</h2>
 
+        </div>
+        <div class="col-md-6 ">
+            <a asp-route-culture="@Request.RouteValues["culture"]" title="طلب نقل جديد" asp-page="Create" class="btn btn-info"> <i class="fas fa-plus"></i></a>
         </div>
 
     </div>
@@ -35,7 +35,34 @@
             <div @*style="height:60px;"*@ class="container ">
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="row" style="margin-top:10px;">
+                        <div dir="rtl" class="row" style="margin-top:10px;">
+
+
+                            <div class="col-md-5 pb-1">
+                                <div dir="rtl" class="form-group row float-md-right">
+
+
+                                    <div>
+                                        <label asp-for="SearchFromDate" class="control-label"></label>
+                                    </div>
+                                    <div>
+                                        <input asp-for="SearchFromDate" class="form-control" />
+                                        @*<span asp-validation-for="SearchCreatedTime" class="text-danger"></span>*@
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-5 pb-1">
+                                <div dir="rtl" class="form-group row float-md-right">
+
+                                    <div>
+                                        <label asp-for="SearchToDate" class="control-label"></label>
+                                    </div>
+                                    <div>
+                                        <input asp-for="SearchToDate" class="form-control" />
+                                        @*<span asp-validation-for="SearchCreatedTime" class="text-danger"></span>*@
+                                    </div>
+                                </div>
+                            </div>
                             <div class="col-md-2 text-md-right pb-1">
 
                                 <button asp-route-culture="@Request.RouteValues["culture"]" title="بحث" type="submit" name="submit" value="search" class="btn btn-info form-control">
@@ -43,30 +70,6 @@
                                 </button>
 
                             </div>
-                            <div class="col-md-5 pb-1">
-                                <div class="form-group row float-md-right">
-                                    <div>
-                                        <input asp-for="SearchToDate" class="form-control" />
-                                        @*<span asp-validation-for="SearchCreatedTime" class="text-danger"></span>*@
-                                    </div>
-                                    <div>
-                                        <label asp-for="SearchToDate" class="control-label"></label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-5 pb-1">
-                                <div class="form-group row float-md-right">
-                                    <div>
-                                        <input asp-for="SearchFromDate" class="form-control" />
-                                        @*<span asp-validation-for="SearchCreatedTime" class="text-danger"></span>*@
-                                    </div>
-
-                                    <div>
-                                        <label asp-for="SearchFromDate" class="control-label"></label>
-                                    </div>
-                                </div>
-                            </div>
-
                         </div>
 
                     </div>

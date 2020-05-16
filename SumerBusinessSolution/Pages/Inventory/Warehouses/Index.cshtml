@@ -16,18 +16,19 @@
 
 
     <div class=" backgroundWhite">
-        <div class="row">
+        <div dir="rtl" class="row">
+
+            <div class="col-md-6">
+                @*<h2 class="text-info">المنتجات</h2>*@
+                <h2 class="text-info text-md-right">@localizer.Get("المخازن")</h2>
+
+            </div>
             @if (User.IsInRole(SD.AdminUser))
             {
                 <div class="col-md-6">
                     <a asp-page="Create" asp-route-culture="@Request.RouteValues["culture"]" title="اضافة" class="btn btn-info"> <i class="fas fa-plus"></i></a>
                 </div>
             }
-            <div class="col-md-6">
-                @*<h2 class="text-info">المنتجات</h2>*@
-                <h2 class="text-info text-md-right">@localizer.Get("المخازن")</h2>
-
-            </div>
         </div>
         @*<form method="get" asp-page="Index">
             <div class="border backgroundWhite">

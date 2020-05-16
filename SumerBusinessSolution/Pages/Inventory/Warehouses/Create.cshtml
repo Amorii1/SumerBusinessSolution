@@ -26,53 +26,57 @@
         @*<input type="hidden" asp-for="Warehouse.CreatedById" />*@
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <br />
-        <div class="form-group row">
+        <div dir="rtl" class="form-group row">
 
-            <div class="col-md-5 offset-md-5">
-                <input asp-for="Warehouse.WhCode" class="form-control text-md-right" />
-            </div>
+
             <div class="col-md-2">
                 <label asp-for="Warehouse.WhCode"></label>
             </div>
+            <div class="col-md-5 offset-md-5">
+                <input asp-for="Warehouse.WhCode" class="form-control text-md-right" />
+            </div>
             <span asp-validation-for="Warehouse.WhCode" class="text-danger"></span>
         </div>
-        <div class="form-group row">
+        <div dir="rtl" class="form-group row">
 
-            <div class="col-md-5 offset-md-5">
-                <input asp-for="Warehouse.WhName" class="form-control text-md-right" />
-            </div>
+
             <div class="col-md-2">
                 <label asp-for="Warehouse.WhName"></label>
+            </div>
+            <div class="col-md-5 offset-md-5">
+                <input asp-for="Warehouse.WhName" class="form-control text-md-right" />
             </div>
             <span asp-validation-for="Warehouse.WhName" class="text-danger"></span>
         </div>
 
-        <div class="form-group row">
+        <div dir="rtl" class="form-group row">
 
-            <div class="col-md-5 offset-md-5">
-                <input asp-for="Warehouse.WhLocation" class="form-control text-md-right" />
-            </div>
+
             <div class="col-md-2">
                 <label asp-for="Warehouse.WhLocation"></label>
+            </div>
+            <div class="col-md-5 offset-md-5">
+                <input asp-for="Warehouse.WhLocation" class="form-control text-md-right" />
             </div>
             <span asp-validation-for="Warehouse.WhLocation" class="text-danger"></span>
         </div>
 
 
-        <div class="form-group row">
+        <div dir="rtl" class="form-group row">
 
-            <div class="col-md-5 offset-md-5">
-                <select WhType="myList" asp-for="Warehouse.TypeId"
-                          asp-items="@(new SelectList(Model.WhTypeList, "Id", "Type"))"
-                        class="form-control text-md-right">
-                    @*<option value="StoreRoom">مخزن رئيسي</option>
-                    <option value="ShowRoom">معرض</option>*@
-                    @*<option value="@localizer.Get("مخزن رئيسي")">@localizer.Get("مخزن رئيسي")</option>
-                    <option value="@localizer.Get("معرض")">@localizer.Get("معرض")</option>*@
-                </select>
-            </div>
+
             <div class="col-md-2">
                 <label asp-for="Warehouse.WhType.Type"></label>
+            </div>
+            <div class="col-md-5 offset-md-5">
+                <select WhType="myList" asp-for="Warehouse.TypeId"
+                        asp-items="@(new SelectList(Model.WhTypeList, "Id", "Type"))"
+                        class="form-control text-md-right">
+                    @*<option value="StoreRoom">مخزن رئيسي</option>
+                <option value="ShowRoom">معرض</option>*@
+                    @*<option value="@localizer.Get("مخزن رئيسي")">@localizer.Get("مخزن رئيسي")</option>
+                <option value="@localizer.Get("معرض")">@localizer.Get("معرض")</option>*@
+                </select>
             </div>
             <span asp-validation-for="Warehouse.WhType.Type" class="text-danger"></span>
         </div>
@@ -81,12 +85,13 @@
                 <div class="row">
 
 
-                    <div class="col-md-6">
-                        <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="Index" class="btn btn-secondary form-control ">@localizer.Get("رجوع")</a>
-                    </div>
+
                     <div class="col-md-6">
                         <input asp-route-culture="@Request.RouteValues["culture"]" type="submit" class="btn btn-info form-control" value="@localizer.Get("حفظ")" />
 
+                    </div>
+                    <div class="col-md-6">
+                        <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="Index" class="btn btn-secondary form-control ">@localizer.Get("رجوع")</a>
                     </div>
                 </div>
             </div>

@@ -16,18 +16,19 @@
 
 
 <div class="backgroundWhite">
-    <div class="row">
+    <div dir="rtl" class="row">
 
 
+
+        <div class="col-md-6 text-md-right">
+            <h2 class="text-info">@localizer.Get("المستخدمين")</h2>
+        </div>
         @if (User.IsInRole(SD.AdminUser))
         {
             <div class="col-md-6">
                 <a asp-area="Identity" asp-route-culture="@Request.RouteValues["culture"]" title="مستخدم جديد" asp-page="/Account/Register" class="btn btn-info"> <i class="fas fa-plus"></i></a>
             </div>
         }
-        <div class="col-md-6 text-md-right">
-            <h2 class="text-info">@localizer.Get("المستخدمين")</h2>
-        </div>
     </div>
 
     <form method="get" asp-page="Index">
@@ -37,14 +38,15 @@
                 <div class="row">
                     <div class="col-md-12">
 
-                        <div class="row" style="margin-top:10px;">
+                        <div dir="rtl" class="row" style="margin-top:10px;">
+
+                            <div class="col-md-10 pb-1">
+                                @Html.Editor("SearchFirstName", new { htmlAttributes = new { @class = "form-control text-md-right", placeholder = @localizer.Get("الاسم الاول....") } })
+                            </div>
                             <div class="col-md-2 text-md-right pb-1">
                                 <button type="submit" name="submit" value="search" title="بحث" asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-info form-control">
                                     <i class="fas fa-search"></i>
                                 </button>
-                            </div>
-                            <div class="col-md-10 pb-1">
-                                @Html.Editor("SearchFirstName", new { htmlAttributes = new { @class = "form-control text-md-right", placeholder = @localizer.Get("الاسم الاول....") } })
                             </div>
                         </div>
 
