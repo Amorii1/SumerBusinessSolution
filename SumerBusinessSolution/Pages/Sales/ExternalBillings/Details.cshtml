@@ -211,13 +211,13 @@
         <br />
         <br />
         <br />
-        <div class="form-group row">
+        <div class="form-group row text-center">
             <div class="col-md-5 offset-md-5">
-                <div class="row">
+                <div class="row pb-4">
                     @if (Model.ExternalBillHeader.Status == SD.OpenBill)
                     {
                         <div class="col-md-3">
-                            <a asp-route-BhId="@Model.ExternalBillHeader.Id" asp-page="MakePayment" asp-route-culture="@Request.RouteValues["culture"]" type="submit" class="btn btn-info form-control">
+                            <a asp-route-BhId="@Model.ExternalBillHeader.Id" asp-page="MakePayment" asp-route-culture="@Request.RouteValues["culture"]" type="submit" class="btn btn-success form-control">
                                 @localizer.Get("تسديد")
                             </a>
                         </div>
@@ -278,7 +278,7 @@
                     }
 
 
-                    <div class="col-md-6">
+                    <div class="col-md-6 pt-4">
 
                         @*<input asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-secondary form-control" type="button" value="@localizer.Get("رجوع")" onclick="history.back()">*@
                         <a asp-page="Index" class="btn btn-secondary form-control" asp-route-culture="@Request.RouteValues["culture"]"> رجوع</a>
