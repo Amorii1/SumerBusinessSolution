@@ -71,7 +71,7 @@ namespace SumerBusinessSolution.Pages.Sales.Billings
 
         [BindProperty]
         public string CustomerName { get; set; }
-
+ 
         public InvStockQty InvStockQty { get; set; }
         public ActionResult OnGet()
         {

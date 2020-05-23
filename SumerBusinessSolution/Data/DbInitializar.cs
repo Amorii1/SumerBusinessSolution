@@ -28,6 +28,8 @@ namespace SumerBusinessSolution.Data
         {
             try
             {
+          
+
                 if (_db.Database.GetPendingMigrations().Count() > 0)
                 {
                     _db.Database.Migrate();

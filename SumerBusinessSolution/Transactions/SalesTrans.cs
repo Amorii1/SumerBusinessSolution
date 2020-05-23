@@ -33,10 +33,9 @@ namespace SumerBusinessSolution.Transactions
                 Header.Id = new int();
                 Header.CreatedById = GetLoggedInUserId();
                 Header.CreatedDataTime = DateTime.Now;
+ 
 
-                double TotalAmt = 0;
-
-                // getting the unit price of each item in the bill items 
+                //// getting the unit price of each item in the bill items 
                 foreach (BillItems item in BillItems)
                 {
                     item.ProdId = _db.ProdInfo.FirstOrDefault(pr => pr.ProdCode == item.ProdInfo.ProdCode).Id;
@@ -47,18 +46,17 @@ namespace SumerBusinessSolution.Transactions
                     {
                         return "Error! لا توجد كمية كافية للبيع";
                     }
-
-                    TotalAmt += item.TotalAmt;
+ 
                 }
 
-                // price before discount
-                Header.TotalAmt = TotalAmt;
+                //// price before discount
+                //Header.TotalAmt = TotalAmt;
 
                 // incase there is a discount
-                TotalAmt = TotalAmt - Header.Discount;
-                Header.TotalNetAmt = TotalAmt;
+                //double TotalNetAmt = Header.TotalAmt - Header.Discount;
+                //Header.TotalNetAmt = TotalNetAmt;
 
-                if (TotalAmt == Header.PaidAmt)
+                if (Header.TotalNetAmt == Header.PaidAmt)
                 {
                     Header.Status = SD.Completed;
                 }
