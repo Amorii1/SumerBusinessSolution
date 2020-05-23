@@ -36,18 +36,18 @@ namespace SumerBusinessSolution.Transactions
  
 
                 //// getting the unit price of each item in the bill items 
-                foreach (BillItems item in BillItems)
-                {
-                    item.ProdId = _db.ProdInfo.FirstOrDefault(pr => pr.ProdCode == item.ProdInfo.ProdCode).Id;
-                    // first check if qty enough in the store room before proceeding
-                    bool CheckQty = CheckQtyInWh(item.ProdId ?? 0, WhId, item.Qty);
+                //foreach (BillItems item in BillItems)
+                //{
+                //    item.ProdId = _db.ProdInfo.FirstOrDefault(pr => pr.ProdCode == item.ProdInfo.ProdCode).Id;
+                ////    first check if qty enough in the store room before proceeding
+                //    bool CheckQty = CheckQtyInWh(item.ProdId ?? 0, WhId, item.Qty);
 
-                    if (CheckQty == false)
-                    {
-                        return "Error! لا توجد كمية كافية للبيع";
-                    }
- 
-                }
+                //    if (CheckQty == false)
+                //    {
+                //        return "Error! لا توجد كمية كافية للبيع";
+                //    }
+
+                //}
 
                 //// price before discount
                 //Header.TotalAmt = TotalAmt;
@@ -81,6 +81,8 @@ namespace SumerBusinessSolution.Transactions
                 // Creating Bill items
                 foreach (BillItems item in BillItems)
                 {
+                    item.ProdId = _db.ProdInfo.FirstOrDefault(pr => pr.ProdCode == item.ProdInfo.ProdCode).Id;
+
                     BillItems Bill = new BillItems
                     {
                         HeaderId = Header.Id,

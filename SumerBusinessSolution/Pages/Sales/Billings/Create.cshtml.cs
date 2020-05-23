@@ -165,13 +165,16 @@ namespace SumerBusinessSolution.Pages.Sales.Billings
 
         }
 
-        public JsonResult OnGetCheckQty(string term, double qty)
+        public JsonResult OnGetCheckProdQty(string qty, string prod)
         {
-            if (term == null)
+            //double qty = 5909;
+            
+            double dqty = Convert.ToDouble(qty);
+            if (prod == null)
             {
                 return new JsonResult("Not Found");
             }
-            bool qtyCheck = CheckQtyInWh(term, qty);
+            bool qtyCheck = CheckQtyInWh(prod, dqty);
 
             return new JsonResult(qtyCheck);
 

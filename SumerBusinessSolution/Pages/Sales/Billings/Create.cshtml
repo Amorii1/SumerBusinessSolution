@@ -204,8 +204,8 @@
                         @*<td>@Html.TextBoxFor(a => a[j].ContactName)</td>*@
 
                         <td onclick="bindAutocomplete(this); bindPrice(this)" onchange="bindPrice(this)">@Html.TextBoxFor(a => Model.Bi[j].ProdInfo.ProdCode) </td>
-                        <td oninput="bindTotal(this)" onclick="bindTotal(this)" onchange="calBillTotal(); CalBillTotalNetAmt()">@Html.TextBoxFor(a => Model.Bi[j].Qty)</td>
-                        <td oninput="bindTotalOnUnitPriceChange(this); calBillTotal()" onchange="calBillTotal(); CalBillTotalNetAmt()">@Html.TextBoxFor(a => Model.Bi[j].UnitPrice)</td>
+                        <td oninput="bindTotal(this); checkProdQty(this)" onclick="bindTotal(this)" onchange="calBillTotal(); calBillTotalNetAmt()">@Html.TextBoxFor(a => Model.Bi[j].Qty)</td>
+                        <td oninput="bindTotalOnUnitPriceChange(this); calBillTotal()" onchange="calBillTotal(); calBillTotalNetAmt()">@Html.TextBoxFor(a => Model.Bi[j].UnitPrice)</td>
                         <td id="totalLineAmt">@Html.TextBoxFor(a => Model.Bi[j].TotalAmt)</td>
                         <td>@Html.TextBoxFor(a => Model.Bi[j].Note)</td>
                         <td>
@@ -237,7 +237,7 @@
                 <label asp-for="@Model.BillHeader.Discount"> </label>
             </div>
             <div class="col-md-5 offset-md-5">
-                <input id="discount" type="text" asp-for="a => @Model.BillHeader.Discount" class="form-control text-md-right" onchange="CalBillTotalNetAmt()" />
+                <input id="discount" type="text" asp-for="a => @Model.BillHeader.Discount" class="form-control text-md-right" onchange="calBillTotalNetAmt()"placeholder="0" />
             </div>
         </div>
         <div dir="rtl" class="row form-group">
@@ -245,7 +245,7 @@
                 <label asp-for="@Model.BillHeader.TotalNetAmt"> </label>
             </div>
             <div class="col-md-5 offset-md-5">
-                <input id="billTotalNetAmt" type="text" asp-for="a => @Model.BillHeader.TotalNetAmt" class="form-control text-md-right"   />
+                <input id="billTotalNetAmt" type="text" asp-for="a => @Model.BillHeader.TotalNetAmt" class="form-control text-md-right" />
             </div>
         </div>
         <div dir="rtl" class="row form-group text-success">
@@ -253,7 +253,7 @@
                 <label asp-for="@Model.BillHeader.PaidAmt"> </label>
             </div>
             <div class="col-md-5 offset-md-5">
-                <input id="paidAmt" type="text" asp-for="a => @Model.BillHeader.PaidAmt" class="form-control text-md-right" />
+                <input id="paidAmt" type="text" asp-for="a => @Model.BillHeader.PaidAmt" class="form-control text-md-right" placeholder="0" />
 
             </div>
         </div>
@@ -361,18 +361,16 @@
                 $(t.children[0]).autocomplete({
 
                         source: '@Url.Page("Create", "SearchNow")'
-                    });
-
-            }
-
-                  async function bindPrice(t) {
+                });
+        }
+        async function bindPrice(t) {
                       if (document.getElementById("PriceType").value == 1) {
                           const obj = await fetch(`${window.location.href}?handler=ProdUnitPriceWhole&term=${t.children[0].value}`)
                           const json = await obj.json()
                            t.parentElement.children[2].children[0].value = json[0]
                       }
                       else {
-                                                     const obj = await fetch(`${window.location.href}?handler=ProdUnitPriceRetail&term=${t.children[0].value}`)
+                          const obj = await fetch(`${window.location.href}?handler=ProdUnitPriceRetail&term=${t.children[0].value}`)
                           const json = await obj.json()
                            t.parentElement.children[2].children[0].value = json[0]
                       }
@@ -407,6 +405,8 @@
                 document.getElementById('billTotalAmt').value = total;
             }
         }
+      
+
 
             function calBillTotalOnRemove() {
             var table = document.getElementById('dataTable');
@@ -421,13 +421,36 @@
             }
         }
 
-        function CalBillTotalNetAmt() {
+        function calBillTotalNetAmt() {
             var totalAmt = parseFloat(document.getElementById('billTotalAmt').value);
             var discount = parseFloat(document.getElementById('discount').value);
-
-            document.getElementById('billTotalNetAmt').value = totalAmt - discount;
+            if (discount > 0) {
+                document.getElementById('billTotalNetAmt').value = totalAmt - discount;
+            }
+            else {
+                 document.getElementById('billTotalNetAmt').value = totalAmt;
+            }
+           
 
         }
+
+        async function checkProdQty(t) {            
+            var rIn = t.parentNode.rowIndex;
+            var table = document.getElementById('dataTable');
+            var prod = table.rows[rIn].cells.item(0).children[0].value;
+
+            const obj = await fetch(`${window.location.href}?handler=CheckProdQty&qty=${t.children[0].value}&prod=${prod}`)
+            const json = await obj.json()
+             // console.log(json);
+            if (json == false) {
+                swal("Error!", "لا يوجد كمية كافية لبيع هذه المادة", "error");
+                table.rows[rIn].cells.item(1).children[0].value = 0;
+                return false
+            }
+            
+        }
+
+    
 
     </script>
     <script type="text/javascript" src="~/js/jquery.js"></script>
@@ -459,7 +482,6 @@
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script>
         function ValidateInput() {
-            console.log("NOO");
             var companyName = document.getElementById("CustName").value;
             var paymentTerms = document.getElementById("paymentTerms").value;
             var paidAmt = document.getElementById("paidAmt").value;
@@ -471,15 +493,33 @@
                 return false
             }
             if (paymentTerms == cod && paidAmt != totalNetAmt) {
-                swal("Error!", "يرجى ادخال المبلغ المدفوع", "error");
-
+                swal("Error!", "المبلغ المدفوع غير صحيح", "error");
                 return false
+            }
+            if (paidAmt > totalNetAmt) {
+                swal("Error!", "المبلغ المدفوع اعلى من المبلغ الاجمالي للفاتورة", "error");
+                return false
+            }
+
+            // making sure all the qtys are more than 0
+            var table = document.getElementById('dataTable');
+            var count = table.getElementsByTagName('tr').length;
+            var qty = 0;
+            if (count > 0) {
+                for (var i = 1; i < count; i++) {
+                    qty = parseFloat(table.rows[i].cells.item(1).children[0].value);
+                    if (qty == 0) {
+                          swal("Error!", "هناك مادة مضافة بدون تحديد الكمية", "error");
+                          return false
+                    }
+                }
+        
             }
 
         }
         window.onload = function iniVals() {
-            document.getElementById("discount").value = 0;
-            document.getElementById("paidAmt").value = 0;
+          //  document.getElementById("discount").value = 0;
+           // document.getElementById("paidAmt").value = 0;
             document.getElementById("billTotalAmt").value = 0;
             document.getElementById("billTotalNetAmt").value = 0;
         }
