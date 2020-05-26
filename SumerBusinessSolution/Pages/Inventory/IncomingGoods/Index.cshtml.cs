@@ -33,14 +33,12 @@ namespace SumerBusinessSolution.Pages.Inventory.IncomingGoods
         public RoleAuth RoleAuth { get; set; }
 
         [DataType(DataType.Date)]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy/MM/dd}")]
         [Display(Name = "من")]
-        public DateTime SearchFromDate { get; set; }
+        public DateTime? SearchFromDate { get; set; }
 
         [DataType(DataType.Date)]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy/MM/dd}")]
         [Display(Name = "الى")]
-        public DateTime SearchToDate { get; set; }
+        public DateTime? SearchToDate { get; set; }
 
 
         public IActionResult OnGet(string SearchProdCode = null, DateTime? SearchFromDate = null, DateTime? SearchToDate = null)
@@ -49,7 +47,7 @@ namespace SumerBusinessSolution.Pages.Inventory.IncomingGoods
             StringBuilder Param = new StringBuilder();
 
 
-            
+
             if (SearchProdCode != null)
             {
                 Param.Append(SearchProdCode);
@@ -70,7 +68,7 @@ namespace SumerBusinessSolution.Pages.Inventory.IncomingGoods
 
             if (SearchFromDate != null & SearchToDate != null & SearchProdCode == null)
             {
-                IncomingGoodList =   _db.IncomingGood
+                IncomingGoodList = _db.IncomingGood
                     .Include(u => u.ProdInfo)
                     .Include(u => u.Warehouse)
                     .Include(u => u.ApplicationUser)
@@ -82,7 +80,7 @@ namespace SumerBusinessSolution.Pages.Inventory.IncomingGoods
             {
                 if (SearchFromDate != null & SearchToDate != null & SearchProdCode != null)
                 {
-                    IncomingGoodList =   _db.IncomingGood
+                    IncomingGoodList = _db.IncomingGood
                         .Include(u => u.ProdInfo)
                         .Include(u => u.Warehouse)
                         .Include(u => u.ApplicationUser)
@@ -92,7 +90,7 @@ namespace SumerBusinessSolution.Pages.Inventory.IncomingGoods
                 {
                     if (SearchFromDate == null & SearchToDate == null & SearchProdCode != null)
                     {
-                        IncomingGoodList =   _db.IncomingGood
+                        IncomingGoodList = _db.IncomingGood
                             .Include(u => u.ProdInfo)
                             .Include(u => u.Warehouse)
                             .Include(u => u.ApplicationUser)
@@ -100,11 +98,11 @@ namespace SumerBusinessSolution.Pages.Inventory.IncomingGoods
                     }
                     else
                     {
-                          IncomingGoodList = _db.IncomingGood
-                            .Include(u => u.Warehouse)
-                            .Include(u => u.ProdInfo)
-                            .Include(u => u.ApplicationUser)
-                          .Where(u => u.CreatedDateTime > DateTime.Now.AddMonths(-1)).ToList().OrderByDescending(u => u.CreatedDateTime);
+                        IncomingGoodList = _db.IncomingGood
+                          .Include(u => u.Warehouse)
+                          .Include(u => u.ProdInfo)
+                          .Include(u => u.ApplicationUser)
+                        .Where(u => u.CreatedDateTime > DateTime.Now.AddMonths(-1)).ToList().OrderByDescending(u => u.CreatedDateTime);
                     }
                 }
             }

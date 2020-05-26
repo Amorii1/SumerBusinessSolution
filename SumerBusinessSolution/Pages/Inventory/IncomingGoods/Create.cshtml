@@ -20,19 +20,97 @@
     <h2 class="text-info text-md-right">  @localizer.Get("أضافة مواد واردة")</h2>
 
     <form method="post">
+        <div dir="rtl" class="row">
+            <div class="col-md-3">
+                <a asp-route-culture="@Request.RouteValues["culture"]" data-toggle="modal" data-target="#prodModal" class="btn btn-info" name="CreateProduct">
+                    @localizer.Get("مادة جديد") <i class="fas fa-plus"></i>
+
+                </a>
+            </div>
+        </div>
+
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-        @*<table>
-                <tr>
-                    <td>
-                        <select asp-for="@Model.WhId"
-                                asp-items="@(new SelectList(Model.WarehouseList, "Id", "WhName"))"
-                                class="form-control ">
-                        </select>
-                    </td>
+        <div class="modal fade " id="prodModal" role="dialog" method="post" dir="rtl">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <div class="col-md-6">
+                            <h3 class="modal-title text-info text-md-right"> اضافة مادة جديدة</h3>
+                        </div>
+                        <div class="col-md-6">
+                            <a href="#" class="close float-md-left" data-dismiss="modal">&times;</a>
+                        </div>
+                    </div>
+                    <div class="modal-body">
+                        <div class="modal-body">
 
-                </tr>
-            </table>*@
+                            <div class="row form-group">
+                                <div class="col-md-3">
+                                    <label asp-for="ProdInfo.ProdCode"> </label>
+                                </div>
+                                <div class="col-md-5 ">
+                                    <input asp-for="ProdInfo.ProdCode" class="form-control  text-md-right" />
+                                </div>
+                                <span asp-validation-for="ProdInfo.ProdCode" class="text-danger"></span>
+                            </div>
+
+                            <div class="row form-group">
+                                <div class="col-md-3">
+                                    <label asp-for="ProdInfo.ProdName"> </label>
+                                </div>
+                                <div class="col-md-5 ">
+                                    <input asp-for="ProdInfo.ProdName" class="form-control  text-md-right" />
+                                </div>
+                                <span asp-validation-for="ProdInfo.ProdName" class="text-danger"></span>
+                            </div>
+
+                            <div class="row form-group">
+                                <div class="col-md-3">
+                                    <label asp-for="ProdInfo.CostPrice"> </label>
+                                </div>
+                                <div class="col-md-5 ">
+                                    <input asp-for="ProdInfo.CostPrice" class="form-control  text-md-right" />
+                                </div>
+                                <span asp-validation-for="ProdInfo.CostPrice" class="text-danger"></span>
+                            </div>
+
+                            <div class="row form-group">
+                                <div class="col-md-3">
+                                    <label asp-for="ProdInfo.RetailPrice"> </label>
+                                </div>
+                                <div class="col-md-5">
+                                    <input asp-for="ProdInfo.RetailPrice" class="form-control  text-md-right" />
+                                </div>
+                                <span asp-validation-for="ProdInfo.RetailPrice" class="text-danger"></span>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-3">
+                                    <label asp-for="ProdInfo.WholePrice"> </label>
+                                </div>
+                                <div class="col-md-5">
+                                    <input asp-for="ProdInfo.WholePrice" class="form-control  text-md-right" />
+                                </div>
+                                <span asp-validation-for="ProdInfo.WholePrice" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="modal-footer" dir="ltr">
+
+                            <a href="#" class="btn btn-danger" data-dismiss="modal">الغاء</a>
+                            @*<input asp-route-culture="@Request.RouteValues["culture"]" type="submit" class="btn btn-info" id="btnCreateProd" value="@localizer.Get("اضافة")" />*@
+                            <input class="btn-default" type="button" id="btnCreateProd" value="Save" />
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </form>
+
+
+    <form method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
         <div class="row form-group" dir="rtl">
             <div class="col-md-2">
@@ -44,11 +122,9 @@
                         class="form-control ">
                 </select>
             </div>
-            
+
             <span asp-validation-for="@Model.WhId" class="text-danger"></span>
         </div>
-
-
         <table dir="rtl" id="dataTable" class=" text-md-center table table-striped border table-responsive-md table-responsive-lg">
             <tr>
                 <th>
@@ -239,7 +315,48 @@
             });
         });
     </script>
+    @*<script>
+            async function CreateProd() {
+                const obj = await fetch(`${window.location.href}?handler=CreateProduct`)
+                console.log("WORKS!");
+            }
+
+        </script>*@
     @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    @*<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>*@
+    <script>
+        $(document).ready(function () {
+            $("#btnCreateProd").click(function () {
+                //$.ajax(
+                //    {
+                //        type: "POST", //HTTP POST Method
+                //        url: "/Create?handler=CreateProduct", // Controller/View
+                //        data: { //Passing data
+                //           // Name: $("#txtName").val(), //Reading text box values using Jquery
+                //           // City: $("#txtAddress").val(),
+                //           // Address: $("#txtcity").val()
+                //        }
+
+                //    });
+                $.ajax({
+                    type: "GET",
+                    url: "/Create?handler=Test",
+                    contentType: "application/json",
+                    dataType: "json",
+                    success: function (response) {
+                        console.log("it works!");
+                    },
+                    failure: function (response) {
+                        console.log("error");
+                    }
+                });
+                console.log("Clicked");
+
+            });
+        });
+
+    </script>
 }
 
 
