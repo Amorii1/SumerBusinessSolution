@@ -38,7 +38,8 @@
                                             <label asp-for="SearchFromDate" class="control-label"></label>
                                         </div>
                                         <div>
-                                            <input type="date" asp-for="SearchFromDate" class="form-control" />
+                                            <input hidden asp-for="SearchFromDate" />
+                                            <input type="text" class="datepicker form-control" id="SearchFromDatePicker" autocomplete="off">
                                         </div>
 
 
@@ -51,7 +52,8 @@
                                             <label asp-for="SearchToDate" class="control-label"></label>
                                         </div>
                                         <div>
-                                            <input type="date" asp-for="SearchToDate" class="form-control" />
+                                            <input hidden asp-for="SearchToDate" />
+                                            <input type="text" class="datepicker form-control" id="SearchToDatePicker" autocomplete="off">
                                         </div>
                                     </div>
                                 </div>
@@ -206,7 +208,17 @@
     $('#SearchProdCode').autocomplete({
     source: '@Url.Page("InvTransactions", "SearchNow")'
     });
-    });
+         });
+        
+            $('.datepicker').val('');
+            $('.datepicker').text('');
+            $('.datepicker').datepicker();
+            $('.datepicker').datepicker("option", "dateFormat", "dd/mm/yy");
+            $('.ui-datepicker').addClass('notranslate');
+            $('#SearchFromDatePicker').datepicker("option", "altField", "#SearchFromDate");
+            $('#SearchFromDatePicker').datepicker("option", "altFormat", "yy-mm-dd");
+            $('#SearchToDatePicker').datepicker("option", "altField", "#SearchToDate");
+            $('#SearchToDatePicker').datepicker("option", "altFormat", "yy-mm-dd");
     </script>
 }
 

@@ -44,14 +44,13 @@
 
                             <div class="col-md-3 pb-1">
                                 <div dir="rtl" class="form-group row float-md-right">
-
-
                                     <div>
+                                        <input hidden asp-for="SearchFromDate" />
                                         <label asp-for="SearchFromDate" class="control-label"></label>
                                     </div>
 
                                     <div>
-                                        <input type="date" asp-for="SearchFromDate" class="form-control" />
+                                        <input type="text" asp-for="SearchFromDate" class="datepicker form-control"  id="SearchFromDatePicker" autocomplete="off" />
                                     </div>
                                 </div>
                             </div>
@@ -64,7 +63,8 @@
                                     </div>
 
                                     <div>
-                                        <input type="date" asp-for="SearchToDate" class="form-control" />
+                                        <input hidden asp-for="SearchToDate" />
+                                        <input type="text" asp-for="SearchToDate" class="datepicker form-control" id="SearchToDatePicker" autocomplete="off"/>
                                     </div>
                                 </div>
                             </div>
@@ -177,6 +177,15 @@
     $('#searchProdCode').autocomplete({
     source: '@Url.Page("Create", "SearchNow")'
     });
-    });
+         });
+        $('.datepicker').val('');
+            $('.datepicker').text('');
+            $('.datepicker').datepicker();
+            $('.datepicker').datepicker("option", "dateFormat", "dd/mm/yy");
+            $('.ui-datepicker').addClass('notranslate');
+            $('#SearchFromDatePicker').datepicker("option", "altField", "#SearchFromDate");
+            $('#SearchFromDatePicker').datepicker("option", "altFormat", "yy-mm-dd");
+            $('#SearchToDatePicker').datepicker("option", "altField", "#SearchToDate");
+            $('#SearchToDatePicker').datepicker("option", "altFormat", "yy-mm-dd");
     </script>
 }

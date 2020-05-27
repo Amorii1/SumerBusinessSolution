@@ -38,14 +38,14 @@ namespace SumerBusinessSolution.Pages.Inventory.Reports
         }
 
         [DataType(DataType.Date)]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy/MM/dd}")]
         [Display(Name = "من")]
-        public DateTime SearchFromDate { get; set; }
+        public DateTime? SearchFromDate { get; set; }
 
         [DataType(DataType.Date)]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy/MM/dd}")]
         [Display(Name = "الى")]
-        public DateTime SearchToDate { get; set; }
+        public DateTime? SearchToDate { get; set; }
+
+  
 
         public async Task<IActionResult> OnGet(string SearchProdCode = null, DateTime? SearchFromDate = null, DateTime? SearchToDate = null)
         {

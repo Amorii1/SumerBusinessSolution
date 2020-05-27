@@ -48,13 +48,11 @@ namespace SumerBusinessSolution.Inventory.TransferRequests
 
         [DataType(DataType.Date)]
         [Display(Name = "من")]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy/MM/dd}")]
-        public DateTime SearchFromDate { get; set; }
+        public DateTime? SearchFromDate { get; set; }
 
         [DataType(DataType.Date)]
         [Display(Name = "الى")]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy/MM/dd}")]
-        public DateTime SearchToDate { get; set; }
+        public DateTime? SearchToDate { get; set; }
 
 
         public async Task<IActionResult> OnGet(DateTime? SearchFromDate = null, DateTime? SearchToDate = null)

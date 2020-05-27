@@ -47,8 +47,15 @@ namespace SumerBusinessSolution.Pages.Sales.ExternalBillings
         [TempData]
         public bool ShowAll { get; set; }
 
+        [DataType(DataType.Date)]
+        [Display(Name = "من")]
+        public DateTime? SearchFromDate { get; set; }
 
-        public  IActionResult OnGet(string CustomerName = null, bool ShowAll = false)
+        [DataType(DataType.Date)]
+        [Display(Name = "الى")]
+        public DateTime? SearchToDate { get; set; }
+
+        public IActionResult OnGet(string CustomerName = null, DateTime? SearchFromDate = null, DateTime? SearchToDate = null)
         {
             StringBuilder Param = new StringBuilder();
             Param.Append("&SearchCustomer=");
@@ -57,52 +64,105 @@ namespace SumerBusinessSolution.Pages.Sales.ExternalBillings
             {
                 Param.Append(CustomerName);
             }
-
             Param.Append("&CustomerName=");
-
-
-            if (ShowAll == true)
-            {
-                Param.Append(ShowAll);
-            }
-
-            Param.Append("&ShowAll=");
 
             CustomerList = _db.Customer.ToList();
 
-            if (CustomerName != null)
+            if (SearchFromDate != null & SearchToDate != null & CustomerName == null)
             {
-                if (ShowAll == true)
-                {
-                    ExternalBillHeaderList =   _db.ExternalBillHeader
-                   .Where(b => b.Customer.CompanyName.ToLower().Contains(CustomerName.ToLower())).ToList()
-                   .OrderByDescending(b => b.CreatedDataTime);
-                }
-                else
-                {
-
-                    ExternalBillHeaderList = _db.ExternalBillHeader
-                        .Where(b => b.Status == SD.OpenBill & b.Customer.CompanyName.ToLower().Contains(CustomerName.ToLower())).ToList()
-                        .OrderByDescending(b => b.CreatedDataTime);
-                }
+                ExternalBillHeaderList = _db.ExternalBillHeader
+                    .Where(header => header.Status == SD.OpenBill & header.CreatedDataTime >= SearchFromDate & header.CreatedDataTime <= SearchToDate).ToList()
+                    .OrderByDescending(header => header.CreatedDataTime);
             }
             else
             {
-                if (ShowAll == true)
+                if (SearchFromDate != null & SearchToDate != null & CustomerName != null)
                 {
-                    ExternalBillHeaderList = _db.ExternalBillHeader 
-                        .OrderByDescending(b => b.CreatedDataTime);
-
+                    ExternalBillHeaderList = _db.ExternalBillHeader
+                        .Include(header => header.Customer)
+                        .Where(header => header.Customer.CompanyName.ToLower().Contains(CustomerName.ToLower()) & header.Status == SD.OpenBill & header.CreatedDataTime >= SearchFromDate & header.CreatedDataTime <= SearchToDate).ToList()
+                        .OrderByDescending(header => header.CreatedDataTime);
                 }
                 else
                 {
-                    ExternalBillHeaderList = _db.ExternalBillHeader
-                        .Where(b => b.Status == SD.OpenBill).ToList()
-                        .OrderByDescending(b => b.CreatedDataTime);
+                    if (SearchFromDate == null & SearchToDate == null & CustomerName != null)
+                    {
+                        ExternalBillHeaderList = _db.ExternalBillHeader
+                            .Include(header => header.Customer)
+                            .Where(header => header.Customer.CompanyName.ToLower().Contains(CustomerName.ToLower()) & header.Status == SD.OpenBill).ToList()
+                            .OrderByDescending(header => header.CreatedDataTime);
+
+                    }
+                    else
+                    {
+                        ExternalBillHeaderList = _db.ExternalBillHeader
+                            .Include(header => header.Customer)
+                            .Where(header => header.CreatedDataTime >= DateTime.Now.AddMonths(-1) & header.Status == SD.OpenBill).ToList()
+                            .OrderByDescending(header => header.CreatedDataTime);
+                    }
                 }
+
             }
-                return Page();
+
+
+            return Page();
         }
+
+        //public IActionResult OnGet(string CustomerName = null, bool ShowAll = false)
+        //{
+        //    StringBuilder Param = new StringBuilder();
+        //    Param.Append("&SearchCustomer=");
+
+        //    if (CustomerName != null)
+        //    {
+        //        Param.Append(CustomerName);
+        //    }
+
+        //    Param.Append("&CustomerName=");
+
+
+        //    if (ShowAll == true)
+        //    {
+        //        Param.Append(ShowAll);
+        //    }
+
+        //    Param.Append("&ShowAll=");
+
+        //    CustomerList = _db.Customer.ToList();
+
+        //    if (CustomerName != null)
+        //    {
+        //        if (ShowAll == true)
+        //        {
+        //            ExternalBillHeaderList =   _db.ExternalBillHeader
+        //           .Where(b => b.Customer.CompanyName.ToLower().Contains(CustomerName.ToLower())).ToList()
+        //           .OrderByDescending(b => b.CreatedDataTime);
+        //        }
+        //        else
+        //        {
+
+        //            ExternalBillHeaderList = _db.ExternalBillHeader
+        //                .Where(b => b.Status == SD.OpenBill & b.Customer.CompanyName.ToLower().Contains(CustomerName.ToLower())).ToList()
+        //                .OrderByDescending(b => b.CreatedDataTime);
+        //        }
+        //    }
+        //    else
+        //    {
+        //        if (ShowAll == true)
+        //        {
+        //            ExternalBillHeaderList = _db.ExternalBillHeader 
+        //                .OrderByDescending(b => b.CreatedDataTime);
+
+        //        }
+        //        else
+        //        {
+        //            ExternalBillHeaderList = _db.ExternalBillHeader
+        //                .Where(b => b.Status == SD.OpenBill).ToList()
+        //                .OrderByDescending(b => b.CreatedDataTime);
+        //        }
+        //    }
+        //        return Page();
+        //}
 
         public IActionResult OnPostCloseBillManually(int ExternalHeaderId)
         {

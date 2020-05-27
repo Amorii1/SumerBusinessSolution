@@ -44,14 +44,12 @@ namespace SumerBusinessSolution
             public string StatusMessage { get; set; }
 
         [DataType(DataType.Date)]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         [Display(Name = "من")]
-        public DateTime SearchFromDate  { get; set; }
+        public DateTime? SearchFromDate { get; set; }
 
         [DataType(DataType.Date)]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy/MM/dd}")]
         [Display(Name = "الى")]
-        public string SearchToDate  { get; set; }
+        public DateTime? SearchToDate { get; set; }
 
         public  IActionResult  OnGet(string CustomerName = null, DateTime? SearchFromDate = null, DateTime? SearchToDate = null)
         {

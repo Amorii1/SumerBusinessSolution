@@ -39,16 +39,13 @@ namespace SumerBusinessSolution.Pages.Sales.Billings
             [BindProperty]
             public int HeaderId { get; set; }
 
-
         [DataType(DataType.Date)]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy/MM/dd}")]
         [Display(Name = "من")]
-        public DateTime SearchFromDate { get; set; }
+        public DateTime? SearchFromDate { get; set; }
 
         [DataType(DataType.Date)]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy/MM/dd}")]
         [Display(Name = "الى")]
-        public DateTime SearchToDate { get; set; }
+        public DateTime? SearchToDate { get; set; }
 
         [TempData]
         public string StatusMessage { get; set; }
