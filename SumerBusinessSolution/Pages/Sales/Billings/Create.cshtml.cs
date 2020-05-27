@@ -185,6 +185,11 @@ namespace SumerBusinessSolution.Pages.Sales.Billings
         {
             InvStockQty = _db.InvStockQty.FirstOrDefaultAsync(inv => inv.ProdInfo.ProdCode == ProdCode & inv.Warehouse.WhType.Type == "StoreRoom").GetAwaiter().GetResult();
 
+            if(InvStockQty == null)
+            {
+                return false;
+            }
+
             double StockQty = InvStockQty.Qty;
 
             if (StockQty >= Qty)
