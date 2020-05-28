@@ -123,31 +123,6 @@
                         <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-primary" title="التفاصيل" asp-page="../Billings/Details" type="submit" asp-route-BhId="@item.Id" name="Details">
                             @localizer.Get("") <i class="far fa-clipboard"></i>
                         </a>
-                        @*@if (User.IsInRole(SD.AdminEndUser))
-                    {
-                        <a asp-route-culture="@Request.RouteValues["culture"]" data-toggle="modal" title="اغلاق" data-target="#Ask" class="btn btn-danger" asp-page-handler="CloseBillManually" asp-route-HeaderId="@item.Id" type="submit" name="Close">
-                            @localizer.Get("") <i class="fas fa-window-close"></i>
-                        </a>
-
-
-                        <div class="modal fade" id="Ask" role="dialog" method="post">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button class="close" data-dismiss="modal">&times;</button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <p class="alert alert-danger">@localizer.Get("هل انت متأكد؟")</p>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <input asp-route-culture="@Request.RouteValues["culture"]" type="submit" class="btn btn-info" value="@localizer.Get("نعم")" />
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                    }*@
-
                     </form>
                 </div>
             </td>

@@ -114,13 +114,14 @@ namespace SumerBusinessSolution.Pages.Inventory.IncomingGoods
             return new JsonResult(ok);
         }
 
-        public ActionResult CreateProduct()
+        public ActionResult OnPostCreateProduct()
         {
             bool check = _InveTrans.CheckProdCodeExist(ProdInfo.ProdCode).GetAwaiter().GetResult();
 
             if (check == false)
             {
                 StatusMessage = "Error!رمز المادة مضافة سابقا";
+                return Page();
                 
             }
 

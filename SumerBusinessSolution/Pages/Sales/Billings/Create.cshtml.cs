@@ -183,7 +183,7 @@ namespace SumerBusinessSolution.Pages.Sales.Billings
         // leave it for later
         private bool CheckQtyInWh(string ProdCode, double Qty)
         {
-            InvStockQty = _db.InvStockQty.FirstOrDefaultAsync(inv => inv.ProdInfo.ProdCode == ProdCode & inv.Warehouse.WhType.Type == "StoreRoom").GetAwaiter().GetResult();
+            InvStockQty = _db.InvStockQty.FirstOrDefaultAsync(inv => inv.ProdInfo.ProdCode == ProdCode & inv.Warehouse.WhType.Type == SD.ShowRoom).GetAwaiter().GetResult();
 
             if(InvStockQty == null)
             {

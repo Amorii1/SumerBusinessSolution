@@ -66,48 +66,52 @@
         </div>
 
         <table dir="rtl" id="dataTable" class=" text-md-center table table-striped border table-responsive-md table-responsive-lg">
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(a => Model.InvT[0].ProdInfo.ProdCode)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(a => Model.InvT[0].Qty)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(a => Model.InvT[0].Note)
-                </th>
-                <th><a title="اضافة" href="#" id="addNew">   <i class="fas fa-plus"></i></a></th>
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(a => Model.InvT[0].ProdInfo.ProdCode)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(a => Model.InvT[0].Qty)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(a => Model.InvT[0].Note)
+                    </th>
+                    <th><a title="اضافة" href="#" id="addNew">   <i class="fas fa-plus"></i></a></th>
 
-            </tr>
-            @if (Model.InvT != null && Model.InvT.Count > 0)
-            {
-
-                int j = 0;
-
-                foreach (var i in Model.InvT)
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.InvT != null && Model.InvT.Count > 0)
                 {
 
+                    int j = 0;
 
-                    <tr>
-                        <td onclick="bindAutocomplete(this)">@Html.TextBoxFor(a => Model.InvT[j].ProdInfo.ProdCode) </td>
-                        <td>@Html.TextBoxFor(a => Model.InvT[j].Qty)</td>
-                        <td>@Html.TextBoxFor(a => Model.InvT[j].Note)</td>
-                        <td>
-                            @if (j > 0)
-                            {
-                                <a href="#" id="removeThis" class="remove">Remove</a>
+                    foreach (var i in Model.InvT)
+                    {
 
-                            }
-                        </td>
-                        <span asp-validation-for="@Model.InvT[j].ProdInfo.ProdCode" class="text-danger"></span>
-                        <span asp-validation-for="@Model.InvT[j].Qty" class="text-danger"></span>
-                        <span asp-validation-for="@Model.InvT[j].Note" class="text-danger"></span>
-                    </tr>
-                    j++;
+
+                        <tr>
+                            <td onclick="bindAutocomplete(this)">@Html.TextBoxFor(a => Model.InvT[j].ProdInfo.ProdCode) </td>
+                            <td>@Html.TextBoxFor(a => Model.InvT[j].Qty)</td>
+                            <td>@Html.TextBoxFor(a => Model.InvT[j].Note)</td>
+                            <td>
+                                @if (j > 0)
+                                {
+                                    <a href="#" id="removeThis" class="remove">Remove</a>
+
+                                }
+                            </td>
+                            <span asp-validation-for="@Model.InvT[j].ProdInfo.ProdCode" class="text-danger"></span>
+                            <span asp-validation-for="@Model.InvT[j].Qty" class="text-danger"></span>
+                            <span asp-validation-for="@Model.InvT[j].Note" class="text-danger"></span>
+                        </tr>
+                        j++;
+
+                    }
 
                 }
-
-            }
+            </tbody>
         </table>
         <div class=" form-group row">
             <div class="col-md-7 offset-md-5">
@@ -135,25 +139,55 @@
 @section Scripts{
     <script language="javascript">
             $(document).ready(function () {
+        
+                $('#dataTable').on('click', '.remove', function (e) {
+                    e.preventDefault();
+                    var tr = $(this).closest('tr');
+                    var index = $(this).data('index');
+                    tr.remove();
+         
+            
+                    $('#dataTable > tbody > tr').each((ix, row) => {
+                        if (ix >= index) {
+                            $.each($(row).find(':input'), function (i, val) {
+                                // Replaced Name
+                                var previous = ix + 1;
+                                var oldN = $(this).attr('name');
+                                var newN = oldN.replace('[' + previous + ']', '[' + ix + ']');
+                                $(this).attr('name', newN);
+
+                                var oldI = $(this).attr('id');
+                                var newI = oldI.replace('_' + previous + '__', '_' + ix + '__');
+                                $(this).attr('id', newI);
+                            });
+
+                            $(row).find('.remove').data('index', ix);
+                        }
+                    });
+                })
 
                 //1. Add new row
                 $("#addNew").click(function (e) {
                     e.preventDefault();
-                    var $tableBody = $("#dataTable");
+                    var $tableBody = $("#dataTable > tbody");
                     var $trLast = $tableBody.find("tr:last");
 
                     var $trNew = $trLast.clone();
                     $trNew.find(':text').val('');
 
                     var suffix = $trNew.find(':input:first').attr('name').match(/\d+/);
-                    $trNew.find("td:last").html('<a href="#" id="removeThis" title="الغاء" onclick="return RemoveRow(this)" class="remove"><i class="fas fa-window-close"></i></a>');
-
+                    $trNew.find("td:last").html('<a href="#" title="الغاء" data-index=' + (parseInt(suffix) + 1) + '  class="remove"><i class="fas fa-window-close"></i></a>');
+                    // $trNew.find("td:last").html('<button  id="removeThis" onclick="RemoveRow(this)">Click here</button>');
 
                     $.each($trNew.find(':input'), function (i, val) {
                         // Replaced Name
                         var oldN = $(this).attr('name');
                         var newN = oldN.replace('[' + suffix + ']', '[' + (parseInt(suffix) + 1) + ']');
                         $(this).attr('name', newN);
+
+                        var oldI = $(this).attr('id');
+                        var newI = oldI.replace('_' + suffix + '__', '_' + (parseInt(suffix) + 1) + '__');
+                        $(this).attr('id', newI);
                         //Replaced value
                         var type = $(this).attr('type');
                         if (type.toLowerCase() == "text") {
@@ -165,11 +199,7 @@
 
                     });
                     $trLast.after($trNew);
-
                 });
-
-
-
             });
 
             function bindAutocomplete(t) {
