@@ -16,13 +16,13 @@
 }
 
 
-<div class=" backgroundWhite">
-    <div class="row">
-          <div class="col-md-12 text-md-right">
-            @*<h2 class="text-info"> طلبات حركه المنتجات </h2>*@
-            <h2 class="text-info"> @localizer.Get("حسابات الزبائن")</h2>
-           </div>
-     </div>
+    <div class=" backgroundWhite">
+        <div class="row">
+            <div class="col-md-12 text-md-right">
+                @*<h2 class="text-info"> طلبات حركه المنتجات </h2>*@
+                <h2 class="text-info"> @localizer.Get("حسابات الزبائن")</h2>
+            </div>
+        </div>
 
 
         <form method="get" asp-page="Index">
@@ -80,81 +80,81 @@
                         @*<tr style="background-color:red;">
                         </tr>*@
 
-            <tr style="background-color:red;">
+                        <tr style="background-color:red;">
 
-                <td style="width:150px;">
-                    <div class="btn-group" role="group">
-                        <form method="post">
-
-
-                            @if (User.IsInRole(SD.AdminUser))
-                            {
-                                <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-success text-white" asp-page="../Accounts/EditCustAcc" asp-route-CustId="@item.Id" type="submit" title="تعديل الحسابات" name="EditCustAcc">
-                                    @localizer.Get("") <i class="fas fa-edit"></i>
-                                </a>
-                            }
-                            <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-info text-white" asp-page="../Accounts/PayToAcc" asp-route-CustId="@item.Id" type="submit" title="دفع لحساب الزبون" name="PayToAcc">
-                                @localizer.Get("") <i class="fas fa-money-check-alt"></i>
-                            </a>
+                            <td style="width:150px;">
+                                <div class="btn-group" role="group">
+                                    <form method="post">
 
 
-                        </form>
-                    </div>
-                </td>
+                                        @if (User.IsInRole(SD.AdminUser))
+                                        {
+                                            <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-success text-white" asp-page="../Accounts/EditCustAcc" asp-route-CustId="@item.Id" type="submit" title="تعديل الحسابات" name="EditCustAcc">
+                                                @localizer.Get("") <i class="fas fa-edit"></i>
+                                            </a>
+                                        }
+                                        <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-info text-white" asp-page="../Accounts/PayToAcc" asp-route-CustId="@item.Id" type="submit" title="دفع لحساب الزبون" name="PayToAcc">
+                                            @localizer.Get("") <i class="fas fa-money-check-alt"></i>
+                                        </a>
+
+
+                                    </form>
+                                </div>
+                            </td>
 
 
 
-                <td>
-                    @Html.DisplayFor(m => item.Debt)
-                </td>
-                <td>
-                    @Html.DisplayFor(m => item.Paid)
-                </td>
-                <td>
-                    @Html.DisplayFor(m => item.Id)
-                </td>
-                <td>
-                    @Html.DisplayFor(m => item.Customer.CompanyName)
-                </td>
-            </tr>
+                            <td>
+                                @Html.DisplayFor(m => item.Debt)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(m => item.Paid)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(m => item.Id)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(m => item.Customer.CompanyName)
+                            </td>
+                        </tr>
 
                     }
                     else
                     {
-            <tr>
-                <td>
-                    <div class="btn-group" role="group">
-                        <form method="post">
-                            @if (User.IsInRole(SD.AdminUser))
-                            {
-                                <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-success text-white" asp-page="../Accounts/EditCustAcc" asp-route-CustId="@item.Id" type="submit" title="تعديل الحسابات" name="AccDetails">
-                                    @localizer.Get("") <i class="fas fa-edit"></i>
-                                </a>
-                            }
-                            <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-info text-white" asp-page="../Accounts/PayToAcc" asp-route-CustId="@item.Id" type="submit" title="دفع لحساب الزبون" name="PayToAcc">
-                                @localizer.Get("") <i class="fas fa-money-check-alt"></i>
-                            </a>
+                        <tr>
+                            <td>
+                                <div class="btn-group" role="group">
+                                    <form method="post">
+                                        @if (User.IsInRole(SD.AdminUser))
+                                        {
+                                            <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-success text-white" asp-page="../Accounts/EditCustAcc" asp-route-CustId="@item.Id" type="submit" title="تعديل الحسابات" name="AccDetails">
+                                                @localizer.Get("") <i class="fas fa-edit"></i>
+                                            </a>
+                                        }
+                                        <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-info text-white" asp-page="../Accounts/PayToAcc" asp-route-CustId="@item.Id" type="submit" title="دفع لحساب الزبون" name="PayToAcc">
+                                            @localizer.Get("") <i class="fas fa-money-check-alt"></i>
+                                        </a>
 
 
-                        </form>
-                    </div>
-                </td>
+                                    </form>
+                                </div>
+                            </td>
 
 
 
-                <td>
-                    @Html.DisplayFor(m => item.Debt)
-                </td>
-                <td>
-                    @Html.DisplayFor(m => item.Paid)
-                </td>
-                <td>
-                    @Html.DisplayFor(m => item.Id)
-                </td>
-                <td>
-                    @Html.DisplayFor(m => item.Customer.CompanyName)
-                </td>
-            </tr>
+                            <td>
+                                @Html.DisplayFor(m => item.Debt)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(m => item.Paid)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(m => item.Id)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(m => item.Customer.CompanyName)
+                            </td>
+                        </tr>
 
                     }
                 }
@@ -165,7 +165,13 @@
             </table>
 
         </div>
+        <div class="col-md-6  ">
+            <a asp-page="/Customers/Reports/Index" title="التقارير" asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-info">
 
+                <i class="fas fa-file-alt"></i> الزبائن
+
+            </a>
+        </div>
     </div>
 
     @section Scripts {

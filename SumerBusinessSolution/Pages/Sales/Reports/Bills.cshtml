@@ -16,183 +16,192 @@
 }
 
 
-<div class=" backgroundWhite">
-    <div class="row">
-        <div class="col-md-12 text-md-right">
-            @*<h2 class="text-info"> طلبات حركه المنتجات </h2>*@
-            <h2 class="text-info"> @localizer.Get("تقرير الفواتير")</h2>
+    <div class=" backgroundWhite">
+        <div class="row">
+            <div class="col-md-12 text-md-right">
+                @*<h2 class="text-info"> طلبات حركه المنتجات </h2>*@
+                <h2 class="text-info"> @localizer.Get("تقرير الفواتير")</h2>
+
+            </div>
 
         </div>
-
-    </div>
-    <form method="get" asp-page="Index">
-        <div class="border backgroundWhite">
-            <div @*style="height:60px;"*@ class="container ">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="row" style="margin-top:10px;">
+        <form method="get" asp-page="Index">
+            <div class="border backgroundWhite">
+                <div @*style="height:60px;"*@ class="container ">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="row" style="margin-top:10px;">
 
 
 
-                            <div class="col-md-3 pb-1">
-                                <div dir="rtl" class="form-group row float-md-right">
+                                <div class="col-md-3 pb-1">
+                                    <div dir="rtl" class="form-group row float-md-right">
 
 
-                                    <div>
-                                        <label asp-for="SearchFromDate" class="control-label"></label>
-                                    </div>
-                                    <div>
-                                        <input asp-for="SearchFromDate" class="form-control" />
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-3 pb-1">
-                                <div dir="rtl" class="form-group row float-md-right">
-
-                                    <div>
-                                        <label asp-for="SearchToDate" class="control-label"></label>
-                                    </div>
-                                    <div>
-                                        <input asp-for="SearchToDate" class="form-control" />
-
+                                        <div>
+                                            <label asp-for="SearchFromDate" class="control-label"></label>
+                                        </div>
+                                        <div>
+                                            <input asp-for="SearchFromDate" class="form-control" />
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-md-4 pb-1">
-                                @Html.Editor("CustomerName", new { htmlAttributes = new { @class = "form-control text-md-right", placeholder = @localizer.Get("اسم الزبون....") } })
+                                <div class="col-md-3 pb-1">
+                                    <div dir="rtl" class="form-group row float-md-right">
 
-                            </div>
-                            <div class="col-md-2 text-md-right pb-1">
+                                        <div>
+                                            <label asp-for="SearchToDate" class="control-label"></label>
+                                        </div>
+                                        <div>
+                                            <input asp-for="SearchToDate" class="form-control" />
 
-                                <button asp-route-culture="@Request.RouteValues["culture"]" title="بحث" type="submit" name="submit" value="search" class="btn btn-info form-control">
-                                    <i class="fas fa-search"></i>
-                                </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 pb-1">
+                                    @Html.Editor("CustomerName", new { htmlAttributes = new { @class = "form-control text-md-right", placeholder = @localizer.Get("اسم الزبون....") } })
 
+                                </div>
+                                <div class="col-md-2 text-md-right pb-1">
+
+                                    <button asp-route-culture="@Request.RouteValues["culture"]" title="بحث" type="submit" name="submit" value="search" class="btn btn-info form-control">
+                                        <i class="fas fa-search"></i>
+                                    </button>
+
+                                </div>
                             </div>
+
                         </div>
-
                     </div>
                 </div>
             </div>
-        </div>
-    </form>
-    <div>
+        </form>
+        <div>
 
-        <table class="table table-striped border table-responsive-md table-responsive-lg text-md-center">
-            <tr class="table-secondary">
+            <table class="table table-striped border table-responsive-md table-responsive-lg text-md-center">
+                <tr class="table-secondary">
 
-                <th></th>
-                <th>
-                    @Html.DisplayNameFor(m => m.BillHeader.CreatedDataTime)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(m => m.BillHeader.Status)
-                </th>
-                <th class="text-success">
-                    @Html.DisplayNameFor(m => m.BillHeader.PaidAmt)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(m => m.BillHeader.TotalNetAmt)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(m => m.BillHeader.Customer.CompanyName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(m => m.BillHeader.Id)
-                </th>
-            </tr>
+                    <th></th>
+                    <th>
+                        @Html.DisplayNameFor(m => m.BillHeader.CreatedDataTime)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(m => m.BillHeader.Status)
+                    </th>
+                    <th class="text-success">
+                        @Html.DisplayNameFor(m => m.BillHeader.PaidAmt)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(m => m.BillHeader.TotalNetAmt)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(m => m.BillHeader.Customer.CompanyName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(m => m.BillHeader.Id)
+                    </th>
+                </tr>
 
-            @if (Model.BillHeaderList.Count() == 0)
-            {
-                <h2 class="text-danger text-md-center"> @localizer.Get("لا يوجد تقرير للفواتير")</h2>
-
-            }
-            else
-            {
-                @foreach (var item in Model.BillHeaderList)
+                @if (Model.BillHeaderList.Count() == 0)
                 {
-        <tr>
-            <td style="width:150px;">
-                <div class="btn-group" role="group">
-                    <form method="post">
-                        @if (item.Status == SD.OpenBill)
-                        {
-                            <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-info" title="تسديد" asp-page="../Billings/MakePayment" type="submit" asp-route-BhId="@item.Id" name="Payment">
-                                @localizer.Get("") <i class="fas fa-money-check-alt"></i>
-                            </a>
-                        }
-                        <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-primary" title="التفاصيل" asp-page="../Billings/Details" type="submit" asp-route-BhId="@item.Id" name="Details">
-                            @localizer.Get("") <i class="far fa-clipboard"></i>
-                        </a>
-                        @*@if (User.IsInRole(SD.AdminEndUser))
+                    <h2 class="text-danger text-md-center"> @localizer.Get("لا يوجد تقرير للفواتير")</h2>
+
+                }
+                else
+                {
+                    @foreach (var item in Model.BillHeaderList)
                     {
-                        <a asp-route-culture="@Request.RouteValues["culture"]" data-toggle="modal" title="اغلاق" data-target="#Ask" class="btn btn-danger" asp-page-handler="CloseBillManually" asp-route-HeaderId="@item.Id" type="submit" name="Close">
-                            @localizer.Get("") <i class="fas fa-window-close"></i>
-                        </a>
+                        <tr>
+                            <td style="width:150px;">
+                                <div class="btn-group" role="group">
+                                    <form method="post">
+                                        @if (item.Status == SD.OpenBill)
+                                        {
+                                            <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-info" title="تسديد" asp-page="../Billings/MakePayment" type="submit" asp-route-BhId="@item.Id" name="Payment">
+                                                @localizer.Get("") <i class="fas fa-money-check-alt"></i>
+                                            </a>
+                                        }
+                                        <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-primary" title="التفاصيل" asp-page="../Billings/Details" type="submit" asp-route-BhId="@item.Id" name="Details">
+                                            @localizer.Get("") <i class="far fa-clipboard"></i>
+                                        </a>
+                                        @*@if (User.IsInRole(SD.AdminEndUser))
+                                        {
+                                            <a asp-route-culture="@Request.RouteValues["culture"]" data-toggle="modal" title="اغلاق" data-target="#Ask" class="btn btn-danger" asp-page-handler="CloseBillManually" asp-route-HeaderId="@item.Id" type="submit" name="Close">
+                                                @localizer.Get("") <i class="fas fa-window-close"></i>
+                                            </a>
 
 
-                        <div class="modal fade" id="Ask" role="dialog" method="post">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button class="close" data-dismiss="modal">&times;</button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <p class="alert alert-danger">@localizer.Get("هل انت متأكد؟")</p>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <input asp-route-culture="@Request.RouteValues["culture"]" type="submit" class="btn btn-info" value="@localizer.Get("نعم")" />
-                                    </div>
+                                            <div class="modal fade" id="Ask" role="dialog" method="post">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <button class="close" data-dismiss="modal">&times;</button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <p class="alert alert-danger">@localizer.Get("هل انت متأكد؟")</p>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <input asp-route-culture="@Request.RouteValues["culture"]" type="submit" class="btn btn-info" value="@localizer.Get("نعم")" />
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        }*@
+
+                                    </form>
                                 </div>
-
-                            </div>
-                        </div>
-                    }*@
-
-                    </form>
-                </div>
-            </td>
+                            </td>
 
 
-            <td>
-                @Html.DisplayFor(m => item.CreatedDataTime)
-            </td>
-            <td>
-                @Html.DisplayFor(m => item.Status)
-            </td>
-            <td>
-                @Html.DisplayFor(m => item.PaidAmt)
-            </td>
-            <td>
-                @Html.DisplayFor(m => item.TotalNetAmt)
-            </td>
-            <td>
-                @Html.DisplayFor(m => item.Customer.CompanyName)
-            </td>
-            <td>
-                @Html.DisplayFor(m => item.Id)
-            </td>
-        </tr>
+                            <td>
+                                @Html.DisplayFor(m => item.CreatedDataTime)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(m => item.Status)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(m => item.PaidAmt)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(m => item.TotalNetAmt)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(m => item.Customer.CompanyName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(m => item.Id)
+                            </td>
+                        </tr>
+
+                    }
 
                 }
 
-            }
+            </table>
 
-        </table>
+        </div>
+      
+            <div class="col-md-6  ">
+                <a asp-page="/reports" title="التقارير" asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-info">
 
-    </div>
+                    <i class="fas fa-file-alt"></i> الرجوع الى التقارير
 
-</div>
+                </a>
+            </div>
+           
+            
+        </div>
 
 
-@section Scripts {
+        @section Scripts {
 
 
-    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+            <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+            <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+            <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
-    <script>
+            <script>
          $(document).ready(function () {
     $('#CustomerName').autocomplete({
     source: '@Url.Page("Bills", "SearchCustomer")'
@@ -202,6 +211,6 @@
 
 
 
-    </script>
-}
+            </script>
+        }
 

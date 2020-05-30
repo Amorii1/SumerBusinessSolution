@@ -14,156 +14,163 @@
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
-<div class=" backgroundWhite">
-    <div dir="rtl" class="row">
+    <div class=" backgroundWhite">
+        <div dir="rtl" class="row">
 
 
 
-        <div class="col-md-6 text-md-right">
-            @*<h2 class="text-info"> حركه المنتجات </h2>*@
-            <h2 class="text-info"> @localizer.Get("نقل المواد")</h2>
+            <div class="col-md-6 text-md-right">
+                @*<h2 class="text-info"> حركه المنتجات </h2>*@
+                <h2 class="text-info"> @localizer.Get("نقل المواد")</h2>
 
-        </div>
-        @if (User.IsInRole(SD.AdminUser))
-        {
-            <div class="col-md-6">
-                <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="Create" title="نقل جديد" class="btn btn-info"> <i class="fas fa-plus"></i></a>
             </div>
-        }
-    </div>
+            @if (User.IsInRole(SD.AdminUser))
+            {
+                <div class="col-md-6">
+                    <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="Create" title="نقل جديد" class="btn btn-info"> <i class="fas fa-plus"></i></a>
+                </div>
+            }
+        </div>
 
-    <form method="get" asp-page="Index">
-        <div class="border backgroundWhite">
+        <form method="get" asp-page="Index">
+            <div class="border backgroundWhite">
 
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div dir="rtl" class="row" style="margin-top:10px;">
-
-
-
-                            <div class="col-md-3 pb-1">
-                                <div dir="rtl" class="form-group row float-md-right">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div dir="rtl" class="row" style="margin-top:10px;">
 
 
-                                    <div>
-                                        <label asp-for="SearchFromDate" class="control-label"></label>
-                                    </div>
 
-                                    <div>
-                                        <input type="date" asp-for="SearchFromDate" class="form-control" />
-                                    </div>
-                                </div>
-                            </div>
+                                <div class="col-md-3 pb-1">
+                                    <div dir="rtl" class="form-group row float-md-right">
 
-                            <div class="col-md-3 pb-1">
-                                <div dir="rtl" class="form-group row float-md-right">
 
-                                    <div>
-                                        <label asp-for="SearchToDate" class="control-label"></label>
-                                    </div>
+                                        <div>
+                                            <label asp-for="SearchFromDate" class="control-label"></label>
+                                        </div>
 
-                                    <div>
-                                        <input type="date" asp-for="SearchToDate" class="form-control" />
+                                        <div>
+                                            <input type="date" asp-for="SearchFromDate" class="form-control" />
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-md-4 pb-1">
-                                @Html.Editor("searchProdCode", new { htmlAttributes = new { @class = "form-control text-md-right", placeholder = @localizer.Get("رمز المنتج....") } })
 
-                            </div>
-                            <div class="col-md-2 text-md-right pb-1">
-                                <button asp-route-culture="@Request.RouteValues["culture"]" type="submit" name="submit" title="بحث" value="search" class="btn btn-info form-control">
-                                    <i class="fas fa-search"></i>
-                                </button>
+                                <div class="col-md-3 pb-1">
+                                    <div dir="rtl" class="form-group row float-md-right">
+
+                                        <div>
+                                            <label asp-for="SearchToDate" class="control-label"></label>
+                                        </div>
+
+                                        <div>
+                                            <input type="date" asp-for="SearchToDate" class="form-control" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 pb-1">
+                                    @Html.Editor("searchProdCode", new { htmlAttributes = new { @class = "form-control text-md-right", placeholder = @localizer.Get("رمز المنتج....") } })
+
+                                </div>
+                                <div class="col-md-2 text-md-right pb-1">
+                                    <button asp-route-culture="@Request.RouteValues["culture"]" type="submit" name="submit" title="بحث" value="search" class="btn btn-info form-control">
+                                        <i class="fas fa-search"></i>
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </form>
+        </form>
 
 
 
-    <div>
+        <div>
 
 
-        <table class="table table-striped border table-responsive-md table-responsive-lg text-md-center">
-            <tr class="table-secondary">
+            <table class="table table-striped border table-responsive-md table-responsive-lg text-md-center">
+                <tr class="table-secondary">
 
 
-                <th>
-                    @Html.DisplayNameFor(m => m.InvTransfers.InvTransferHeader.ApplicationUser.FirstName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(m => m.InvTransfers.InvTransferHeader.CreatedDateTime)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(m => m.InvTransfers.Note)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(m => m.InvTransfers.Qty)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(m => m.InvTransfers.InvTransferHeader.ToWhId)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(m => m.InvTransfers.InvTransferHeader.FromWhId)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(m => m.ProdInfo.ProdName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(m => m.ProdInfo.ProdCode)
-                </th>
-            </tr>
-            @if (Model.InvTransferList.Count() == 0)
-            {
-                @*<h2 class="text-danger text-md-center">لا يوجد حركة في المنتجات  </h2>*@
-                <h2 class="text-danger text-md-center"> @localizer.Get("لا يوجد حركات")</h2>
-
-            }
-            else
-            {
-                @foreach (var item in Model.InvTransferList)
+                    <th>
+                        @Html.DisplayNameFor(m => m.InvTransfers.InvTransferHeader.ApplicationUser.FirstName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(m => m.InvTransfers.InvTransferHeader.CreatedDateTime)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(m => m.InvTransfers.Note)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(m => m.InvTransfers.Qty)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(m => m.InvTransfers.InvTransferHeader.ToWhId)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(m => m.InvTransfers.InvTransferHeader.FromWhId)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(m => m.ProdInfo.ProdName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(m => m.ProdInfo.ProdCode)
+                    </th>
+                </tr>
+                @if (Model.InvTransferList.Count() == 0)
                 {
-        <tr>
+                    @*<h2 class="text-danger text-md-center">لا يوجد حركة في المنتجات  </h2>*@
+                    <h2 class="text-danger text-md-center"> @localizer.Get("لا يوجد حركات")</h2>
 
-            <td>
-                @Html.DisplayFor(m => item.InvTransferHeader.ApplicationUser.FirstName)
-            </td>
-            <td>
-                @Html.DisplayFor(m => item.InvTransferHeader.CreatedDateTime)
-            </td>
-            <td>
-                @Html.DisplayFor(m => item.Note)
-            </td>
-            <td>
-                @Html.DisplayFor(m => item.Qty)
-            </td>
-            <td>
-                @Html.DisplayFor(m => item.InvTransferHeader.FromWarehouse.WhName)
-            </td>
-            <td>
-                @Html.DisplayFor(m => item.InvTransferHeader.ToWarehouse.WhName)
-            </td>
-
-            <td>
-                @Html.DisplayFor(m => item.ProdInfo.ProdName)
-            </td>
-            <td>
-                @Html.DisplayFor(m => item.ProdInfo.ProdCode)
-            </td>
-
-        </tr>
                 }
-            }
+                else
+                {
+                    @foreach (var item in Model.InvTransferList)
+                    {
+                        <tr>
 
-        </table>
+                            <td>
+                                @Html.DisplayFor(m => item.InvTransferHeader.ApplicationUser.FirstName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(m => item.InvTransferHeader.CreatedDateTime)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(m => item.Note)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(m => item.Qty)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(m => item.InvTransferHeader.FromWarehouse.WhName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(m => item.InvTransferHeader.ToWarehouse.WhName)
+                            </td>
 
+                            <td>
+                                @Html.DisplayFor(m => item.ProdInfo.ProdName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(m => item.ProdInfo.ProdCode)
+                            </td>
+
+                        </tr>
+                    }
+                }
+
+            </table>
+
+        </div>
+        <div class="col-md-6  ">
+            <a asp-page="/index" title="الرئيسية" asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-info">
+
+                <i class="fas fa-home"></i>
+
+            </a>
+        </div>
     </div>
-</div>
 
 @section Scripts {
      

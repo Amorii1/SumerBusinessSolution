@@ -220,7 +220,7 @@
                                                         <p class="alert alert-danger">@localizer.Get("هل انت متأكد؟")</p>
                                                     </div>
                                                     <div class="modal-footer">
-                                                        <input asp-route-culture="@Request.RouteValues["culture"]" type="submit" asp-page-handler="RejectTransferRequests" asp-route-ReqId="@item.Id"  class="btn btn-info" value="@localizer.Get("نعم")" />
+                                                        <input asp-route-culture="@Request.RouteValues["culture"]" type="submit" asp-page-handler="RejectTransferRequests" asp-route-ReqId="@item.Id" class="btn btn-info" value="@localizer.Get("نعم")" />
                                                     </div>
                                                 </div>
 
@@ -229,16 +229,16 @@
 
                                     }
                                     @*else if (User.IsInRole(SD.SupervisorEndUser) & Model.RoleAuth.AppTransReq == true)
-        {
-            <button asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-success text-white" asp-page-handler="ApproveTransferRequests" asp-route-ReqId="@item.Id" type="submit" title="Approve" name="Accept">
-                @localizer.Get("") <i class="fas fa-check"></i>
-            </button>
+                                        {
+                                            <button asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-success text-white" asp-page-handler="ApproveTransferRequests" asp-route-ReqId="@item.Id" type="submit" title="Approve" name="Accept">
+                                                @localizer.Get("") <i class="fas fa-check"></i>
+                                            </button>
 
 
-            <button asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-warning text-white" asp-page-handler="RejectTransferRequests" asp-route-ReqId="@item.Id" type="submit" title="Reject" name="Reject">
-                @localizer.Get("") <i class="fas fa-window-close"></i>
-            </button>
-        }*@
+                                            <button asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-warning text-white" asp-page-handler="RejectTransferRequests" asp-route-ReqId="@item.Id" type="submit" title="Reject" name="Reject">
+                                                @localizer.Get("") <i class="fas fa-window-close"></i>
+                                            </button>
+                                        }*@
 
 
                                     <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-primary text-white" asp-page="RequestDetails" asp-route-ReqId="@item.Id" type="submit" title="تفاصيل الطلب" name="Details">
@@ -271,6 +271,13 @@
 
         </table>
 
+    </div>
+    <div class="col-md-6  ">
+        <a asp-page="/index" title="الرئيسية" asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-info">
+
+            <i class="fas fa-home"></i>
+
+        </a>
     </div>
 
 </div>

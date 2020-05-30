@@ -99,11 +99,11 @@
 
                                 @if (User.IsInRole(SD.AdminUser))
                                 {
-                                    <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-success text-white" asp-page="../Billings/MakePayment" asp-route-BhId="@item.Id" type="submit" title="تسديد" name="PayToBill">
+                                    <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-success text-white" asp-page="../ExternalBillings/MakePayment" asp-route-BhId="@item.Id" type="submit" title="تسديد" name="PayToBill">
                                         @localizer.Get("") <i class="fas fa-check"></i>
                                     </a>
 
-                                    <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-success text-white" asp-page="../Billings/Details" asp-route-BhId="@item.Id" type="submit" title="تفاصيل الفاتورة" name="Details">
+                                    <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-success text-white" asp-page="../ExternalBillings/DetailsMob" asp-route-BhId="@item.Id" type="submit" title="تفاصيل الفاتورة" name="Details">
                                         @localizer.Get("") <i class="fas fa-check"></i>
                                     </a>
 

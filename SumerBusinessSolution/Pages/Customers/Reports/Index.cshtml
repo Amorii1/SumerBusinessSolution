@@ -14,23 +14,34 @@
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
-<br />
-<br />
-<div class="row pl-md-5 ml-md-5" style=" padding-right:100px;">
-    <div class="column" style="padding-left:140px;">
-        <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="CustomersDebt">
-            <img src="~/img/team.png" style="width:120px;height:120px;" />
-            <h4 class="text-center"> @localizer.Get("الديون")</h4>
+<div>
+    <div class="col-md-6  ">
+        <a asp-page="/reports" title="التقارير" asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-info">
+
+            <i class="fas fa-file-alt"></i> الرجوع الى التقارير
 
         </a>
     </div>
+    <br />
+    <br />
+    
+   
+    <div class="row pl-md-5 ml-md-5" style=" padding-right:100px;">
+        <div class="column" style="padding-left:140px;">
+            <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="CustomersDebt">
+                <img src="~/img/team.png" style="width:120px;height:120px;" />
+                <h4 class="text-center"> @localizer.Get("الديون")</h4>
 
-    <div class="column" style="padding-left:140px;">
-        <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="CustomersAcc">
-            <img src="~/img/warehouse.png" style="width:120px;height:120px;" />
-            <h4 class="text-center"> @localizer.Get("الحسابات")</h4>
+            </a>
+        </div>
 
-        </a>
+        <div class="column" style="padding-left:140px;">
+            <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="CustomersAcc">
+                <img src="~/img/warehouse.png" style="width:120px;height:120px;" />
+                <h4 class="text-center"> @localizer.Get("الحسابات")</h4>
+
+            </a>
+        </div>
+
     </div>
-
 </div>

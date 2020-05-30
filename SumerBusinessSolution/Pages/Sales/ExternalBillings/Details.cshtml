@@ -54,11 +54,14 @@
 
 <div class="border backgroundWhite">
     @*<h2 class="text-info">المواد الواردة </h2>*@
-    <h2 class="text-info text-md-right">  @localizer.Get("تفاصيل الفاتورة")</h2>
+    <h2 class="text-info text-md-right">  @localizer.Get("شكل الفاتورة")</h2>
 
     <form method="post">
+        <input type="hidden" asp-for="ExternalBillHeader.Id" />
+
+        
+
         <div id="tabledata">
-            <input type="hidden" asp-for="ExternalBillHeader.Id" />
 
             <br />
             <div class="pl-md-5 offset-md-4">
@@ -98,8 +101,8 @@
                 </div>
 
 
-                <div id="field" class="row pt-md-2 col-md-3 form-control form-group offset-md-1" >
-                    <h4 class=" text-dark font-weight-bold text-md-right"> اسم الزبون&nbsp;: @Model.ExternalBillHeader.Customer.CompanyName </h4>
+                <div id="field" class="row pt-md-2 col-md-3 form-control form-group offset-md-1">
+                    <h4 class=" text-dark font-weight-bold text-md-right">@Model.ExternalBillHeader.Customer.CompanyName &nbsp; :  اسم الشركة </h4>
                 </div>
 
                 <div id="field" class="row pt-md-2 col-md-3 form-control form-group offset-md-1">
@@ -144,7 +147,7 @@
                     <th>ت</th>
 
                 </tr>
-                @{int RowNo = 0;}
+                @{int RowNo1 = 0;}
 
                 @foreach (var item in Model.ExternalBillItemsList)
                 {
@@ -176,7 +179,7 @@
                         }
 
 
-                        <td>@{RowNo++;} @RowNo</td>
+                        <td>@{RowNo1++;} @RowNo1</td>
                     </tr>
 
                 }
@@ -278,7 +281,7 @@
                     }
 
 
-                    <div class="col-md-6 pt-4">
+                    <div class="col-md-12 pt-4">
 
                         @*<input asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-secondary form-control" type="button" value="@localizer.Get("رجوع")" onclick="history.back()">*@
                         <a asp-page="Index" class="btn btn-secondary form-control" asp-route-culture="@Request.RouteValues["culture"]"> رجوع</a>
@@ -294,7 +297,7 @@
 
 
 <div>
-    <button class="btn btn-primary" id="print">@localizer.Get("طباعة الفاتورة")</button>
+    <button class="btn btn-primary" id="print">@localizer.Get("طباعة")</button>
 </div>
 
 <script type="text/javascript" src="~/js/jquery.js"></script>

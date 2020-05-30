@@ -14,82 +14,82 @@
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
-<div class="backgroundWhite">
+    <div class="backgroundWhite">
 
-    <div class="row" dir="rtl">
-        <div class="col-md-5 offset-md-4">
-            <h2 class="text-info text-md-right"> @localizer.Get("البضائع الواردة")</h2>
+        <div class="row" dir="rtl">
+            <div class="col-md-5 offset-md-4">
+                <h2 class="text-info text-md-right"> @localizer.Get("البضائع الواردة")</h2>
+
+            </div>
+            @if (User.IsInRole(SD.AdminUser) || (User.IsInRole(SD.SupervisorUser) & Model.RoleAuth.CreateInGoods == true))
+            {
+                <div class="col-md-3  ">
+                    <a asp-page="../IncomingGoods/Create" title="اضافة" asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-info">
+
+                        <i class="fas fa-plus"></i>
+
+                    </a>
+                </div>
+            }
+
 
         </div>
-        @if (User.IsInRole(SD.AdminUser) || (User.IsInRole(SD.SupervisorUser) & Model.RoleAuth.CreateInGoods == true))
-        {
-            <div class="col-md-3  ">
-                <a asp-page="../IncomingGoods/Create" title="اضافة" asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-info">
-
-                    <i class="fas fa-plus"></i>
-
-                </a>
-            </div>
-        }
 
 
-    </div>
-
-
-    <form method="get" asp-page="Index">
-        <div class="border backgroundWhite">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div dir="rtl" class="row" style="margin-top:10px;">
+        <form method="get" asp-page="Index">
+            <div class="border backgroundWhite">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div dir="rtl" class="row" style="margin-top:10px;">
 
 
 
-                            <div class="col-md-3 pb-1">
-                                <div dir="rtl" class="form-group row float-md-right">
+                                <div class="col-md-3 pb-1">
+                                    <div dir="rtl" class="form-group row float-md-right">
 
 
-                                    <div>
-                                        <label asp-for="SearchFromDate" class="control-label"></label>
-                                    </div>
-                                    <div>
-                                        <input hidden asp-for="SearchFromDate" />
-                                        <input type="text" class="datepicker form-control" id="SearchFromDatePicker">
+                                        <div>
+                                            <label asp-for="SearchFromDate" class="control-label"></label>
+                                        </div>
+                                        <div>
+                                            <input hidden asp-for="SearchFromDate" />
+                                            <input type="text" class="datepicker form-control" id="SearchFromDatePicker">
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div dir="rtl" class="col-md-3 pb-1">
-                                <div class="form-group row float-md-right">
+                                <div dir="rtl" class="col-md-3 pb-1">
+                                    <div class="form-group row float-md-right">
 
-                                    <div>
-                                        <label asp-for="SearchToDate" class="control-label"></label>
-                                    </div>
-                                    <div>
-                                        <input hidden asp-for="SearchToDate" />
-                                        <input type="text" class="datepicker form-control" id="SearchToDatePicker">
+                                        <div>
+                                            <label asp-for="SearchToDate" class="control-label"></label>
+                                        </div>
+                                        <div>
+                                            <input hidden asp-for="SearchToDate" />
+                                            <input type="text" class="datepicker form-control" id="SearchToDatePicker">
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-md-4 pb-1">
-                                @Html.Editor("searchProdCode", new { htmlAttributes = new { @class = "form-control text-md-right", placeholder = @localizer.Get("رمز المنتج....") } })
+                                <div class="col-md-4 pb-1">
+                                    @Html.Editor("searchProdCode", new { htmlAttributes = new { @class = "form-control text-md-right", placeholder = @localizer.Get("رمز المنتج....") } })
 
-                            </div>
-                            <div class="col-md-2 text-md-right pb-1">
+                                </div>
+                                <div class="col-md-2 text-md-right pb-1">
 
-                                <button asp-route-culture="@Request.RouteValues["culture"]" type="submit" name="submit" title="بحث" value="search" class="btn btn-info form-control">
-                                    <i class="fas fa-search"></i>
-                                </button>
+                                    <button asp-route-culture="@Request.RouteValues["culture"]" type="submit" name="submit" title="بحث" value="search" class="btn btn-info form-control">
+                                        <i class="fas fa-search"></i>
+                                    </button>
 
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </form>
+        </form>
 
 
-    @*<form method="get" asp-page="Index">
+        @*<form method="get" asp-page="Index">
             <div class="border backgroundWhite">
                 <div  class="container ">
                     <div class="row">
@@ -140,78 +140,85 @@
 
 
 
-    <div>
-        <table class="text-md-center table table-striped border table-responsive-md table-responsive-lg">
-            <tr class="table-secondary">
+        <div>
+            <table class="text-md-center table table-striped border table-responsive-md table-responsive-lg">
+                <tr class="table-secondary">
 
 
-                <th>  </th>
-                <th>
-                    @Html.DisplayNameFor(m => m.IncomingGoods.ApplicationUser.FirstName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(m => m.IncomingGoods.CreatedDateTime)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(m => m.IncomingGoods.Note)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(m => m.IncomingGoods.Qty)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(m => m.Warehouse.WhName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(m => m.ProdInfo.ProdName)
+                    <th>  </th>
+                    <th>
+                        @Html.DisplayNameFor(m => m.IncomingGoods.ApplicationUser.FirstName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(m => m.IncomingGoods.CreatedDateTime)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(m => m.IncomingGoods.Note)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(m => m.IncomingGoods.Qty)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(m => m.Warehouse.WhName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(m => m.ProdInfo.ProdName)
 
-                </th>
-                <th>
-                    @Html.DisplayNameFor(m => m.ProdInfo.ProdCode)
-                </th>
-            </tr>
-            @if (Model.IncomingGoodList.Count() == 0)
-            {
-                @*<h2 class="text-danger text-md-center">لا يوجد منتجات واردة </h2>*@
-                <h2 class="text-danger text-md-center">No Incoming Goods </h2>
-
-            }
-            else
-            {
-                @foreach (var item in Model.IncomingGoodList)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(m => m.ProdInfo.ProdCode)
+                    </th>
+                </tr>
+                @if (Model.IncomingGoodList.Count() == 0)
                 {
-                    <tr>
-                        <td>
+                    @*<h2 class="text-danger text-md-center">لا يوجد منتجات واردة </h2>*@
+                    <h2 class="text-danger text-md-center">لا يوجد بضائع واردة </h2>
 
-                            <a class="btn btn-primary" asp-route-culture="@Request.RouteValues["culture"]" asp-page="/Inventory/Products/details" asp-route-Id="@item.ProdInfo.Id" title="تفاصيل المنتج"><i class="far fa-clipboard"></i>@localizer.Get("")</a>
-                        </td>
-                        <td>
-                            @Html.DisplayFor(m => item.ApplicationUser.FirstName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(m => item.CreatedDateTime)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(m => item.Note)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(m => item.Qty)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(m => item.Warehouse.WhName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(m => item.ProdInfo.ProdName)
-                        </td>
-
-                        <td>
-                            @Html.DisplayFor(m => item.ProdInfo.ProdCode)
-                        </td>
-                    </tr>
                 }
-            }
-        </table>
+                else
+                {
+                    @foreach (var item in Model.IncomingGoodList)
+                    {
+                        <tr>
+                            <td>
+
+                                <a class="btn btn-primary" asp-route-culture="@Request.RouteValues["culture"]" asp-page="/Inventory/Products/details" asp-route-Id="@item.ProdInfo.Id" title="تفاصيل المنتج"><i class="far fa-clipboard"></i>@localizer.Get("")</a>
+                            </td>
+                            <td>
+                                @Html.DisplayFor(m => item.ApplicationUser.FirstName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(m => item.CreatedDateTime)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(m => item.Note)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(m => item.Qty)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(m => item.Warehouse.WhName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(m => item.ProdInfo.ProdName)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(m => item.ProdInfo.ProdCode)
+                            </td>
+                        </tr>
+                    }
+                }
+            </table>
+        </div>
+        <div class="col-md-6  ">
+            <a asp-page="/index" title="الرئيسية" asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-info">
+
+                <i class="fas fa-home"></i>
+
+            </a>
+        </div>
     </div>
-</div>
 
 @section Scripts {
     @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}

@@ -96,7 +96,7 @@
                         <tr>
                             <td>
                                 <form>
-                                  
+
                                     <a class="btn btn-success" asp-route-culture="@Request.RouteValues["culture"]" asp-page="Edit" asp-route-WhId="@item.Id" type="submit" title="تعديل"><i class="fa fa-edit"></i>@localizer.Get("")</a>
 
                                 </form>
@@ -127,6 +127,12 @@
             </table>
 
         </div>
+        <div class="col-md-6  ">
+            <a asp-page="/index" title="الرئيسية" asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-info">
 
+                <i class="fas fa-home"></i>
+
+            </a>
+        </div>
     </div>
 

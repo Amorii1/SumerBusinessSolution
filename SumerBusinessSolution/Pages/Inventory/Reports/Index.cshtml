@@ -13,37 +13,49 @@
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
-<br />
-<br />
-<div class="row" style="padding-right:100px;">
+    <div>
+        <div class="col-md-6  ">
+            <a asp-page="/reports" title="التقارير" asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-info">
 
-    <div class="column" style="padding-left:146px;">
-        <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="/inventory/reports/ProdInWhQty">
-
-            <img src="~/img/quantity.png" style="width:120px;height:120px;" />
-            @*<p class="text-center">كمية المواد</p>*@
-        <h4 class="text-center">@localizer.Get("تقارير كمية المنتجات")</h4>
-
-        </a>
-    </div>
-
-    <div class="column" style="padding-left:146px;">
-        <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="/inventory/reports/WhProdQty">
-            <img src="~/img/stock.png" style="width:120px;height:120px;" />
-            @*<p class="text-center">المخازن</p>*@
-        <h4 class="text-center">@localizer.Get("تقارير المخازن")</h4>
-        </a>
-    </div>
-    @if (User.IsInRole(SD.AdminUser))
-    {
-        <div class="column" style="padding-left:146px;">
-            <a  asp-route-culture="@Request.RouteValues["culture"]" asp-page="/inventory/reports/InvTransactions">
-                <img src="~/img/lamp.png" style="width:120px;height:120px;" />
-                @*<p class="text-center">العمليات تجارية</p>*@
-            <h4 class="text-center">@localizer.Get("تقارير العمليات التجارية")</h4>
+                <i class="fas fa-file-alt"></i> الرجوع الى التقارير
 
             </a>
         </div>
-    }
-</div>
+        <br />
+        <br />
 
+
+
+        <div class="row" style="padding-right:100px;">
+
+            <div class="column" style="padding-left:146px;">
+                <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="/inventory/reports/ProdInWhQty">
+
+                    <img src="~/img/quantity.png" style="width:120px;height:120px;" />
+                    @*<p class="text-center">كمية المواد</p>*@
+                    <h4 class="text-center">@localizer.Get("تقارير كمية المنتجات")</h4>
+
+                </a>
+            </div>
+
+            <div class="column" style="padding-left:146px;">
+                <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="/inventory/reports/WhProdQty">
+                    <img src="~/img/stock.png" style="width:120px;height:120px;" />
+                    @*<p class="text-center">المخازن</p>*@
+                    <h4 class="text-center">@localizer.Get("تقارير المخازن")</h4>
+                </a>
+            </div>
+            @if (User.IsInRole(SD.AdminUser))
+            {
+                <div class="column" style="padding-left:146px;">
+                    <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="/inventory/reports/InvTransactions">
+                        <img src="~/img/lamp.png" style="width:120px;height:120px;" />
+                        @*<p class="text-center">العمليات تجارية</p>*@
+                        <h4 class="text-center">@localizer.Get("تقارير العمليات التجارية")</h4>
+
+                    </a>
+                </div>
+            }
+        </div>
+
+    </div>

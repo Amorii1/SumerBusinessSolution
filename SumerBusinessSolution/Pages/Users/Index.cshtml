@@ -15,102 +15,110 @@
 }
 
 
-<div class="backgroundWhite">
-    <div dir="rtl" class="row">
+    <div class="backgroundWhite">
+        <div dir="rtl" class="row">
 
 
 
-        <div class="col-md-6 text-md-right">
-            <h2 class="text-info">@localizer.Get("المستخدمين")</h2>
-        </div>
-        @if (User.IsInRole(SD.AdminUser))
-        {
-            <div class="col-md-6">
-                <a asp-area="Identity" asp-route-culture="@Request.RouteValues["culture"]" title="مستخدم جديد" asp-page="/Account/Register" class="btn btn-info"> <i class="fas fa-plus"></i></a>
+            <div class="col-md-6 text-md-right">
+                <h2 class="text-info">@localizer.Get("المستخدمين")</h2>
             </div>
-        }
-    </div>
+            @if (User.IsInRole(SD.AdminUser))
+            {
+                <div class="col-md-6">
+                    <a asp-area="Identity" asp-route-culture="@Request.RouteValues["culture"]" title="مستخدم جديد" asp-page="/Account/Register" class="btn btn-info"> <i class="fas fa-plus"></i></a>
+                </div>
+            }
+        </div>
 
-    <form method="get" asp-page="Index">
+        <form method="get" asp-page="Index">
 
-        <div class="border backgroundWhite">
-            <div class="container ">
-                <div class="row">
-                    <div class="col-md-12">
+            <div class="border backgroundWhite">
+                <div class="container ">
+                    <div class="row">
+                        <div class="col-md-12">
 
-                        <div dir="rtl" class="row" style="margin-top:10px;">
+                            <div dir="rtl" class="row" style="margin-top:10px;">
 
-                            <div class="col-md-10 pb-1">
-                                @Html.Editor("SearchFirstName", new { htmlAttributes = new { @class = "form-control text-md-right", placeholder = @localizer.Get("الاسم الاول....") } })
+                                <div class="col-md-10 pb-1">
+                                    @Html.Editor("SearchFirstName", new { htmlAttributes = new { @class = "form-control text-md-right", placeholder = @localizer.Get("الاسم الاول....") } })
+                                </div>
+                                <div class="col-md-2 text-md-right pb-1">
+                                    <button type="submit" name="submit" value="search" title="بحث" asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-info form-control">
+                                        <i class="fas fa-search"></i>
+                                    </button>
+                                </div>
                             </div>
-                            <div class="col-md-2 text-md-right pb-1">
-                                <button type="submit" name="submit" value="search" title="بحث" asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-info form-control">
-                                    <i class="fas fa-search"></i>
-                                </button>
-                            </div>
+
                         </div>
-
                     </div>
                 </div>
             </div>
+        </form>
+
+
+        <div>
+            <table class="table table-striped border table-responsive-md table-responsive-lg text-md-center">
+                <tr class="table-secondary">
+
+                    <th></th>
+                    <th>
+                        @localizer.Get("رقم الهاتف")
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(m => m.ApplicationUser[0].LastName)
+                    </th>
+
+                    <th>
+                        @Html.DisplayNameFor(m => m.ApplicationUser[0].FirstName)
+                    </th>
+
+                </tr>
+
+                @foreach (var item in Model.UsersListVM.ApplicationUserList)
+                {
+                    <tr>
+
+
+
+
+                        @if (User.IsInRole(SD.AdminUser))
+                        {
+                            <td style="width:150px;">
+                                <div class="btn-group" role="group">
+                                    <form>
+                                        <a asp-page="Edit" asp-route-Id="@item.Id" asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-success ext-white " title="@localizer.Get("تعديل")">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+
+
+                                        <a asp-page="Delete" asp-route-Id="@item.Id" asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-danger text-white" title="@localizer.Get("حذف")">
+                                            <i class="fas fa-user-minus"></i>
+                                        </a>
+                                    </form>
+                                </div>
+                            </td>
+                        }
+
+                        <td>
+                            @Html.DisplayFor(m => item.PhoneNumber)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.LastName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.FirstName)
+                        </td>
+
+                    </tr>
+                }
+            </table>
         </div>
-    </form>
+        <div class="col-md-6  ">
+            <a asp-page="/index" title="الرئيسية" asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-info">
 
+                <i class="fas fa-home"></i>
 
-
-    <table class="table table-striped border table-responsive-md table-responsive-lg text-md-center">
-        <tr class="table-secondary">
-           
-            <th></th>
-            <th>
-                @localizer.Get("رقم الهاتف")
-            </th>
-            <th>
-                @Html.DisplayNameFor(m => m.ApplicationUser[0].LastName)
-            </th>
-
-            <th>
-                @Html.DisplayNameFor(m => m.ApplicationUser[0].FirstName)
-            </th>
-
-        </tr>
-
-        @foreach (var item in Model.UsersListVM.ApplicationUserList)
-        {
-    <tr>
-
-
-
-
-        @if (User.IsInRole(SD.AdminUser))
-        {
-            <td style="width:150px;">
-                <div class="btn-group" role="group">
-                    <form>
-                        <a asp-page="Edit" asp-route-Id="@item.Id" asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-success ext-white " title="@localizer.Get("تعديل")">
-                            <i class="fas fa-edit"></i>
-                        </a>
-
-
-                        <a asp-page="Delete" asp-route-Id="@item.Id" asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-danger text-white" title="@localizer.Get("حذف")">
-                            <i class="fas fa-user-minus"></i>
-                        </a>
-                    </form>
-                </div>
-            </td>
-        }
-
-        <td>
-            @Html.DisplayFor(m => item.PhoneNumber)
-        </td>
-        <td>
-            @Html.DisplayFor(m => item.LastName)
-        </td>
-        <td>
-            @Html.DisplayFor(m => item.FirstName)
-        </td>
-
-    </tr>
-        }
-    </table>
-</div>
+            </a>
+        </div>
+    </div>

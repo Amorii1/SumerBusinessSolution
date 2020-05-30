@@ -85,8 +85,8 @@
                             <div class="btn-group" role="group">
                                 <form method="post">
                                     @*<div class="col-md-6">
-                                        <a asp-page="Index" asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-secondary form-control">@localizer.Get("رجوع")</a>
-                                    </div>*@
+                                            <a asp-page="Index" asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-secondary form-control">@localizer.Get("رجوع")</a>
+                                        </div>*@
                                     <button asp-page="Index" asp-route-culture="@Request.RouteValues["culture"]" data-toggle="modal" data-target="#Ask" class="btn btn-danger text-white" asp-page-handler="DeleteCustomer" asp-route-CustId="@item.Customer.Id" type="submit" title="حذف" name="Delete">
                                         @localizer.Get("") <i class="fas fa-trash-alt"></i>
                                     </button>
@@ -150,6 +150,13 @@
 
         </table>
 
+    </div>
+    <div class="col-md-6  ">
+        <a asp-page="/index" title="الرئيسية" asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-info">
+
+            <i class="fas fa-home"></i>
+
+        </a>
     </div>
 </div>
 

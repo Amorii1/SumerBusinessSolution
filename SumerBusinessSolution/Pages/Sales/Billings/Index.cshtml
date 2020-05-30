@@ -130,7 +130,7 @@
                                         </a>
                                     }
 
-                                    <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-primary" asp-page="Details" type="submit" title="التفاصيل" asp-route-BhId="@item.Id" name="Details">
+                                    <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-primary" asp-page="DetailsMob" type="submit" title="التفاصيل" asp-route-BhId="@item.Id" name="Details">
                                         @localizer.Get("") <i class="far fa-clipboard"></i>
                                     </a>
 
@@ -167,7 +167,13 @@
         </table>
 
     </div>
+    <div class="col-md-6  ">
+        <a asp-page="/index" title="الرئيسية" asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-info">
 
+            <i class="fas fa-home"></i>
+
+        </a>
+    </div>
 </div>
 
 @section Scripts {
