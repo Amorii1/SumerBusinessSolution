@@ -39,6 +39,7 @@ namespace SumerBusinessSolution.Models
 
         [Required]
         [Display(Name = "تاريخ الاضافه")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy hh:mm tt}")]
         public DateTime CreatedDateTime { get; set; }
 
         [Required]

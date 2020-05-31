@@ -16,7 +16,8 @@
 }
 <partial name="_StatusMessage" model="Model.StatusMessage" />
 <div class="  border backgroundWhite">
-    <form method="post">
+    <form id="productForm" action="/inventory/products/create?handler=Product" title="" method="post">
+
         <div dir="rtl" class="row">
             <div class="col-md-5 offset-md-4">
                 <h2 class="text-info text-md-right">  @localizer.Get("أضافة مواد واردة")</h2>
@@ -44,7 +45,9 @@
                     </div>
                     <div class="modal-body">
                         <div class="modal-body">
+                            <div class="alert alert-danger" style="display:none; margin:10px;" id="prod-validation-error">
 
+                            </div>
                             <div class="row form-group">
                                 <div class="col-md-3">
                                     <label asp-for="ProdInfo.ProdCode"> </label>
@@ -97,7 +100,7 @@
                         <div class="modal-footer" dir="ltr">
 
                             <a href="#" class="btn btn-danger" data-dismiss="modal">الغاء</a>
-                            <input asp-route-culture="@Request.RouteValues["culture"]" type="submit" asp-page-handler="CreateProduct" class="btn btn-info" id="btnCreateProd" value="@localizer.Get("اضافة")" />
+                            <input asp-route-culture="@Request.RouteValues["culture"]" type="submit" class="btn btn-info" id="btnCreateProd" value="@localizer.Get("اضافة")" />
                             @*<input class="btn-default" type="button" id="btnCreateProd" value="Save" />*@
                         </div>
 
@@ -214,8 +217,8 @@
                     var tr = $(this).closest('tr');
                     var index = $(this).data('index');
                     tr.remove();
-         
-            
+
+
                     $('#dataTable > tbody > tr').each((ix, row) => {
                         if (ix >= index) {
                             $.each($(row).find(':input'), function (i, val) {
@@ -308,13 +311,11 @@
 
 
     </script>
-    <script type="text/javascript" src="~/js/jquery.js"></script>
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.2/jquery.form.js"></script>
     <script>
-     
+
 
         $(document).ready(function () {
             $(window).keydown(function (event) {
@@ -323,6 +324,21 @@
                     return false;
                 }
             });
+        });
+
+        $('#productForm').ajaxForm(function (response) {
+            if (response.success) {
+                $('#prod-validation-error').hide();
+                $(':input', '#productForm')
+                    .not(':button, :submit, :reset, :hidden')
+                    .val('')
+                    .prop('checked', false)
+                    .prop('selected', false);
+                $('#prodModal').modal('toggle');
+            } else {
+                $('#prod-validation-error').html(response.error);
+                $('#prod-validation-error').show();
+            }
         });
     </script>
 }

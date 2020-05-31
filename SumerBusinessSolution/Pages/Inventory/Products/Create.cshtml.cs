@@ -19,6 +19,7 @@ using SumerBusinessSolution.Transactions;
 namespace SumerBusinessSolution.Pages.Inventory.Products
 {
     [Authorize]
+    [IgnoreAntiforgeryToken(Order = 2000)]
     public class CreateModel : PageModel
     {
         private readonly ApplicationDbContext _db;
@@ -56,7 +57,7 @@ namespace SumerBusinessSolution.Pages.Inventory.Products
 
         [TempData]
         public string StatusMessage { get; set; }
- 
+
         public IActionResult OnGet(string AdminId = null)
         {
             if (AdminId == null)
@@ -102,12 +103,106 @@ namespace SumerBusinessSolution.Pages.Inventory.Products
             return Page();
         }
 
+        public async Task<IActionResult> OnPostProduct(ProdInfo prodInfo)
+        {
+            bool check = _InveTrans.CheckProdCodeExist(prodInfo.ProdCode).GetAwaiter().GetResult();
+
+            if (check == false)
+            {
+                return new JsonResult(new
+                {
+                    success = false,
+                    error = "Error!رمز المادة مضافة سابقا"
+                });
+            }
+
+            var ClaimId = (ClaimsIdentity)User.Identity;
+            var Claim = ClaimId.FindFirst(ClaimTypes.NameIdentifier);
+            string UserId = Claim.Value;
+            prodInfo.CreatedById = UserId;
+
+            var context = new ValidationContext(prodInfo, serviceProvider: null, items: null);
+            var validationResults = new List<ValidationResult>();
+            bool isValid = Validator.TryValidateObject(prodInfo, context, validationResults, true);
+            if (!isValid)
+            {
+                return new JsonResult(new
+                {
+                    success = false,
+                    error = validationResults.First().ErrorMessage
+                });
+            }
+
+            string newfileName = string.Empty;
+            if (img != null && img.Length > 0)
+            {
+
+                string fn = img.FileName;
+                if (IsImagValidate(fn))
+                {
+                    string extension = Path.GetExtension(fn);
+                    newfileName = Guid.NewGuid().ToString() + extension;
+                    string filename = Path.Combine(_host.WebRootPath + "/img/", newfileName);
+                    await img.CopyToAsync(new FileStream(filename, FileMode.Create));
+                }
+                else
+                {
+                    return new JsonResult(new
+                    {
+                        success = false,
+                        error = "Invalid Image"
+                    });
+                }
+            }
+
+            prodInfo.CreatedDateTime = DateTime.Now;
+            var Information = new ProdInfo
+            {
+                CreatedById = UserId,
+                ProdCode = prodInfo.ProdCode,
+                ProdDescription = prodInfo.ProdDescription,
+                ProdName = prodInfo.ProdName,
+                ProdCategory = prodInfo.ProdCategory,
+                CostPrice = prodInfo.CostPrice,
+                RetailPrice = prodInfo.RetailPrice,
+                WholePrice = prodInfo.WholePrice,
+                CreatedDateTime = prodInfo.CreatedDateTime,
+
+                ImgFile = newfileName
+
+
+            };
+
+            AddPhoto = await _db.TempProdImg.ToListAsync();
+            foreach (var item in AddPhoto)
+            {
+                var AddPhoto = new ProdImg
+                {
+                    ImgFile = item.ImgFile,
+                    ProdId = Information.Id
+                };
+                _db.ProdImg.Add(AddPhoto);
+
+            }
+            _db.TempProdImg.RemoveRange(AddPhoto);
+            _db.ProdInfo.Add(Information);
+
+            await _db.SaveChangesAsync();
+            var Prod = _db.ProdInfo.FirstOrDefault(pr => pr.ProdCode == prodInfo.ProdCode);
+            bool CreateProdInWh = _InveTrans.CreateProdInWh(Prod.Id, SelectedWarehouse, OpenQty);
+
+            StatusMessage = "تمت اضافة مادة جديدة";
+            return new JsonResult(new
+            {
+                success = true
+            });
+        }
 
         public async Task<IActionResult> OnPost()
         {
-            bool check =  _InveTrans.CheckProdCodeExist(ProductInfo.ProdCode).GetAwaiter().GetResult();
+            bool check = _InveTrans.CheckProdCodeExist(ProductInfo.ProdCode).GetAwaiter().GetResult();
 
-            if(check == false)
+            if (check == false)
             {
                 StatusMessage = "Error!رمز المادة مضافة سابقا";
                 return Page();
@@ -119,7 +214,7 @@ namespace SumerBusinessSolution.Pages.Inventory.Products
 
             if (!ModelState.IsValid)
             {
-               // return Page();
+                // return Page();
             }
             string newfileName = string.Empty;
             if (img != null && img.Length > 0)
@@ -173,7 +268,7 @@ namespace SumerBusinessSolution.Pages.Inventory.Products
 
             await _db.SaveChangesAsync();
             var Prod = _db.ProdInfo.FirstOrDefault(pr => pr.ProdCode == ProductInfo.ProdCode);
-            bool CreateProdInWh = _InveTrans.CreateProdInWh(Prod.Id, SelectedWarehouse,OpenQty);
+            bool CreateProdInWh = _InveTrans.CreateProdInWh(Prod.Id, SelectedWarehouse, OpenQty);
 
             StatusMessage = "تمت اضافة مادة جديدة";
             return RedirectToPage("Create");

@@ -17,10 +17,10 @@ using SumerBusinessSolution.Utility;
 
 namespace SumerBusinessSolution.Pages.Inventory.IncomingGoods
 {
-    
-   //[Authorize(Roles = SD.AdminUser)]
 
-   [Authorize]
+    //[Authorize(Roles = SD.AdminUser)]
+   // [IgnoreAntiforgeryToken(Order = 2000)]
+    [Authorize]
     public class CreateModel : PageModel
     {
         private readonly ApplicationDbContext _db;
@@ -30,7 +30,7 @@ namespace SumerBusinessSolution.Pages.Inventory.IncomingGoods
         {
             _db = db;
             _InveTrans = InveTrans;
- 
+
         }
 
         [BindProperty]
@@ -55,17 +55,17 @@ namespace SumerBusinessSolution.Pages.Inventory.IncomingGoods
 
         [Required]
         [BindProperty]
-       [Display(Name ="الكمية")]
+        [Display(Name = "الكمية")]
         public double Qty { get; set; }
 
         [BindProperty]
-       [Display(Name = "الملاحظات")]
+        [Display(Name = "الملاحظات")]
 
         public string Note { get; set; }
 
         [Required]
         [BindProperty]
-      //  [Display(Name = "رمز المنتج")]
+        //  [Display(Name = "رمز المنتج")]
 
         public string ProdCode { get; set; }
 
@@ -76,9 +76,9 @@ namespace SumerBusinessSolution.Pages.Inventory.IncomingGoods
 
         public ActionResult OnGet()
         {
-            InG = new List<IncomingGood> { new IncomingGood { ProdId = 0, WhId = WhId , Qty = 0, Note = "" } };
+            InG = new List<IncomingGood> { new IncomingGood { ProdId = 0, WhId = WhId, Qty = 0, Note = "" } };
 
-            WarehouseList = _db.Warehouse.Where(wh=> wh.Active == true).OrderByDescending(wh=> wh.WhType.Type).ToList();
+            WarehouseList = _db.Warehouse.Where(wh => wh.Active == true).OrderByDescending(wh => wh.WhType.Type).ToList();
 
 
             return Page();
@@ -88,7 +88,7 @@ namespace SumerBusinessSolution.Pages.Inventory.IncomingGoods
         public ActionResult OnPost(List<IncomingGood> InG)
         {
 
-            StatusMessage =  _InveTrans.CreateIncomingGoods(WhId, InG).GetAwaiter().GetResult();
+            StatusMessage = _InveTrans.CreateIncomingGoods(WhId, InG).GetAwaiter().GetResult();
 
             ModelState.Clear();
 
@@ -122,13 +122,13 @@ namespace SumerBusinessSolution.Pages.Inventory.IncomingGoods
             {
                 StatusMessage = "Error!رمز المادة مضافة سابقا";
                 return Page();
-                
+
             }
 
             var ClaimId = (ClaimsIdentity)User.Identity;
             var Claim = ClaimId.FindFirst(ClaimTypes.NameIdentifier);
             string UserId = Claim.Value;
-  
+
 
             ProdInfo.CreatedDateTime = DateTime.Now;
             var NewProd = new ProdInfo
@@ -143,7 +143,7 @@ namespace SumerBusinessSolution.Pages.Inventory.IncomingGoods
                 WholePrice = ProdInfo.WholePrice,
                 CreatedDateTime = ProdInfo.CreatedDateTime
             };
- 
+
             _db.ProdInfo.Add(NewProd);
 
             _db.SaveChanges();
@@ -156,4 +156,3 @@ namespace SumerBusinessSolution.Pages.Inventory.IncomingGoods
         }
     }
 }
-   
