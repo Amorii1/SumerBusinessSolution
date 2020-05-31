@@ -43,10 +43,10 @@ namespace SumerBusinessSolution.Models
         [Required]
         [Display(Name = "معرف المنشئ")]
         public string CreatedById { get; set; }
-  
+
+       // [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy hh:mm tt}")]
         [Required]
         [Display(Name="تاريخ الاضافة")]
-        [DataType(DataType.Date)]
         public DateTime CreatedDateTime { get; set; }
 
         [ForeignKey("CreatedById")]

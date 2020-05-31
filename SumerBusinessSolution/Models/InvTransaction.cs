@@ -36,7 +36,7 @@ namespace SumerBusinessSolution.Models
         [Display(Name = "معرف المنشئ")]
         public string CreatedById { get; set; }
 
-
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy hh:mm tt}")]
         [Required]
         [Display(Name = "تاريخ العملية")]
 

@@ -21,6 +21,7 @@ namespace SumerBusinessSolution.Models
         [Display(Name = "حالة الحركة")]
         public string TransferStatus { get; set; }
 
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy hh:mm tt}")]
         [Required]
         [Display(Name = "تاريخ النقل ")]
 

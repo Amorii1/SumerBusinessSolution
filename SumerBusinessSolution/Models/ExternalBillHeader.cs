@@ -31,6 +31,8 @@ namespace SumerBusinessSolution.Models
         [Display(Name = "المبلغ المدفوع")]
         public double PaidAmt { get; set; }
         [Display(Name = "تاريخ الفاتورة")]
+
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy hh:mm tt}")]
         [Required]
         public DateTime CreatedDataTime { get; set; }
         [Required]

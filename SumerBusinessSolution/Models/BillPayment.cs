@@ -15,6 +15,8 @@ namespace SumerBusinessSolution.Models
         public int? CustId { get; set; }
         public double PaidAmt { get; set; }
         public string CreatedById { get; set; }
+
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy hh:mm tt}")]
         public DateTime CreatedDateTime { get; set; }
         public string Note { get; set; }
 
