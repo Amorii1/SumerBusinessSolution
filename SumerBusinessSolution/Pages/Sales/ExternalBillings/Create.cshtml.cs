@@ -73,7 +73,7 @@ namespace SumerBusinessSolution.Pages.Sales.ExternalBillings
         public ActionResult OnGet()
         {
             COD = SD.COD;
-            Bi = new List<ExternalBillItems> { new ExternalBillItems { ProdId = 0, Qty = 0, UnitPrice = 0, TotalAmt = 0, Note = "", IsExternal= false } };
+            Bi = new List<ExternalBillItems> { new ExternalBillItems { Qty = 0, UnitPrice = 0, TotalAmt = 0, Note = "", IsExternal= false, ProdId = 0} };
 
             WarehouseList = _db.Warehouse.Where(wh => wh.WhType.Type.ToLower() == SD.ShowRoom.ToLower()).ToList();
             CustomerList = _db.Customer.Where(cus => cus.Status == SD.ActiveCustomer).ToList();
@@ -107,13 +107,19 @@ namespace SumerBusinessSolution.Pages.Sales.ExternalBillings
             IQueryable<string> lstProdCode = from P in _db.ProdInfo
                                              where (P.ProdCode.Contains(term))
                                              select P.ProdCode;
-
-            //int x = Bi.Count();
-
-            //Bi[0].UnitPrice =  500;
-
             return new JsonResult(lstProdCode);
+        }
 
+        public JsonResult OnGetSearchProdId(string term)
+        {
+            if (term == null)
+            {
+                return new JsonResult("Not Found");
+            }
+            IQueryable<int> lstProdId = from P in _db.ProdInfo
+                                             where (P.ProdCode.Contains(term))
+                                             select P.Id;
+            return new JsonResult(lstProdId);
         }
 
         public JsonResult OnGetProdUnitPriceWhole(string term)

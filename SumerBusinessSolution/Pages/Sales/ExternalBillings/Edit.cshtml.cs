@@ -177,13 +177,16 @@ namespace SumerBusinessSolution.Pages.Sales.ExternalBillings
 
         }
 
-        public JsonResult OnGetCheckQty(string term, double qty)
+        public JsonResult OnGetCheckProdQty(string qty, string prod)
         {
-            if (term == null)
+            //double qty = 5909;
+
+            double dqty = Convert.ToDouble(qty);
+            if (prod == null)
             {
                 return new JsonResult("Not Found");
             }
-            bool qtyCheck = CheckQtyInWh(term, qty);
+            bool qtyCheck = CheckQtyInWh(prod, dqty);
 
             return new JsonResult(qtyCheck);
 
@@ -192,7 +195,12 @@ namespace SumerBusinessSolution.Pages.Sales.ExternalBillings
         // leave it for later
         private bool CheckQtyInWh(string ProdCode, double Qty)
         {
-            InvStockQty = _db.InvStockQty.FirstOrDefaultAsync(inv => inv.ProdInfo.ProdCode == ProdCode & inv.Warehouse.WhType.Type == "StoreRoom").GetAwaiter().GetResult();
+            InvStockQty = _db.InvStockQty.FirstOrDefaultAsync(inv => inv.ProdInfo.ProdCode == ProdCode & inv.Warehouse.WhType.Type == SD.ShowRoom).GetAwaiter().GetResult();
+
+            if (InvStockQty == null)
+            {
+                return true;
+            }
 
             double StockQty = InvStockQty.Qty;
 
@@ -206,7 +214,7 @@ namespace SumerBusinessSolution.Pages.Sales.ExternalBillings
             }
         }
 
-       
+
     }
 
 }

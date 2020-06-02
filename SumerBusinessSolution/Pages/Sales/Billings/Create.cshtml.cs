@@ -128,6 +128,18 @@ namespace SumerBusinessSolution.Pages.Sales.Billings
             return new JsonResult(lstProdCode);
 
         }
+        public JsonResult OnGetSearchProdId(string term)
+        {
+            if (term == null)
+            {
+                return new JsonResult("Not Found");
+            }
+            IQueryable<int> lstProdId = from P in _db.ProdInfo
+                                        where (P.ProdCode.Contains(term))
+                                        select P.Id;
+            return new JsonResult(lstProdId);
+        }
+
 
         public JsonResult OnGetProdUnitPriceWhole(string term)
         {
