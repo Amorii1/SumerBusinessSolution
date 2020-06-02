@@ -15,7 +15,13 @@
 }
 
 <partial name="_StatusMessage" model="Model.StatusMessage" />
+<div class="float-md-right">
+    <a asp-page="/index" title="الرئيسية" asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-info">
 
+        <i class="fas fa-home"></i>
+
+    </a>
+</div>
 <div class=" backgroundWhite">
     <div dir="rtl" class="row">
 
@@ -272,12 +278,6 @@
         </table>
 
     </div>
-    <div class="col-md-6  ">
-        <a asp-page="/index" title="الرئيسية" asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-info">
-
-            <i class="fas fa-home"></i>
-
-        </a>
-    </div>
+    
 
 </div>

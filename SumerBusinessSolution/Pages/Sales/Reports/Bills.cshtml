@@ -15,7 +15,14 @@
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
+ <div class="float-md-right  ">
+                <a asp-page="/reports" title="التقارير" asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-info">
 
+                    <i class="fas fa-file-alt"></i> الرجوع الى التقارير
+
+                </a>
+            </div>
+           
     <div class=" backgroundWhite">
         <div class="row">
             <div class="col-md-12 text-md-right">
@@ -34,18 +41,7 @@
 
 
 
-                                <div class="col-md-3 pb-1">
-                                    <div dir="rtl" class="form-group row float-md-right">
 
-
-                                        <div>
-                                            <label asp-for="SearchFromDate" class="control-label"></label>
-                                        </div>
-                                        <div>
-                                            <input asp-for="SearchFromDate" class="form-control" />
-                                        </div>
-                                    </div>
-                                </div>
                                 <div class="col-md-3 pb-1">
                                     <div dir="rtl" class="form-group row float-md-right">
 
@@ -55,6 +51,18 @@
                                         <div>
                                             <input asp-for="SearchToDate" class="form-control" />
 
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 pb-1">
+                                    <div dir="rtl" class="form-group row float-md-right">
+
+
+                                        <div>
+                                            <label asp-for="SearchFromDate" class="control-label"></label>
+                                        </div>
+                                        <div>
+                                            <input asp-for="SearchFromDate" class="form-control" />
                                         </div>
                                     </div>
                                 </div>
@@ -182,13 +190,6 @@
 
         </div>
       
-            <div class="col-md-6  ">
-                <a asp-page="/reports" title="التقارير" asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-info">
-
-                    <i class="fas fa-file-alt"></i> الرجوع الى التقارير
-
-                </a>
-            </div>
            
             
         </div>

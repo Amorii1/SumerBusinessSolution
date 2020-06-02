@@ -13,44 +13,52 @@
     ViewData["Title"] = "Settings";
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
+    <div>
+        <div class="float-md-right ">
+            <a asp-page="/Index" title="الرئيسية" asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-info">
 
-<br />
-<br />
-<div class="row" style=" padding-right:100px;">
-    @if (User.IsInRole(SD.AdminUser))
-    {
-        <div class="column" style="padding-left:115px;">
-            <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="CompanyDetails/Index">
-
-                <img src="~/img/office.PNG" style="width:120px;height:115px;" />
-                <h4 class="text-center"> @localizer.Get("معلومات الشركة")</h4>
+                <i class="fas fa-home"></i> الرجوع الى الرئيسية
 
             </a>
         </div>
+        <br />
+        <br />
+        <div class="row" style=" padding-right:100px;">
+            @if (User.IsInRole(SD.AdminUser))
+            {
+                <div class="column" style="padding-left:115px;">
+                    <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="CompanyDetails/Index">
 
-        <div class="column" style="padding-left:115px;">
-            <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="GeneralSettings/UserAuthorization">
-                <img src="~/img/application.png" style="width:120px;height:120px;" />
-                <h4 class="text-center"> @localizer.Get("الصلاحيات")</h4>
+                        <img src="~/img/office.PNG" style="width:120px;height:115px;" />
+                        <h4 class="text-center"> @localizer.Get("معلومات الشركة")</h4>
 
-            </a>
+                    </a>
+                </div>
+
+                <div class="column" style="padding-left:115px;">
+                    <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="GeneralSettings/UserAuthorization">
+                        <img src="~/img/application.png" style="width:120px;height:120px;" />
+                        <h4 class="text-center"> @localizer.Get("الصلاحيات")</h4>
+
+                    </a>
+                </div>
+            }
+            <div class="column" style="padding-left:115px;">
+                <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="Users/Index">
+                    <img src="~/img/team.png" style="width:120px;height:120px;" />
+                    <h4 class="text-center"> @localizer.Get("المستخدمين")</h4>
+
+                </a>
+            </div>
+
+            <div class="column" style="padding-left:115px;">
+                <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="INVSettings">
+                    <img src="~/img/warehouse.png" style="width:120px;height:115px;" />
+                    <h4 class="text-center mt-md-1"> @localizer.Get("ادارة المخازن")</h4>
+
+                </a>
+            </div>
+
+
         </div>
-    }
-    <div class="column" style="padding-left:115px;">
-        <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="Users/Index">
-            <img src="~/img/team.png" style="width:120px;height:120px;" />
-            <h4 class="text-center"> @localizer.Get("المستخدمين")</h4>
-
-        </a>
     </div>
-
-    <div class="column" style="padding-left:115px;">
-        <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="INVSettings">
-            <img src="~/img/warehouse.png" style="width:120px;height:115px;" />
-            <h4 class="text-center mt-md-1"> @localizer.Get("ادارة المخازن")</h4>
-
-        </a>
-    </div>
-
-
-</div>

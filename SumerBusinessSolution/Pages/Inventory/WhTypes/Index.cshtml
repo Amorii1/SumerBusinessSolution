@@ -6,7 +6,13 @@
     ViewData["Title"] = "Index";
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
+    <div class="float-md-right">
+        <a asp-page="/index" title="الرئيسية" asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-info">
 
+            <i class="fas fa-home"></i>
+
+        </a>
+    </div>
 <partial name="_StatusMessage" model="Model.StatusMessage" />
 <div class=" backgroundWhite">
 
@@ -63,13 +69,7 @@
             }
         </table>
     </div>
-    <div class="col-md-6  ">
-        <a asp-page="/index" title="الرئيسية" asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-info">
-
-            <i class="fas fa-home"></i>
-
-        </a>
-    </div>
+    
 </div>
 
 
