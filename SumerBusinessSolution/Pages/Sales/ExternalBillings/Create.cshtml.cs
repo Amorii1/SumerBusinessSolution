@@ -73,7 +73,7 @@ namespace SumerBusinessSolution.Pages.Sales.ExternalBillings
         public ActionResult OnGet()
         {
             COD = SD.COD;
-            Bi = new List<ExternalBillItems> { new ExternalBillItems { ProdId = 0, Qty = 0, UnitPrice = 0, TotalAmt = 0, Note = "" } };
+            Bi = new List<ExternalBillItems> { new ExternalBillItems { ProdId = 0, Qty = 0, UnitPrice = 0, TotalAmt = 0, Note = "", IsExternal= false } };
 
             WarehouseList = _db.Warehouse.Where(wh => wh.WhType.Type.ToLower() == SD.ShowRoom.ToLower()).ToList();
             CustomerList = _db.Customer.Where(cus => cus.Status == SD.ActiveCustomer).ToList();
@@ -149,13 +149,16 @@ namespace SumerBusinessSolution.Pages.Sales.ExternalBillings
 
         }
 
-        public JsonResult OnGetCheckQty(string term, double qty)
-        {
-            if (term == null)
+        public JsonResult OnGetCheckProdQty(string qty, string prod)
+            {
+            //double qty = 5909;
+
+            double dqty = Convert.ToDouble(qty);
+            if (prod == null)
             {
                 return new JsonResult("Not Found");
             }
-            bool qtyCheck = CheckQtyInWh(term, qty);
+            bool qtyCheck = CheckQtyInWh(prod, dqty);
 
             return new JsonResult(qtyCheck);
 
@@ -164,7 +167,12 @@ namespace SumerBusinessSolution.Pages.Sales.ExternalBillings
         // leave it for later
         private bool CheckQtyInWh(string ProdCode, double Qty)
         {
-            InvStockQty = _db.InvStockQty.FirstOrDefaultAsync(inv => inv.ProdInfo.ProdCode == ProdCode & inv.Warehouse.WhType.Type == "StoreRoom").GetAwaiter().GetResult();
+            InvStockQty = _db.InvStockQty.FirstOrDefaultAsync(inv => inv.ProdInfo.ProdCode == ProdCode & inv.Warehouse.WhType.Type == SD.ShowRoom).GetAwaiter().GetResult();
+
+            if(InvStockQty == null)
+            {
+                return true;
+            }
 
             double StockQty = InvStockQty.Qty;
 

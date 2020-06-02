@@ -293,62 +293,62 @@ namespace SumerBusinessSolution.Transactions
                 ExternalHeader.CreatedById = GetLoggedInUserId();
                 ExternalHeader.CreatedDataTime = DateTime.Now;
 
-                double TotalAmt = 0;
-                int ProdId;
+                // double TotalAmt = 0;
+                //int ProdId;
                 // getting the unit price of each item in the bill items 
-                foreach (ExternalBillItems item in ExternalBill)
-                {
-                    ProdId = 0;
-                    try
-                    {
-                        if (Type == "Edit")
-                        {
-                            ProdId = _db.ProdInfo.FirstOrDefault(pr => pr.ProdName == item.ProdInfo.ProdName).Id;
+                //foreach (ExternalBillItems item in ExternalBill)
+                //{
+                //    ProdId = 0;
+                //    try
+                //    {
+                //        if (Type == "Edit")
+                //        {
+                //            ProdId = _db.ProdInfo.FirstOrDefault(pr => pr.ProdName == item.ProdInfo.ProdName).Id;
 
-                        }
-                        else
-                        {
-                            ProdId = _db.ProdInfo.FirstOrDefault(pr => pr.ProdCode == item.ProdInfo.ProdCode).Id;
+                //        }
+                //        else
+                //        {
+                //            ProdId = _db.ProdInfo.FirstOrDefault(pr => pr.ProdCode == item.ProdInfo.ProdCode).Id;
 
-                        }
+                //        }
 
-                    }
-                    catch
-                    {
+                //    }
+                //    catch
+                //    {
 
-                    }
+                //    }
 
-                    if (ProdId > 0)
-                    {
-                        item.ProdId = ProdId;
-                        item.IsExternal = false;
-                        // first check if qty enough in the store room before proceeding
-                        bool CheckQty = CheckQtyInWh(item.ProdId ?? 0, WhId, item.Qty);
-                        // ExternalHeader.HasExternalProd = false;
-                        if (CheckQty == false)
-                        {
-                            return "Error! لا توجد كمية كافية للبيع";
-                        }
-                    }
-                    else
-                    {
-                        // to indicase if the product of this line is an external product
-                        // which means its bought from another shop and has no effect on 
-                        // inventory 
-                        item.IsExternal = true;
-                        ExternalHeader.HasExternalProd = true;
-                    }
-                    TotalAmt += item.TotalAmt;
-                }
+                //    if (ProdId > 0)
+                //    {
+                //        item.ProdId = ProdId;
+                //        item.IsExternal = false;
+                //        // first check if qty enough in the store room before proceeding
+                //        //bool CheckQty = CheckQtyInWh(item.ProdId ?? 0, WhId, item.Qty);
+                //        //// ExternalHeader.HasExternalProd = false;
+                //        //if (CheckQty == false)
+                //        //{
+                //        //    return "Error! لا توجد كمية كافية للبيع";
+                //        //}
+                //    }
+                //    else
+                //    {
+                //        // to indicase if the product of this line is an external product
+                //        // which means its bought from another shop and has no effect on 
+                //        // inventory 
+                //        item.IsExternal = true;
+                //        ExternalHeader.HasExternalProd = true;
+                //    }
+                //   // TotalAmt += item.TotalAmt;
+                //}
 
                 // price before discount
-                ExternalHeader.TotalAmt = TotalAmt;
+               // ExternalHeader.TotalAmt = TotalAmt;
 
                 // incase there is a discount
-                TotalAmt = TotalAmt - ExternalHeader.Discount;
-                ExternalHeader.TotalNetAmt = TotalAmt;
+              //  TotalAmt = TotalAmt - ExternalHeader.Discount;
+              //  ExternalHeader.TotalNetAmt = TotalAmt;
 
-                if (TotalAmt == ExternalHeader.PaidAmt)
+                if (ExternalHeader.TotalNetAmt == ExternalHeader.PaidAmt)
                 {
                     ExternalHeader.Status = SD.Completed;
                 }
@@ -373,11 +373,20 @@ namespace SumerBusinessSolution.Transactions
                 // Creating Bill items
                 foreach (ExternalBillItems item in ExternalBill)
                 {
+                    int ProdId = 0;
+                    try
+                    {
+                        ProdId = _db.ProdInfo.FirstOrDefault(pr => pr.ProdCode == item.ProdInfo.ProdCode).Id;
+                    }
+                    catch
+                    {
 
+                    }
+ 
                     ExternalBillItems Bill = new ExternalBillItems
                     {
                         HeaderId = ExternalHeader.Id,
-                        // ProdId = item.ProdId,
+                       // ProdId = item.ProdId,
                         Qty = item.Qty,
                         UnitPrice = item.UnitPrice,
                         WhId = WhId,
@@ -388,7 +397,7 @@ namespace SumerBusinessSolution.Transactions
 
                     if (item.IsExternal == false)
                     {
-                        Bill.ProdId = item.ProdId;
+                        Bill.ProdId = ProdId;
                         Bill.IsExternal = false;
                         // decrease stock qty of that item 
                         DecreaseStockQty(Bill.ProdId ?? 0, WhId, Bill.Qty);
@@ -399,6 +408,7 @@ namespace SumerBusinessSolution.Transactions
                     }
                     else
                     {
+                        ExternalHeader.HasExternalProd = true;
                         if (Type == "Edit")
                         {
                             Bill.ProdName = item.ProdName;
@@ -448,28 +458,28 @@ namespace SumerBusinessSolution.Transactions
         {
             try
             {
-                ShowRoom = _db.Warehouse.Include(wh => wh.WhType).FirstOrDefault(wh => wh.WhType.Type == "StoreRoom");
+                ShowRoom = _db.Warehouse.Include(wh => wh.WhType).FirstOrDefault(wh => wh.WhType.Type == SD.StoreRoom);
 
                 ExternalHeader.CreatedById = GetLoggedInUserId();
                 ExternalHeader.CreatedDataTime = DateTime.Now;
 
-                double TotalAmt = 0;
+                // double TotalAmt = 0;
 
                 // getting the unit price of each item in the bill items 
-                foreach (ExternalBillItems item in ExternalBill)
-                {
+                //foreach (ExternalBillItems item in ExternalBill)
+                //{
 
-                    TotalAmt += item.TotalAmt;
-                }
+                //    TotalAmt += item.TotalAmt;
+                //}
 
-                // price before discount
-                ExternalHeader.TotalAmt = TotalAmt;
+                //// price before discount
+                //ExternalHeader.TotalAmt = TotalAmt;
 
-                // in case there is a discount
-                TotalAmt = TotalAmt - ExternalHeader.Discount;
-                ExternalHeader.TotalNetAmt = TotalAmt;
+                //// in case there is a discount
+                //TotalAmt = TotalAmt - ExternalHeader.Discount;
+                //ExternalHeader.TotalNetAmt = TotalAmt;
 
-                if (TotalAmt == ExternalHeader.PaidAmt)
+                if (ExternalHeader.TotalNetAmt == ExternalHeader.PaidAmt)
                 {
                     ExternalHeader.Status = SD.Completed;
                 }

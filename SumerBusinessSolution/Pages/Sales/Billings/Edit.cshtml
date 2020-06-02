@@ -74,98 +74,130 @@
             </div>
         </div>
 
-        <table id="dataTable" dir="rtl" class=" text-md-center table table-striped border table-responsive-md table-responsive-lg">
-            <tr class="table-secondary">
-                @*<table id="dataTable" border="0" cellpadding="0" cellspacing="0">
-                    <tr>*@
-                <th>
-                    @Html.DisplayNameFor(a => Model.Bi[0].ProdInfo.ProdCode)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(a => Model.Bi[0].Qty)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(a => Model.Bi[0].UnitPrice)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(a => Model.Bi[0].TotalAmt)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(a => Model.Bi[0].Note)
-                </th>
+        <table id="dataTable" dir="rtl" class=" text-md-center table table-striped border table-responsive-md table-responsive-lg text-md-center">
+            <thead>
+                <tr class="table-secondary">
+                    @*<table id="dataTable" border="0" cellpadding="0" cellspacing="0">
+                        <tr>*@
+                    <th>
+                        @Html.DisplayNameFor(a => Model.Bi[0].ProdInfo.ProdCode)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(a => Model.Bi[0].Qty)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(a => Model.Bi[0].UnitPrice)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(a => Model.Bi[0].TotalAmt)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(a => Model.Bi[0].Note)
+                    </th>
 
-                @*<th>Prod Code</th>
-                    <th>Qty</th>
-                    <th>Unit Price</th>
-                    <th>Total </th>
-                    <th>Note</th>*@
-                <th><a href="#" title="اضافة" id="addNew">   <i class="fas fa-plus"></i></a></th>
-            </tr>
-            @if (Model.Bi != null && Model.Bi.Count > 0)
-            {
-
-                int j = 0;
-
-                foreach (var i in Model.Bi)
+                    @*<th>Prod Code</th>
+                        <th>Qty</th>
+                        <th>Unit Price</th>
+                        <th>Total </th>
+                        <th>Note</th>*@
+                    <th><a href="#" title="اضافة" id="addNew">   <i class="fas fa-plus"></i></a></th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Bi != null && Model.Bi.Count > 0)
                 {
 
+                    int j = 0;
 
-                    <tr>
-                        @*float a= (float)((ArrayList)paredes[i])[0];*@
-                        @*<td>@Html.TextBoxFor(a => a[j].ContactName)</td>*@
+                    foreach (var i in Model.Bi)
+                    {
 
-                        <td onclick="bindAutocomplete(this); bindPrice(this)" onchange="bindPrice(this)">@Html.TextBoxFor(a => Model.Bi[j].ProdInfo.ProdCode) </td>
-                        <td oninput="bindTotal(this)" onclick="bindTotal(this)">@Html.TextBoxFor(a => Model.Bi[j].Qty)</td>
-                        <td>@Html.TextBoxFor(a => Model.Bi[j].UnitPrice)</td>
-                        <td>@Html.TextBoxFor(a => Model.Bi[j].TotalAmt)</td>
-                        <td>@Html.TextBoxFor(a => Model.Bi[j].Note)</td>
-                        <td>
 
-                            <a href="#" id="removeThis" onclick="return RemoveRow(this)" title="الغاء" class="remove"><i class="fas fa-window-close"></i></a>
+                        <tr>
+                            @*float a= (float)((ArrayList)paredes[i])[0];*@
+                            @*<td>@Html.TextBoxFor(a => a[j].ContactName)</td>*@
 
-                        </td>
-                    </tr>
-                    j++;
+                            <td onclick="bindAutocomplete(this); bindPrice(this)" onchange="bindPrice(this)">@Html.TextBoxFor(a => Model.Bi[j].ProdInfo.ProdCode)</td>
+                            <td oninput="bindTotal(this); checkProdQty(this)" onclick="bindTotal(this)" onchange="calBillTotal(); calBillTotalNetAmt()">@Html.TextBoxFor(a => Model.Bi[j].Qty)</td>
+                            <td oninput="bindTotalOnUnitPriceChange(this); calBillTotal()" onchange="calBillTotal(); calBillTotalNetAmt()">@Html.TextBoxFor(a => Model.Bi[j].UnitPrice)</td>
+                            <td id="totalLineAmt">@Html.TextBoxFor(a => Model.Bi[j].TotalAmt)</td>
+                            <td>@Html.TextBoxFor(a => Model.Bi[j].Note)</td>
+                            <td>
+                                @if (j > 0)
+                                {
+
+                                    // <input type="button" value="Delete" onclick="deleteRow(this)">
+                                    <a href="#" id="removeThis" class="remove">Remove</a>
+
+
+                                }
+                            </td>
+                            <td>
+                                @*<button onclick="RemoveRow(this)">
+                                        Click here
+                                    </button>*@
+                            </td>
+                        </tr>
+                        j++;
+
+                    }
 
                 }
-
-            }
+            </tbody>
         </table>
-
-        <div class="row form-group text-success">
-
-            <div class="col-md-5 offset-md-5">
-                <input id="paidAmt" type="text" asp-for="@Model.BillHeader.PaidAmt" class="form-control text-md-right" />
-
-            </div>
+        <div dir="rtl" class="row form-group">
             <div class="col-md-2">
-                <label asp-for="@Model.BillHeader.PaidAmt"> </label>
+                <label asp-for="@Model.BillHeader.TotalAmt"> </label>
+            </div>
+            <div class="col-md-5 offset-md-5">
+                <input id="billTotalAmt" type="text" asp-for="a => @Model.BillHeader.TotalAmt" class="form-control text-md-right" />
             </div>
         </div>
-
-        <div class="row form-group text-warning">
-
-            <div class="col-md-5 offset-md-5">
-                <input id="discount" type="text" asp-for="a => @Model.BillHeader.Discount" class="form-control text-md-right" />
-            </div>
+        <div dir="rtl" class="row form-group text-warning">
             <div class="col-md-2">
                 <label asp-for="@Model.BillHeader.Discount"> </label>
             </div>
-        </div>
-        <div class="row form-group">
-
             <div class="col-md-5 offset-md-5">
-                <input type="text" asp-for="a => @Model.BillHeader.Note" class="form-control text-md-right" />
+                <input id="discount" type="text" asp-for="a => @Model.BillHeader.Discount" class="form-control text-md-right" onchange="calBillTotalNetAmt()" placeholder="0" autocomplete="off" />
+            </div>
+        </div>
+        <div dir="rtl" class="row form-group">
+            <div class="col-md-2">
+                <label asp-for="@Model.BillHeader.TotalNetAmt"> </label>
+            </div>
+            <div class="col-md-5 offset-md-5">
+                <input id="billTotalNetAmt" type="text" asp-for="a => @Model.BillHeader.TotalNetAmt" class="form-control text-md-right" />
+            </div>
+        </div>
+        <div dir="rtl" class="row form-group text-success">
+            <div class="col-md-2">
+                <label asp-for="@Model.BillHeader.PaidAmt"> </label>
+            </div>
+            <div class="col-md-5 offset-md-5">
+                <input id="paidAmt" type="text" asp-for="a => @Model.BillHeader.PaidAmt" class="form-control text-md-right" placeholder="0" autocomplete="off" />
 
             </div>
+        </div>
+        <div dir="rtl" class="row form-group">
             <div class="col-md-2">
                 <label asp-for="@Model.BillHeader.Note"> </label>
             </div>
+            <div class="col-md-5 offset-md-5">
+                <input type="text" asp-for="a => @Model.BillHeader.Note" class="form-control text-md-right" autocomplete="off" />
+
+            </div>
         </div>
+
         <div class=" form-group row">
             <div class="col-md-5 offset-md-5">
                 <div class="row">
 
+
+                    <div class="col-md-6">
+                        @*<input type="submit" class="btn btn-info form-control" value="حفظ" />*@
+                        <input asp-route-culture="@Request.RouteValues["culture"]" type="submit" class="btn btn-info form-control" value="@localizer.Get("انشاء")" onclick="return ValidateInput()" />
+
+                    </div>
                     <div class="col-md-6">
                         @*<a asp-page="Index" class="btn btn-success form-control">الرجوع</a>*@
 
@@ -174,39 +206,13 @@
                         </a>
 
                     </div>
-                    <div class="col-md-6">
-                        @*<input type="submit" class="btn btn-info form-control" value="حفظ" />*@
-                        <input asp-route-culture="@Request.RouteValues["culture"]" type="submit" class="btn btn-info form-control" value="@localizer.Get("انشاء")" onclick="return ValidateInput()" />
-
-                    </div>
                 </div>
 
             </div>
         </div>
-
-        @*<input type="submit" value="Save Bulk Data" />*@
     </form>
 
 </div>
-
-
-
-@*@using (Html.BeginForm("BulkData", "Save", FormMethod.Post))
-    {
-        @Html.AntiForgeryToken()
-        @Html.ValidationSummary(true)
-
-    }*@
-
-
-
-<script>
-    function RemoveRow(r) {
-        var i = r.parentNode.parentNode.rowIndex;
-        document.getElementById("dataTable").deleteRow(i);
-    }
-
-</script>
 
 @* Here I will add Jquery Code for validation / dynamically add new rows / Remove rows etc *@
 
@@ -214,24 +220,55 @@
     <script language="javascript">
             $(document).ready(function () {
 
+                $('#dataTable').on('click', '.remove', function (e) {
+                    e.preventDefault();
+                    var tr = $(this).closest('tr');
+                    var index = $(this).data('index');
+                    tr.remove();
+
+                    calBillTotalOnRemove();
+                    calBillTotalNetAmt();
+                    $('#dataTable > tbody > tr').each((ix, row) => {
+                        if (ix >= index) {
+                            $.each($(row).find(':input'), function (i, val) {
+                                // Replaced Name
+                                var previous = ix + 1;
+                                var oldN = $(this).attr('name');
+                                var newN = oldN.replace('[' + previous + ']', '[' + ix + ']');
+                                $(this).attr('name', newN);
+
+                                var oldI = $(this).attr('id');
+                                var newI = oldI.replace('_' + previous + '__', '_' + ix + '__');
+                                $(this).attr('id', newI);
+                            });
+
+                            $(row).find('.remove').data('index', ix);
+                        }
+                    });
+                })
+
                 //1. Add new row
                 $("#addNew").click(function (e) {
                     e.preventDefault();
-                    var $tableBody = $("#dataTable");
+                    var $tableBody = $("#dataTable > tbody");
                     var $trLast = $tableBody.find("tr:last");
 
                     var $trNew = $trLast.clone();
                     $trNew.find(':text').val('');
 
                     var suffix = $trNew.find(':input:first').attr('name').match(/\d+/);
-                    $trNew.find("td:last").html('<a href="#" id="removeThis" onclick="return RemoveRow(this)" title="الغاء" class="remove"><i class="fas fa-window-close"></i></a>');
-
+                    $trNew.find("td:last").html('<a href="#" title="الغاء" data-index=' + (parseInt(suffix) + 1) + '  class="remove"><i class="fas fa-window-close"></i></a>');
+                    // $trNew.find("td:last").html('<button  id="removeThis" onclick="RemoveRow(this)">Click here</button>');
 
                     $.each($trNew.find(':input'), function (i, val) {
                         // Replaced Name
                         var oldN = $(this).attr('name');
                         var newN = oldN.replace('[' + suffix + ']', '[' + (parseInt(suffix) + 1) + ']');
                         $(this).attr('name', newN);
+
+                        var oldI = $(this).attr('id');
+                        var newI = oldI.replace('_' + suffix + '__', '_' + (parseInt(suffix) + 1) + '__');
+                        $(this).attr('id', newI);
                         //Replaced value
                         var type = $(this).attr('type');
                         if (type.toLowerCase() == "text") {
@@ -246,20 +283,15 @@
 
                 });
 
-
-
             });
 
             function bindAutocomplete(t) {
                 $(t.children[0]).autocomplete({
 
-                        source: '@Url.Page("Edit", "SearchNow")'
-                    });
-
-            }
-
+                        source: '@Url.Page("Create", "SearchNow")'
+                });
+        }
         async function bindPrice(t) {
-
                       if (document.getElementById("PriceType").value == 1) {
                           const obj = await fetch(`${window.location.href.split('?')[0]}?handler=ProdUnitPriceWhole&term=${t.children[0].value}`)
                           const json = await obj.json()
@@ -270,18 +302,78 @@
                           const json = await obj.json()
                            t.parentElement.children[2].children[0].value = json[0]
                       }
-
-
-                       console.log(document.getElementById("PriceType").value)
-
                 }
 
-                function bindTotal(t) {
-                    const val = t.children[0].value
-                    const price = t.parentElement.children[2].children[0].value
+        function bindTotal(t) {
+            const val = t.children[0].value
+            const price = t.parentElement.children[2].children[0].value
 
-                    t.parentElement.children[3].children[0].value = val * price
+            t.parentElement.children[3].children[0].value = val * price
+        }
+          function bindTotalOnUnitPriceChange(t) {
+            const val = t.children[0].value
+            const qty = t.parentElement.children[1].children[0].value
+
+            t.parentElement.children[3].children[0].value = val * qty
+        }
+
+        function calBillTotal() {
+            var table = document.getElementById('dataTable');
+            var count = table.getElementsByTagName('tr').length;
+
+            if (count > 0) {
+                var total = 0;
+                for (var i = 1; i < count; i++) {
+                    total += parseFloat(table.rows[i].cells.item(3).children[0].value);
+                }
+                document.getElementById('billTotalAmt').value = total;
             }
+        }
+
+            function calBillTotalOnRemove() {
+            var table = document.getElementById('dataTable');
+            var count = table.getElementsByTagName('tr').length;
+
+            if (count > 0) {
+                var total = 0;
+                for (var i = 1; i < count; i++) {
+                    total += parseFloat(table.rows[i].cells.item(3).children[0].value);
+                }
+                document.getElementById('billTotalAmt').value = total;
+                }
+
+        }
+
+        function calBillTotalNetAmt() {
+            var totalAmt = parseFloat(document.getElementById('billTotalAmt').value);
+            var discount = parseFloat(document.getElementById('discount').value);
+            if (discount > 0) {
+                document.getElementById('billTotalNetAmt').value = totalAmt - discount;
+            }
+            else {
+                 document.getElementById('billTotalNetAmt').value = totalAmt;
+            }
+
+
+        }
+
+        async function checkProdQty(t) {
+            var rIn = t.parentNode.rowIndex;
+            var table = document.getElementById('dataTable');
+            var prod = table.rows[rIn].cells.item(0).children[0].value;
+
+            const obj = await fetch(`${window.location.href.split('?')[0]}?handler=CheckProdQty&qty=${t.children[0].value}&prod=${prod}`)
+            const json = await obj.json()
+             // console.log(json);
+            if (json == false) {
+                swal("Error!", "لا يوجد كمية كافية لبيع هذه المادة", "error");
+                table.rows[rIn].cells.item(1).children[0].value = 0;
+                return false
+            }
+
+        }
+
+
 
     </script>
     <script type="text/javascript" src="~/js/jquery.js"></script>
@@ -300,7 +392,14 @@
             });
         });
     </script>
+    <script>
+         $(document).ready(function () {
+    $('#CustName').autocomplete({
+    source: '@Url.Page("Create", "SearchCustomer")'
+    });
+         });
 
+    </script>
 
     @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
@@ -309,25 +408,59 @@
             var companyName = document.getElementById("CustName").value;
             var paymentTerms = document.getElementById("paymentTerms").value;
             var paidAmt = document.getElementById("paidAmt").value;
+            var totalNetAmt = document.getElementById("billTotalNetAmt").value;
             var cod = document.getElementById("cod").value;
             if (companyName == "") {
                 swal("Error!", "يرجى ادخال اسم الزبون", "error");
 
                 return false
             }
-            if (paymentTerms == cod && paidAmt == 0) {
-                swal("Error!", "يرجى ادخال المبلغ المدفوع", "error");
-
+            if (paymentTerms == cod && paidAmt != totalNetAmt) {
+                swal("Error!", "المبلغ المدفوع غير صحيح", "error");
+                return false
+            }
+            if (paidAmt > totalNetAmt) {
+                swal("Error!", "المبلغ المدفوع اعلى من المبلغ الاجمالي للفاتورة", "error");
                 return false
             }
 
-        }
-        window.onload = function iniVals() {
-            // document.getElementById("discount").value = 0;
-            // document.getElementById("paidAmt").value = 0;
+            if (!document.getElementById("discount").value) {
+                document.getElementById("discount").value = 0
+            };
+
+            // making sure all the qtys are more than 0
+            var table = document.getElementById('dataTable');
+            var count = table.getElementsByTagName('tr').length;
+            var qty = 0;
+            if (count > 0) {
+                for (var i = 1; i < count; i++) {
+                    qty = parseFloat(table.rows[i].cells.item(1).children[0].value);
+                    if (qty == 0) {
+                        swal("Error!", "هناك مادة مضافة بدون تحديد الكمية", "error");
+                        return false
+                    }
+                }
+
+            }
 
         }
+        //window.onload = function iniVals() {
+
+        //    document.getElementById("billTotalAmt").value = 0;
+        //    document.getElementById("billTotalNetAmt").value = 0;
+        //}
+
+        //function setIniPaidAmt() {
+        //    var paymentTerms = document.getElementById("paymentTerms").value;
+        //    if (paymentTerms != cod) {
+        //        document.getElementById("paidAmt").value = 0;
+        //    }
+        //    else {
+        //        document.getElementById("paidAmt").value = "";
+        //    }
+        //}
+
+
     </script>
 
 }
-

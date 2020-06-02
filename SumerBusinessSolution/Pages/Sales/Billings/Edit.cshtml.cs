@@ -145,7 +145,7 @@ namespace SumerBusinessSolution.Pages.Sales.Billings
 
         }
 
-        public JsonResult OnGetProdUnitPriceWhole(int BhId, string term)
+        public JsonResult OnGetProdUnitPriceWhole(string term)
         {
             if (term == null)
             {
@@ -163,7 +163,7 @@ namespace SumerBusinessSolution.Pages.Sales.Billings
 
         }
 
-        public JsonResult OnGetProdUnitPriceRetail(int BhId, string term)
+        public JsonResult OnGetProdUnitPriceRetail(string term)
         {
             if (term == null)
             {
@@ -181,13 +181,16 @@ namespace SumerBusinessSolution.Pages.Sales.Billings
 
         }
 
-        public JsonResult OnGetCheckQty(string term, double qty)
+        public JsonResult OnGetCheckProdQty(string qty, string prod)
         {
-            if (term == null)
+            //double qty = 5909;
+
+            double dqty = Convert.ToDouble(qty);
+            if (prod == null)
             {
                 return new JsonResult("Not Found");
             }
-            bool qtyCheck = CheckQtyInWh(term, qty);
+            bool qtyCheck = CheckQtyInWh(prod, dqty);
 
             return new JsonResult(qtyCheck);
 
@@ -196,7 +199,12 @@ namespace SumerBusinessSolution.Pages.Sales.Billings
         // leave it for later
         private bool CheckQtyInWh(string ProdCode, double Qty)
         {
-            InvStockQty = _db.InvStockQty.FirstOrDefaultAsync(inv => inv.ProdInfo.ProdCode == ProdCode & inv.Warehouse.WhType.Type == "StoreRoom").GetAwaiter().GetResult();
+            InvStockQty = _db.InvStockQty.FirstOrDefaultAsync(inv => inv.ProdInfo.ProdCode == ProdCode & inv.Warehouse.WhType.Type == SD.ShowRoom).GetAwaiter().GetResult();
+
+            if (InvStockQty == null)
+            {
+                return false;
+            }
 
             double StockQty = InvStockQty.Qty;
 
@@ -210,7 +218,7 @@ namespace SumerBusinessSolution.Pages.Sales.Billings
             }
         }
 
-       
+
     }
 
 }
