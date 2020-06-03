@@ -1,0 +1,146 @@
+﻿@page
+@model SumerBusinessSolution.ProductInquiryModel
+@{
+    ViewData["Title"] = "ProductInquiry";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+@inject Services.CommonLocalizationService localizer
+@using SumerBusinessSolution.Utility
+<div class="backgroundWhite">
+    <div class="row">
+        <div class="col-md-12 text-md-right">
+            @*<h2 class="text-info">تقارير كمية المواد </h2>*@
+            <h2 class="text-info">@localizer.Get("استعلام المواد")</h2>
+
+        </div>
+
+    </div>
+
+
+    <form method="get" asp-page="ProdInWhQty">
+        <div class="border backgroundWhite">
+            <div @*style="height:60px;"*@ class="container ">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div dir="rtl" class="row" style="margin-top:10px;">
+
+                            <div class="col-md-10 pb-1">
+                                @*@Html.Editor("searchProdCode", new { htmlAttributes = new { @class = "form-control", placeholder = ".....رمز المنتج " } })*@
+                                @Html.Editor("searchProdCode", new { htmlAttributes = new { @class = "form-control text-md-right", placeholder = @localizer.Get("رمز المنتج....") } })
+
+                            </div>
+                            <div class="col-md-2 text-md-right pb-1">
+                                <button asp-route-culture="@Request.RouteValues["culture"]" type="submit" title="بحث" name="submit" value="search" class="btn btn-info form-control">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+
+
+    <div>
+        <table dir="rtl" class="table table-striped border table-responsive-md table-responsive-lg text-md-center">
+            <tr class="table-secondary">
+                <th>
+                    @Html.DisplayNameFor(m => m.InvStockQtyList[0].ProdInfo.ProdCode)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(m => m.InvStockQtyList[0].ProdInfo.ProdName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(m => m.InvStockQtyList[0].Warehouse.WhName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(m => m.InvStockQtyList[0].Qty)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(m => m.InvStockQtyList[0].ProdInfo.WholePrice)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(m => m.InvStockQtyList[0].ProdInfo.RetailPrice)
+                </th>
+                @if (User.IsInRole(SD.AdminUser))
+                {
+                    <th>
+                        @Html.DisplayNameFor(m => m.InvStockQtyList[0].ProdInfo.CostPrice)
+                    </th>
+                }
+
+            </tr>
+            @if (Model.InvStockQtyList.Count() == 0)
+            {
+                <h2 class="text-danger text-md-center">@localizer.Get("لا يوجد تقرير المواد")</h2>
+
+            }
+            else
+            {
+                @foreach (var item in Model.InvStockQtyList)
+                {
+
+        <tr>
+            <td>
+                @Html.DisplayFor(m => item.ProdInfo.ProdCode)
+            </td>
+            <td>
+                @Html.DisplayFor(m => item.ProdInfo.ProdName)
+            </td>
+            <td>
+                @Html.DisplayFor(m => item.Warehouse.WhName)
+            </td>
+
+            @if (item.Qty < 10)
+            {
+                <td class="bg-danger">
+                    @Html.DisplayFor(m => item.Qty)
+                </td>
+            }
+            else
+            {
+                <td>
+                    @Html.DisplayFor(m => item.Qty)
+                </td>
+            }
+            <td>
+                @Html.DisplayFor(m => item.ProdInfo.WholePrice)
+            </td>
+            <td>
+                @Html.DisplayFor(m => item.ProdInfo.RetailPrice)
+            </td>
+            @if (User.IsInRole(SD.AdminUser))
+            {
+                <td>
+                    @Html.DisplayFor(m => item.ProdInfo.CostPrice)
+                </td>
+            }
+        </tr>
+                }
+            }
+        </table>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <script>
+         $(document).ready(function () {
+    $('#searchProdCode').autocomplete({
+    source: '@Url.Page("ProdInWhQty", "SearchNow")'
+    });
+    });
+    </script>
+}
+
+
