@@ -15,167 +15,173 @@
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
+<div class="float-md-right ">
+    <a asp-page="/Customers/Reports/Index" title="التقارير" asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-info">
 
+        <i class="fas fa-file-alt"></i> الزبائن
+
+    </a>
+</div>
 <div class=" backgroundWhite">
     <div class="row">
-          <div class="col-md-12 text-md-right">
+        <div class="col-md-12 text-md-right">
             @*<h2 class="text-info"> طلبات حركه المنتجات </h2>*@
             <h2 class="text-info"> @localizer.Get("حسابات الزبائن")</h2>
-           </div>
-     </div>
+        </div>
+    </div>
 
 
-        <form method="get" asp-page="Index">
-            <div class="border backgroundWhite">
+    <form method="get" asp-page="Index">
+        <div class="border backgroundWhite">
 
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div dir="rtl" class="row" style="margin-top:10px;">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div dir="rtl" class="row" style="margin-top:10px;">
 
-                                <div class="col-md-10 pb-1">
-                                    @Html.Editor("CustomerName", new { htmlAttributes = new { @class = "form-control text-md-right", placeholder = @localizer.Get("اسم الزبون....") } })
+                            <div class="col-md-10 pb-1">
+                                @Html.Editor("CustomerName", new { htmlAttributes = new { @class = "form-control text-md-right", placeholder = @localizer.Get("اسم الزبون....") } })
 
-                                </div>
-                                <div class="col-md-2 text-md-right pb-1">
+                            </div>
+                            <div class="col-md-2 text-md-right pb-1">
 
-                                    <button asp-route-culture="@Request.RouteValues["culture"]" type="submit" title="بحث" name="submit" value="search" class="btn btn-info form-control">
-                                        <i class="fas fa-search"></i>
-                                    </button>
+                                <button asp-route-culture="@Request.RouteValues["culture"]" type="submit" title="بحث" name="submit" value="search" class="btn btn-info form-control">
+                                    <i class="fas fa-search"></i>
+                                </button>
 
-                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </form>
+        </div>
+    </form>
 
 
-        <div>
+    <div>
 
-            <table class="table table-striped border table-responsive-md table-responsive-lg text-md-center">
-                <tr class="table-secondary">
+        <table class="table table-striped border table-responsive-md table-responsive-lg text-md-center">
+            <tr class="table-secondary">
 
-                    <th></th>
+                <th></th>
 
-                    <th class="text-danger">
-                        @Html.DisplayNameFor(m => m.CustAcc.Debt)
-                    </th>
-                    <th class="text-success">
-                        @Html.DisplayNameFor(m => m.CustAcc.Paid)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(m => m.CustAcc.Id)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(m => m.Customer.CompanyName)
-                    </th>
-                </tr>
+                <th class="text-danger">
+                    @Html.DisplayNameFor(m => m.CustAcc.Debt)
+                </th>
+                <th class="text-success">
+                    @Html.DisplayNameFor(m => m.CustAcc.Paid)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(m => m.CustAcc.Id)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(m => m.Customer.CompanyName)
+                </th>
+            </tr>
 
-                @foreach (var item in Model.CustAccList)
+            @foreach (var item in Model.CustAccList)
+            {
+                @if (item.Debt > 0)
                 {
-                    @if (item.Debt > 0)
-                    {
-                        @*<tr style="background-color:red;">
+                    @*<tr style="background-color:red;">
                         </tr>*@
 
-            <tr style="background-color:red;">
+                    <tr style="background-color:red;">
 
-                <td style="width:150px;">
-                    <div class="btn-group" role="group">
-                        <form method="post">
-
-
-                            @if (User.IsInRole(SD.AdminUser))
-                            {
-                                <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-success text-white" asp-page="../Accounts/EditCustAcc" asp-route-CustId="@item.Id" type="submit" title="تعديل الحسابات" name="EditCustAcc">
-                                    @localizer.Get("") <i class="fas fa-edit"></i>
-                                </a>
-                            }
-                            <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-info text-white" asp-page="../Accounts/PayToAcc" asp-route-CustId="@item.Id" type="submit" title="دفع لحساب الزبون" name="PayToAcc">
-                                @localizer.Get("") <i class="fas fa-money-check-alt"></i>
-                            </a>
+                        <td style="width:150px;">
+                            <div class="btn-group" role="group">
+                                <form method="post">
 
 
-                        </form>
-                    </div>
-                </td>
+                                    @if (User.IsInRole(SD.AdminUser))
+                                    {
+                                        <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-success text-white" asp-page="../Accounts/EditCustAcc" asp-route-CustId="@item.Id" type="submit" title="تعديل الحسابات" name="EditCustAcc">
+                                            @localizer.Get("") <i class="fas fa-edit"></i>
+                                        </a>
+                                    }
+                                    <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-info text-white" asp-page="../Accounts/PayToAcc" asp-route-CustId="@item.Id" type="submit" title="دفع لحساب الزبون" name="PayToAcc">
+                                        @localizer.Get("") <i class="fas fa-money-check-alt"></i>
+                                    </a>
 
 
-
-                <td>
-                    @Html.DisplayFor(m => item.Debt)
-                </td>
-                <td>
-                    @Html.DisplayFor(m => item.Paid)
-                </td>
-                <td>
-                    @Html.DisplayFor(m => item.Id)
-                </td>
-                <td>
-                    @Html.DisplayFor(m => item.Customer.CompanyName)
-                </td>
-            </tr>
-
-                    }
-                    else
-                    {
-            <tr>
-                <td>
-                    <div class="btn-group" role="group">
-                        <form method="post">
-                            @if (User.IsInRole(SD.AdminUser))
-                            {
-                                <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-success text-white" asp-page="../Accounts/EditCustAcc" asp-route-CustId="@item.Id" type="submit" title="تعديل الحسابات" name="AccDetails">
-                                    @localizer.Get("") <i class="fas fa-edit"></i>
-                                </a>
-                            }
-                            <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-info text-white" asp-page="../Accounts/PayToAcc" asp-route-CustId="@item.Id" type="submit" title="دفع لحساب الزبون" name="PayToAcc">
-                                @localizer.Get("") <i class="fas fa-money-check-alt"></i>
-                            </a>
-
-
-                        </form>
-                    </div>
-                </td>
+                                </form>
+                            </div>
+                        </td>
 
 
 
-                <td>
-                    @Html.DisplayFor(m => item.Debt)
-                </td>
-                <td>
-                    @Html.DisplayFor(m => item.Paid)
-                </td>
-                <td>
-                    @Html.DisplayFor(m => item.Id)
-                </td>
-                <td>
-                    @Html.DisplayFor(m => item.Customer.CompanyName)
-                </td>
-            </tr>
+                        <td>
+                            @Html.DisplayFor(m => item.Debt)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.Paid)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.Id)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.Customer.CompanyName)
+                        </td>
+                    </tr>
 
-                    }
                 }
+                else
+                {
+                    <tr>
+                        <td>
+                            <div class="btn-group" role="group">
+                                <form method="post">
+                                    @if (User.IsInRole(SD.AdminUser))
+                                    {
+                                        <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-success text-white" asp-page="../Accounts/EditCustAcc" asp-route-CustId="@item.Id" type="submit" title="تعديل الحسابات" name="AccDetails">
+                                            @localizer.Get("") <i class="fas fa-edit"></i>
+                                        </a>
+                                    }
+                                    <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-info text-white" asp-page="../Accounts/PayToAcc" asp-route-CustId="@item.Id" type="submit" title="دفع لحساب الزبون" name="PayToAcc">
+                                        @localizer.Get("") <i class="fas fa-money-check-alt"></i>
+                                    </a>
+
+
+                                </form>
+                            </div>
+                        </td>
+
+
+
+                        <td>
+                            @Html.DisplayFor(m => item.Debt)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.Paid)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.Id)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.Customer.CompanyName)
+                        </td>
+                    </tr>
+
+                }
+            }
 
 
 
 
-            </table>
-
-        </div>
+        </table>
 
     </div>
 
-    @section Scripts {
+</div>
+
+@section Scripts {
 
 
-        <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
-        <script>
+    <script>
          $(document).ready(function () {
     $('#CustomerName').autocomplete({
     source: '@Url.Page("CustomersAcc", "SearchCustomer")'
@@ -185,5 +191,5 @@
 
 
 
-        </script>
-    }
+    </script>
+}

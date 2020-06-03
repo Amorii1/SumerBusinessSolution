@@ -14,6 +14,14 @@
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 <partial name="_StatusMessage" model="Model.StatusMessage" />
+
+<div class="float-md-right">
+    <a asp-page="/index" title="الرئيسية" asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-info">
+
+        <i class="fas fa-home"></i>
+
+    </a>
+</div>
 <div class=" backgroundWhite">
     <div dir="rtl" class="row">
 
@@ -31,47 +39,32 @@
 
     <form method="get" asp-page="Index">
         <div class="border backgroundWhite">
-
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
                         <div dir="rtl" class="row" style="margin-top:10px;">
-                            <div class="col-md-3 pb-1">
-                                <div dir="rtl" class="form-group row float-md-right">
 
 
-                                    <div>
-                                        <label asp-for="SearchFromDate" class="control-label"></label>
-                                    </div>
-                                    <div>
-                                        <input hidden asp-for="SearchFromDate" />
-                                        <input type="text" class="datepicker form-control" id="SearchFromDatePicker" autocomplete="off" />
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-3 pb-1">
-                                <div dir="rtl" class="form-group row float-md-right">
 
-                                    <div>
-                                        <label asp-for="SearchToDate" class="control-label"></label>
-                                    </div>
-                                    <div>
-                                        <input hidden asp-for="SearchToDate" />
-                                        <input type="text" class="datepicker form-control" id="SearchToDatePicker" autocomplete="off">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4 pb-1">
+                            <div class="col-md-5 pb-1">
                                 @Html.Editor("CustomerName", new { htmlAttributes = new { @class = "form-control text-md-right", placeholder = @localizer.Get("اسم الزبون....") } })
 
                             </div>
+                            <div class=" col-md-4 offset-1 form-check">
+                                <input type="checkbox" asp-for="ShowAll" class="form-check-input" id="exampleCheck1">
+                                <label class="form-check-label" for="exampleCheck1">عرض جميع الحالات</label>
+                            </div>
+                            @*<div class="col-md-5 pb-1">
+                                    @Html.Editor("searchCreateDateTime", new { htmlAttributes = new { @class = "form-control text-md-right", placeholder = @localizer.Get("تاريخ الطلب....") } })
+                                </div>*@
                             <div class="col-md-2 text-md-right pb-1">
 
-                                <button asp-route-culture="@Request.RouteValues["culture"]" type="submit" name="submit" title="بحث" value="search" class="btn btn-info form-control">
+                                <button asp-route-culture="@Request.RouteValues["culture"]" type="submit" title="بحث" name="submit" value="search" class="btn btn-info form-control">
                                     <i class="fas fa-search"></i>
                                 </button>
 
                             </div>
+
                         </div>
                     </div>
                 </div>
@@ -127,7 +120,7 @@
                                         </a>
                                     }
 
-                                    <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-primary" asp-page="Details" type="submit" title="التفاصيل" asp-route-BhId="@item.Id" name="Details">
+                                    <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-primary" asp-page="DetailsMob" type="submit" title="التفاصيل" asp-route-BhId="@item.Id" name="Details">
                                         @localizer.Get("") <i class="far fa-clipboard"></i>
                                     </a>
                                 </form>
@@ -172,7 +165,7 @@
         </table>
 
     </div>
-
+     
 </div>
 
 @section Scripts {
@@ -189,15 +182,6 @@
     });
          });
 
-             $('.datepicker').val('');
-            $('.datepicker').text('');
-            $('.datepicker').datepicker();
-            $('.datepicker').datepicker("option", "dateFormat", "dd/mm/yy");
-            $('.ui-datepicker').addClass('notranslate');
-            $('#SearchFromDatePicker').datepicker("option", "altField", "#SearchFromDate");
-            $('#SearchFromDatePicker').datepicker("option", "altFormat", "yy-mm-dd");
-            $('#SearchToDatePicker').datepicker("option", "altField", "#SearchToDate");
-            $('#SearchToDatePicker').datepicker("option", "altFormat", "yy-mm-dd");
     </script>
 }
 

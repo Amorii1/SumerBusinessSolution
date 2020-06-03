@@ -13,7 +13,13 @@
     ViewData["Title"] = "Index";
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
+<div class="float-md-right">
+    <a asp-page="/index" title="الرئيسية" asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-info">
 
+        <i class="fas fa-home"></i>
+
+    </a>
+</div>
 <div class="backgroundWhite">
 
     <div class="row" dir="rtl">
@@ -172,7 +178,7 @@
             @if (Model.IncomingGoodList.Count() == 0)
             {
                 @*<h2 class="text-danger text-md-center">لا يوجد منتجات واردة </h2>*@
-                <h2 class="text-danger text-md-center">No Incoming Goods </h2>
+                <h2 class="text-danger text-md-center">لا يوجد بضائع واردة </h2>
 
             }
             else
@@ -211,6 +217,7 @@
             }
         </table>
     </div>
+
 </div>
 
 @section Scripts {

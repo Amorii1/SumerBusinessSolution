@@ -13,31 +13,41 @@
     ViewData["Title"] = "Settings";
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
+    <div>
+        <div class="float-md-right ">
+            <a asp-page="/Index" title="الرئيسية" asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-info">
 
-<br />
-<br />
-<div class="row" style=" padding-right:100px;">
-    <div class="column" style="padding-left:163px;">
-        <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="Customers/Reports/Index">
-            <img src="~/img/team.png" style="width:120px;height:140px;" />
-            <h4 class="text-center"> @localizer.Get("الزبائن")</h4>
+                <i class="fas fa-home"></i> الرجوع الى الرئيسية
 
-        </a>
+            </a>
+        </div>
+        <br />
+        <br />
+
+
+        <div class="row" style=" padding-right:100px;">
+            <div class="column" style="padding-left:163px;">
+                <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="Customers/Reports/Index">
+                    <img src="~/img/team.png" style="width:120px;height:140px;" />
+                    <h4 class="text-center"> @localizer.Get("الزبائن")</h4>
+
+                </a>
+            </div>
+
+            <div class="column" style="padding-left:163px;">
+                <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="Inventory/Reports/Index">
+                    <img src="~/img/inventory.png" style="width:140px;height:140px;" />
+                    <h4 class="text-center"> @localizer.Get("المخازن")</h4>
+
+                </a>
+            </div>
+
+            <div class="column" style="padding-left:163px;">
+                <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="Sales/Reports/Bills">
+                    <img src="~/img/bills.png" style="width:140px;height:140px;" />
+                    <h4 class="text-center"> @localizer.Get("الفواتير")</h4>
+
+                </a>
+            </div>
+        </div>
     </div>
-
-    <div class="column" style="padding-left:163px;">
-        <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="Inventory/Reports/Index">
-            <img src="~/img/inventory.png" style="width:140px;height:140px;" />
-            <h4 class="text-center"> @localizer.Get("المخازن")</h4>
-
-        </a>
-    </div>
-
-    <div class="column" style="padding-left:163px;">
-        <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="Sales/Reports/Bills">
-            <img src="~/img/bills.png" style="width:140px;height:140px;" />
-            <h4 class="text-center"> @localizer.Get("الفواتير")</h4>
-
-        </a>
-    </div>
-</div>

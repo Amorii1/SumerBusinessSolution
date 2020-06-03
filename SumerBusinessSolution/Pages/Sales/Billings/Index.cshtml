@@ -15,7 +15,13 @@
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 <partial name="_StatusMessage" model="Model.StatusMessage" />
+<div class="float-md-right">
+    <a asp-page="/index" title="الرئيسية" asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-info">
 
+        <i class="fas fa-home"></i>
+
+    </a>
+</div>
 <div class=" backgroundWhite">
     <div dir="rtl" class="row">
 
@@ -132,7 +138,7 @@
                                         </a>
                                     }
 
-                                    <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-primary" asp-page="Details" type="submit" title="التفاصيل" asp-route-BhId="@item.Id" name="Details">
+                                    <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-primary" asp-page="DetailsMob" type="submit" title="التفاصيل" asp-route-BhId="@item.Id" name="Details">
                                         @localizer.Get("") <i class="far fa-clipboard"></i>
                                     </a>
 
@@ -169,7 +175,7 @@
         </table>
 
     </div>
-
+    
 </div>
 
 @section Scripts {

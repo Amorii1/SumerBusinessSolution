@@ -13,124 +13,132 @@
     ViewData["Title"] = "Index";
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
-    <partial name="_StatusMessage" model="Model.StatusMessage" />
-<div class="backgroundWhite">
-    <div dir="rtl" class="row">
+    <div class="float-md-right">
+        <a asp-page="/index" title="الرئيسية" asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-info">
 
-        <div class="col-md-6">
-            @*<h2 class="text-info">المنتجات</h2>*@
-            <h2 class="text-info text-md-right">@localizer.Get("المنتجات")</h2>
+            <i class="fas fa-home"></i>
 
-        </div>
-        @if (User.IsInRole(SD.AdminUser))
-        {
-            <div class="col-md-6">
-                <a asp-page="Create" asp-route-culture="@Request.RouteValues["culture"]" title="اضافة" class="btn btn-info"> <i class="fas fa-plus"></i></a>
-            </div>
-        }
+        </a>
     </div>
+    <partial name="_StatusMessage" model="Model.StatusMessage" />
+    <div class="backgroundWhite">
+        <div dir="rtl" class="row">
 
-    <form method="get" asp-page="Index">
-        <div class="border backgroundWhite">
-            <div class="container ">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div dir="rtl" class="row" style="margin-top:10px;">
+            <div class="col-md-6">
+                @*<h2 class="text-info">المنتجات</h2>*@
+                <h2 class="text-info text-md-right">@localizer.Get("المنتجات")</h2>
+
+            </div>
+            @if (User.IsInRole(SD.AdminUser))
+            {
+                <div class="col-md-6">
+                    <a asp-page="Create" asp-route-culture="@Request.RouteValues["culture"]" title="اضافة" class="btn btn-info"> <i class="fas fa-plus"></i></a>
+                </div>
+            }
+        </div>
+
+        <form method="get" asp-page="Index">
+            <div class="border backgroundWhite">
+                <div class="container ">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div dir="rtl" class="row" style="margin-top:10px;">
 
 
-                            <div class="col-md-5 pb-1" onclick="bindNameAutocomplete(this)">
-                                @*@Html.Editor("SearchProdName", new { htmlAttributes = new { @class = "form-control", placeholder ="....اسم المنتج" } })*@
-                                @Html.Editor("SearchProdName", new { htmlAttributes = new { @class = "form-control text-md-right", placeholder = @localizer.Get("اسم المنتج....") } })
+                                <div class="col-md-5 pb-1" onclick="bindNameAutocomplete(this)">
+                                    @*@Html.Editor("SearchProdName", new { htmlAttributes = new { @class = "form-control", placeholder ="....اسم المنتج" } })*@
+                                    @Html.Editor("SearchProdName", new { htmlAttributes = new { @class = "form-control text-md-right", placeholder = @localizer.Get("اسم المنتج....") } })
 
+                                </div>
+                                <div class="col-md-5 pb-1" onclick="bindCodeAutocomplete(this)">
+                                    @*@Html.Editor("SearchProdCode", new { htmlAttributes = new { @class = "form-control", placeholder = "....رمز المنتج" } })*@
+                                    @Html.Editor("SearchProdCode", new { htmlAttributes = new { @class = "form-control text-md-right", placeholder = @localizer.Get("رمز المنتج....") } })
+                                </div>
+                                <div class="col-md-2 text-md-right pb-1">
+
+                                    <button asp-route-culture="@Request.RouteValues["culture"]" type="submit" title="بحث" name="submit" value="search" class="btn btn-info form-control">
+                                        <i class="fas fa-search"></i>
+                                    </button>
+
+                                </div>
                             </div>
-                            <div class="col-md-5 pb-1" onclick="bindCodeAutocomplete(this)">
-                                @*@Html.Editor("SearchProdCode", new { htmlAttributes = new { @class = "form-control", placeholder = "....رمز المنتج" } })*@
-                                @Html.Editor("SearchProdCode", new { htmlAttributes = new { @class = "form-control text-md-right", placeholder = @localizer.Get("رمز المنتج....") } })
-                            </div>
-                            <div class="col-md-2 text-md-right pb-1">
 
-                                <button asp-route-culture="@Request.RouteValues["culture"]" type="submit" title="بحث" name="submit" value="search" class="btn btn-info form-control">
-                                    <i class="fas fa-search"></i>
-                                </button>
-
-                            </div>
                         </div>
-
                     </div>
                 </div>
             </div>
-        </div>
-    </form>
+        </form>
 
 
 
-    <div>
+        <div>
 
-        <table class="table table-striped border table-responsive-md table-responsive-lg text-md-center">
-            <tr class="table-secondary">
+            <table class="table table-striped border table-responsive-md table-responsive-lg text-md-center">
+                <tr class="table-secondary">
 
 
-                <th></th>
-                <th>
-                    @Html.DisplayNameFor(m => m.ProdInfo[0].WholePrice)
-                </th>
+                    <th></th>
+                    <th>
+                        @Html.DisplayNameFor(m => m.ProdInfo[0].WholePrice)
+                    </th>
 
-                <th>
-                    @Html.DisplayNameFor(m => m.ProdInfo[0].RetailPrice)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(m => m.ProdInfo[0].ProdName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(m => m.ProdInfo[0].ProdCode)
-                </th>
-            </tr>
-            @if (Model.ProdInfo.Count() == 0)
-            {
-                @*<h2 class="text-danger text-md-center">لا يوجد منتجات مضافة  </h2>*@
-                <h2 class="text-danger text-md-center">No product created</h2>
-
-            }
-            else
-            {
-                @foreach (var item in Model.ProdInfo)
+                    <th>
+                        @Html.DisplayNameFor(m => m.ProdInfo[0].RetailPrice)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(m => m.ProdInfo[0].ProdName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(m => m.ProdInfo[0].ProdCode)
+                    </th>
+                </tr>
+                @if (Model.ProdInfo.Count() == 0)
                 {
-                    <tr>
-
-                        <td style="width:250px;">
-                            <div class="btn-group " role="group">
-                                <form method="post">
-                                    @if (User.IsInRole(SD.AdminUser))
-                                    {
-
-                                        <a class="btn btn-success" asp-route-culture="@Request.RouteValues["culture"]" asp-page="Edit" asp-route-ProdId="@item.Id" title="تعديل"><i class="fa fa-edit"></i>@localizer.Get("")</a>
-                                        <a class="btn btn-danger" asp-route-culture="@Request.RouteValues["culture"]" asp-page="Delete" asp-route-Id="@item.Id" title="مسح"><i class="far fa-trash-alt"></i>@localizer.Get("")</a>
-                                    }
-                                    <a class="btn btn-primary" asp-route-culture="@Request.RouteValues["culture"]" asp-page="Details" asp-route-Id="@item.Id" title="التفاصيل"><i class="far fa-clipboard"></i>@localizer.Get("")</a>
-                                </form>
-                            </div>
-                        </td>
-
-                        <td>
-                            @Html.DisplayFor(m => item.WholePrice)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(m => item.RetailPrice)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(m => item.ProdName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(m => item.ProdCode)
-                        </td>
-                    </tr>
+                    @*<h2 class="text-danger text-md-center">لا يوجد منتجات مضافة  </h2>*@
+                    <h2 class="text-danger text-md-center">No product created</h2>
 
                 }
-            }
-        </table>
+                else
+                {
+                    @foreach (var item in Model.ProdInfo)
+                    {
+                        <tr>
 
+                            <td style="width:250px;">
+                                <div class="btn-group " role="group">
+                                    <form method="post">
+                                        @if (User.IsInRole(SD.AdminUser))
+                                        {
+
+                                            <a class="btn btn-success" asp-route-culture="@Request.RouteValues["culture"]" asp-page="Edit" asp-route-ProdId="@item.Id" title="تعديل"><i class="fa fa-edit"></i>@localizer.Get("")</a>
+                                            <a class="btn btn-danger" asp-route-culture="@Request.RouteValues["culture"]" asp-page="Delete" asp-route-Id="@item.Id" title="مسح"><i class="far fa-trash-alt"></i>@localizer.Get("")</a>
+                                        }
+                                        <a class="btn btn-primary" asp-route-culture="@Request.RouteValues["culture"]" asp-page="Details" asp-route-Id="@item.Id" title="التفاصيل"><i class="far fa-clipboard"></i>@localizer.Get("")</a>
+                                    </form>
+                                </div>
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(m => item.WholePrice)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(m => item.RetailPrice)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(m => item.ProdName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(m => item.ProdCode)
+                            </td>
+                        </tr>
+
+                    }
+                }
+            </table>
+
+        </div>
+        
     </div>
-</div>
 
 
 @section Scripts {

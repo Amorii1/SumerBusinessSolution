@@ -14,7 +14,13 @@
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
+    <div class="float-md-right">
+        <a asp-page="/index" title="الرئيسية" asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-info">
 
+            <i class="fas fa-home"></i>
+
+        </a>
+    </div>
     <div class=" backgroundWhite">
         <div dir="rtl" class="row">
 
@@ -96,7 +102,7 @@
                         <tr>
                             <td>
                                 <form>
-                                  
+
                                     <a class="btn btn-success" asp-route-culture="@Request.RouteValues["culture"]" asp-page="Edit" asp-route-WhId="@item.Id" type="submit" title="تعديل"><i class="fa fa-edit"></i>@localizer.Get("")</a>
 
                                 </form>
@@ -127,6 +133,6 @@
             </table>
 
         </div>
-
+         
     </div>
 

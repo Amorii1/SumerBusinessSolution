@@ -1,0 +1,294 @@
+﻿@page
+@model SumerBusinessSolution.Pages.Sales.ExternalBillings.DetailsMobModel
+@using SumerBusinessSolution.Utility
+@using Microsoft.AspNetCore.Localization
+@using System.ComponentModel.DataAnnotations;
+@*@inject IHtmlLocalizer<IndexModel> htmlLocalizer*@ @*for html lozcalization*@
+@*@inject IStringLocalizer<IndexModel> localizer*@
+@*First Method*@
+@inject Services.CommonLocalizationService localizer
+@*Second and the easier Method*@
+
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+
+@*<partial name="_StatusMessage" model="Model.StatusMessage" />*@
+
+
+
+    <div class="border backgroundWhite">
+        <div dir="rtl" class="row">
+
+
+            <div class="col-md-6 text-right">
+                <h2 class="text-info text-md-right">  @localizer.Get("تفاصيل الفاتورة")</h2>
+
+            </div>
+            <div class="col-md-6 ">
+                <a asp-route-culture="@Request.RouteValues["culture"]" asp-route-BhId="@Model.ExternalBillHeader.Id" asp-page="Details" title="طباعة الفاتورة" class="btn btn-info"> <i class="fas fa-print"></i> طباعة الفاتورة</a>
+            </div>
+
+
+        </div>
+        <form method="post">
+            <input type="hidden" asp-for="ExternalBillHeader.Id" />
+
+            <div dir="rtl" class="row form-group">
+
+                <div class="col-md-2">
+                    <label asp-for="@Model.ExternalBillHeader.Id"></label>
+
+                </div>
+
+                <div class="col-md-5 offset-md-5">
+                    <input asp-for="@Model.ExternalBillHeader.Id" class="form-control text-md-right" disabled />
+                    <span asp-validation-for="@Model.ExternalBillHeader.Id" class="text-danger"> </span>
+
+                </div>
+            </div>
+            <div dir="rtl" class="row form-group">
+
+                <div class="col-md-2">
+                    <label asp-for="@Model.ExternalBillHeader.Customer.CompanyName"></label>
+
+                </div>
+
+                <div class="col-md-5 offset-md-5">
+                    <input asp-for="@Model.ExternalBillHeader.Customer.CompanyName" class="form-control text-md-right" disabled />
+                    <span asp-validation-for="@Model.ExternalBillHeader.Customer.CompanyName" class="text-danger"> </span>
+
+                </div>
+            </div>
+            <div dir="rtl" class="row form-group">
+
+                <div class="col-md-2">
+                    <label asp-for="@Model.ExternalBillHeader.ApplicationUser.FirstName"></label>
+
+                </div>
+
+                <div class="col-md-5 offset-md-5">
+                    <input asp-for="@Model.ExternalBillHeader.ApplicationUser.FirstName" class="form-control text-md-right" disabled />
+                    <span asp-validation-for="@Model.ExternalBillHeader.ApplicationUser.FirstName" class="text-danger"> </span>
+
+                </div>
+            </div>
+            <div dir="rtl" class="row form-group">
+
+                <div class="col-md-2">
+                    <label asp-for="@Model.ExternalBillHeader.CreatedDataTime"></label>
+
+                </div>
+
+                <div class="col-md-5 offset-md-5">
+                    <input asp-for="@Model.ExternalBillHeader.CreatedDataTime" class="form-control text-md-right" disabled />
+                    <span asp-validation-for="@Model.ExternalBillHeader.CreatedDataTime" class="text-danger"> </span>
+
+                </div>
+            </div>
+            <div dir="rtl" class="row form-group">
+
+                <div class="col-md-2">
+                    <label asp-for="@Model.ExternalBillHeader.PaymentTerms"></label>
+
+                </div>
+
+                <div class="col-md-5 offset-md-5">
+                    <input asp-for="@Model.ExternalBillHeader.PaymentTerms" class="form-control text-md-right" disabled />
+                    <span asp-validation-for="@Model.ExternalBillHeader.PaymentTerms" class="text-danger"> </span>
+
+                </div>
+            </div>
+            <table class="table table-striped border table-responsive-md table-responsive-lg text-md-center ">
+                <tr class="table-secondary">
+
+                    <th>
+                        @Html.DisplayNameFor(m => m.ExternalBillItems.Note)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(m => m.ExternalBillItems.TotalAmt)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(m => m.ExternalBillItems.UnitPrice)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(m => m.ExternalBillItems.Qty)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(m => m.ExternalBillItems.ProdInfo.ProdCode)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(m => m.ExternalBillItems.ProdInfo.ProdName)
+                    </th>
+                    <th>ت</th>
+
+                </tr>
+                @{int RowNo = 0;}
+
+                @foreach (var item in Model.ExternalBillItemsList)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(m => item.Note)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(m => item.TotalAmt)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.UnitPrice)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.Qty)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.ProdInfo.ProdCode)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.ProdInfo.ProdName)
+                        </td>
+                        <td>@{RowNo++;} @RowNo</td>
+                    </tr>
+
+                }
+            </table>
+            <div dir="rtl" class="row form-group">
+
+                <div class="col-md-2">
+                    <label asp-for="@Model.ExternalBillHeader.TotalAmt"></label>
+
+                </div>
+
+                <div class="col-md-5 offset-md-5">
+                    <input asp-for="@Model.ExternalBillHeader.TotalAmt" class="form-control text-md-right" disabled />
+                    <span asp-validation-for="@Model.ExternalBillHeader.TotalAmt" class="text-danger"> </span>
+
+                </div>
+            </div>
+            <div dir="rtl" class="row form-group">
+
+                <div class="col-md-2">
+                    <label asp-for="@Model.ExternalBillHeader.TotalNetAmt"></label>
+
+                </div>
+
+                <div class="col-md-5 offset-md-5">
+                    <input asp-for="@Model.ExternalBillHeader.TotalNetAmt" class="form-control text-md-right" disabled />
+                    <span asp-validation-for="@Model.ExternalBillHeader.TotalNetAmt" class="text-danger"> </span>
+
+                </div>
+            </div>
+            <div dir="rtl" class="row form-group">
+
+                <div class="col-md-2">
+                    <label asp-for="@Model.ExternalBillHeader.Discount"></label>
+
+                </div>
+
+                <div class="col-md-5 offset-md-5">
+                    <input asp-for="@Model.ExternalBillHeader.Discount" class="form-control text-md-right" disabled />
+                    <span asp-validation-for="@Model.ExternalBillHeader.Discount" class="text-danger"> </span>
+
+                </div>
+            </div>
+            <div dir="rtl" class="row form-group">
+
+                <div class="col-md-2">
+                    <label asp-for="@Model.ExternalBillHeader.PaidAmt"></label>
+
+                </div>
+
+                <div class="col-md-5 offset-md-5">
+                    <input asp-for="@Model.ExternalBillHeader.PaidAmt" class="form-control text-md-right" disabled />
+                    <span asp-validation-for="@Model.ExternalBillHeader.PaidAmt" class="text-danger"> </span>
+
+                </div>
+            </div>
+
+
+
+            <div class="form-group row text-center">
+                <div class="col-md-7 offset-md-5">
+                    <div class="row pb-4">
+                        @if (Model.ExternalBillHeader.Status == SD.OpenBill)
+                        {
+                            <div class="col-md-3 pt-md-4">
+                                <a asp-route-BhId="@Model.ExternalBillHeader.Id" asp-page="MakePayment" asp-route-culture="@Request.RouteValues["culture"]" type="submit" class="btn btn-success form-control">
+                                    @localizer.Get("تسديد")
+                                </a>
+                            </div>
+                        }
+
+                        @if (User.IsInRole(SD.AdminUser) && (Model.ExternalBillHeader.Status == SD.OpenBill))
+                        {
+                
+                        <div class=" offset-3 pt-md-4">
+                            <a asp-route-culture="@Request.RouteValues["culture"]" data-toggle="modal" data-target="#Close" class="btn btn-danger" asp-page-handler="CloseBillManually" asp-route-HeaderId="@Model.ExternalBillHeader.Id" type="submit" name="Close">
+                                @localizer.Get("اغلاق")
+                            </a>
+                        </div>
+                        <div class="modal fade" id="Close" role="dialog" method="post">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button class="close" data-dismiss="modal">&times;</button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p class="alert alert-danger">@localizer.Get("هل انت متأكد؟")</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <input asp-route-culture="@Request.RouteValues["culture"]" type="submit" asp-page-handler="CloseBillManually" asp-route-BhId="@Model.ExternalBillHeader.Id" class="btn btn-info" value="@localizer.Get("نعم")" />
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class=" offset-2 pt-md-4">
+                            <a asp-route-culture="@Request.RouteValues["culture"]" data-toggle="modal" data-target="#Delete" class="btn btn-dark" asp-page-handler="DeleteBill" asp-route-BhId="@Model.ExternalBillHeader.Id" type="submit" name="DeleteBill">
+                                @localizer.Get("حذف")
+                            </a>
+                        </div>
+                        <div class="modal fade" id="Delete" role="dialog" method="post">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button class="close" data-dismiss="modal">&times;</button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p class="alert alert-danger">@localizer.Get("هل انت متأكد؟")</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <input asp-route-culture="@Request.RouteValues["culture"]" type="submit" asp-page-handler="DeleteBill" asp-route-BhId="@Model.ExternalBillHeader.Id" class="btn btn-info" value="@localizer.Get("نعم")" />
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+               
+                            <div class="col-md-12  pt-md-4">
+                                <a asp-route-BhId="@Model.ExternalBillHeader.Id" asp-page="Edit" asp-route-culture="@Request.RouteValues["culture"]" type="submit" class="btn btn-info form-control">
+                                    @localizer.Get("تعديل")
+                                </a>
+                            </div>
+
+                        }
+
+
+                        <div class="col-md-12 pt-md-4">
+
+                            @*<input asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-secondary form-control" type="button" value="@localizer.Get("رجوع")" onclick="history.back()">*@
+                            <a asp-page="Index" class="btn btn-secondary form-control" asp-route-culture="@Request.RouteValues["culture"]"> رجوع</a>
+
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+

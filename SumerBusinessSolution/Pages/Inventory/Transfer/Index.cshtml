@@ -14,6 +14,13 @@
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
+<div class="float-md-right">
+    <a asp-page="/index" title="الرئيسية" asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-info">
+
+        <i class="fas fa-home"></i>
+
+    </a>
+</div>
 <div class=" backgroundWhite">
     <div dir="rtl" class="row">
 
@@ -128,45 +135,46 @@
             {
                 @foreach (var item in Model.InvTransferList)
                 {
-        <tr>
+                    <tr>
 
-            <td>
-                @Html.DisplayFor(m => item.InvTransferHeader.ApplicationUser.FirstName)
-            </td>
-            <td>
-                @Html.DisplayFor(m => item.InvTransferHeader.CreatedDateTime)
-            </td>
-            <td>
-                @Html.DisplayFor(m => item.Note)
-            </td>
-            <td>
-                @Html.DisplayFor(m => item.Qty)
-            </td>
-            <td>
-                @Html.DisplayFor(m => item.InvTransferHeader.FromWarehouse.WhName)
-            </td>
-            <td>
-                @Html.DisplayFor(m => item.InvTransferHeader.ToWarehouse.WhName)
-            </td>
+                        <td>
+                            @Html.DisplayFor(m => item.InvTransferHeader.ApplicationUser.FirstName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.InvTransferHeader.CreatedDateTime)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.Note)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.Qty)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.InvTransferHeader.FromWarehouse.WhName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.InvTransferHeader.ToWarehouse.WhName)
+                        </td>
 
-            <td>
-                @Html.DisplayFor(m => item.ProdInfo.ProdName)
-            </td>
-            <td>
-                @Html.DisplayFor(m => item.ProdInfo.ProdCode)
-            </td>
+                        <td>
+                            @Html.DisplayFor(m => item.ProdInfo.ProdName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.ProdInfo.ProdCode)
+                        </td>
 
-        </tr>
+                    </tr>
                 }
             }
 
         </table>
 
     </div>
+
 </div>
 
 @section Scripts {
-     
+
 
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
