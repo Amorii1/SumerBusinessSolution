@@ -27,6 +27,9 @@ namespace SumerBusinessSolution.Models
         [Display(Name = "سعر المنتج")]
         public double UnitPrice { get; set; }
 
+        [Display(Name = "كلفة المنتج")]
+        public double? CostPrice { get; set; }
+
         [Display(Name = "المخزن")]
         public int WhId { get; set; }
 

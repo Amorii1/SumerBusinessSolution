@@ -322,6 +322,7 @@ namespace SumerBusinessSolution.Transactions
                     else
                     {
                         ExternalHeader.HasExternalProd = true;
+                        Bill.CostPrice = item.CostPrice;
                         if (Type == "Edit")
                         {
                             Bill.ProdName = item.ProdName;

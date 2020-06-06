@@ -1,0 +1,248 @@
+﻿@page
+@model SumerBusinessSolution.ExternalSalesAnalysisModel
+@{
+    ViewData["Title"] = "ExternalSalesAnalysis";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+
+@inject Services.CommonLocalizationService localizer
+@using SumerBusinessSolution.Utility
+
+<div class=" backgroundWhite">
+    <div class="row">
+        <div class="col-md-12 text-md-right">
+            @*<h2 class="text-info"> طلبات حركه المنتجات </h2>*@
+            <h2 class="text-info"> @localizer.Get("تحليل المبيعات")</h2>
+
+        </div>
+
+    </div>
+    <form method="get" asp-page="Index">
+        <div class="border backgroundWhite">
+            <div class="container ">
+                <div class="row">
+                    <div class="col-md-2 pb-1 float-md-right">
+                        @Html.Editor("BillNo", new { htmlAttributes = new { @class = "form-control text-md-right", placeholder = @localizer.Get("رقم الفاتورة....") } })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div dir="rtl" class="row" style="margin-top:10px;">
+                            <div class="col-md-3 pb-1">
+                                <div dir="rtl" class="form-group row float-md-right">
+                                    <div>
+                                        <label asp-for="SearchFromDate" class="control-label"></label>
+                                    </div>
+                                    <div>
+                                        <input hidden asp-for="SearchFromDate" />
+                                        <input type="text" class="datepicker form-control" id="SearchFromDatePicker" autocomplete="off">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 pb-1">
+                                <div dir="rtl" class="form-group row float-md-right">
+
+                                    <div>
+                                        <label asp-for="SearchToDate" class="control-label"></label>
+                                    </div>
+                                    <div>
+                                        <input hidden asp-for="SearchToDate" />
+                                        <input type="text" class="datepicker form-control" id="SearchToDatePicker" autocomplete="off">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 pb-1">
+                                @Html.Editor("CustomerName", new { htmlAttributes = new { @class = "form-control text-md-right", placeholder = @localizer.Get("اسم الزبون....") } })
+
+                            </div>
+
+                            <div class="col-md-2 text-md-right pb-1">
+
+                                <button asp-route-culture="@Request.RouteValues["culture"]" title="بحث" type="submit" name="submit" value="search" class="btn btn-info form-control">
+                                    <i class="fas fa-search"></i>
+                                </button>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="col-md-3 pb-1">
+                    <div dir="rtl" class="form-group row float-md-right">
+
+                        <div>
+                            <label asp-for="TotalNetAmt" class="control-label"></label>
+                        </div>
+                        <div>
+                            <input asp-for="TotalNetAmt" id="TotalNetAmt" disabled="disabled">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3 pb-1">
+                    <div dir="rtl" class="form-group row float-md-right">
+
+                        <div>
+                            <label asp-for="TotalNetAmtExternal" class="control-label"></label>
+                        </div>
+                        <div>
+                            <input asp-for="TotalNetAmtExternal" id="TotalNetAmtExternal" disabled="disabled">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3 pb-1">
+                    <div dir="rtl" class="form-group row float-md-right">
+
+                        <div>
+                            <label asp-for="TotalPaidAmt" class="control-label"></label>
+                        </div>
+                        <div>
+                            <input asp-for="TotalPaidAmt" id="TotalPaidAmt" disabled="disabled">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3 pb-1">
+                    <div dir="rtl" class="form-group row float-md-right">
+
+                        <div>
+                            <label asp-for="TotalUnpaidAmt" class="control-label"></label>
+                        </div>
+                        <div>
+                            <input asp-for="TotalUnpaidAmt" id="TotalUnpaidAmt" disabled="disabled">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3 pb-1">
+                    <div dir="rtl" class="form-group row float-md-right">
+
+                        <div>
+                            <label asp-for="TotalRevenue" class="control-label"></label>
+                        </div>
+                        <div>
+                            <input asp-for="TotalRevenue" id="TotalRevenue" disabled="disabled">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </form>
+    <div>
+
+        <table class="table table-striped border table-responsive-md table-responsive-lg text-md-center">
+            <tr class="table-secondary">
+
+                <th></th>
+                <th>
+                    @Html.DisplayNameFor(m => m.ExternalBillHeader.CreatedDataTime)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(m => m.ExternalBillHeader.Status)
+                </th>
+                <th class="text-success">
+                    @Html.DisplayNameFor(m => m.ExternalBillHeader.PaidAmt)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(m => m.ExternalBillHeader.TotalNetAmt)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(m => m.ExternalBillHeader.Customer.CompanyName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(m => m.ExternalBillHeader.Id)
+                </th>
+            </tr>
+
+            @if (Model.ExternalBillHeaderList.Count() == 0)
+            {
+                <h2 class="text-danger text-md-center"> @localizer.Get("لا يوجد تقرير للفواتير")</h2>
+
+            }
+            else
+            {
+                @foreach (var item in Model.ExternalBillHeaderList)
+                {
+                    <tr>
+                        <td style="width:150px;">
+                            <div class="btn-group" role="group">
+                                <form method="post">
+                                    @if (item.Status == SD.OpenBill)
+                                    {
+                                        <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-info" title="تسديد" asp-page="../Billings/MakePayment" type="submit" asp-route-BhId="@item.Id" name="Payment">
+                                            @localizer.Get("") <i class="fas fa-money-check-alt"></i>
+                                        </a>
+                                    }
+                                    <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-primary" title="التفاصيل" asp-page="../Billings/Details" type="submit" asp-route-BhId="@item.Id" name="Details">
+                                        @localizer.Get("") <i class="far fa-clipboard"></i>
+                                    </a>
+                                </form>
+                            </div>
+                        </td>
+
+
+                        <td>
+                            @Html.DisplayFor(m => item.CreatedDataTime)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.Status)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.PaidAmt)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.TotalNetAmt)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.Customer.CompanyName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.Id)
+                        </td>
+                    </tr>
+
+                }
+
+            }
+
+        </table>
+
+    </div>
+
+
+</div>
+
+
+@section Scripts {
+
+
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <script>
+         $(document).ready(function () {
+    $('#CustomerName').autocomplete({
+    source: '@Url.Page("Bills", "SearchCustomer")'
+    });
+         });
+           $('.datepicker').val('');
+            $('.datepicker').text('');
+            $('.datepicker').datepicker();
+            $('.datepicker').datepicker("option", "dateFormat", "dd/mm/yy");
+            $('.ui-datepicker').addClass('notranslate');
+            $('#SearchFromDatePicker').datepicker("option", "altField", "#SearchFromDate");
+            $('#SearchFromDatePicker').datepicker("option", "altFormat", "yy-mm-dd");
+            $('#SearchToDatePicker').datepicker("option", "altField", "#SearchToDate");
+            $('#SearchToDatePicker').datepicker("option", "altFormat", "yy-mm-dd");
+
+
+
+    </script>
+}
+

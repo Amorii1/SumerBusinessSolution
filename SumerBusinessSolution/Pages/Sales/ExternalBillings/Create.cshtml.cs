@@ -73,7 +73,7 @@ namespace SumerBusinessSolution.Pages.Sales.ExternalBillings
         public ActionResult OnGet()
         {
             COD = SD.COD;
-            Bi = new List<ExternalBillItems> { new ExternalBillItems { Qty = 0, UnitPrice = 0, TotalAmt = 0, Note = "", IsExternal= false, ProdId = 0} };
+            Bi = new List<ExternalBillItems> { new ExternalBillItems { Qty = 0, UnitPrice = 0, TotalAmt = 0, Note = "", IsExternal= false, ProdId = 0, CostPrice=0} };
 
             WarehouseList = _db.Warehouse.Where(wh => wh.WhType.Type.ToLower() == SD.ShowRoom.ToLower()).ToList();
             CustomerList = _db.Customer.Where(cus => cus.Status == SD.ActiveCustomer).ToList();
