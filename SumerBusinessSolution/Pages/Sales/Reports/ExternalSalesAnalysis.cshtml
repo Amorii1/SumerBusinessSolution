@@ -8,6 +8,13 @@
 
 @inject Services.CommonLocalizationService localizer
 @using SumerBusinessSolution.Utility
+<div class="float-md-right  ">
+    <a asp-page="index" title="التقارير" asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-info">
+
+        <i class="fas fa-file-alt"></i> الفواتير
+
+    </a>
+</div>
 
 <div class=" backgroundWhite">
     <div class="row">
@@ -69,70 +76,77 @@
                     </div>
                 </div>
             </div>
-            <div class="container">
-                <div class="col-md-3 pb-1">
-                    <div dir="rtl" class="form-group row float-md-right">
-
-                        <div>
-                            <label asp-for="TotalNetAmt" class="control-label"></label>
-                        </div>
-                        <div>
-                            <input asp-for="TotalNetAmt" id="TotalNetAmt" disabled="disabled">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-3 pb-1">
-                    <div dir="rtl" class="form-group row float-md-right">
-
-                        <div>
-                            <label asp-for="TotalNetAmtExternal" class="control-label"></label>
-                        </div>
-                        <div>
-                            <input asp-for="TotalNetAmtExternal" id="TotalNetAmtExternal" disabled="disabled">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-3 pb-1">
-                    <div dir="rtl" class="form-group row float-md-right">
-
-                        <div>
-                            <label asp-for="TotalPaidAmt" class="control-label"></label>
-                        </div>
-                        <div>
-                            <input asp-for="TotalPaidAmt" id="TotalPaidAmt" disabled="disabled">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-3 pb-1">
-                    <div dir="rtl" class="form-group row float-md-right">
-
-                        <div>
-                            <label asp-for="TotalUnpaidAmt" class="control-label"></label>
-                        </div>
-                        <div>
-                            <input asp-for="TotalUnpaidAmt" id="TotalUnpaidAmt" disabled="disabled">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-3 pb-1">
-                    <div dir="rtl" class="form-group row float-md-right">
-
-                        <div>
-                            <label asp-for="TotalRevenue" class="control-label"></label>
-                        </div>
-                        <div>
-                            <input asp-for="TotalRevenue" id="TotalRevenue" disabled="disabled">
-                        </div>
-                    </div>
-                </div>
-
-            </div>
         </div>
     </form>
+
+    <div dir="rtl" class="row form-group">
+
+        <div class="col-md-2">
+            <label asp-for="TotalNetAmt"></label>
+
+        </div>
+
+        <div class="col-md-5 offset-md-5">
+            <input asp-for="TotalNetAmt" class="form-control text-md-right" disabled />
+            <span asp-validation-for="TotalNetAmt" class="text-danger"> </span>
+
+        </div>
+    </div>
+
+    <div dir="rtl" class="row form-group">
+
+        <div class="col-md-2">
+            <label asp-for="TotalNetAmtExternal"></label>
+
+        </div>
+
+        <div class="col-md-5 offset-md-5">
+            <input asp-for="TotalNetAmtExternal" class="form-control text-md-right" disabled />
+            <span asp-validation-for="TotalNetAmtExternal" class="text-danger"> </span>
+
+        </div>
+    </div>
+    <div dir="rtl" class="row form-group">
+
+        <div class="col-md-2">
+            <label asp-for="TotalPaidAmt"></label>
+
+        </div>
+
+        <div class="col-md-5 offset-md-5">
+            <input asp-for="TotalPaidAmt" class="form-control text-md-right" disabled />
+            <span asp-validation-for="TotalPaidAmt" class="text-danger"> </span>
+
+        </div>
+    </div>
+    <div dir="rtl" class="row form-group">
+
+        <div class="col-md-2">
+            <label asp-for="TotalUnpaidAmt"></label>
+
+        </div>
+
+        <div class="col-md-5 offset-md-5">
+            <input asp-for="TotalUnpaidAmt" class="form-control text-md-right" disabled />
+            <span asp-validation-for="TotalUnpaidAmt" class="text-danger"> </span>
+
+        </div>
+    </div> 
+    <div dir="rtl" class="row form-group">
+
+        <div class="col-md-2">
+            <label asp-for="TotalRevenue"></label>
+
+        </div>
+
+        <div class="col-md-5 offset-md-5">
+            <input asp-for="TotalRevenue" class="form-control text-md-right" disabled />
+            <span asp-validation-for="TotalRevenue" class="text-danger"> </span>
+
+        </div>
+    </div>
+
+
     <div>
 
         <table class="table table-striped border table-responsive-md table-responsive-lg text-md-center">
