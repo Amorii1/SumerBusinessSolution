@@ -27,15 +27,17 @@
 
 
         <div class="row" style="padding-right:100px;">
-            <div class="column" style="padding-left:136px;">
-                <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="/Sales/reports/SalesAnalysis">
+            @if (User.IsInRole(SD.BnasStoreUser) || User.IsInRole(SD.AdminUser))
+            { 
+                <div class="column" style="padding-left:136px;">
+                    <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="/Sales/reports/SalesAnalysis">
 
-                    <img src="~/img/analysis.png" style="width:120px;height:120px;" />
-                    @*<p class="text-center">كمية المواد</p>*@
-                    <h4 class="text-center">@localizer.Get("تحليل مبيعات البناس")</h4>
+                        <img src="~/img/analysis.png" style="width:120px;height:120px;" />
+                        @*<p class="text-center">كمية المواد</p>*@
+                        <h4 class="text-center">@localizer.Get("تحليل مبيعات البناس")</h4>
 
-                </a>
-            </div>
+                    </a>
+                </div>
             <div class="column" style="padding-left:146px;">
                 <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="/Sales/reports/Bills">
                     <img src="~/img/bills.png" style="width:120px;height:120px;" />
@@ -44,24 +46,27 @@
 
                 </a>
             </div>
-            <div class="column" style="padding-left:146px;">
-                <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="/sales/reports/ExternalSalesAnalysis">
+            }
+            @if (User.IsInRole(SD.YaseenStoreUser)||User.IsInRole(SD.AdminUser))
+            {
+                <div class="column" style="padding-left:146px;">
+                    <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="/sales/reports/ExternalSalesAnalysis">
 
-                    <img src="~/img/analysis.png" style="width:120px;height:120px;" />
-                    @*<p class="text-center">كمية المواد</p>*@
-                    <h4 class="text-center">@localizer.Get("تحليل مبيعات الياسين")</h4>
+                        <img src="~/img/analysis.png" style="width:120px;height:120px;" />
+                        @*<p class="text-center">كمية المواد</p>*@
+                        <h4 class="text-center">@localizer.Get("تحليل مبيعات الياسين")</h4>
 
-                </a>
-            </div>
+                    </a>
+                </div>
 
-            <div class="column" style="padding-left:136px;">
-                <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="/sales/reports/ExternalBills">
-                    <img src="~/img/bills.png" style="width:120px;height:120px;" />
-                    @*<p class="text-center">المخازن</p>*@
-                    <h4 class="text-center">@localizer.Get("تقارير الياسين")</h4>
-                </a>
-            </div>
-
+                <div class="column" style="padding-left:136px;">
+                    <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="/sales/reports/ExternalBills">
+                        <img src="~/img/bills.png" style="width:120px;height:120px;" />
+                        @*<p class="text-center">المخازن</p>*@
+                        <h4 class="text-center">@localizer.Get("تقارير الياسين")</h4>
+                    </a>
+                </div>
+            }
 
 
 
