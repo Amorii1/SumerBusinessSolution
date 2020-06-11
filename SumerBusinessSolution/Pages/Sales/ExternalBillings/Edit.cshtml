@@ -76,7 +76,7 @@
             <thead>
                 <tr class="table-secondary">
                     @*<table id="dataTable" border="0" cellpadding="0" cellspacing="0">
-                        <tr>*@
+        <tr>*@
                     <th>
                         @Html.DisplayNameFor(a => Model.Bi[0].ProdInfo.ProdName)
                     </th>
@@ -88,6 +88,9 @@
                     </th>
                     <th>
                         @Html.DisplayNameFor(a => Model.Bi[0].TotalAmt)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(a => Model.Bi[0].CostPrice)
                     </th>
                     <th>
                         @Html.DisplayNameFor(a => Model.Bi[0].Note)
@@ -118,8 +121,9 @@
                     <td oninput="bindTotal(this); checkProdQty(this)" onclick="bindTotal(this)" onchange="calBillTotal(); calBillTotalNetAmt()">@Html.TextBoxFor(a => Model.Bi[j].Qty)</td>
                     <td oninput="bindTotalOnUnitPriceChange(this); calBillTotal()" onchange="calBillTotal(); calBillTotalNetAmt()">@Html.TextBoxFor(a => Model.Bi[j].UnitPrice)</td>
                     <td id="totalLineAmt">@Html.TextBoxFor(a => Model.Bi[j].TotalAmt)</td>
-                    <td>@Html.TextBoxFor(a => Model.Bi[j].Note)</td>
+                    <td>@Html.TextBoxFor(a => Model.Bi[j].CostPrice)</td>
                     <td hidden="hidden" id="externalItem">@Html.TextBoxFor(a => Model.Bi[j].IsExternal)</td>
+                    <td>@Html.TextBoxFor(a => Model.Bi[j].Note)</td>
                     <td>
                         @if (j > 0)
                         {
@@ -195,7 +199,7 @@
 
 
                     <div class="col-md-6">
-                        <input asp-route-culture="@Request.RouteValues["culture"]" type="submit" class="btn btn-info form-control" value="@localizer.Get("انشاء")" onclick="return ValidateInput()" />
+                        <input asp-route-culture="@Request.RouteValues["culture"]" type="submit" class="btn btn-info form-control" value="@localizer.Get("تعديل")" onclick="return ValidateInput()" />
                     </div>
                     <div class="col-md-6">
                         <a asp-page="Index" asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-secondary form-control">

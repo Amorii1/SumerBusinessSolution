@@ -174,11 +174,11 @@
                                 <form method="post">
                                     @if (item.Status == SD.OpenBill)
                                     {
-                                        <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-info" title="تسديد" asp-page="../Billings/MakePayment" type="submit" asp-route-BhId="@item.Id" name="Payment">
+                                        <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-info" title="تسديد" asp-page="../ExternalBillings/MakePayment" type="submit" asp-route-BhId="@item.Id" name="Payment">
                                             @localizer.Get("") <i class="fas fa-money-check-alt"></i>
                                         </a>
                                     }
-                                    <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-primary" title="التفاصيل" asp-page="../Billings/Details" type="submit" asp-route-BhId="@item.Id" name="Details">
+                                    <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-primary" title="التفاصيل" asp-page="../ExternalBillings/Details" type="submit" asp-route-BhId="@item.Id" name="Details">
                                         @localizer.Get("") <i class="far fa-clipboard"></i>
                                     </a>
                                 </form>
