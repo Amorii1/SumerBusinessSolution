@@ -192,7 +192,7 @@
                     {
                         <div class="col-md-6">
 
-                        <btn data-toggle="modal" data-target="#Ask1" asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-danger text-white" asp-page-handler="RejectTransferRequests" asp-route-ReqId="@Model.InvTransferHeader.Id" type="submit" title="رفض" name="Reject">
+                        <btn data-toggle="modal" data-target="#Ask1" asp-route-culture="@Request.RouteValues["culture"]" class=" btn-block btn btn-danger text-white" asp-page-handler="RejectTransferRequests" asp-route-ReqId="@Model.InvTransferHeader.Id" type="submit" title="رفض" name="Reject">
                             @localizer.Get("رفض")
                         </btn>
                         <div class="modal fade" id="Ask1" role="dialog" method="post">
@@ -215,7 +215,7 @@
 
                         <div class="col-md-6">
 
-                                <btn data-toggle="modal" data-target="#Ask2" asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-info text-white" asp-page-handler="ApproveTransferRequests" asp-route-ReqId="@Model.InvTransferHeader.Id" type="submit" title="قبول" name="Approve">
+                                <btn data-toggle="modal" data-target="#Ask2" asp-route-culture="@Request.RouteValues["culture"]" class=" btn-block btn btn-info text-white" asp-page-handler="ApproveTransferRequests" asp-route-ReqId="@Model.InvTransferHeader.Id" type="submit" title="قبول" name="Approve">
                                     @localizer.Get("قبول")
                                 </btn>
                                 <div class="modal fade" id="Ask2" role="dialog" method="post">
@@ -249,13 +249,13 @@
                     <div class="col-md-6">
                         @*<a asp-page="Index" asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-success form-control">@localizer.Get("رجوع")</a>*@
 
-                        <button asp-route-culture="@Request.RouteValues["culture"]" class=" col-md-6 btn btn-dark text-white" asp-page-handler="DeleteTransferRequests" asp-route-ReqId="@Model.InvTransferHeader.Id" type="submit" title="حذف" name="Delete">
+                        <button asp-route-culture="@Request.RouteValues["culture"]" class="btn-block btn btn-dark text-white" asp-page-handler="DeleteTransferRequests" asp-route-ReqId="@Model.InvTransferHeader.Id" type="submit" title="حذف" name="Delete">
                             @localizer.Get("حذف")
                         </button>
                     </div>
                     <div class="col-md-6">
                         @*<a asp-page="Index" asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-success form-control">@localizer.Get("رجوع")</a>*@
-                        <a asp-page="Index" asp-route-culture="@Request.RouteValues["culture"]" class=" col-md-6 btn btn-secondary form-control">
+                        <a role="button" asp-page="Index" asp-route-culture="@Request.RouteValues["culture"]" class=" btn-block btn btn-secondary form-control">
                             @localizer.Get("رجوع")
                         </a>
                     </div>
