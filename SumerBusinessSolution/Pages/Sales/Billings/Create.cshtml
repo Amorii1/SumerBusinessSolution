@@ -106,11 +106,11 @@
         <div dir="rtl" class="row form-group">
 
             @*<div class="col-md-5 offset-md-5">
-                    <select asp-for="a => @Model.BillHeader.CustId"
-                            asp-items="@(new SelectList(Model.Customer, "Id", "CompanyName"))"
-                            class="form-control ">
-                    </select>
-                </div>*@
+                <select asp-for="a => @Model.BillHeader.CustId"
+                        asp-items="@(new SelectList(Model.Customer, "Id", "CompanyName"))"
+                        class="form-control ">
+                </select>
+            </div>*@
 
 
             <div class="col-md-2">
@@ -158,12 +158,11 @@
                 </select>
             </div>
         </div>
-
-        <table id="dataTable" dir="rtl" class=" text-md-center table table-striped border table-responsive-md table-responsive-lg  text-md-center">
+        <table id="dataTable" dir="rtl" class=" text-md-center table table-striped border table-responsive-lg text-md-center">
             <thead>
                 <tr class="table-secondary">
                     @*<table id="dataTable" border="0" cellpadding="0" cellspacing="0">
-                        <tr>*@
+                    <tr>*@
                     <th>
                         @Html.DisplayNameFor(a => Model.Bi[0].ProdInfo.ProdCode)
                     </th>
@@ -181,10 +180,10 @@
                     </th>
 
                     @*<th>Prod Code</th>
-                        <th>Qty</th>
-                        <th>Unit Price</th>
-                        <th>Total </th>
-                        <th>Note</th>*@
+                    <th>Qty</th>
+                    <th>Unit Price</th>
+                    <th>Total </th>
+                    <th>Note</th>*@
                     <th><a href="#" title="اضافة" id="addNew">   <i class="fas fa-plus"></i></a></th>
                 </tr>
             </thead>
