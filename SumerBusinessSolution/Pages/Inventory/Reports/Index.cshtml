@@ -56,6 +56,17 @@
                     </a>
                 </div>
             }
+
+            <div class="column" style="padding-left:136px;">
+                <a asp-route-culture="@Request.RouteValues["culture"]" asp-page="/inventory/reports/productinquiry">
+
+                    <img src="~/img/barcode.png" style="width:120px;height:120px;" />
+                    @*<p class="text-center">كمية المواد</p>*@
+                    <h4 class="text-center">@localizer.Get("استعلام المواد")</h4>
+
+                </a>
+            </div>
+
         </div>
 
     </div>

@@ -51,7 +51,7 @@
 
 
 
-                            <div class="col-md-3 pb-1">
+                            <div class="col-md-auto pb-1 ml-2">
                                 <div dir="rtl" class="form-group row float-md-right">
 
 
@@ -64,7 +64,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div dir="rtl" class="col-md-3 pb-1">
+                            <div dir="rtl" class="col-md-auto pb-1">
                                 <div class="form-group row float-md-right">
 
                                     <div>
@@ -76,11 +76,11 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-4 pb-1">
+                            <div class="col pb-1">
                                 @Html.Editor("searchProdCode", new { htmlAttributes = new { @class = "form-control text-md-right", placeholder = @localizer.Get("رمز المنتج....") } })
 
                             </div>
-                            <div class="col-md-2 text-md-right pb-1">
+                            <div class="col text-md-right pb-1">
 
                                 <button asp-route-culture="@Request.RouteValues["culture"]" type="submit" name="submit" title="بحث" value="search" class="btn btn-info form-control">
                                     <i class="fas fa-search"></i>
@@ -147,7 +147,7 @@
 
 
     <div>
-        <table class="text-md-center table table-striped border table-responsive-md table-responsive-lg">
+        <table class="text-md-center table table-striped border table-responsive-sm ">
             <tr class="table-secondary">
 
 

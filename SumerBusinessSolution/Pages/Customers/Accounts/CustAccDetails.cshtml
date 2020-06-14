@@ -70,25 +70,25 @@
 
         <div class=" form-group row">
             <div class="col-md-6 offset-md-5">
-                <div class="row">
+                <div class="row justify-content-center">
 
 
-                    <div class="col-md-4">
+                    <div  class="pl-md-3">
                         @*<a asp-page="Index" class="btn btn-success form-control">الرجوع</a>*@
                         <a asp-page="../Accounts/PayToAcc" asp-route-culture="@Request.RouteValues["culture"]" asp-route-CustId="@Model.Customer.Id" class="btn btn-info form-control">@localizer.Get("تسديد الديون")</a>
 
                     </div>
-                    <div class="col-md-3">
+                    <div  class="pl-md-3">
                         <a asp-page="/Sales/Billings/CustBills" asp-route-culture="@Request.RouteValues["culture"]" asp-route-CustId="@Model.Customer.Id" class="btn btn-primary form-control">@localizer.Get("الفواتير")</a>
 
                     </div>
                     @if (User.IsInRole(SD.AdminUser))
                     {
-                        <div class="col-md-2">
+                        <div class="pl-md-3">
                             <a asp-page="../Accounts/EditCustAcc" asp-route-culture="@Request.RouteValues["culture"]" asp-route-CustId="@Model.Customer.Id" class="btn btn-success form-control">@localizer.Get("تعديل")</a>
                         </div>
                     }
-                    <div class="col-md-3">
+                    <div  class="pl-md-3" >
 
                         <input asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-secondary form-control" type="button" value="@localizer.Get("رجوع")" onclick="history.back()">
 
