@@ -8,7 +8,7 @@
 
 @inject Services.CommonLocalizationService localizer
 
-<div class="border backgroundWhite">
+<div class="border backgroundWhite right-title">
     @*<h2 class="text-info">اضافة مخزن جديد</h2>*@
     <h2 class="text-info text-md-right">@localizer.Get("تعديل معلومات المخزن")</h2>
 
@@ -21,7 +21,7 @@
         <div dir="rtl" class="form-group row">
             <input type="hidden" asp-for="Warehouse.Id" class="form-control text-md-right" />
 
-            <div class="col-md-2">
+            <div class="col-md-2 ">
                 <label asp-for="Warehouse.WhCode"></label>
             </div>
             <div class="col-md-5 offset-md-5">
@@ -33,7 +33,7 @@
         <div dir="rtl" class="form-group row">
 
 
-            <div class="col-md-2">
+            <div class="col-md-2 ">
                 <label asp-for="Warehouse.WhName"></label>
             </div>
             <div class="col-md-5 offset-md-5">
@@ -44,7 +44,7 @@
 
         <div dir="rtl" class="form-group row">
 
-            <div class="col-md-2">
+            <div class="col-md-2 ">
                 <label asp-for="Warehouse.WhLocation"></label>
             </div>
             <div class="col-md-5 offset-md-5">
@@ -53,7 +53,7 @@
             <span asp-validation-for="Warehouse.WhLocation" class="text-danger"></span>
         </div>
        
-        <div dir="rtl" class=" pr-md-5 form-group form-check text-md-right">
+        <div dir="rtl" class=" pr-md-5 form-group form-check text-md-right ">
             <input type="checkbox" asp-for="Warehouse.Active" class="form-check-input" id="exampleCheck1">
             <label class="form-check-label" for="exampleCheck1">&nbsp;&nbsp;&nbsp;مفعل</label>
         </div>
@@ -61,7 +61,7 @@
 
         <div dir="rtl" class="form-group row">
 
-            <div class="col-md-2">
+            <div class="col-md-2 ">
                 <label asp-for="Warehouse.WhType.Type"></label>
             </div>
             <div class="col-md-5 offset-md-5">

@@ -136,6 +136,8 @@ body {
   margin-bottom: 20px;
 }
 
+.table-responsive-full {
+}
 
 @media screen and (max-width: 990px ) {
     
@@ -200,4 +202,31 @@ body {
         max-width: 800px;
         margin-left: -40px;
     }
+    .table-responsive-full {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
 }
+
+@media (max-width: 425.1px) {
+    .table-responsive-xs {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+        .table-responsive-xs > .table-bordered {
+            border: 0;
+        }
+}
+
+
+@media (max-width: 767px) {
+
+    .right-title {
+        text-align: right;
+    }
+ }

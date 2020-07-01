@@ -14,7 +14,7 @@
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
-<div class="border backgroundWhite">
+<div class="border backgroundWhite right-title">
     <partial name="_StatusMessage" model="Model.StatusMessage" />
     @*<h2 class="text-info">حركة المواد</h2>*@
     <h2 class="text-info text-md-right">@localizer.Get("نقل المواد")</h2>
@@ -24,7 +24,7 @@
         <div dir="rtl" class="row form-group">
 
 
-            <div class="col-md-2">
+            <div class="col-md-2 ">
                 <label asp-for="@Model.FromWhId"> </label>
             </div>
             <div class="col-md-5 offset-md-5">
@@ -39,7 +39,7 @@
         <div dir="rtl" class="row form-group">
 
 
-            <div class="col-md-2">
+            <div class="col-md-2 ">
                 <label asp-for="@Model.ToWhId"> </label>
             </div>
             <div class="col-md-5 offset-md-5">
@@ -52,8 +52,8 @@
             <span asp-validation-for="@Model.ToWhId" class="text-danger"></span>
         </div>
 
-        <table dir="rtl" id="dataTable" class=" text-md-center table table-striped border table-responsive-sm">
-            <thead>
+        <table dir="rtl" id="dataTable" style="  width: 100%;" class=" text-md-center table table-striped border  table-responsive-lg table-responsive-md table-responsive-sm ">
+           
                 <tr>
                     <th>
                         @Html.DisplayNameFor(a => Model.InvT[0].ProdInfo.ProdCode)
@@ -67,8 +67,7 @@
                     <th><a title="اضافة" href="#" id="addNew">   <i class="fas fa-plus"></i></a></th>
 
                 </tr>
-            </thead>
-            <tbody>
+          
                 @if (Model.InvT != null && Model.InvT.Count > 0)
                 {
 
@@ -98,7 +97,7 @@
                     }
 
                 }
-            </tbody>
+          
         </table>
         <div class=" form-group row">
             <div class="col-md-7 offset-md-5">

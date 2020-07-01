@@ -21,7 +21,7 @@
         </a>
     </div>
     <partial name="_StatusMessage" model="Model.StatusMessage" />
-    <div class="backgroundWhite">
+    <div class="backgroundWhite right-title">
         <div dir="rtl" class="row">
 
             <div class="col-md-6">
@@ -45,12 +45,12 @@
                             <div dir="rtl" class="row" style="margin-top:10px;">
 
 
-                                <div class="col  pb-1" onclick="bindNameAutocomplete(this)">
+                                <div class="col-xl-auto  pb-1" onclick="bindNameAutocomplete(this)">
                                     @*@Html.Editor("SearchProdName", new { htmlAttributes = new { @class = "form-control", placeholder ="....اسم المنتج" } })*@
                                     @Html.Editor("SearchProdName", new { htmlAttributes = new { @class = "form-control text-md-right", placeholder = @localizer.Get("اسم المنتج....") } })
 
                                 </div>
-                                <div class="col  pb-1" onclick="bindCodeAutocomplete(this)">
+                                <div class="col-xl-auto  pb-1" onclick="bindCodeAutocomplete(this)">
                                     @*@Html.Editor("SearchProdCode", new { htmlAttributes = new { @class = "form-control", placeholder = "....رمز المنتج" } })*@
                                     @Html.Editor("SearchProdCode", new { htmlAttributes = new { @class = "form-control text-md-right", placeholder = @localizer.Get("رمز المنتج....") } })
                                 </div>

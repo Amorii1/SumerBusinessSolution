@@ -17,7 +17,7 @@
 <partial name="_StatusMessage" model="Model.StatusMessage" />
 
 
-<div class=" border backgroundWhite">
+<div class=" border backgroundWhite right-title">
     <form method="post">
         <div dir="rtl" class="row">
             <div class="col-md-5 offset-md-4">
@@ -151,8 +151,8 @@
                 </select>
             </div>
         </div>
-        <table id="dataTable" dir="rtl" class=" text-md-center table table-striped border table-responsive text-md-center">
-            <thead>
+        <table id="dataTable" dir="rtl" class="text-md-center table table-striped border table-responsive ">
+         
                 <tr class="table-secondary">
                     <th>
                         @Html.DisplayNameFor(a => Model.Bi[0].ProdInfo.ProdCode)
@@ -174,8 +174,7 @@
                     </th>
                     <th><a href="#" title="اضافة" id="addNew">   <i class="fas fa-plus"></i></a></th>
                 </tr>
-            </thead>
-            <tbody>
+
                 @if (Model.Bi != null && Model.Bi.Count > 0)
                 {
 
@@ -210,7 +209,7 @@
                     }
 
                 }
-            </tbody>
+         
         </table>
         <div dir="rtl" class="row form-group">
             <div class="col-md-2">
