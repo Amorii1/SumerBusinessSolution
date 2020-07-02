@@ -53,19 +53,19 @@ namespace SumerBusinessSolution
         public DateTime? SearchToDate { get; set; }
 
         [BindProperty]
-        [Display(Name = "الربح الصافي")]
+        [Display(Name = "المبلغ الكلي")]
         public double TotalNetAmt { get; set; }
         [BindProperty]
-        [Display(Name = "التكلفة المدفوعة")]
+        [Display(Name = "المبلغ المدفوع")]
 
         public double TotalPaidAmt { get; set; }
 
         [BindProperty]
-        [Display(Name = "التكلفة غير المدفوعة")]
+        [Display(Name = "المبلغ غير مدفوع")]
         public double TotalUnpaidAmt { get; set; }
 
         [BindProperty]
-        [Display(Name = "العائد الكلي")]
+        [Display(Name = "الارباح الكلية")]
         public double TotalRevenue { get; set; }
         public IActionResult OnGet(string CustomerName = null, DateTime? SearchFromDate = null, DateTime? SearchToDate = null, int? BillNo = null)
         {

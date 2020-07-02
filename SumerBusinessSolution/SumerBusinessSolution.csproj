@@ -7,7 +7,13 @@
 
 
   <ItemGroup>
+    <PackageReference Include="AspNetCore.ReportViewer" Version="3.0.0.200103" />
+    <PackageReference Include="EntityFramework" Version="6.4.4" />
+    <PackageReference Include="Microsoft.AspNet.Mvc" Version="5.2.7" />
     <PackageReference Include="Microsoft.AspNet.SignalR.Core" Version="2.4.1" />
+    <PackageReference Include="Microsoft.AspNet.WebPages" Version="3.2.7" />
+    <PackageReference Include="Microsoft.AspNet.WebPages.Data" Version="3.2.7" />
+    <PackageReference Include="Microsoft.AspNet.WebPages.WebData" Version="3.2.7" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.1" />
@@ -17,6 +23,8 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.1.1" />
+    <PackageReference Include="Microsoft.ReportViewer" Version="11.0.3366.16" />
+    <PackageReference Include="Microsoft.ReportViewer.2015.Runtime" Version="12.0.2.2402" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.3" />
   </ItemGroup>
 
