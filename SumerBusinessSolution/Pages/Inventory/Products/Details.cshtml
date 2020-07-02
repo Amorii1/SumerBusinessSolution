@@ -13,7 +13,7 @@
     ViewData["Title"] = "Details";
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
-<div class="border backgroundWhite">
+<div class="border backgroundWhite right-title">
     @*<h2 class="text-info">تفاصيل المنتج</h2>*@
     <h2 class="text-info text-md-right">@localizer.Get("تفاصيل المنتج")</h2>
 
@@ -23,7 +23,7 @@
         <div dir="rtl" class="row form-group">
 
 
-            <div class="col-md-2">
+            <div class="col-md-2 ">
                 <label asp-for="ProdInfo.ProdCode"></label>
             </div>
             <div class="col-md-5 offset-md-5">
@@ -35,7 +35,7 @@
 
         <div dir="rtl" class="row form-group">
 
-            <div class="col-md-2">
+            <div class="col-md-2 ">
                 <label asp-for="ProdInfo.ProdName"></label>
 
             </div>
@@ -48,7 +48,7 @@
         </div>
         <div dir="rtl" class="row form-group">
 
-            <div class="col-md-2">
+            <div class="col-md-2 ">
                 <label asp-for="ProdInfo.ProdDescription"></label>
 
             </div>
@@ -64,7 +64,7 @@
         <div dir="rtl" class="row form-group">
 
 
-            <div class="col-md-2">
+            <div class="col-md-2 ">
                 <label asp-for="ProdInfo.ApplicationUser.FirstName"></label>
 
             </div>
@@ -77,7 +77,7 @@
         <div dir="rtl" class="row form-group">
 
 
-            <div class="col-md-2">
+            <div class="col-md-2 ">
                 <label asp-for="ProdInfo.CreatedDateTime"></label>
 
             </div>
@@ -92,7 +92,7 @@
     <div dir="rtl" class="row form-group">
 
 
-        <div class="col-md-2">
+        <div class="col-md-2 ">
             <label asp-for="ProdInfo.ImgFile"></label>
 
         </div>
@@ -107,7 +107,7 @@
         {
     <div dir="rtl" class="row form-group">
 
-        <div class="col-md-2">
+        <div class="col-md-2 ">
             <label asp-for="ProdInfo.CostPrice"></label>
 
         </div>
@@ -122,7 +122,7 @@
     <div dir="rtl" class="row form-group">
 
 
-        <div class="col-md-2">
+        <div class="col-md-2 ">
             <label asp-for="ProdInfo.WholePrice"></label>
 
         </div>
@@ -135,7 +135,7 @@
     <div dir="rtl" class="row form-group">
 
 
-        <div class="col-md-2">
+        <div class="col-md-2 ">
             <label asp-for="ProdInfo.RetailPrice"></label>
 
         </div>

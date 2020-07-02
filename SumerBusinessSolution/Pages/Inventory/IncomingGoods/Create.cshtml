@@ -15,14 +15,14 @@
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 <partial name="_StatusMessage" model="Model.StatusMessage" />
-<div class="  border backgroundWhite">
+<div class="  border backgroundWhite right-title ">
     <form id="productForm" action="/inventory/products/create?handler=Product" title="" method="post">
 
         <div dir="rtl" class="row">
-            <div class="col-md-5 offset-md-4">
+            <div class="col-md-5 offset-md-4 ">
                 <h2 class="text-info text-md-right">  @localizer.Get("أضافة مواد واردة")</h2>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-3 ">
                 <a asp-route-culture="@Request.RouteValues["culture"]" data-toggle="modal" data-target="#prodModal" class="btn btn-info" name="CreateProduct">
                     @localizer.Get("مادة جديد") <i class="fas fa-plus"></i>
 
@@ -37,7 +37,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <div class="col-md-6">
-                            <h3 class="modal-title text-info text-md-right"> اضافة مادة جديدة</h3>
+                            <h3 class="modal-title text-info "> اضافة مادة جديدة</h3>
                         </div>
                         <div class="col-md-6">
                             <a href="#" class="close float-md-left" data-dismiss="modal">&times;</a>
@@ -49,7 +49,7 @@
 
                             </div>
                             <div class="row form-group">
-                                <div class="col-md-3">
+                                <div class="col-md-3 ">
                                     <label asp-for="ProdInfo.ProdCode"> </label>
                                 </div>
                                 <div class="col-md-5 ">
@@ -59,7 +59,7 @@
                             </div>
 
                             <div class="row form-group">
-                                <div class="col-md-3">
+                                <div class="col-md-3" >
                                     <label asp-for="ProdInfo.ProdName"> </label>
                                 </div>
                                 <div class="col-md-5 ">
@@ -88,7 +88,7 @@
                                 <span asp-validation-for="ProdInfo.RetailPrice" class="text-danger"></span>
                             </div>
                             <div class="row form-group">
-                                <div class="col-md-3">
+                                <div class="col-md-3 ">
                                     <label asp-for="ProdInfo.WholePrice"> </label>
                                 </div>
                                 <div class="col-md-5">
@@ -116,7 +116,7 @@
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
         <div class="row form-group" dir="rtl">
-            <div class="col-md-2">
+            <div class="col-md-2 ">
                 <label asp-for="@Model.WhId"> </label>
             </div>
             <div class="col-md-5 offset-md-5">
@@ -128,8 +128,8 @@
 
             <span asp-validation-for="@Model.WhId" class="text-danger"></span>
         </div>
-        <table dir="rtl" id="dataTable" class=" text-md-center table table-striped border table-responsive-sm ">
-            <thead>
+        <table dir="rtl" id="dataTable" class="  text-md-center table table-striped border  table-responsive-lg table-responsive-md table-responsive-sm">
+          
                 <tr>
                     <th>
                         @Html.DisplayNameFor(a => Model.InG[0].ProdInfo.ProdCode)
@@ -142,8 +142,7 @@
                     </th>
                     <th><a title="اضافة" href="#" id="addNew">   <i class="fas fa-plus"></i></a></th>
                 </tr>
-            </thead>
-            <tbody>
+          
                 @if (Model.InG != null && Model.InG.Count > 0)
                 {
 
@@ -177,7 +176,7 @@
                     }
 
                 }
-            </tbody>
+         
         </table>
 
         <div class=" form-group row">

@@ -14,7 +14,7 @@
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
-<div class="  border backgroundWhite">
+<div class="  border backgroundWhite right-title">
     <h2 class="text-info  text-md-right">@localizer.Get("تحديث كمية المنتج")</h2>
 
     <partial name="_StatusMessage" model="Model.StatusMessage" />
@@ -27,7 +27,7 @@
         <div dir="rtl" class="row form-group">
 
 
-            <div class="col-md-2">
+            <div class="col-md-2  ">
                 <label asp-for="InvStkQty.ProdInfo.ProdCode"></label>
             </div>
             <div class="col-md-5 offset-md-5">
@@ -38,7 +38,7 @@
         <div dir="rtl" class="row form-group">
 
 
-            <div class="col-md-2">
+            <div class="col-md-2 ">
                 <label asp-for="InvStkQty.ProdInfo.ProdName"></label>
 
             </div>
@@ -49,7 +49,7 @@
         <div dir="rtl" class="row form-group">
 
 
-            <div class="col-md-2">
+            <div class="col-md-2 ">
                 <label asp-for="InvStkQty.Warehouse.WhName"></label>
 
             </div>
@@ -59,7 +59,7 @@
         </div>
         <div dir="rtl" class="row form-group">
 
-            <div class="col-md-2">
+            <div class="col-md-2 ">
                 <label asp-for="InvStkQty.Qty"></label>
 
             </div>
@@ -70,7 +70,7 @@
         </div>
         <div dir="rtl" class="row form-group">
 
-            <div class="col-md-2">
+            <div class="col-md-2 ">
                 @*<label>الكميه الجديده</label>*@
                 <label asp-for="NewQty"></label>
             </div>
