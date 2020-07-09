@@ -12,6 +12,10 @@ using SumerBusinessSolution.Models;
 using SumerBusinessSolution.Transactions;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using System.IO;
+using Microsoft.AspNetCore.Mvc.Razor;
+using System.Net;
+using SelectPdf;
 
 namespace SumerBusinessSolution.Pages.Sales.Billings
 {
@@ -71,7 +75,7 @@ namespace SumerBusinessSolution.Pages.Sales.Billings
 
         [BindProperty]
         public string CustomerName { get; set; }
- 
+
         public InvStockQty InvStockQty { get; set; }
         public ActionResult OnGet()
         {
@@ -100,9 +104,33 @@ namespace SumerBusinessSolution.Pages.Sales.Billings
 
             // }
             // }
-            if(BillHeader.Id != 0)
+            string path = Request.Host.Value;
+            if (BillHeader.Id != 0)
             {
-                return RedirectToPage("/Sales/Billings/PrintBill", new { BhId = BillHeader.Id });
+                //return RedirectToPage("/Sales/Billings/PrintBill", new { BhId = BillHeader.Id });
+
+                var body = RazorPage.RenderToString("https://" + path + "/Sales/Billings/InvoicePrint?BhId=" + BillHeader.Id);
+
+                var converter = new HtmlToPdf();
+                converter.Options.PdfPageSize = PdfPageSize.A4;
+                converter.Options.PdfPageOrientation = PdfPageOrientation.Portrait;
+
+                converter.Options.WebPageWidth = 1024;
+                converter.Options.WebPageHeight = 0;
+                converter.Options.WebPageFixedSize = false;
+
+                converter.Options.AutoFitWidth = HtmlToPdfPageFitMode.ShrinkOnly;
+                converter.Options.AutoFitHeight = HtmlToPdfPageFitMode.NoAdjustment;
+
+                //converter.Options.PdfPageCustomSize = new System.Drawing.SizeF(816, 1020);
+                PdfDocument doc = converter.ConvertHtmlString(body, "https://" + path + "/Sales/Billings/InvoicePrint?BhId=" + BillHeader.Id);
+                byte[] pdf = doc.Save();
+                doc.Close();
+                return new FileContentResult(pdf, "application/pdf")
+                {
+                    FileDownloadName = "فاتورة.pdf"
+                };
+                //  return RedirectToPage("/Sales/Billings/PrintBill", new { BhId = BillHeader.Id });
 
             }
             else
@@ -110,7 +138,29 @@ namespace SumerBusinessSolution.Pages.Sales.Billings
                 return RedirectToPage("/Sales/Billings/Create");
             }
         }
-
+        public static class RazorPage
+        {
+            public static string RenderToString(string url)
+            {
+                try
+                {
+                    //Grab page
+                    WebRequest request = WebRequest.Create(url);
+                    WebResponse response = request.GetResponse();
+                    Stream data = response.GetResponseStream();
+                    string html = String.Empty;
+                    using (StreamReader sr = new StreamReader(data))
+                    {
+                        html = sr.ReadToEnd();
+                    }
+                    return html;
+                }
+                catch (Exception err)
+                {
+                    return err.Message;
+                }
+            }
+        }
         public JsonResult OnGetSearchNow(string term)
         {
             if (term == null)
@@ -180,7 +230,7 @@ namespace SumerBusinessSolution.Pages.Sales.Billings
         public JsonResult OnGetCheckProdQty(string qty, string prod)
         {
             //double qty = 5909;
-            
+
             double dqty = Convert.ToDouble(qty);
             if (prod == null)
             {
@@ -197,7 +247,7 @@ namespace SumerBusinessSolution.Pages.Sales.Billings
         {
             InvStockQty = _db.InvStockQty.FirstOrDefaultAsync(inv => inv.ProdInfo.ProdCode == ProdCode & inv.Warehouse.WhType.Type == SD.ShowRoom).GetAwaiter().GetResult();
 
-            if(InvStockQty == null)
+            if (InvStockQty == null)
             {
                 return false;
             }
@@ -239,7 +289,7 @@ namespace SumerBusinessSolution.Pages.Sales.Billings
 
             return RedirectToPage("/Sales/Billings/Create");
         }
- 
+
     }
 
 }
