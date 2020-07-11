@@ -128,7 +128,7 @@
                                                 @localizer.Get("") <i class="fas fa-money-check-alt"></i>
                                             </a>
                                         }
-                                        <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-primary" title="التفاصيل" asp-page="../Billings/Details" type="submit" asp-route-BhId="@item.Id" name="Details">
+                                        <a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-primary" title="التفاصيل" asp-page="../Billings/DetailsMob" type="submit" asp-route-BhId="@item.Id" name="Details">
                                             @localizer.Get("") <i class="far fa-clipboard"></i>
                                         </a>
                                         @*@if (User.IsInRole(SD.AdminEndUser))

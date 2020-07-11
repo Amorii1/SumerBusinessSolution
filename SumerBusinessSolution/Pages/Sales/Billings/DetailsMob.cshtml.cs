@@ -80,6 +80,24 @@ namespace SumerBusinessSolution.Pages.Sales.Billings
             return RedirectToPage("/Sales/Billings/Index");
         }
 
+
+
+
+        // Here's The Print Bill Function
+
+        //public IActionResult PrintBill(int HeaderId)
+        //{
+
+        //}
+
+
+
+
+
+
+
+
+
         public IActionResult OnPostDeleteBill(int HeaderId)
         {
 
