@@ -10,10 +10,13 @@ using SumerBusinessSolution.Models;
 using SumerBusinessSolution.Transactions;
 using Microsoft.AspNetCore.Localization;
 using System.ComponentModel.DataAnnotations;
-
+using System.IO;
+using Microsoft.AspNetCore.Mvc.Razor;
+using System.Net;
+using SelectPdf;
 
 namespace SumerBusinessSolution.Pages.Sales.Billings
-{ 
+{
     public class DetailsMobModel : PageModel
     {
 
@@ -32,7 +35,7 @@ namespace SumerBusinessSolution.Pages.Sales.Billings
         [BindProperty]
         public BillItems BillItems { get; set; }
         [BindProperty]
- 
+
 
         public List<BillItems> BillItemsList { get; set; }
 
@@ -46,12 +49,12 @@ namespace SumerBusinessSolution.Pages.Sales.Billings
         {
 
             BillItemsList = await _db.BillItems
-                .Include(bill=> bill.BillHeader)
-                .Include(bill=> bill.BillHeader.Customer)
-                .Include(bill=> bill.ProdInfo)
-                .Include(bill=> bill.BillHeader.ApplicationUser)
+                .Include(bill => bill.BillHeader)
+                .Include(bill => bill.BillHeader.Customer)
+                .Include(bill => bill.ProdInfo)
+                .Include(bill => bill.BillHeader.ApplicationUser)
                 .Where(bill => bill.HeaderId == BhId).ToListAsync();
-            if(BillItemsList.Count() > 0)
+            if (BillItemsList.Count() > 0)
             {
                 BillHeader = BillItemsList[0].BillHeader;
             }
@@ -64,8 +67,9 @@ namespace SumerBusinessSolution.Pages.Sales.Billings
             {
 
             }
-
-            return Page();
+            
+   
+            return Page(); 
         }
         public void OnPost()
         {
@@ -77,24 +81,75 @@ namespace SumerBusinessSolution.Pages.Sales.Billings
 
             StatusMessage = _SalesTrans.CloseBillManually(HeaderId).GetAwaiter().GetResult();
 
+           
+
             return RedirectToPage("/Sales/Billings/Index");
         }
 
-
-
-
         // Here's The Print Bill Function
 
-        //public IActionResult PrintBill(int HeaderId)
-        //{
+        public IActionResult OnGetPrintBill(int BhId)
+        {
+            string path = Request.Host.Value;
+            if (BhId != 0)
+            {
+ 
+                var body = RazorPage.RenderToString("https://" + path + "/Sales/Billings/InvoicePrint?BhId=" + BhId);
 
-        //}
+                var converter = new HtmlToPdf();
+                converter.Options.PdfPageSize = PdfPageSize.A4;
+                converter.Options.PdfPageOrientation = PdfPageOrientation.Portrait;
 
+                converter.Options.WebPageWidth = 1024;
+                converter.Options.WebPageHeight = 0;
+                converter.Options.WebPageFixedSize = false;
 
+                converter.Options.AutoFitWidth = HtmlToPdfPageFitMode.ShrinkOnly;
+                converter.Options.AutoFitHeight = HtmlToPdfPageFitMode.NoAdjustment;
 
+                //converter.Options.PdfPageCustomSize = new System.Drawing.SizeF(816, 1020);
+                PdfDocument doc = converter.ConvertHtmlString(body, "https://" + path + "/Sales/Billings/InvoicePrint?BhId=" + BhId);
+                byte[] pdf = doc.Save();
+                doc.Close();
+                string BillName = "فاتورة" + "-" + BhId + ".pdf";
+                return new FileContentResult(pdf, "application/pdf")
+                {
+                    
+                    FileDownloadName = BillName 
+                    
+                };
+ 
 
+            }
+            else
+            {
+                return Page();
+            }
 
-
+        }
+        public static class RazorPage
+        {
+            public static string RenderToString(string url)
+            {
+                try
+                {
+                    //Grab page
+                    WebRequest request = WebRequest.Create(url);
+                    WebResponse response = request.GetResponse();
+                    Stream data = response.GetResponseStream();
+                    string html = String.Empty;
+                    using (StreamReader sr = new StreamReader(data))
+                    {
+                        html = sr.ReadToEnd();
+                    }
+                    return html;
+                }
+                catch (Exception err)
+                {
+                    return err.Message;
+                }
+            }
+        }
 
 
 
@@ -114,7 +169,7 @@ namespace SumerBusinessSolution.Pages.Sales.Billings
         //   .Include(bill => bill.ProdInfo)
         //   .Include(bill => bill.BillHeader.ApplicationUser)
         //   .Where(bill => bill.HeaderId == BhId).ToListAsync();
- 
+
         //    return RedirectToPage("/Sales/Billings/Edit", new { Bi = BillItemsList, BhId } );
         //}
 

@@ -23,17 +23,17 @@
             <h2 class="text-info text-md-right">  @localizer.Get("تفاصيل الفاتورة")</h2>
 
         </div>
-        <div class="col-md-6 ">
-            <a asp-route-culture="@Request.RouteValues["culture"]" asp-page-handler="PrintBill" asp-route-BhId="@Model.BillHeader.Id" type="submit" name="PrintBill" title="طباعة الفاتورة" class="btn btn-info"> <i class="fas fa-print"></i> طباعة الفاتورة</a>
-        </div>
-
+        <form method="get">
+            <div class="col-md-6 ">
+                <a asp-route-culture="@Request.RouteValues["culture"]" asp-page-handler="PrintBill" asp-route-BhId="@Model.BillHeader.Id" name="PrintBill" title="طباعة الفاتورة" class="btn btn-info"> <i class="fas fa-print"></i> طباعة الفاتورة</a>
+            </div>
+        </form>
 
     </div>
     
 
     <form method="post">
         <input type="hidden" asp-for="BillHeader.Id" />
-
         <div dir="rtl" class="row form-group">
 
             <div class="col-md-2">
@@ -207,84 +207,84 @@
 
         <div class="form-group row">
             <div class="col-md-6 offset-md-5">
-                
-                    <div class="row text-center pb-3 pr-5">
-                        @*<div class="col-md-6">
 
-            <a asp-page="Index" class="btn btn-secondary form-control" asp-route-culture="@Request.RouteValues["culture"]"> رجوع</a>
+                <div class="row text-center pb-3 pr-5">
+                    @*<div class="col-md-6">
 
-        </div>*@
-                        @if (Model.BillHeader.Status == SD.OpenBill)
-                        {
-                            <div class="col">
-                                <a asp-route-BhId="@Model.BillHeader.Id" asp-page="MakePayment" asp-route-culture="@Request.RouteValues["culture"]" type="submit" class="btn btn-success form-control">
-                                    @localizer.Get("تسديد")
-                                </a>
-                            </div>
-                        }
+                        <a asp-page="Index" class="btn btn-secondary form-control" asp-route-culture="@Request.RouteValues["culture"]"> رجوع</a>
 
-                        @if (User.IsInRole(SD.AdminUser) && (Model.BillHeader.Status == SD.OpenBill))
-                        {
-                            <div class="col">
-                                <a asp-route-culture="@Request.RouteValues["culture"]" data-toggle="modal" data-target="#Ask" class="btn btn-danger form-control" asp-page-handler="CloseBillManually" asp-route-HeaderId="@Model.BillHeader.Id" type="submit" name="Close">
-                                    @localizer.Get("اغلاق")
-                                </a>
-                            </div>
-                            <div class="modal fade" id="Ask" role="dialog" method="post">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <button class="close" data-dismiss="modal">&times;</button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <p class="alert alert-danger">@localizer.Get("هل انت متأكد؟")</p>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <input asp-route-culture="@Request.RouteValues["culture"]" type="submit" asp-page-handler="CloseBillManually" asp-route-HeaderId="@Model.BillHeader.Id" class="btn btn-info" value="@localizer.Get("نعم")" />
-                                        </div>
+                    </div>*@
+                    @if (Model.BillHeader.Status == SD.OpenBill)
+                    {
+                        <div class="col">
+                            <a asp-route-BhId="@Model.BillHeader.Id" asp-page="MakePayment" asp-route-culture="@Request.RouteValues["culture"]" type="submit" class="btn btn-success form-control">
+                                @localizer.Get("تسديد")
+                            </a>
+                        </div>
+                    }
+
+                    @if (User.IsInRole(SD.AdminUser) && (Model.BillHeader.Status == SD.OpenBill))
+                    {
+                        <div class="col">
+                            <a asp-route-culture="@Request.RouteValues["culture"]" data-toggle="modal" data-target="#Ask" class="btn btn-danger form-control" asp-page-handler="CloseBillManually" asp-route-HeaderId="@Model.BillHeader.Id" type="submit" name="Close">
+                                @localizer.Get("اغلاق")
+                            </a>
+                        </div>
+                        <div class="modal fade" id="Ask" role="dialog" method="post">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button class="close" data-dismiss="modal">&times;</button>
                                     </div>
-
-                                </div>
-                            </div>
-
-                            <div class="col">
-                                <a asp-route-culture="@Request.RouteValues["culture"]" data-toggle="modal" data-target="#AskDelete" class="btn btn-dark form-control" asp-page-handler="DeleteBill" asp-route-HeaderId="@Model.BillHeader.Id" type="submit" name="DeleteBill">
-                                    @localizer.Get("حذف")
-                                </a>
-                            </div>
-                            <div class="modal fade" id="AskDelete" role="dialog" method="post">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <button class="close" data-dismiss="modal">&times;</button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <p class="alert alert-danger">@localizer.Get("هل انت متأكد؟")</p>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <input asp-route-culture="@Request.RouteValues["culture"]" type="submit" asp-page-handler="DeleteBill" asp-route-HeaderId="@Model.BillHeader.Id" class="btn btn-info" value="@localizer.Get("نعم")" />
-                                        </div>
+                                    <div class="modal-body">
+                                        <p class="alert alert-danger">@localizer.Get("هل انت متأكد؟")</p>
                                     </div>
-
+                                    <div class="modal-footer">
+                                        <input asp-route-culture="@Request.RouteValues["culture"]" type="submit" asp-page-handler="CloseBillManually" asp-route-HeaderId="@Model.BillHeader.Id" class="btn btn-info" value="@localizer.Get("نعم")" />
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="col">
-                                <a asp-route-BhId="@Model.BillHeader.Id" asp-page="Edit" asp-route-culture="@Request.RouteValues["culture"]" type="submit" class="btn btn-info form-control">
-                                    @localizer.Get("تعديل")
-                                </a>
                             </div>
-
-                        }
+                        </div>
 
                         <div class="col">
-                            <a asp-page="Index" class="btn btn-secondary form-control" asp-route-culture="@Request.RouteValues["culture"]"> رجوع</a>
-
+                            <a asp-route-culture="@Request.RouteValues["culture"]" data-toggle="modal" data-target="#AskDelete" class="btn btn-dark form-control" asp-page-handler="DeleteBill" asp-route-HeaderId="@Model.BillHeader.Id" type="submit" name="DeleteBill">
+                                @localizer.Get("حذف")
+                            </a>
                         </div>
-                    </div>
+                        <div class="modal fade" id="AskDelete" role="dialog" method="post">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button class="close" data-dismiss="modal">&times;</button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p class="alert alert-danger">@localizer.Get("هل انت متأكد؟")</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <input asp-route-culture="@Request.RouteValues["culture"]" type="submit" asp-page-handler="DeleteBill" asp-route-HeaderId="@Model.BillHeader.Id" class="btn btn-info" value="@localizer.Get("نعم")" />
+                                    </div>
+                                </div>
 
-                   
-               
+                            </div>
+                        </div>
+
+                        <div class="col">
+                            <a asp-route-BhId="@Model.BillHeader.Id" asp-page="Edit" asp-route-culture="@Request.RouteValues["culture"]" type="submit" class="btn btn-info form-control">
+                                @localizer.Get("تعديل")
+                            </a>
+                        </div>
+
+                    }
+
+                    <div class="col">
+                        <a asp-page="Index" class="btn btn-secondary form-control" asp-route-culture="@Request.RouteValues["culture"]"> رجوع</a>
+
+                    </div>
+                </div>
+
+
+
             </div>
         </div>
     </form>

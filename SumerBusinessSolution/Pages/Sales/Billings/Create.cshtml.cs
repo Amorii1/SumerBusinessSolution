@@ -101,66 +101,67 @@ namespace SumerBusinessSolution.Pages.Sales.Billings
             //_db.SaveChanges();
 
             ModelState.Clear();
+            return RedirectToPage("/Sales/Billings/DetailsMob", new { BhId = BillHeader.Id });
 
             // }
             // }
-            string path = Request.Host.Value;
-            if (BillHeader.Id != 0)
-            {
-                //return RedirectToPage("/Sales/Billings/PrintBill", new { BhId = BillHeader.Id });
+            //string path = Request.Host.Value;
+            //if (BillHeader.Id != 0)
+            //{
+            //    //return RedirectToPage("/Sales/Billings/PrintBill", new { BhId = BillHeader.Id });
 
-                var body = RazorPage.RenderToString("https://" + path + "/Sales/Billings/InvoicePrint?BhId=" + BillHeader.Id);
+            //    var body = RazorPage.RenderToString("https://" + path + "/Sales/Billings/InvoicePrint?BhId=" + BillHeader.Id);
 
-                var converter = new HtmlToPdf();
-                converter.Options.PdfPageSize = PdfPageSize.A4;
-                converter.Options.PdfPageOrientation = PdfPageOrientation.Portrait;
+            //    var converter = new HtmlToPdf();
+            //    converter.Options.PdfPageSize = PdfPageSize.A4;
+            //    converter.Options.PdfPageOrientation = PdfPageOrientation.Portrait;
 
-                converter.Options.WebPageWidth = 1024;
-                converter.Options.WebPageHeight = 0;
-                converter.Options.WebPageFixedSize = false;
+            //    converter.Options.WebPageWidth = 1024;
+            //    converter.Options.WebPageHeight = 0;
+            //    converter.Options.WebPageFixedSize = false;
 
-                converter.Options.AutoFitWidth = HtmlToPdfPageFitMode.ShrinkOnly;
-                converter.Options.AutoFitHeight = HtmlToPdfPageFitMode.NoAdjustment;
+            //    converter.Options.AutoFitWidth = HtmlToPdfPageFitMode.ShrinkOnly;
+            //    converter.Options.AutoFitHeight = HtmlToPdfPageFitMode.NoAdjustment;
 
-                //converter.Options.PdfPageCustomSize = new System.Drawing.SizeF(816, 1020);
-                PdfDocument doc = converter.ConvertHtmlString(body, "https://" + path + "/Sales/Billings/InvoicePrint?BhId=" + BillHeader.Id);
-                byte[] pdf = doc.Save();
-                doc.Close();
-                return new FileContentResult(pdf, "application/pdf")
-                {
-                    FileDownloadName = "فاتورة.pdf"
-                };
-                //  return RedirectToPage("/Sales/Billings/PrintBill", new { BhId = BillHeader.Id });
+            //    //converter.Options.PdfPageCustomSize = new System.Drawing.SizeF(816, 1020);
+            //    PdfDocument doc = converter.ConvertHtmlString(body, "https://" + path + "/Sales/Billings/InvoicePrint?BhId=" + BillHeader.Id);
+            //    byte[] pdf = doc.Save();
+            //    doc.Close();
+            //    return new FileContentResult(pdf, "application/pdf")
+            //    {
+            //        FileDownloadName = "فاتورة.pdf"
+            //    };
+            //    //  return RedirectToPage("/Sales/Billings/PrintBill", new { BhId = BillHeader.Id });
 
-            }
-            else
-            {
-                return RedirectToPage("/Sales/Billings/Create");
-            }
+            // }
+            //else
+            //{
+            //    return RedirectToPage("/Sales/Billings/Create");
+            //}
         }
-        public static class RazorPage
-        {
-            public static string RenderToString(string url)
-            {
-                try
-                {
-                    //Grab page
-                    WebRequest request = WebRequest.Create(url);
-                    WebResponse response = request.GetResponse();
-                    Stream data = response.GetResponseStream();
-                    string html = String.Empty;
-                    using (StreamReader sr = new StreamReader(data))
-                    {
-                        html = sr.ReadToEnd();
-                    }
-                    return html;
-                }
-                catch (Exception err)
-                {
-                    return err.Message;
-                }
-            }
-        }
+        //public static class RazorPage
+        //{
+        //    public static string RenderToString(string url)
+        //    {
+        //        try
+        //        {
+        //            //Grab page
+        //            WebRequest request = WebRequest.Create(url);
+        //            WebResponse response = request.GetResponse();
+        //            Stream data = response.GetResponseStream();
+        //            string html = String.Empty;
+        //            using (StreamReader sr = new StreamReader(data))
+        //            {
+        //                html = sr.ReadToEnd();
+        //            }
+        //            return html;
+        //        }
+        //        catch (Exception err)
+        //        {
+        //            return err.Message;
+        //        }
+        //    }
+        //}
         public JsonResult OnGetSearchNow(string term)
         {
             if (term == null)
