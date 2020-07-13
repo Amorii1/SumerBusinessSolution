@@ -17,14 +17,14 @@ using SelectPdf;
 
 namespace SumerBusinessSolution.Pages.Sales.Billings
 {
-    public class DetailsMobModel : PageModel
+    public class DetailsPageModel : PageModel
     {
 
         private readonly ApplicationDbContext _db;
         private readonly ISalesTrans _SalesTrans;
 
         //private readonly IServiceScopeFactory _serviceScopeFactory;
-        public DetailsMobModel(ApplicationDbContext db, ISalesTrans SalesTrans)
+        public DetailsPageModel(ApplicationDbContext db, ISalesTrans SalesTrans)
         {
             _db = db;
             _SalesTrans = SalesTrans;

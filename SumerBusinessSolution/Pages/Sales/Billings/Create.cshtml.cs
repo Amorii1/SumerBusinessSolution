@@ -101,7 +101,7 @@ namespace SumerBusinessSolution.Pages.Sales.Billings
             //_db.SaveChanges();
 
             ModelState.Clear();
-            return RedirectToPage("/Sales/Billings/DetailsMob", new { BhId = BillHeader.Id });
+            return RedirectToPage("/Sales/Billings/DetailsPage", new { BhId = BillHeader.Id });
 
             // }
             // }

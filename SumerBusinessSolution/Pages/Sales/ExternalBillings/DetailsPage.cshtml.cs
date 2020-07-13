@@ -16,7 +16,7 @@ using SumerBusinessSolution.Utility;
 namespace SumerBusinessSolution.Pages.Sales.ExternalBillings
 {
     [Authorize]
-    public class DetailsMobModel : PageModel
+    public class DetailsPageModel : PageModel
     {
 
         private readonly ApplicationDbContext _db;
@@ -26,7 +26,7 @@ namespace SumerBusinessSolution.Pages.Sales.ExternalBillings
         public string StatusMessage { get; set; }
 
         //private readonly IServiceScopeFactory _serviceScopeFactory;
-        public DetailsMobModel(ApplicationDbContext db, ISalesTrans SalesTrans)
+        public DetailsPageModel(ApplicationDbContext db, ISalesTrans SalesTrans)
         {
             _db = db;
             _SalesTrans = SalesTrans;
@@ -82,7 +82,24 @@ namespace SumerBusinessSolution.Pages.Sales.ExternalBillings
             return Page();
         }
 
-        public IActionResult OnPostCloseBillManually(int BhId)
+
+
+
+
+        // Here's The Print Bill Function
+
+        //public IActionResult OnGetPrintBill(int BhId)
+        //{ 
+        
+        //}
+
+
+
+
+
+
+
+            public IActionResult OnPostCloseBillManually(int BhId)
         {
 
             StatusMessage = _SalesTrans.CloseExternalBillManually(BhId).GetAwaiter().GetResult();
