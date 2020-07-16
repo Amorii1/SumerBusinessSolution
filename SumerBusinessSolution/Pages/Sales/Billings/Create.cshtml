@@ -12,6 +12,7 @@
 @{
     ViewData["Title"] = "Create";
     Layout = "~/Pages/Shared/_Layout.cshtml";
+
 }
 
 <partial name="_StatusMessage" model="Model.StatusMessage" />
@@ -106,11 +107,11 @@
         <div dir="rtl" class="row form-group">
 
             @*<div class="col-md-5 offset-md-5">
-                <select asp-for="a => @Model.BillHeader.CustId"
-                        asp-items="@(new SelectList(Model.Customer, "Id", "CompanyName"))"
-                        class="form-control ">
-                </select>
-            </div>*@
+                    <select asp-for="a => @Model.BillHeader.CustId"
+                            asp-items="@(new SelectList(Model.Customer, "Id", "CompanyName"))"
+                            class="form-control ">
+                    </select>
+                </div>*@
 
 
             <div class="col-md-2">
@@ -159,72 +160,148 @@
             </div>
         </div>
         <table id="dataTable" dir="rtl" class="text-md-center table table-striped border table-responsive-lg table-responsive-md table-responsive-sm table-responsive-xl table-responsive-full">
-            
-                <tr class="table-secondary">
-                    @*<table id="dataTable" border="0" cellpadding="0" cellspacing="0">
-                    <tr>*@
-                    <th>
-                        @Html.DisplayNameFor(a => Model.Bi[0].ProdInfo.ProdCode)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(a => Model.Bi[0].Qty)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(a => Model.Bi[0].UnitPrice)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(a => Model.Bi[0].TotalAmt)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(a => Model.Bi[0].Note)
-                    </th>
 
-                    @*<th>Prod Code</th>
+            <tr class="table-secondary">
+                @*<table id="dataTable" border="0" cellpadding="0" cellspacing="0">
+                    <tr>*@
+                <th>
+                    @Html.DisplayNameFor(a => Model.Bi[0].ProdInfo.ProdCode)
+                </th>
+                <th>
+
+                </th>
+                <th>
+                    @Html.DisplayNameFor(a => Model.Bi[0].Qty)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(a => Model.Bi[0].UnitPrice)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(a => Model.Bi[0].TotalAmt)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(a => Model.Bi[0].Note)
+                </th>
+
+                @*<th>Prod Code</th>
                     <th>Qty</th>
                     <th>Unit Price</th>
                     <th>Total </th>
                     <th>Note</th>*@
-                    <th><a href="#" title="اضافة" id="addNew">   <i class="fas fa-plus"></i></a></th>
-                </tr>
-            
-            
-                @if (Model.Bi != null && Model.Bi.Count > 0)
+                <th><a href="#" title="اضافة" id="addNew"><i class="fas fa-plus"></i></a></th>
+            </tr>
+
+
+            @if (Model.Bi != null && Model.Bi.Count > 0)
+            {
+
+                int j = 0;
+
+                foreach (var i in Model.Bi)
                 {
+        <tr>
+            <td onclick="bindAutocomplete(this); bindPrice(this)" onchange="bindPrice(this); getProdId(this)">@Html.TextBoxFor(a => Model.Bi[j].ProdInfo.ProdCode) </td>
+            <td style="margin-right:-10px;" onclick="getProdStkQty(this)">
+                <a data-toggle="modal" data-target="#getProdQtyModal" class="btn-sm btn-info" style="margin-left:-10px; margin-right:-10px;" name="CreateProduct">
+                    <i class="fas fa-warehouse"></i>
+                </a>
+            </td>
+            <td oninput="bindTotal(this); checkProdQty(this)" onclick="bindTotal(this)" onchange="calBillTotal(); calBillTotalNetAmt()">@Html.TextBoxFor(a => Model.Bi[j].Qty)</td>
+            <td oninput="bindTotalOnUnitPriceChange(this); calBillTotal()" onchange="calBillTotal(); calBillTotalNetAmt()">@Html.TextBoxFor(a => Model.Bi[j].UnitPrice)</td>
+            <td id="totalLineAmt">@Html.TextBoxFor(a => Model.Bi[j].TotalAmt)</td>
+            <td>@Html.TextBoxFor(a => Model.Bi[j].Note)</td>
 
-                    int j = 0;
+            @*<td hidden="hidden">@Html.TextBoxFor(a => Model.Bi[j].ProdId) </td>*@
+            <td hidden="hidden" name="@Model.Bi[j].ProdId">@Html.TextBoxFor(a => Model.Bi[j].ProdId) </td>
 
-                    foreach (var i in Model.Bi)
-                    {
-
-
-                        <tr>
-                            @*float a= (float)((ArrayList)paredes[i])[0];*@
-                            @*<td>@Html.TextBoxFor(a => a[j].ContactName)</td>*@
-
-                            <td onclick="bindAutocomplete(this); bindPrice(this)" onchange="bindPrice(this); getProdId(this)">@Html.TextBoxFor(a => Model.Bi[j].ProdInfo.ProdCode)</td>
-                            <td oninput="bindTotal(this); checkProdQty(this)" onclick="bindTotal(this)" onchange="calBillTotal(); calBillTotalNetAmt()">@Html.TextBoxFor(a => Model.Bi[j].Qty)</td>
-                            <td oninput="bindTotalOnUnitPriceChange(this); calBillTotal()" onchange="calBillTotal(); calBillTotalNetAmt()">@Html.TextBoxFor(a => Model.Bi[j].UnitPrice)</td>
-                            <td id="totalLineAmt">@Html.TextBoxFor(a => Model.Bi[j].TotalAmt)</td>
-                            <td>@Html.TextBoxFor(a => Model.Bi[j].Note)</td>
-                            <td hidden="hidden">@Html.TextBoxFor(a => Model.Bi[j].ProdId) </td>
-                            <td>
-                                @if (j > 0)
-                                {
-
-                                    // <input type="button" value="Delete" onclick="deleteRow(this)">
-                                    <a href="#" id="removeThis" class="remove">Remove</a>
+            <td>
+                @if (j > 0)
+                {
+                    // <input type="button" value="Delete" onclick="deleteRow(this)">
+                    <a href="#" id="removeThis" class="remove">Remove</a>
+                }
+            </td>
+        </tr>
+                    j++;
 
 
-                                }
-                            </td>
-                        </tr>
-                        j++;
-
-                    }
 
                 }
-           
+
+            }
+
         </table>
+
+        @*here is the modal dialog*@
+
+        <div class="modal fade " id="getProdQtyModal" role="dialog" method="post" dir="rtl">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <div class="col-md-6">
+                            <h3 class="modal-title text-info "> كمية المادة</h3>
+                        </div>
+                        <div class="col-md-6">
+                            <a href="#" class="close float-md-left" data-dismiss="modal">&times;</a>
+                        </div>
+                    </div>
+                    <div class="modal-body">
+                        <div class="modal-body">
+                            <div id="partial">
+
+                                <table dir="rtl" id="tblstock" class="table table-striped border table-responsive-sm  text-md-center">
+                                    <thead>
+                                        <tr class="table-secondary">
+                                            @*<th>
+                                                    @Html.DisplayNameFor(m => m.InvStockQtyList[0].ProdInfo.ProdCode)
+                                                </th>
+                                                <th>
+                                                    @Html.DisplayNameFor(m => m.InvStockQtyList[0].ProdInfo.ProdName)
+                                                </th>*@
+                                            <th>
+                                                @Html.DisplayNameFor(m => m.InvStockQtyList[0].Warehouse.WhName)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(m => m.InvStockQtyList[0].Qty)
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    @if (Model.InvStockQtyList.Count > 0)
+                                    {
+                                        <tbody id="tbdstock">
+
+                                            @foreach (var item in Model.InvStockQtyList)
+                                            {
+                                                <tr>
+                                                    @*<td>
+                                                            @Html.DisplayFor(m => item.ProdInfo.ProdCode)
+                                                        </td>
+                                                        <td>
+                                                            @Html.DisplayFor(m => item.ProdInfo.ProdName)
+                                                        </td>*@
+                                                    <td>
+                                                        @Html.DisplayFor(m => item.Warehouse.WhName)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(m => item.Qty)
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    }
+                                </table>
+                            </div>
+                        </div>
+                        <div class="modal-footer" dir="ltr">
+                            <a href="#" class="btn btn-danger" data-dismiss="modal">الغاء</a>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
         <div dir="rtl" class="row form-group">
             <div class="col-md-2">
                 <label asp-for="@Model.BillHeader.TotalAmt"> </label>
@@ -371,28 +448,74 @@
                         source: '@Url.Page("Create", "SearchNow")'
                 });
         }
-         async function getProdId(t) {
 
-               const obj = await fetch(`${window.location.href}?handler=SearchProdId&term=${t.children[0].value}`)
-                 const json = await obj.json()
-                 var id = json[0];
-                 console.log(id);
-                 if (json.length > 0) {
+        async function getProdStkQty(t) {
 
-                   t.parentElement.children[5].children[0].value =  json[0];
-               }
+            var currentRow = $(t).closest("tr");
+
+             var row_index = $(t).parent().index();
+   var col_index = $(t).index();
+
+         var col1=$("#Bi_"+(row_index-1)+"__ProdInfo_ProdCode").val();
+            console.log(col1);
+            $("#tblstock tbody").remove();
+            debugger;
+              $.ajax({
+                    type: "GET",
+                    url: `${window.location.href}?handler=StockList&term=${col1}`,
+                  success: function (grups) {
+                      debugger;
+                    //  $('#partial').html(result);
+                      var tablename = $("#tblstock");
+                     // $("#tbdstock").empty();
+        for (var i = 0; i < grups.length; i++) {
+            var tableData = "<tbody><tr>" +
+                //"<td>" + grups[i].prodInfo.prodCode + "</td>" +
+                //       "<td>" + grups[i].prodInfo.prodName + "</td>" +
+                                "<td>" + grups[i].warehouse.whName + "</td>" +
+                             "<td>" + grups[i].qty + "</td>" +
+
+                "</tr></tbody>";
+            tablename.append(tableData);
+        }
+                    }
+                });
+            }
+
+
+        async function getProdId(t) {
+
+            var row_index = $(t).parent().index();
+            const obj = await fetch(`${window.location.href}?handler=SearchProdId&term=${t.children[0].value}`)
+            const json = await obj.json()
+            var id = json[0];
+            console.log(id);
+            $("#Bi_" + (row_index - 1) + "__ProdId").val(id);
+             //if (json.length > 0) {
+
+             //      t.parentElement.children[6].children[0].value =  json[0];
+             //  }
+
+               //const obj = await fetch(`${window.location.href}?handler=SearchProdId&term=${t.children[0].value}`)
+               //  const json = await obj.json()
+               //  var id = json[0];
+             
+               //  if (json.length > 0) {
+
+               //    t.parentElement.children[6].children[0].value =  json[0];
+               //}
 
             }
         async function bindPrice(t) {
                       if (document.getElementById("PriceType").value == 1) {
-                          const obj = await fetch(`${window.location.href}?handler=ProdUnitPriceWhole&term=${t.children[0].value}`)
-                          const json = await obj.json()
-                           t.parentElement.children[2].children[0].value = json[0]
+                          const obj = await fetch(`${window.location.href}?handler=ProdUnitPriceWhole&term=${t.children[0].value}`);
+                          const json = await obj.json();
+                          t.parentElement.children[3].children[0].value = json[0];
                       }
                       else {
-                          const obj = await fetch(`${window.location.href}?handler=ProdUnitPriceRetail&term=${t.children[0].value}`)
-                          const json = await obj.json()
-                           t.parentElement.children[2].children[0].value = json[0]
+                          const obj = await fetch(`${window.location.href}?handler=ProdUnitPriceRetail&term=${t.children[0].value}`);
+                          const json = await obj.json();
+                          t.parentElement.children[3].children[0].value = json[0];
                       }
 
 
@@ -402,15 +525,15 @@
 
         function bindTotal(t) {
             const val = t.children[0].value
-            const price = t.parentElement.children[2].children[0].value
+            const price = t.parentElement.children[3].children[0].value
 
-            t.parentElement.children[3].children[0].value = val * price
+            t.parentElement.children[4].children[0].value = val * price
         }
           function bindTotalOnUnitPriceChange(t) {
             const val = t.children[0].value
-            const qty = t.parentElement.children[1].children[0].value
+            const qty = t.parentElement.children[2].children[0].value
 
-            t.parentElement.children[3].children[0].value = val * qty
+            t.parentElement.children[4].children[0].value = val * qty
         }
 
         function calBillTotal() {
@@ -420,7 +543,7 @@
             if (count > 0) {
                 var total = 0;
                 for (var i = 1; i < count; i++) {
-                    total += parseFloat(table.rows[i].cells.item(3).children[0].value);
+                    total += parseFloat(table.rows[i].cells.item(4).children[0].value);
                 }
                 document.getElementById('billTotalAmt').value = total;
             }
@@ -433,7 +556,7 @@
             if (count > 0) {
                 var total = 0;
                 for (var i = 1; i < count; i++) {
-                    total += parseFloat(table.rows[i].cells.item(3).children[0].value);
+                    total += parseFloat(table.rows[i].cells.item(4).children[0].value);
                 }
                 document.getElementById('billTotalAmt').value = total;
                 }
@@ -530,7 +653,7 @@
             var qty = 0;
             if (count > 0) {
                 for (var i = 1; i < count; i++) {
-                    qty = parseFloat(table.rows[i].cells.item(1).children[0].value);
+                    qty = parseFloat(table.rows[i].cells.item(2).children[0].value);
                     if (qty == 0) {
                         swal("Error!", "هناك مادة مضافة بدون تحديد الكمية", "error");
                         return false

@@ -63,6 +63,7 @@ namespace SumerBusinessSolution.Pages.Sales.Billings
 
         public List<PricingType> UnitPriceTypesList { get; set; }
 
+        public List<InvStockQty> InvStockQtyList { get; set; }
 
         [Display(Name = "الية الدفع")]
         public List<string> PaymentTermsList = new List<string>();
@@ -90,6 +91,11 @@ namespace SumerBusinessSolution.Pages.Sales.Billings
 
             PaymentTermsList.Add(SD.COD);
             PaymentTermsList.Add(SD.Postpaid);
+            //List<InvStockQty> InvStockQtyList;
+            InvStockQtyList = _db.InvStockQty
+               .Include(inv => inv.Warehouse)
+               .Include(inv => inv.ProdInfo).ToList();
+            //.Where(inv => inv.ProdInfo.ProdCode == "0002").ToList();
 
             return Page();
         }
@@ -101,67 +107,9 @@ namespace SumerBusinessSolution.Pages.Sales.Billings
             //_db.SaveChanges();
 
             ModelState.Clear();
-            return RedirectToPage("/Sales/Billings/DetailsMob", new { BhId = BillHeader.Id });
-
-            // }
-            // }
-            //string path = Request.Host.Value;
-            //if (BillHeader.Id != 0)
-            //{
-            //    //return RedirectToPage("/Sales/Billings/PrintBill", new { BhId = BillHeader.Id });
-
-            //    var body = RazorPage.RenderToString("https://" + path + "/Sales/Billings/InvoicePrint?BhId=" + BillHeader.Id);
-
-            //    var converter = new HtmlToPdf();
-            //    converter.Options.PdfPageSize = PdfPageSize.A4;
-            //    converter.Options.PdfPageOrientation = PdfPageOrientation.Portrait;
-
-            //    converter.Options.WebPageWidth = 1024;
-            //    converter.Options.WebPageHeight = 0;
-            //    converter.Options.WebPageFixedSize = false;
-
-            //    converter.Options.AutoFitWidth = HtmlToPdfPageFitMode.ShrinkOnly;
-            //    converter.Options.AutoFitHeight = HtmlToPdfPageFitMode.NoAdjustment;
-
-            //    //converter.Options.PdfPageCustomSize = new System.Drawing.SizeF(816, 1020);
-            //    PdfDocument doc = converter.ConvertHtmlString(body, "https://" + path + "/Sales/Billings/InvoicePrint?BhId=" + BillHeader.Id);
-            //    byte[] pdf = doc.Save();
-            //    doc.Close();
-            //    return new FileContentResult(pdf, "application/pdf")
-            //    {
-            //        FileDownloadName = "فاتورة.pdf"
-            //    };
-            //    //  return RedirectToPage("/Sales/Billings/PrintBill", new { BhId = BillHeader.Id });
-
-            // }
-            //else
-            //{
-            //    return RedirectToPage("/Sales/Billings/Create");
-            //}
+            return RedirectToPage("/Sales/Billings/Details", new { BhId = BillHeader.Id });
         }
-        //public static class RazorPage
-        //{
-        //    public static string RenderToString(string url)
-        //    {
-        //        try
-        //        {
-        //            //Grab page
-        //            WebRequest request = WebRequest.Create(url);
-        //            WebResponse response = request.GetResponse();
-        //            Stream data = response.GetResponseStream();
-        //            string html = String.Empty;
-        //            using (StreamReader sr = new StreamReader(data))
-        //            {
-        //                html = sr.ReadToEnd();
-        //            }
-        //            return html;
-        //        }
-        //        catch (Exception err)
-        //        {
-        //            return err.Message;
-        //        }
-        //    }
-        //}
+
         public JsonResult OnGetSearchNow(string term)
         {
             if (term == null)
@@ -188,6 +136,7 @@ namespace SumerBusinessSolution.Pages.Sales.Billings
             IQueryable<int> lstProdId = from P in _db.ProdInfo
                                         where (P.ProdCode.Contains(term))
                                         select P.Id;
+            //ViewData["hdnProdCode"] = term;
             return new JsonResult(lstProdId);
         }
 
@@ -276,7 +225,24 @@ namespace SumerBusinessSolution.Pages.Sales.Billings
                                               select P.CompanyName;
             return new JsonResult(lstCustomers);
         }
-
+        public JsonResult OnGetInvStkQty(string term)
+        {
+            InvStockQtyList = _db.InvStockQty
+                .Include(inv => inv.Warehouse)
+                .Include(inv => inv.ProdInfo)
+             .Where(inv => inv.ProdInfo.ProdCode == term).ToList();
+            //ViewData["hdnProdCode"] = term;
+            return new JsonResult(InvStockQtyList);
+        }
+        public JsonResult OnGetStockList(string term)
+        {
+            InvStockQtyList = _db.InvStockQty
+                .Include(inv => inv.Warehouse)
+                .Include(inv => inv.ProdInfo)
+             .Where(inv => inv.ProdInfo.ProdCode == term).ToList();
+           // ViewData["hdnProdCode"] = term;
+            return new JsonResult(InvStockQtyList);
+        }
         public IActionResult OnPostCreateCustomer()
         {
             try
@@ -291,6 +257,29 @@ namespace SumerBusinessSolution.Pages.Sales.Billings
             return RedirectToPage("/Sales/Billings/Create");
         }
 
+    }
+    public static class RazorPage
+    {
+        public static string RenderToString(string url)
+        {
+            try
+            {
+                //Grab page
+                WebRequest request = WebRequest.Create(url);
+                WebResponse response = request.GetResponse();
+                Stream data = response.GetResponseStream();
+                string html = String.Empty;
+                using (StreamReader sr = new StreamReader(data))
+                {
+                    html = sr.ReadToEnd();
+                }
+                return html;
+            }
+            catch (Exception err)
+            {
+                return err.Message;
+            }
+        }
     }
 
 }

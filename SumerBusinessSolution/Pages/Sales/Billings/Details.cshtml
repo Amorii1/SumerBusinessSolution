@@ -51,9 +51,9 @@
     <h2 class="text-info text-md-right">  @localizer.Get("شكل الفاتورة")</h2>
 
     <form method="post">
-        <input type="hidden" asp-for="BillHeader.Id" />
+        <input type="hidden" asp-for="BillHeader.Id" id="billid" />
 
-        
+
 
 
         <div id="tabledata">
@@ -91,39 +91,39 @@
 
             <div class="row col-md-12">
                 @*<div class="form-group row ">
-                    <div class="col-md-5 offset-md-5">
-                        <input type="text" id="ProdInfo" asp-for="BillHeader.Id" class="form-control text-md-right" />
-                    </div>
-                    <div class="col-md-2 ">
-                        <label asp-for="BillHeader.Id"></label>
-                    </div>
-                </div>*@
+                        <div class="col-md-5 offset-md-5">
+                            <input type="text" id="ProdInfo" asp-for="BillHeader.Id" class="form-control text-md-right" />
+                        </div>
+                        <div class="col-md-2 ">
+                            <label asp-for="BillHeader.Id"></label>
+                        </div>
+                    </div>*@
 
                 <div id="field" class="row pt-md-2 col-md-3 form-control form-group offset-md-1">
                     <h4 class=" text-dark font-weight-bold text-md-right">@Model.BillHeader.Id &nbsp; : رقم الفاتورة</h4>
                 </div>
 
                 @*<div class="form-group row">
-                    <div class="col-md-5 offset-md-5">
-                        <input asp-for="BillHeader.Customer.CompanyName" class="form-control  text-md-right" disabled />
-                    </div>
-                    <div class="col-md-2">
-                        <label asp-for="BillHeader.Customer.CompanyName"></label>
-                    </div>
-                </div>*@
+                        <div class="col-md-5 offset-md-5">
+                            <input asp-for="BillHeader.Customer.CompanyName" class="form-control  text-md-right" disabled />
+                        </div>
+                        <div class="col-md-2">
+                            <label asp-for="BillHeader.Customer.CompanyName"></label>
+                        </div>
+                    </div>*@
 
                 <div id="field" class="row pt-md-2 col-md-3 form-control form-group offset-md-1">
                     <h4 class=" text-dark font-weight-bold text-md-right">@Model.BillHeader.Customer.CompanyName &nbsp; :  اسم الشركة </h4>
                 </div>
 
                 @*<div class="form-group row">
-                    <div class="col-md-5 offset-md-5">
-                        <input asp-for="BillHeader.ApplicationUser.FirstName" class="form-control  text-md-right" disabled />
-                    </div>
-                    <div class="col-md-2">
-                        <label asp-for="BillHeader.ApplicationUser.FirstName"></label>
-                    </div>
-                </div>*@
+                        <div class="col-md-5 offset-md-5">
+                            <input asp-for="BillHeader.ApplicationUser.FirstName" class="form-control  text-md-right" disabled />
+                        </div>
+                        <div class="col-md-2">
+                            <label asp-for="BillHeader.ApplicationUser.FirstName"></label>
+                        </div>
+                    </div>*@
                 <div id="field" class="row pt-md-2 col-md-3 form-control form-group offset-md-1">
                     <h4 class=" text-dark font-weight-bold text-md-right">@Model.BillHeader.ApplicationUser.FirstName &nbsp; : اسم الموظف</h4>
                 </div>
@@ -133,26 +133,26 @@
 
 
                 @*<div class="form-group row">
-                    <div class="col-md-5 offset-md-5">
-                        <input asp-for="BillHeader.CreatedDataTime" class="form-control  text-md-right" disabled />
-                    </div>
-                    <div class="col-md-2">
-                        <label asp-for="BillHeader.CreatedDataTime"></label>
-                    </div>
-                </div>*@
+                        <div class="col-md-5 offset-md-5">
+                            <input asp-for="BillHeader.CreatedDataTime" class="form-control  text-md-right" disabled />
+                        </div>
+                        <div class="col-md-2">
+                            <label asp-for="BillHeader.CreatedDataTime"></label>
+                        </div>
+                    </div>*@
 
                 <div id="field" class="row pt-md-2  col-md-6 form-control form-group offset-md-1">
                     <h4 class=" text-dark font-weight-bold text-md-right">@Model.BillHeader.CreatedDataTime &nbsp; : التاريخ</h4>
                 </div>
 
                 @*<div class="form-group row">
-                    <div class="col-md-5 offset-md-5">
-                        <input asp-for="BillHeader.Status" class="form-control  text-md-right" disabled />
-                    </div>
-                    <div class="col-md-2">
-                        <label asp-for="BillHeader.Status"></label>
-                    </div>
-                </div>*@
+                        <div class="col-md-5 offset-md-5">
+                            <input asp-for="BillHeader.Status" class="form-control  text-md-right" disabled />
+                        </div>
+                        <div class="col-md-2">
+                            <label asp-for="BillHeader.Status"></label>
+                        </div>
+                    </div>*@
 
                 <div id="field" class="row pt-md-2 col-md-2 form-control form-group offset-md-1">
                     <h4 class=" text-dark font-weight-bold text-md-right">@Model.BillHeader.PaymentTerms :  الدفع</h4>
@@ -161,13 +161,13 @@
             </div>
 
             @*<div class="form-group row">
-                <div class="col-md-5 offset-md-5">
-                    <input asp-for="BillHeader.PaidAmt" class="form-control  text-md-right" disabled />
-                </div>
-                <div class="col-md-2">
-                    <label asp-for="BillHeader.PaidAmt"></label>
-                </div>
-            </div>*@
+                    <div class="col-md-5 offset-md-5">
+                        <input asp-for="BillHeader.PaidAmt" class="form-control  text-md-right" disabled />
+                    </div>
+                    <div class="col-md-2">
+                        <label asp-for="BillHeader.PaidAmt"></label>
+                    </div>
+                </div>*@
 
 
 
@@ -263,9 +263,9 @@
                 <div class="row text-center pb-3 pr-5">
                     @*<div class="col-md-6">
 
-                        <a asp-page="Index" class="btn btn-secondary form-control" asp-route-culture="@Request.RouteValues["culture"]"> رجوع</a>
+                            <a asp-page="Index" class="btn btn-secondary form-control" asp-route-culture="@Request.RouteValues["culture"]"> رجوع</a>
 
-                    </div>*@
+                        </div>*@
                     @if (Model.BillHeader.Status == SD.OpenBill)
                     {
                         <div class="col-md-3">
@@ -343,20 +343,20 @@
 
 
         @*<div class="row">
-            <div class="col-7">
-                <button type="submit" class="btn btn-info"  onclick="return ValidateInput()">تخزين</button>
-                <a asp-page="Index" class="btn btn-success form-control">رجوع</a>
+                <div class="col-7">
+                    <button type="submit" class="btn btn-info"  onclick="return ValidateInput()">تخزين</button>
+                    <a asp-page="Index" class="btn btn-success form-control">رجوع</a>
 
-            </div>
-        </div>*@
+                </div>
+            </div>*@
 
+        <div>
+            <button type="submit" class="btn btn-primary" id="print">@localizer.Get("طباعة")</button>
+        </div>
     </form>
 </div>
 
 
-<div>
-    <button class="btn btn-primary" id="print">@localizer.Get("طباعة")</button>
-</div>
 
 
 
@@ -367,22 +367,10 @@
 
 
 <script type="text/javascript">
-
-    $('#print').click(function () {
-
-        var w = document.getElementById("tabledata").offsetWidth;
-        var h = document.getElementById("tabledata").offsetHeight;
-        html2canvas(document.getElementById("tabledata"), {
-            dpi: 300, // Set to 300 DPI
-            scale: 4, // Adjusts your resolution
-            onrendered: function (canvas) {
-                var img = canvas.toDataURL("image/jpeg", 1);
-                var doc = new jsPDF('L', 'px', [w, h]);
-                doc.addImage(img, 'JPEG', 0, 0, w, h);
-                doc.save('فاتورة.pdf');
-            }
-        });
+    jQuery(function () {
+        jQuery('#print').click();
     });
+
 </script>
 
 
