@@ -97,7 +97,7 @@ namespace SumerBusinessSolution.Transactions
                 return "تمت اضافة فاتورة مبيعات جديدة";
             }
 
-            catch
+            catch (Exception ex)
             {
                 return "Error! حصل خطأ لم يتم اضافة الفاتورة";
             }
