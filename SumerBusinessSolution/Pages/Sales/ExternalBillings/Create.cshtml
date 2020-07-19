@@ -152,8 +152,8 @@
             </div>
         </div>
         <table id="dataTable" dir="rtl" class="text-md-center table table-striped border table-responsive ">
-         
-                <tr class="table-secondary">
+            <thead>
+                <tr>
                     <th>
                         @Html.DisplayNameFor(a => Model.Bi[0].ProdInfo.ProdCode)
                     </th>
@@ -174,7 +174,8 @@
                     </th>
                     <th><a href="#" title="اضافة" id="addNew">   <i class="fas fa-plus"></i></a></th>
                 </tr>
-
+            </thead>
+            <tbody>
                 @if (Model.Bi != null && Model.Bi.Count > 0)
                 {
 
@@ -184,32 +185,32 @@
                     {
 
 
-                <tr>
-                    <td onclick="bindAutocomplete(this); bindPrice(this)" onchange="bindPrice(this); checkIfExternalItem(this); getProdId(this)">@Html.TextBoxFor(a => Model.Bi[j].ProdInfo.ProdCode) </td>
-                    <td oninput="bindTotal(this); checkProdQty(this)" onclick="bindTotal(this)" onchange="calBillTotal(); calBillTotalNetAmt()">@Html.TextBoxFor(a => Model.Bi[j].Qty)</td>
-                    <td oninput="bindTotalOnUnitPriceChange(this); calBillTotal()" onchange="calBillTotal(); calBillTotalNetAmt()">@Html.TextBoxFor(a => Model.Bi[j].UnitPrice)</td>
-                    <td id="totalLineAmt">@Html.TextBoxFor(a => Model.Bi[j].TotalAmt)</td>
-                    <td>@Html.TextBoxFor(a => Model.Bi[j].CostPrice) </td>
-                    <td hidden="hidden" id="externalItem">@Html.TextBoxFor(a => Model.Bi[j].IsExternal)</td>
-                    <td hidden="hidden">@Html.TextBoxFor(a => Model.Bi[j].ProdId) </td>
-                    <td>@Html.TextBoxFor(a => Model.Bi[j].Note)</td>
-                    <td>
-                        @if (j > 0)
-                        {
+                        <tr>
+                            <td onclick="bindAutocomplete(this); bindPrice(this)" onchange="bindPrice(this); checkIfExternalItem(this); getProdId(this)">@Html.TextBoxFor(a => Model.Bi[j].ProdInfo.ProdCode) </td>
+                            <td oninput="bindTotal(this); checkProdQty(this)" onclick="bindTotal(this)" onchange="calBillTotal(); calBillTotalNetAmt()">@Html.TextBoxFor(a => Model.Bi[j].Qty)</td>
+                            <td oninput="bindTotalOnUnitPriceChange(this); calBillTotal()" onchange="calBillTotal(); calBillTotalNetAmt()">@Html.TextBoxFor(a => Model.Bi[j].UnitPrice)</td>
+                            <td id="totalLineAmt">@Html.TextBoxFor(a => Model.Bi[j].TotalAmt)</td>
+                            <td>@Html.TextBoxFor(a => Model.Bi[j].CostPrice) </td>
+                            <td hidden="hidden" id="externalItem">@Html.TextBoxFor(a => Model.Bi[j].IsExternal)</td>
+                            <td hidden="hidden">@Html.TextBoxFor(a => Model.Bi[j].ProdId) </td>
+                            <td>@Html.TextBoxFor(a => Model.Bi[j].Note)</td>
+                            <td>
+                                @if (j > 0)
+                                {
 
-                            // <input type="button" value="Delete" onclick="deleteRow(this)">
-                            <a href="#" id="removeThis" class="remove">Remove</a>
+                                    // <input type="button" value="Delete" onclick="deleteRow(this)">
+                                    <a href="#" id="removeThis" class="remove">Remove</a>
 
-                        }
-                    </td>
+                                }
+                            </td>
 
-                </tr>
+                        </tr>
                         j++;
 
                     }
 
                 }
-         
+            </tbody>
         </table>
         <div dir="rtl" class="row form-group">
             <div class="col-md-2">
