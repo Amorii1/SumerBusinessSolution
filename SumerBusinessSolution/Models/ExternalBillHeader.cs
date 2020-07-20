@@ -25,7 +25,7 @@ namespace SumerBusinessSolution.Models
         public double TotalAmt { get; set; }
         [Display(Name = "التخفيض")]
         public double Discount { get; set; }
-        [Display(Name = "المبلغ المتبقي")]
+        [Display(Name = "المبلغ الاجمالي")]
         public double TotalNetAmt { get; set; }
 
         [Display(Name = "المبلغ المدفوع")]
