@@ -10,11 +10,10 @@ using SumerBusinessSolution.Models;
 using SumerBusinessSolution.Transactions;
 using Microsoft.AspNetCore.Localization;
 using System.ComponentModel.DataAnnotations;
+using System.IO;
+using Microsoft.AspNetCore.Mvc.Razor;
 using System.Net;
 using SelectPdf;
- 
-using static SumerBusinessSolution.Pages.Sales.Billings.CreateModel;
-using System.IO;
 
 namespace SumerBusinessSolution.Pages.Sales.Billings
 {
@@ -58,7 +57,6 @@ namespace SumerBusinessSolution.Pages.Sales.Billings
             if (BillItemsList.Count() > 0)
             {
                 BillHeader = BillItemsList[0].BillHeader;
-
             }
 
             try
@@ -70,8 +68,10 @@ namespace SumerBusinessSolution.Pages.Sales.Billings
 
             }
 
+
             return Page();
         }
+
         public ActionResult OnPost(BillHeader billHeader)
         {
             string path = Request.Host.Value;
@@ -102,6 +102,7 @@ namespace SumerBusinessSolution.Pages.Sales.Billings
             }
             return RedirectToPage("/Sales/Billings/Details", new { BhId = billHeader.Id });
         }
+
         public ActionResult OnGetPdfDownload(int id)
         {
             string path = Request.Host.Value;
@@ -163,8 +164,16 @@ namespace SumerBusinessSolution.Pages.Sales.Billings
 
             StatusMessage = _SalesTrans.CloseBillManually(HeaderId).GetAwaiter().GetResult();
 
+
+
             return RedirectToPage("/Sales/Billings/Index");
         }
+
+ 
+
+
+
+
 
         public IActionResult OnPostDeleteBill(int HeaderId)
         {
@@ -174,17 +183,17 @@ namespace SumerBusinessSolution.Pages.Sales.Billings
             return RedirectToPage("/Sales/Billings/Index");
         }
 
-        //public async Task<IActionResult> OnPostEditBill(int BhId)
-        //{
-        //    BillItemsList = await _db.BillItems
-        //   .Include(bill => bill.BillHeader)
-        //   .Include(bill => bill.BillHeader.Customer)
-        //   .Include(bill => bill.ProdInfo)
-        //   .Include(bill => bill.BillHeader.ApplicationUser)
-        //   .Where(bill => bill.HeaderId == BhId).ToListAsync();
+        public async Task<IActionResult> OnPostEditBill(int BhId)
+        {
+            BillItemsList = await _db.BillItems
+           .Include(bill => bill.BillHeader)
+           .Include(bill => bill.BillHeader.Customer)
+           .Include(bill => bill.ProdInfo)
+           .Include(bill => bill.BillHeader.ApplicationUser)
+           .Where(bill => bill.HeaderId == BhId).ToListAsync();
 
-        //    return RedirectToPage("/Sales/Billings/Edit", new { Bi = BillItemsList, BhId } );
-        //}
+            return RedirectToPage("/Sales/Billings/Edit", new { Bi = BillItemsList, BhId });
+        }
 
 
     }
