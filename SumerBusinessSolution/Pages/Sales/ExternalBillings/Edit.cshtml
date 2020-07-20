@@ -13,7 +13,7 @@
 <div class=" border backgroundWhite right-title">
     <form method="post">
         <div class="row">
-            <div class="col-md-6 offset-6 right-title">
+            <div class="col-md-5 offset-md-4">
                 <h2 class="text-info  text-md-right">@localizer.Get("تعديل الفاتورة")</h2>
             </div>
         </div>
@@ -72,11 +72,11 @@
             </div>
         </div>
 
-        <table id="dataTable" dir="rtl" class="text-md-center table table-striped border table-responsive ">
-        
-                <tr class="table-secondary">
+        <table id="dataTable" dir="rtl" class=" text-md-center table table-striped border table-responsive-sm">
+            <thead>
+                <tr>
                     @*<table id="dataTable" border="0" cellpadding="0" cellspacing="0">
-                    <tr>*@
+        <tr>*@
                     <th>
                         @Html.DisplayNameFor(a => Model.Bi[0].ProdInfo.ProdName)
                     </th>
@@ -97,7 +97,8 @@
                     </th>
                     <th><a href="#" title="اضافة" id="addNew">   <i class="fas fa-plus"></i></a></th>
                 </tr>
-           
+            </thead>
+            <tbody>
                 @if (Model.Bi != null && Model.Bi.Count > 0)
                 {
 
@@ -107,42 +108,42 @@
                     {
 
 
-                        <tr>
-                            @if (Model.Bi[j].IsExternal == true)
-                            {
-                                <td onclick="bindAutocomplete(this); bindPrice(this)" onchange="bindPrice(this); checkIfExternalItem(this)">@Html.TextBoxFor(a => Model.Bi[j].ProdName) </td>
-                            }
-                            else
-                            {
-                                <td onclick="bindAutocomplete(this); bindPrice(this)" onchange="bindPrice(this)">@Html.TextBoxFor(a => Model.Bi[j].ProdInfo.ProdName) </td>
-                            }
+                <tr>
+                    @if (Model.Bi[j].IsExternal == true)
+                    {
+                        <td onclick="bindAutocomplete(this); bindPrice(this)" onchange="bindPrice(this); checkIfExternalItem(this)">@Html.TextBoxFor(a => Model.Bi[j].ProdName) </td>
+                    }
+                    else
+                    {
+                        <td onclick="bindAutocomplete(this); bindPrice(this)" onchange="bindPrice(this)">@Html.TextBoxFor(a => Model.Bi[j].ProdInfo.ProdName) </td>
+                    }
 
-                            <td oninput="bindTotal(this); checkProdQty(this)" onclick="bindTotal(this)" onchange="calBillTotal(); calBillTotalNetAmt()">@Html.TextBoxFor(a => Model.Bi[j].Qty)</td>
-                            <td oninput="bindTotalOnUnitPriceChange(this); calBillTotal()" onchange="calBillTotal(); calBillTotalNetAmt()">@Html.TextBoxFor(a => Model.Bi[j].UnitPrice)</td>
-                            <td id="totalLineAmt">@Html.TextBoxFor(a => Model.Bi[j].TotalAmt)</td>
-                            <td>@Html.TextBoxFor(a => Model.Bi[j].CostPrice)</td>
-                            <td hidden="hidden" id="externalItem">@Html.TextBoxFor(a => Model.Bi[j].IsExternal)</td>
-                            <td>@Html.TextBoxFor(a => Model.Bi[j].Note)</td>
-                            <td>
-                                @if (j > 0)
-                                {
+                    <td oninput="bindTotal(this); checkProdQty(this)" onclick="bindTotal(this)" onchange="calBillTotal(); calBillTotalNetAmt()">@Html.TextBoxFor(a => Model.Bi[j].Qty)</td>
+                    <td oninput="bindTotalOnUnitPriceChange(this); calBillTotal()" onchange="calBillTotal(); calBillTotalNetAmt()">@Html.TextBoxFor(a => Model.Bi[j].UnitPrice)</td>
+                    <td id="totalLineAmt">@Html.TextBoxFor(a => Model.Bi[j].TotalAmt)</td>
+                    <td>@Html.TextBoxFor(a => Model.Bi[j].CostPrice)</td>
+                    <td hidden="hidden" id="externalItem">@Html.TextBoxFor(a => Model.Bi[j].IsExternal)</td>
+                    <td>@Html.TextBoxFor(a => Model.Bi[j].Note)</td>
+                    <td>
+                        @if (j > 0)
+                        {
 
-                                    // <input type="button" value="Delete" onclick="deleteRow(this)">
-                                    <a href="#" id="removeThis" class="remove"><i class="fas fa-window-close"></i></a>
+                            // <input type="button" value="Delete" onclick="deleteRow(this)">
+                            <a href="#" id="removeThis" class="remove"><i class="fas fa-window-close"></i></a>
 
-                                }
-                            </td>
-                            @if (Model.Bi[j].IsExternal == false)
-                            {
-                                <td hidden="hidden">@Html.TextBoxFor(a => Model.Bi[j].ProdId) </td>
-                            }
-                        </tr>
+                        }
+                    </td>
+                    @if (Model.Bi[j].IsExternal == false)
+                    {
+                        <td hidden="hidden">@Html.TextBoxFor(a => Model.Bi[j].ProdId) </td>
+                    }
+                    </tr>
                         j++;
 
                     }
 
                 }
-           
+            </tbody>
         </table>
         <div dir="rtl" class="row form-group">
             <div class="col-md-2">

@@ -129,7 +129,7 @@
             <span asp-validation-for="@Model.WhId" class="text-danger"></span>
         </div>
         <table dir="rtl" id="dataTable" class="  text-md-center table table-striped border  table-responsive-lg table-responsive-md table-responsive-sm">
-          
+            <thead>
                 <tr>
                     <th>
                         @Html.DisplayNameFor(a => Model.InG[0].ProdInfo.ProdCode)
@@ -142,7 +142,8 @@
                     </th>
                     <th><a title="اضافة" href="#" id="addNew">   <i class="fas fa-plus"></i></a></th>
                 </tr>
-          
+            </thead>
+            <tbody>
                 @if (Model.InG != null && Model.InG.Count > 0)
                 {
 
@@ -176,7 +177,7 @@
                     }
 
                 }
-         
+            </tbody>
         </table>
 
         <div class=" form-group row">
