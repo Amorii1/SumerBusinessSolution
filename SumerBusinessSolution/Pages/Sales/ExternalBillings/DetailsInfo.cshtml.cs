@@ -10,35 +10,36 @@ using SumerBusinessSolution.Models;
 using SumerBusinessSolution.Transactions;
 using Microsoft.AspNetCore.Localization;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Authorization;
+using System.IO;
+using Microsoft.AspNetCore.Mvc.Razor;
 using System.Net;
 using SelectPdf;
- 
-using static SumerBusinessSolution.Pages.Sales.Billings.CreateModel;
-using System.IO;
 
-namespace SumerBusinessSolution.Pages.Sales.Billings
+namespace SumerBusinessSolution.Pages.Sales.ExternalBillings
 {
-    public class DetailsOLDModel : PageModel
+    [Authorize]
+    public class DetailsInfoModel : PageModel
     {
 
         private readonly ApplicationDbContext _db;
         private readonly ISalesTrans _SalesTrans;
 
         //private readonly IServiceScopeFactory _serviceScopeFactory;
-        public DetailsOLDModel(ApplicationDbContext db, ISalesTrans SalesTrans)
+        public DetailsInfoModel(ApplicationDbContext db, ISalesTrans SalesTrans)
         {
             _db = db;
             _SalesTrans = SalesTrans;
         }
         [BindProperty]
-        public BillHeader BillHeader { get; set; }
+        public ExternalBillHeader ExternalBillHeader { get; set; }
 
         [BindProperty]
-        public BillItems BillItems { get; set; }
+        public  ExternalBillItems ExternalBillItems { get; set; }
         [BindProperty]
 
 
-        public List<BillItems> BillItemsList { get; set; }
+        public List<ExternalBillItems> ExternalBillItemsList { get; set; }
 
         [BindProperty]
         public CompanyInfo CompanyInfo { get; set; }
@@ -49,16 +50,15 @@ namespace SumerBusinessSolution.Pages.Sales.Billings
         public async Task<ActionResult> OnGet(int BhId)
         {
 
-            BillItemsList = await _db.BillItems
-                .Include(bill => bill.BillHeader)
-                .Include(bill => bill.BillHeader.Customer)
-                .Include(bill => bill.ProdInfo)
-                .Include(bill => bill.BillHeader.ApplicationUser)
-                .Where(bill => bill.HeaderId == BhId).ToListAsync();
-            if (BillItemsList.Count() > 0)
+              ExternalBillItemsList = await _db.ExternalBillItems
+             .Include(bill => bill.ExternalBillHeader)
+             .Include(bill => bill.ExternalBillHeader.Customer)
+             .Include(bill => bill.ExternalBillHeader.ApplicationUser)
+             .Include(bill => bill.ProdInfo)
+             .Where(bill => bill.ExternalBillHeader.Id == BhId).ToListAsync();
+            if (ExternalBillItemsList.Count() > 0)
             {
-                BillHeader = BillItemsList[0].BillHeader;
-
+                ExternalBillHeader = ExternalBillItemsList[0].ExternalBillHeader;
             }
 
             try
@@ -70,16 +70,18 @@ namespace SumerBusinessSolution.Pages.Sales.Billings
 
             }
 
+
             return Page();
         }
-        public ActionResult OnPost(BillHeader billHeader)
+
+        public ActionResult OnPost(ExternalBillHeader ExternalBillHeader)
         {
             string path = Request.Host.Value;
-            if (billHeader.Id != 0)
+            if (ExternalBillHeader.Id != 0)
             {
-                //return RedirectToPage("/Sales/Billings/PrintBill", new { BhId = BillHeader.Id });
+                //return RedirectToPage("/Sales/Billings/PrintBill", new { BhId = ExternalBillHeader.Id });
 
-                var body = RazorPage.RenderToString("https://" + path + "/Sales/Billings/InvoicePrint?BhId=" + billHeader.Id);
+                var body = RazorPage.RenderToString("https://" + path + "/Sales/ExternalBillings/InvoicePrint?BhId=" + ExternalBillHeader.Id);
 
                 var converter = new HtmlToPdf();
                 converter.Options.PdfPageSize = PdfPageSize.A4;
@@ -91,25 +93,28 @@ namespace SumerBusinessSolution.Pages.Sales.Billings
                 converter.Options.AutoFitWidth = HtmlToPdfPageFitMode.ShrinkOnly;
                 converter.Options.AutoFitHeight = HtmlToPdfPageFitMode.NoAdjustment;
                 // converter.Options.PdfPageCustomSize = new System.Drawing.SizeF(816, 1020);
-                PdfDocument doc = converter.ConvertHtmlString(body, "https://" + path + "/Sales/Billings/InvoicePrint?BhId=" + billHeader.Id);
+                PdfDocument doc = converter.ConvertHtmlString(body, "https://" + path + "/Sales/ExternalBillings/InvoicePrint?BhId=" + ExternalBillHeader.Id);
 
                 byte[] pdf = doc.Save();
                 doc.Close();
+
                 return new FileContentResult(pdf, "application/pdf")
                 {
-                    FileDownloadName = "فاتورة.pdf"
+                    FileDownloadName =  ExternalBillHeader.Id + "-" + "فاتورة.pdf"
+
                 };
             }
-            return RedirectToPage("/Sales/Billings/Details", new { BhId = billHeader.Id });
+            return RedirectToPage("/Sales/ExternalBillings/Details", new { BhId = ExternalBillHeader.Id });
         }
+
         public ActionResult OnGetPdfDownload(int id)
         {
             string path = Request.Host.Value;
             //if (id != 0)
             //{
-            //return RedirectToPage("/Sales/Billings/PrintBill", new { BhId = BillHeader.Id });
+            //return RedirectToPage("/Sales/Billings/PrintBill", new { BhId = ExternalBillHeader.Id });
 
-            var body = RazorPage.RenderToString("https://" + path + "/Sales/Billings/InvoicePrint?BhId=" + id);
+            var body = RazorPage.RenderToString("https://" + path + "/Sales/ExternalBillings/InvoicePrint?BhId=" + id);
 
             var converter = new HtmlToPdf();
             converter.Options.PdfPageSize = PdfPageSize.A4;
@@ -121,7 +126,7 @@ namespace SumerBusinessSolution.Pages.Sales.Billings
             converter.Options.AutoFitWidth = HtmlToPdfPageFitMode.ShrinkOnly;
             converter.Options.AutoFitHeight = HtmlToPdfPageFitMode.NoAdjustment;
             // converter.Options.PdfPageCustomSize = new System.Drawing.SizeF(816, 1020);
-            PdfDocument doc = converter.ConvertHtmlString(body, "https://" + path + "/Sales/Billings/InvoicePrint?BhId=" + id);
+            PdfDocument doc = converter.ConvertHtmlString(body, "https://" + path + "/Sales/ExternalBillings/InvoicePrint?BhId=" + id);
 
             byte[] pdf = doc.Save();
             doc.Close();
@@ -158,33 +163,34 @@ namespace SumerBusinessSolution.Pages.Sales.Billings
         }
 
 
-        public IActionResult OnPostCloseBillManually(int HeaderId)
+        public IActionResult OnPostCloseBillManually(int BhId)
         {
 
-            StatusMessage = _SalesTrans.CloseBillManually(HeaderId).GetAwaiter().GetResult();
+            StatusMessage = _SalesTrans.CloseExternalBillManually(BhId).GetAwaiter().GetResult();
 
-            return RedirectToPage("/Sales/Billings/Index");
+            return RedirectToPage("/Sales/ExternalBillings/Index");
         }
 
-        public IActionResult OnPostDeleteBill(int HeaderId)
+
+        public IActionResult OnPostDeleteBill(int BhId)
         {
 
-            StatusMessage = _SalesTrans.DeleteBill(HeaderId).GetAwaiter().GetResult();
+            StatusMessage = _SalesTrans.DeleteExternalBill(BhId).GetAwaiter().GetResult();
 
-            return RedirectToPage("/Sales/Billings/Index");
+            return RedirectToPage("/Sales/ExternalBillings/Index");
         }
 
-        //public async Task<IActionResult> OnPostEditBill(int BhId)
-        //{
-        //    BillItemsList = await _db.BillItems
-        //   .Include(bill => bill.BillHeader)
-        //   .Include(bill => bill.BillHeader.Customer)
-        //   .Include(bill => bill.ProdInfo)
-        //   .Include(bill => bill.BillHeader.ApplicationUser)
-        //   .Where(bill => bill.HeaderId == BhId).ToListAsync();
+        public async Task<IActionResult> OnPostEditBill(int BhId)
+        {
+            ExternalBillItemsList = await _db.ExternalBillItems
+           .Include(bill => bill.ExternalBillHeader)
+           .Include(bill => bill.ExternalBillHeader.Customer)
+           .Include(bill => bill.ProdInfo)
+           .Include(bill => bill.ExternalBillHeader.ApplicationUser)
+           .Where(bill => bill.HeaderId == BhId).ToListAsync();
 
-        //    return RedirectToPage("/Sales/Billings/Edit", new { Bi = BillItemsList, BhId } );
-        //}
+            return RedirectToPage("/Sales/ExternalBillings/Edit", new { Bi = ExternalBillItemsList, BhId });
+        }
 
 
     }

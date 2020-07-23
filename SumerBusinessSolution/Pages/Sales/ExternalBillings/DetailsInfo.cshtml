@@ -1,5 +1,5 @@
 ﻿@page
-@model SumerBusinessSolution.Pages.Sales.ExternalBillings.DetailsModel
+@model SumerBusinessSolution.Pages.Sales.ExternalBillings.DetailsInfoModel
 @using SumerBusinessSolution.Utility
 @using Microsoft.AspNetCore.Localization
 @using System.ComponentModel.DataAnnotations;
@@ -122,6 +122,9 @@
                     @Html.DisplayNameFor(m => m.ExternalBillItems.TotalAmt)
                 </th>
                 <th>
+                    @Html.DisplayNameFor(m => m.ExternalBillItems.CostPrice)
+                </th>
+                <th>
                     @Html.DisplayNameFor(m => m.ExternalBillItems.Note)
                 </th>
             </tr>
@@ -129,33 +132,36 @@
 
             @foreach (var item in Model.ExternalBillItemsList)
             {
-                <tr>
-                    <td>@{RowNo++;} @RowNo</td>
-                    @if (item.IsExternal == true)
-                    {
-                        <td>
-                            @Html.DisplayFor(m => item.ProdName)
-                        </td>
-                    }
-                    else
-                    {
-                        <td>
-                            @Html.DisplayFor(m => item.ProdInfo.ProdName)
-                        </td>
-                    }
-                    <td>
-                        @Html.DisplayFor(m => item.Qty)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(m => item.UnitPrice)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(m => item.TotalAmt)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(m => item.Note)
-                    </td>
-                </tr>
+        <tr>
+            <td>@{RowNo++;} @RowNo</td>
+            @if (item.IsExternal == true)
+            {
+                <td>
+                    @Html.DisplayFor(m => item.ProdName)
+                </td>
+            }
+            else
+            {
+                <td>
+                    @Html.DisplayFor(m => item.ProdInfo.ProdName)
+                </td>
+            }
+            <td>
+                @Html.DisplayFor(m => item.Qty)
+            </td>
+            <td>
+                @Html.DisplayFor(m => item.UnitPrice)
+            </td>
+            <td>
+                @Html.DisplayFor(m => item.TotalAmt)
+            </td>
+            <td>
+                @Html.DisplayFor(m => item.CostPrice)
+            </td>
+            <td>
+                @Html.DisplayFor(m => item.Note)
+            </td>
+        </tr>
 
             }
         </table>
@@ -302,9 +308,9 @@
 <script type="text/javascript" src="~/js/html2canvas.min.js"></script>
 
 
-<script type="text/javascript">
+@*<script type="text/javascript">
     jQuery(function () {
         jQuery('#print').click();
     });
 
-</script>
+</script>*@

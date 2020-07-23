@@ -1,5 +1,5 @@
 ﻿@page
-@model SumerBusinessSolution.Pages.Sales.Billings.DetailsModel
+@model SumerBusinessSolution.Pages.Sales.Billings.DetailsInfoModel
 @using SumerBusinessSolution.Utility
 @using Microsoft.AspNetCore.Localization
 @using System.ComponentModel.DataAnnotations;
@@ -27,7 +27,13 @@
         <div class="col-md-6 ">
             <form method="post">
                 <input type="hidden" asp-for="BillHeader.Id" id="billid" />
-                <button asp-route-culture="@Request.RouteValues["culture"]" type="submit" class="btn btn-info" id="print"><i class="fas fa-print"></i> طباعة الفاتورة</button>
+
+                @*<a asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-sm btn-info form-control" asp-page-handler="PdfDownload" asp-route-BhId="@Model.BillHeader.Id" type="submit" name="Print" id="print">
+            <i class="fas fa-print"></i> طباعة الفاتورة
+        </a>*@
+                <button asp-route-culture="@Request.RouteValues["culture"]" type="submit" class="btn btn-info" id="print2"><i class="fas fa-print"></i> طباعة الفاتورة</button>
+
+                @*<button asp-route-culture="@Request.RouteValues["culture"]" asp-page-handler="PrintPdf" asp-route-BhId="@Model.BillHeader.Id" type="submit" class="btn btn-info" id="print2"><i class="fas fa-print"></i> طباعة الفاتورة</button>*@
             </form>
         </div>
         <form method="post">

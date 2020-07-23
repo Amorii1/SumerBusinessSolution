@@ -16,23 +16,23 @@ namespace SumerBusinessSolution
     [Authorize]
     public class RequestDetailsModel : PageModel
     {
-    
-     
-            private readonly ApplicationDbContext _db;
-            private readonly IInventoryTrans _InveTrans;
 
-            public RequestDetailsModel(ApplicationDbContext db, IInventoryTrans InveTrans)
-            {
-                _db = db;
-                _InveTrans = InveTrans;
-            }
 
-            public ProdInfo ProdInfo { get; set; }
+        private readonly ApplicationDbContext _db;
+        private readonly IInventoryTrans _InveTrans;
 
-            [BindProperty]
-            public IEnumerable<InvTransfer> InvTransferList { get; set; }
+        public RequestDetailsModel(ApplicationDbContext db, IInventoryTrans InveTrans)
+        {
+            _db = db;
+            _InveTrans = InveTrans;
+        }
 
-        public InvTransfer InvTransfer  { get; set; }
+        public ProdInfo ProdInfo { get; set; }
+
+        [BindProperty]
+        public IEnumerable<InvTransfer> InvTransferList { get; set; }
+
+        public InvTransfer InvTransfer { get; set; }
         public InvTransferHeader InvTransferHeader { get; set; }
 
         [BindProperty]
@@ -40,39 +40,39 @@ namespace SumerBusinessSolution
 
 
         [BindProperty]
-            public int ReqId { get; set; }
-            [TempData]
-            public string StatusMessage { get; set; }
-            public ActionResult OnGet(int ReqId)
-            {
-                InvTransferHeader = _db.InvTransferHeader.Include(h=> h.FromWarehouse).Include(h=> h.ToWarehouse)
-                .Include(h=> h.ApplicationUser)
-                .FirstOrDefault(h => h.Id == ReqId);
+        public int ReqId { get; set; }
+        [TempData]
+        public string StatusMessage { get; set; }
+        public ActionResult OnGet(int ReqId)
+        {
+            InvTransferHeader = _db.InvTransferHeader.Include(h => h.FromWarehouse).Include(h => h.ToWarehouse)
+            .Include(h => h.ApplicationUser)
+            .FirstOrDefault(h => h.Id == ReqId);
 
-                InvTransferList = _db.InvTransfer.Include(tr => tr.ProdInfo).Include(tr => tr.InvTransferHeader)
-                .Include(tr => tr.InvTransferHeader.ApplicationUser)
-                .Where(tr => tr.HeaderId == ReqId).ToList().OrderBy(tr => tr.InvTransferHeader.CreatedDateTime);
+            InvTransferList = _db.InvTransfer.Include(tr => tr.ProdInfo).Include(tr => tr.InvTransferHeader)
+            .Include(tr => tr.InvTransferHeader.ApplicationUser)
+            .Where(tr => tr.HeaderId == ReqId).ToList().OrderBy(tr => tr.InvTransferHeader.CreatedDateTime);
 
             RoleAuth = _db.RoleAuth.FirstOrDefault(ro => ro.RoleName == SD.SupervisorUser);
 
             return Page();
 
-            }
-            public IActionResult OnPostApproveTransferRequests(int ReqId)
-            {
-                StatusMessage = _InveTrans.ApproveInvTransferRequest(ReqId).GetAwaiter().GetResult();
-                return RedirectToPage("/Inventory/transferrequests/index");
-            }
-            public IActionResult OnPostRejectTransferRequests(int ReqId)
-            {
-                StatusMessage = _InveTrans.RejectInvTransferRequest(ReqId).GetAwaiter().GetResult();
-                return RedirectToPage("/Inventory/transferrequests/index");
-            }
-            public IActionResult OnPostDeleteTransferRequestsLine(int LineId, int ReqId)
-            {
-               StatusMessage = _InveTrans.DeleteInvTransferRequestLine(LineId).GetAwaiter().GetResult();
-               return RedirectToPage("/Inventory/transferrequests/requestdetails", new { ReqId = ReqId });
-            }
+        }
+        public IActionResult OnPostApproveTransferRequests(int ReqId)
+        {
+            StatusMessage = _InveTrans.ApproveInvTransferRequest(ReqId).GetAwaiter().GetResult();
+            return RedirectToPage("/Inventory/transferrequests/index");
+        }
+        public IActionResult OnPostRejectTransferRequests(int ReqId)
+        {
+            StatusMessage = _InveTrans.RejectInvTransferRequest(ReqId).GetAwaiter().GetResult();
+            return RedirectToPage("/Inventory/transferrequests/index");
+        }
+        public IActionResult OnPostDeleteTransferRequestsLine(int LineId, int ReqId)
+        {
+            StatusMessage = _InveTrans.DeleteInvTransferRequestLine(LineId).GetAwaiter().GetResult();
+            return RedirectToPage("/Inventory/transferrequests/requestdetails", new { ReqId = ReqId });
+        }
 
         public IActionResult OnPostDeleteTransferRequests(int ReqId)
         {
@@ -82,4 +82,4 @@ namespace SumerBusinessSolution
             return RedirectToPage("/Inventory/transferrequests/index");
         }
     }
-    }
+}

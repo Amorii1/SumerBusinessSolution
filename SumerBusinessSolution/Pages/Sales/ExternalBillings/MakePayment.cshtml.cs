@@ -50,6 +50,10 @@ namespace SumerBusinessSolution.Pages.Sales.ExternalBillings
         [Display(Name = "رقم الفاتورة")]
         public int ExternalHeaderId { get; set; }
 
+        [BindProperty]
+        [Display(Name = "المبلغ المتبقي")]
+        public double BalanceAmt { get; set; }
+
         [TempData]
         public string StatusMessage { get; set; }
         public async Task<ActionResult> OnGet(int BhId)
@@ -60,7 +64,8 @@ namespace SumerBusinessSolution.Pages.Sales.ExternalBillings
             CompanyName = ExternalBillHeader.Customer.CompanyName;
             TotalNetAmt = ExternalBillHeader.TotalNetAmt;
             PaidAmt = ExternalBillHeader.PaidAmt;
-            NewPayment = 0;
+            //NewPayment =;
+            BalanceAmt = TotalNetAmt - PaidAmt;
 
 
             return Page();

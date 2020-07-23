@@ -120,7 +120,7 @@ namespace SumerBusinessSolution.Pages.Sales.ExternalBillings
 
             if (ExternalBillHeader.Id != 0)
             {
-                return RedirectToPage("/Sales/ExternalBillings/PrintExternalBill", new { BhId = ExternalBillHeader.Id });
+                return RedirectToPage("/Sales/ExternalBillings/Details", new { BhId = ExternalBillHeader.Id });
             }
             else
             {

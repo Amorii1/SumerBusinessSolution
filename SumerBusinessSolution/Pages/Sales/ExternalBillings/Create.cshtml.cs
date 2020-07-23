@@ -36,6 +36,8 @@ namespace SumerBusinessSolution.Pages.Sales.ExternalBillings
         [BindProperty]
         public ExternalBillHeader ExternalBillHeader { get; set; }
 
+        public List<InvStockQty> InvStockQtyList { get; set; }
+
         [BindProperty]
         public string ProdCode { get; set; }
 
@@ -81,8 +83,10 @@ namespace SumerBusinessSolution.Pages.Sales.ExternalBillings
             UnitPriceTypesList = _db.PricingType.ToList();
             PaymentTermsList.Add(SD.COD);
             PaymentTermsList.Add(SD.Postpaid);
-            //UnitPriceTypesList.Add(SD.WholePrice);
-            // UnitPriceTypesList.Add(SD.RetailPrice);
+
+            InvStockQtyList = _db.InvStockQty
+            .Include(inv => inv.Warehouse)
+            .Include(inv => inv.ProdInfo).ToList();
 
             return Page();
         }
@@ -94,7 +98,7 @@ namespace SumerBusinessSolution.Pages.Sales.ExternalBillings
  
             ModelState.Clear();
 
-             return RedirectToPage("/Sales/ExternalBillings/PrintExternalBill", new { BhId = ExternalBillHeader.Id });
+             return RedirectToPage("/Sales/ExternalBillings/Details", new { BhId = ExternalBillHeader.Id });
            // return Page();
         }
 
@@ -153,6 +157,16 @@ namespace SumerBusinessSolution.Pages.Sales.ExternalBillings
 
             return new JsonResult(unitPrice);
 
+        }
+
+        public JsonResult OnGetStockList(string term)
+        {
+            InvStockQtyList = _db.InvStockQty
+                .Include(inv => inv.Warehouse)
+                .Include(inv => inv.ProdInfo)
+             .Where(inv => inv.ProdInfo.ProdCode == term).ToList();
+            // ViewData["hdnProdCode"] = term;
+            return new JsonResult(InvStockQtyList);
         }
 
         public JsonResult OnGetCheckProdQty(string qty, string prod)

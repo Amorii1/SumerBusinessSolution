@@ -58,7 +58,7 @@
             width: 30%;
             height: 34px;
             padding: 6px 12px;
-            font-size: 20px;
+            font-size: 24px;
             font-weight: bold;
             line-height: 1.42857143;
             color: #555;
@@ -77,7 +77,7 @@
         body {
             font-family: 'Open Sans';
             /*font-weight: normal;*/
-            font-size: 14px !important;
+            font-size: 18px !important;
             color: #6a6a6a !important;
             margin: 0;
             padding: 0;
@@ -203,11 +203,8 @@
                             @Html.DisplayNameFor(m => m.ExternalBillItems.Qty)
                         </font>
                     </th>
-                    <th>
-                        <font style="vertical-align: inherit;">
-                            @Html.DisplayNameFor(m => m.ExternalBillItems.ProdInfo.ProdCode)
-                        </font>
-                    </th>
+ 
+
                     <th>
                         <font style="vertical-align: inherit;">
                             @Html.DisplayNameFor(m => m.ExternalBillItems.ProdInfo.ProdName)
@@ -223,37 +220,44 @@
 
                 @foreach (var item in Model.ExternalItemsList)
                 {
-                    <tr>
+                <tr>
+                    <td>
+                        <font style="vertical-align: inherit;">
+                            @Html.DisplayFor(m => item.Note)
+                        </font>
+                    </td>
+                    <td>
+                        <font style="vertical-align: inherit;">
+                            @Html.DisplayFor(m => item.TotalAmt)
+                        </font>
+                    </td>
+                    <td>
+                        <font style="vertical-align: inherit;">
+                            @Html.DisplayFor(m => item.UnitPrice)
+                        </font>
+                    </td>
+                    <td>
+                        <font style="vertical-align: inherit;">
+                            @Html.DisplayFor(m => item.Qty)
+                        </font>
+                    </td>
+                    @if (item.IsExternal == true)
+                    {
                         <td>
-                            <font style="vertical-align: inherit;">
-                                @Html.DisplayFor(m => item.Note)
-                            </font>
+                            @Html.DisplayFor(m => item.ProdName)
                         </td>
+                    }
+                    else
+                    {
                         <td>
-                            <font style="vertical-align: inherit;">
-                                @Html.DisplayFor(m => item.TotalAmt)
-                            </font>
+                            @Html.DisplayFor(m => item.ProdInfo.ProdName)
                         </td>
-                        <td>
-                            <font style="vertical-align: inherit;">
-                                @Html.DisplayFor(m => item.UnitPrice)
-                            </font>
-                        </td>
-                        <td>
-                            <font style="vertical-align: inherit;">
-                                @Html.DisplayFor(m => item.Qty)
-                            </font>
-                        </td>
-                        <td>
-                            <font style="vertical-align: inherit;">
-                                @Html.DisplayFor(m => item.ProdInfo.ProdCode)
-                            </font>
-                        </td>
-                        <td>
-                            <font style="vertical-align: inherit;"> @Html.DisplayFor(m => item.ProdInfo.ProdName)</font>
-                        </td>
-                        <td>@{RowNo++;} @RowNo</td>
-                    </tr>
+                    }
+                    @*<td>
+                        <font style="vertical-align: inherit;"> @Html.DisplayFor(m => item.ProdInfo.ProdName)</font>
+                    </td>*@
+                    <td>@{RowNo++;} @RowNo</td>
+                </tr>
                 }
 
 

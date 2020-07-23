@@ -158,6 +158,9 @@
                         @Html.DisplayNameFor(a => Model.Bi[0].ProdInfo.ProdCode)
                     </th>
                     <th>
+
+                    </th>
+                    <th>
                         @Html.DisplayNameFor(a => Model.Bi[0].Qty)
                     </th>
                     <th>
@@ -187,6 +190,11 @@
 
                         <tr>
                             <td onclick="bindAutocomplete(this); bindPrice(this)" onchange="bindPrice(this); checkIfExternalItem(this); getProdId(this)">@Html.TextBoxFor(a => Model.Bi[j].ProdInfo.ProdCode) </td>
+                            <td style="margin-right:-10px;" onclick="getProdStkQty(this)">
+                                <a data-toggle="modal" data-target="#getProdQtyModal" class="btn-sm btn-info" style="margin-left:-10px; margin-right:-10px;" name="CreateProduct">
+                                    <i class="fas fa-warehouse"></i>
+                                </a>
+                            </td>
                             <td oninput="bindTotal(this); checkProdQty(this)" onclick="bindTotal(this)" onchange="calBillTotal(); calBillTotalNetAmt()">@Html.TextBoxFor(a => Model.Bi[j].Qty)</td>
                             <td oninput="bindTotalOnUnitPriceChange(this); calBillTotal()" onchange="calBillTotal(); calBillTotalNetAmt()">@Html.TextBoxFor(a => Model.Bi[j].UnitPrice)</td>
                             <td id="totalLineAmt">@Html.TextBoxFor(a => Model.Bi[j].TotalAmt)</td>
@@ -212,6 +220,68 @@
                 }
             </tbody>
         </table>
+
+        <div class="modal fade " id="getProdQtyModal" role="dialog" method="post" dir="rtl">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <div class="col-md-6">
+                            <h3 class="modal-title text-info "> كمية المادة</h3>
+                        </div>
+                        <div class="col-md-6">
+                            <a href="#" class="close float-md-left" data-dismiss="modal">&times;</a>
+                        </div>
+                    </div>
+                    <div class="modal-body">
+                        <div class="modal-body">
+                            <div id="partial">
+                                <table dir="rtl" id="tblstock" class="table table-striped border table-responsive-sm  text-md-center">
+                                    <thead>
+                                        <tr class="table-secondary">
+                                            <th>
+                                                @Html.DisplayNameFor(m => m.InvStockQtyList[0].Warehouse.WhName)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(m => m.InvStockQtyList[0].Qty)
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    @if (Model.InvStockQtyList.Count > 0)
+                                    {
+                                        <tbody id="tbdstock">
+
+                                            @foreach (var item in Model.InvStockQtyList)
+                                            {
+                                                <tr>
+                                                    @*<td>
+                                                        @Html.DisplayFor(m => item.ProdInfo.ProdCode)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(m => item.ProdInfo.ProdName)
+                                                    </td>*@
+                                                    <td>
+                                                        @Html.DisplayFor(m => item.Warehouse.WhName)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(m => item.Qty)
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    }
+                                </table>
+                            </div>
+                        </div>
+                        <div class="modal-footer" dir="ltr">
+                            <a href="#" class="btn btn-danger" data-dismiss="modal">الغاء</a>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
         <div dir="rtl" class="row form-group">
             <div class="col-md-2">
                 <label asp-for="@Model.ExternalBillHeader.TotalAmt"> </label>
@@ -227,7 +297,7 @@
                 <label asp-for="@Model.ExternalBillHeader.Discount"> </label>
             </div>
             <div class="col-md-5 offset-md-5">
-                <input id="discount" type="text" asp-for="a => @Model.ExternalBillHeader.Discount" class="form-control text-md-right" onchange="calBillTotalNetAmt()" placeholder="0" autocomplete="off"  />
+                <input id="discount" type="text" asp-for="a => @Model.ExternalBillHeader.Discount" class="form-control text-md-right" onchange="calBillTotalNetAmt()" placeholder="0" autocomplete="off" />
             </div>
         </div>
         <div dir="rtl" class="row form-group">
@@ -267,6 +337,7 @@
 
                     <div class="col-md-6">
                         <input asp-route-culture="@Request.RouteValues["culture"]" type="submit" class="btn btn-info form-control" value="@localizer.Get("انشاء")" onclick="return ValidateInput()" />
+
                     </div>
                     <div class="col-md-6">
                         <a asp-page="Index" asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-secondary form-control">
@@ -367,16 +438,49 @@
                 });
         }
 
+          async function getProdStkQty(t) {
+
+            var currentRow = $(t).closest("tr");
+
+             var row_index = $(t).parent().index();
+   var col_index = $(t).index();
+
+         var col1=$("#Bi_"+(row_index )+"__ProdInfo_ProdCode").val();
+            console.log(col1);
+            $("#tblstock tbody").remove();
+            debugger;
+              $.ajax({
+                    type: "GET",
+                    url: `${window.location.href}?handler=StockList&term=${col1}`,
+                  success: function (grups) {
+                      debugger;
+                    //  $('#partial').html(result);
+                      var tablename = $("#tblstock");
+                     // $("#tbdstock").empty();
+        for (var i = 0; i < grups.length; i++) {
+            var tableData = "<tbody><tr>" +
+                //"<td>" + grups[i].prodInfo.prodCode + "</td>" +
+                //       "<td>" + grups[i].prodInfo.prodName + "</td>" +
+                                "<td>" + grups[i].warehouse.whName + "</td>" +
+                             "<td>" + grups[i].qty + "</td>" +
+
+                "</tr></tbody>";
+            tablename.append(tableData);
+        }
+                    }
+                });
+            }
+
            async function checkIfExternalItem(t) {
   
                   const obj = await fetch(`${window.location.href}?handler=SearchNow&term=${t.children[0].value}`)
                const json = await obj.json()
 
                if (json.length > 0) {
-                   t.parentElement.children[5].children[0].value = false
+                   t.parentElement.children[6].children[0].value = false
                }
                else {
-                   t.parentElement.children[5].children[0].value = true
+                   t.parentElement.children[6].children[0].value = true
                }  
         }
 
@@ -387,7 +491,7 @@
                  var id = json[0];
                  if (json.length > 0) {
 
-                   t.parentElement.children[6].children[0].value =  json[0];
+                   t.parentElement.children[7].children[0].value =  json[0];
                }
  
             }
@@ -397,13 +501,13 @@
                           const obj = await fetch(`${window.location.href}?handler=ProdUnitPriceWhole&term=${t.children[0].value}`)
                           const json = await obj.json()
 
-                          t.parentElement.children[2].children[0].value = json[0]
+                          t.parentElement.children[3].children[0].value = json[0]
 
                           if (json[0] == undefined) {
-                              t.parentElement.children[2].children[0].value = 0
+                              t.parentElement.children[3].children[0].value = 0
                           }
                           else {
-                               t.parentElement.children[2].children[0].value = json[0]
+                               t.parentElement.children[3].children[0].value = json[0]
                           }
 
                       }
@@ -411,10 +515,10 @@
                           const obj = await fetch(`${window.location.href}?handler=ProdUnitPriceRetail&term=${t.children[0].value}`)
                           const json = await obj.json()
                             if (json[0] == undefined) {
-                              t.parentElement.children[2].children[0].value = 0
+                              t.parentElement.children[3].children[0].value = 0
                           }
                           else {
-                               t.parentElement.children[2].children[0].value = json[0]
+                               t.parentElement.children[3].children[0].value = json[0]
                           }
 
                       }
@@ -422,16 +526,16 @@
 
                 function bindTotal(t) {
                     const val = t.children[0].value
-                    const price = t.parentElement.children[2].children[0].value
+                    const price = t.parentElement.children[3].children[0].value
 
-                    t.parentElement.children[3].children[0].value = val * price
+                    t.parentElement.children[4].children[0].value = val * price
         }
 
               function bindTotalOnUnitPriceChange(t) {
             const val = t.children[0].value
-            const qty = t.parentElement.children[1].children[0].value
+            const qty = t.parentElement.children[2].children[0].value
 
-            t.parentElement.children[3].children[0].value = val * qty
+            t.parentElement.children[4].children[0].value = val * qty
         }
 
           function calBillTotal() {
@@ -441,7 +545,7 @@
             if (count > 0) {
                 var total = 0;
                 for (var i = 1; i < count; i++) {
-                    total += parseFloat(table.rows[i].cells.item(3).children[0].value);
+                    total += parseFloat(table.rows[i].cells.item(4).children[0].value);
                 }
                 document.getElementById('billTotalAmt').value = total;
             }
@@ -454,7 +558,7 @@
             if (count > 0) {
                 var total = 0;
                 for (var i = 1; i < count; i++) {
-                    total += parseFloat(table.rows[i].cells.item(3).children[0].value);
+                    total += parseFloat(table.rows[i].cells.item(4).children[0].value);
                 }
                 document.getElementById('billTotalAmt').value = total;
                 }
@@ -487,8 +591,6 @@
                 return false
             }
         }
-
-
 
             function bindNewTotal(t) {
                     const price = t.children[0].value
@@ -532,6 +634,7 @@
             var paidAmt = document.getElementById("paidAmt").value;
             var totalNetAmt = document.getElementById("billTotalNetAmt").value;
             var cod = document.getElementById("cod").value;
+            console.log(companyName);
             if (companyName == "") {
                 swal("Error!", "يرجى ادخال اسم الزبون", "error");
 
@@ -558,19 +661,11 @@
             var qty = 0;
             if (count > 0) {
                 for (var i = 1; i < count; i++) {
-                    qty = parseFloat(table.rows[i].cells.item(1).children[0].value);
-                   // isExternal = table.row[i].cells.item(5).children[0].value;
-                  //   costPrice = table.row[i].cells.item(4).children[0].value;
+                    qty = parseFloat(table.rows[i].cells.item(2).children[0].value);
                     if (qty == 0) {
                         swal("Error!", "هناك مادة مضافة بدون تحديد الكمية", "error");
                         return false
                     }
-                  //   console.log(costPrice);
-                    // console.log(isExternal);
-                    //if (isExternal == true && costPrice == 0) {
-                    //    swal("Error!", "هناك مادة خارجية مضافة بدون تحديد الكلفة", "error");
-                    //    return false
-                    //}
                 }
 
             }

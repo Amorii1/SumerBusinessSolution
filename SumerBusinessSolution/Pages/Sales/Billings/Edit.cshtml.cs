@@ -36,6 +36,9 @@ namespace SumerBusinessSolution.Pages.Sales.Billings
         [BindProperty]
         public string ProdCode { get; set; }
 
+        public List<InvStockQty> InvStockQtyList { get; set; }
+
+
         [BindProperty]
         public IList<Warehouse> WarehouseList { get; set; }
 
@@ -103,6 +106,10 @@ namespace SumerBusinessSolution.Pages.Sales.Billings
 
                 PaymentTermsList.Add(SD.COD);
                 PaymentTermsList.Add(SD.Postpaid);
+
+                InvStockQtyList = _db.InvStockQty
+                    .Include(inv => inv.Warehouse)
+                    .Include(inv => inv.ProdInfo).ToList();
             }
             catch
             {
@@ -123,7 +130,7 @@ namespace SumerBusinessSolution.Pages.Sales.Billings
 
             if (BillHeader.Id != 0)
             {
-                return RedirectToPage("/Sales/Billings/PrintBill", new { BhId = BillHeader.Id });
+                return RedirectToPage("/Sales/Billings/Details", new { BhId = BillHeader.Id });
 
             }
             else
@@ -228,6 +235,26 @@ namespace SumerBusinessSolution.Pages.Sales.Billings
             {
                 return false;
             }
+        }
+
+        public JsonResult OnGetInvStkQty(string term)
+        {
+            InvStockQtyList = _db.InvStockQty
+                .Include(inv => inv.Warehouse)
+                .Include(inv => inv.ProdInfo)
+             .Where(inv => inv.ProdInfo.ProdCode == term).ToList();
+            //ViewData["hdnProdCode"] = term;
+            return new JsonResult(InvStockQtyList);
+        }
+
+        public JsonResult OnGetStockList(string term)
+        {
+            InvStockQtyList = _db.InvStockQty
+                .Include(inv => inv.Warehouse)
+                .Include(inv => inv.ProdInfo)
+             .Where(inv => inv.ProdInfo.ProdCode == term).ToList();
+            // ViewData["hdnProdCode"] = term;
+            return new JsonResult(InvStockQtyList);
         }
 
 

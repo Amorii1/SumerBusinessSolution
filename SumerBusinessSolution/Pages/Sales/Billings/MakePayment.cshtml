@@ -153,8 +153,8 @@
 
     <script>
         function ValidateInput() {
-            var balanceAmt = document.getElementById("balanceAmt").value;
-            var newPayment = document.getElementById("newPayment").value;
+            var balanceAmt = parseFloat(document.getElementById("balanceAmt").value);
+            var newPayment = parseFloat(document.getElementById("newPayment").value);
 
             if (newPayment > balanceAmt) {
                 swal("Error!", "المبلغ المدفوع اعلى من اجمالي الفاتورة", "error");

@@ -2,19 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using SumerBusinessSolution.Data;
 using SumerBusinessSolution.Models;
-using SumerBusinessSolution.Utility;
 
 namespace SumerBusinessSolution
 {
-    [Authorize]
     public class PrintExternalBillModel : PageModel
     {
+
         private readonly ApplicationDbContext _db;
 
         //private readonly IServiceScopeFactory _serviceScopeFactory;
@@ -29,8 +27,10 @@ namespace SumerBusinessSolution
         [BindProperty]
         public ExternalBillItems ExternalBillItems { get; set; }
 
+
         // THE COMPANY INFO CODE BELOW
 
+        [BindProperty]
         public CompanyInfo CompanyInfo { get; set; }
         public List<ExternalBillItems> ExternalItemsList { get; set; }
 
@@ -41,15 +41,12 @@ namespace SumerBusinessSolution
         {
 
             ExternalItemsList = await _db.ExternalBillItems
-                .Include(bill => bill.ExternalBillHeader)
-                .Include(bill => bill.ExternalBillHeader.Customer)
-                .Include(bill => bill.ProdInfo)
-                .Include(bill => bill.ExternalBillHeader.ApplicationUser)
-                .Where(bill => bill.HeaderId == BhId).ToListAsync();
+                .Include(bill => bill.ExternalBillHeader).Include(bill => bill.ExternalBillHeader.Customer).Include(bill => bill.ProdInfo).Include(bill => bill.ExternalBillHeader.ApplicationUser).Where(bill => bill.HeaderId == BhId).ToListAsync();
             if (ExternalItemsList.Count() > 0)
             {
                 ExternalBillHeader = ExternalItemsList[0].ExternalBillHeader;
             }
+
             try
             {
                 CompanyInfo = _db.CompanyInfo.FirstOrDefault();
@@ -58,6 +55,8 @@ namespace SumerBusinessSolution
             {
 
             }
+
+
 
             return Page();
         }

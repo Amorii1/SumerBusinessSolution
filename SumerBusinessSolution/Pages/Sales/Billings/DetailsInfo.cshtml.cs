@@ -19,14 +19,14 @@ using SelectPdf;
 namespace SumerBusinessSolution.Pages.Sales.Billings
 {
     [Authorize]
-    public class DetailsModel : PageModel
+    public class DetailsInfoModel : PageModel
     {
 
         private readonly ApplicationDbContext _db;
         private readonly ISalesTrans _SalesTrans;
 
         //private readonly IServiceScopeFactory _serviceScopeFactory;
-        public DetailsModel(ApplicationDbContext db, ISalesTrans SalesTrans)
+        public DetailsInfoModel(ApplicationDbContext db, ISalesTrans SalesTrans)
         {
             _db = db;
             _SalesTrans = SalesTrans;
@@ -69,9 +69,8 @@ namespace SumerBusinessSolution.Pages.Sales.Billings
             {
 
             }
-
-
             return Page();
+               // return RedirectToPage("/Sales/Billings/DetailsInfo", new { BhId = BhId });
         }
 
         public ActionResult OnPost(BillHeader billHeader)
@@ -99,42 +98,42 @@ namespace SumerBusinessSolution.Pages.Sales.Billings
                 doc.Close();
                 return new FileContentResult(pdf, "application/pdf")
                 {
-                    FileDownloadName = billHeader.Id + "-" + "فاتورة.pdf"
+                    FileDownloadName = "فاتورة.pdf"
                 };
             }
-            return RedirectToPage("/Sales/Billings/Details", new { BhId = billHeader.Id });
+            return RedirectToPage("/Sales/Billings/DetailsInfo", new { BhId = billHeader.Id });
         }
 
-        public ActionResult OnGetPdfDownload(int id)
-        {
-            string path = Request.Host.Value;
-            //if (id != 0)
-            //{
-            //return RedirectToPage("/Sales/Billings/PrintBill", new { BhId = BillHeader.Id });
+        //public ActionResult OnGetPdfDownload(int BhId)
+        //{
+        //    string path = Request.Host.Value;
+        //    //if (id != 0)
+        //    //{
+        //    //return RedirectToPage("/Sales/Billings/PrintBill", new { BhId = BillHeader.Id });
 
-            var body = RazorPage.RenderToString("https://" + path + "/Sales/Billings/InvoicePrint?BhId=" + id);
+        //    var body = RazorPage.RenderToString("https://" + path + "/Sales/Billings/InvoicePrint?BhId=" + BhId);
 
-            var converter = new HtmlToPdf();
-            converter.Options.PdfPageSize = PdfPageSize.A4;
-            converter.Options.PdfPageOrientation = PdfPageOrientation.Portrait;
-            converter.Options.WebPageWidth = 1024;
-            converter.Options.WebPageHeight = 0;
-            converter.Options.WebPageFixedSize = false;
+        //    var converter = new HtmlToPdf();
+        //    converter.Options.PdfPageSize = PdfPageSize.A4;
+        //    converter.Options.PdfPageOrientation = PdfPageOrientation.Portrait;
+        //    converter.Options.WebPageWidth = 1024;
+        //    converter.Options.WebPageHeight = 0;
+        //    converter.Options.WebPageFixedSize = false;
 
-            converter.Options.AutoFitWidth = HtmlToPdfPageFitMode.ShrinkOnly;
-            converter.Options.AutoFitHeight = HtmlToPdfPageFitMode.NoAdjustment;
-            // converter.Options.PdfPageCustomSize = new System.Drawing.SizeF(816, 1020);
-            PdfDocument doc = converter.ConvertHtmlString(body, "https://" + path + "/Sales/Billings/InvoicePrint?BhId=" + id);
+        //    converter.Options.AutoFitWidth = HtmlToPdfPageFitMode.ShrinkOnly;
+        //    converter.Options.AutoFitHeight = HtmlToPdfPageFitMode.NoAdjustment;
+        //    // converter.Options.PdfPageCustomSize = new System.Drawing.SizeF(816, 1020);
+        //    PdfDocument doc = converter.ConvertHtmlString(body, "https://" + path + "/Sales/Billings/InvoicePrint?BhId=" + BhId);
 
-            byte[] pdf = doc.Save();
-            doc.Close();
-            return new FileContentResult(pdf, "application/pdf")
-            {
-                FileDownloadName = "فاتورة.pdf"
-            };
-            //}
-            //return  Page();
-        }
+        //    byte[] pdf = doc.Save();
+        //    doc.Close();
+        //    return new FileContentResult(pdf, "application/pdf")
+        //    {
+        //        FileDownloadName = "فاتورة.pdf"
+        //    };
+        //    //}
+        //    //return  Page();
+        //}
 
         public static class RazorPage
         {

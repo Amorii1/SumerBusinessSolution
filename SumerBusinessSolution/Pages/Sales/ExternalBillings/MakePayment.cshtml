@@ -40,12 +40,12 @@
 
         <div dir="rtl" class="form-group row">
 
+
             <div class="col-md-2">
                 <label asp-for="CompanyName"></label>
             </div>
-
             <div class="col-md-5 offset-md-5">
-                <input id="companyName" asp-for="CompanyName" class="form-control  text-md-right" disabled />
+                <input asp-for="CompanyName" class="form-control  text-md-right" disabled />
 
 
             </div>
@@ -59,11 +59,12 @@
             </div>
             <div class="col-md-5 offset-md-5">
                 @*<textarea placeholder="ملاحظات" asp-for="Note" class="form-control"></textarea>*@
-                <input asp-for="TotalNetAmt" class="form-control  text-md-right" disabled />
+                <input id="totalNetAmt" asp-for="TotalNetAmt" class="form-control  text-md-right" disabled />
 
             </div>
         </div>
         <div dir="rtl" class="form-group row">
+
 
 
             <div class="col-md-2">
@@ -71,26 +72,50 @@
             </div>
             <div class="col-md-5 offset-md-5">
                 @*<textarea placeholder="ملاحظات" asp-for="Note" class="form-control"></textarea>*@
-                <input asp-for="PaidAmt" class="form-control  text-md-right" disabled />
+                <input id="paidAmt" asp-for="PaidAmt" class="form-control  text-md-right" disabled />
 
             </div>
-
         </div>
-        <div dir="rtl" class="form-group row text-success">
 
+        @*<div class="form-group row">
+
+                <div class="col-md-5 offset-md-5">
+                    <input asp-for="Discount" class="form-control  text-md-right" />
+
+                </div>
+
+                <div class="col-md-2">
+                    <label asp-for="Discount"></label>
+                </div>
+            </div>*@
+
+        <div dir="rtl" class="form-group row text-danger">
+
+
+            <div class="col-md-2 text-danger">
+                <label asp-for="BalanceAmt"></label>
+            </div>
+            <div class="col-md-5 offset-md-5">
+                <input id="balanceAmt" asp-for="BalanceAmt" class="form-control  text-md-right" disabled />
+
+            </div>
+        </div>
+
+        <div dir="rtl" class="form-group row text-success">
 
             <div class="col-md-2">
                 <label asp-for="NewPayment"></label>
             </div>
             <div class="col-md-5 offset-md-5">
                 @*<textarea placeholder="ملاحظات" asp-for="Note" class="form-control"></textarea>*@
-                <input asp-for="NewPayment" class="form-control  text-md-right" />
+                <input id="newPayment" asp-for="NewPayment" class="form-control  text-md-right" placeholder="0" autocomplete="off"/>
 
             </div>
 
             <span asp-validation-for="NewPayment" class="text-danger"></span>
 
         </div>
+
 
         <div class="form-group row">
             <div class="col-md-5 offset-md-5">
@@ -102,23 +127,25 @@
 
                     </div>
                     <div class="col-md-6">
-                        @*<a asp-page="Index" class="btn btn-success form-control">رجوع</a>*@
-                        <a asp-page="Index" class="btn btn-secondary form-control" asp-route-culture="@Request.RouteValues["culture"]">  @localizer.Get("رجوع")</a>
+                        <a asp-page="Index" asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-secondary form-control">رجوع</a>
+
+                        @*<input asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-secondary form-control" type="button" value="@localizer.Get("رجوع")" onclick="history.back()">*@
 
                     </div>
                 </div>
             </div>
         </div>
         @*<div class="row">
-            <div class="col-7">
-                <button type="submit" class="btn btn-info"  onclick="return ValidateInput()">تخزين</button>
-                <a asp-page="Index" class="btn btn-success form-control">رجوع</a>
+                <div class="col-7">
+                    <button type="submit" class="btn btn-info"  onclick="return ValidateInput()">تخزين</button>
+                    <a asp-page="Index" class="btn btn-success form-control">رجوع</a>
 
-            </div>
-        </div>*@
+                </div>
+            </div>*@
 
     </form>
 </div>
+
 @section Scripts {
     @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
@@ -126,16 +153,32 @@
 
     <script>
         function ValidateInput() {
-            var companyName = document.getElementById("companyName").value;
+            var balanceAmt = parseFloat(document.getElementById("balanceAmt").value);
+            var newPayment = parseFloat(document.getElementById("newPayment").value);
 
-
-            if (companyName == null) {
-                swal("Error!", "يرجى ادخال اسم الزبون", "error");
+            if (newPayment > balanceAmt) {
+                swal("Error!", "المبلغ المدفوع اعلى من اجمالي الفاتورة", "error");
 
                 return false
             }
 
-
+            if (newPayment == 0) {
+                swal("Error!", "يرجى ادخال مبلغ الدفع", "error");
+                return false
+            }
         }
     </script>
+
+    <script>
+
+        $(document).ready(function () {
+            $(window).keydown(function (event) {
+                if (event.keyCode == 13) {
+                    event.preventDefault();
+                    return false;
+                }
+            });
+        });
+    </script>
 }
+
