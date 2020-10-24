@@ -90,7 +90,49 @@ namespace SumerBusinessSolution.Transactions
             return true;
         }
 
-     
+        // this function will create products while creating incoming goods
+        public void CreateProdAtIG(List<ProdInfo> NewProd)
+        {
+            try
+            {
+                DateTime InDateTime = DateTime.Now;
+                string sqlFormattedDate = InDateTime.ToString("yyyy-MM-dd HH:mm:ss");
+
+                // create new products here
+
+                foreach (var Prod in NewProd)
+                {
+
+                    ProdInfo ProdInfo = new ProdInfo
+                    {
+                        ProdCode = Prod.ProdCode,
+                        ProdName = Prod.ProdName,
+                        CostPrice = Prod.CostPrice,
+                        RetailPrice = Prod.RetailPrice,
+                        WholePrice = Prod.WholePrice,
+                        CreatedDateTime = InDateTime,
+                        CreatedById = GetLoggedInUserId(),
+                    };
+
+                   
+                    _db.ProdInfo.Add(ProdInfo);
+
+                    /// i will have to create prodct in wh later ****
+
+                   // CreateProdInWh(int ProdId, 0, double OpenQty);
+                }
+
+                // Save changes
+                _db.SaveChanges();
+
+               // return true;
+            }
+            catch (Exception ex)
+            {
+
+               // return false;
+            }
+        }
 
         public async Task<string> CreateIncomingGoods(int SelectedWhId ,List<IncomingGood> IG)
         {
@@ -98,6 +140,10 @@ namespace SumerBusinessSolution.Transactions
             {
                 DateTime InDateTime = DateTime.Now;
                 string sqlFormattedDate = InDateTime.ToString("yyyy-MM-dd HH:mm:ss");
+
+                // create new products here
+
+
                 int ProdId;
                  
                 foreach (var income in IG)
@@ -119,7 +165,10 @@ namespace SumerBusinessSolution.Transactions
                     _db.IncomingGood.Add(IncomingGood);
 
                     //updating Qty of InvStockQty
-                    ChangeStockQty(ProdId, SelectedWhId, income.Qty, "In");
+                    //ChangeStockQty(ProdId, SelectedWhId, income.Qty, "In");
+
+                    // Creating a new stock in inv stock qty table
+                    CreateProdInWh(ProdId, SelectedWhId, income.Qty);
 
                     // creating transaction 
                     CreateInvTransaction(ProdId, SelectedWhId, income.Qty, SD.Incoming);

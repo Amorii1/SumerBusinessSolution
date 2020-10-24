@@ -72,10 +72,13 @@ namespace SumerBusinessSolution.Pages.Inventory.IncomingGoods
         [TempData]
         public string StatusMessage { get; set; }
 
+        public List<ProdInfo> NewProd { get; set; }
         public List<IncomingGood> InG { get; set; }
 
         public ActionResult OnGet()
         {
+            NewProd = new List<ProdInfo> { new ProdInfo { ProdCode = "", ProdName = "", RetailPrice =0, WholePrice = 0, CostPrice = 0 } };
+
             InG = new List<IncomingGood> { new IncomingGood { ProdId = 0, WhId = WhId, Qty = 0, Note = "" } };
 
             WarehouseList = _db.Warehouse.Where(wh => wh.Active == true).OrderByDescending(wh => wh.WhType.Type).ToList();
@@ -85,9 +88,10 @@ namespace SumerBusinessSolution.Pages.Inventory.IncomingGoods
 
         }
 
-        public ActionResult OnPost(List<IncomingGood> InG)
+        public ActionResult OnPost(List<IncomingGood> InG, List<ProdInfo> NewProd)
         {
-
+            
+            _InveTrans.CreateProdAtIG(NewProd);
             StatusMessage = _InveTrans.CreateIncomingGoods(WhId, InG).GetAwaiter().GetResult();
 
             ModelState.Clear();

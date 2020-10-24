@@ -621,6 +621,9 @@
                 return false
             }
 
+            if (discount == "") {
+                document.getElementById("discount").value = 0;
+            }
             // making sure all the qtys are more than 0
             var table = document.getElementById('dataTable');
             var count = table.getElementsByTagName('tr').length;
@@ -649,10 +652,12 @@
             var paymentTerms = document.getElementById("paymentTerms").value;
             if (paymentTerms != cod) {
                 document.getElementById("paidAmt").value = 0;
-                document.getElementById("discount").value = 0;
+               
             }
             else {
+                document.getElementById("paidAmt").value = 0;
                 document.getElementById("paidAmt").value = "";
+             
             }
         }
 

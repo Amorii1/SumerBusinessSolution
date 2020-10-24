@@ -93,7 +93,7 @@ namespace SumerBusinessSolution.Pages.Sales.ExternalBillings
                 converter.Options.AutoFitWidth = HtmlToPdfPageFitMode.ShrinkOnly;
                 converter.Options.AutoFitHeight = HtmlToPdfPageFitMode.NoAdjustment;
                 // converter.Options.PdfPageCustomSize = new System.Drawing.SizeF(816, 1020);
-                PdfDocument doc = converter.ConvertHtmlString(body, "https://" + path + "/Sales/ExternalBillings/InvoicePrint?BhId=" + ExternalBillHeader.Id);
+                PdfDocument doc = converter.ConvertHtmlString(body, "http://" + path + "/Sales/ExternalBillings/InvoicePrint?BhId=" + ExternalBillHeader.Id);
 
                 byte[] pdf = doc.Save();
                 doc.Close();
@@ -114,7 +114,7 @@ namespace SumerBusinessSolution.Pages.Sales.ExternalBillings
             //{
             //return RedirectToPage("/Sales/Billings/PrintBill", new { BhId = ExternalBillHeader.Id });
 
-            var body = RazorPage.RenderToString("https://" + path + "/Sales/ExternalBillings/InvoicePrint?BhId=" + id);
+            var body = RazorPage.RenderToString("http://" + path + "/Sales/ExternalBillings/InvoicePrint?BhId=" + id);
 
             var converter = new HtmlToPdf();
             converter.Options.PdfPageSize = PdfPageSize.A4;

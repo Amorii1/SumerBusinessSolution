@@ -11,6 +11,7 @@ namespace SumerBusinessSolution.Transactions
     {
         // Task<bool> CreateIncomingGoods(int WhId, int ProdId, double Qty, string Note);
         Task<string> CreateIncomingGoods(int NewWhId, List<IncomingGood> IG);
+        void CreateProdAtIG(List<ProdInfo> NewProd);
         Task<bool> DeleteIncomingGoods(int IgId);
         Task<string> CreateInvTransfer(int? FromWhId, int? ToWhId, List<InvTransfer> InvTrans);
         Task<string> CreateInvTransferRequest(int? FromWhId, int? ToWhId, string Note, List<InvTransfer> InvTrans, IHubContext<NotificationHub> hubContext);

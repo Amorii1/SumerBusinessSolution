@@ -649,6 +649,10 @@
                 return false
             }
 
+              if (discount == "") {
+                document.getElementById("discount").value = 0;
+            }
+
             if (!document.getElementById("discount").value) {
                 document.getElementById("discount").value = 0
             };

@@ -128,80 +128,107 @@
 
             <span asp-validation-for="@Model.WhId" class="text-danger"></span>
         </div>
-        <table dir="rtl" id="dataTable" class="  text-md-center table table-striped border  table-responsive-lg table-responsive-md table-responsive-sm">
-            <thead>
-                <tr>
-                    <th>
-                        @Html.DisplayNameFor(a => Model.InG[0].ProdInfo.ProdCode)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(a => Model.InG[0].Qty)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(a => Model.InG[0].Note)
-                    </th>
-                    <th><a title="اضافة" href="#" id="addNew">   <i class="fas fa-plus"></i></a></th>
-                </tr>
-            </thead>
-            <tbody>
-                @if (Model.InG != null && Model.InG.Count > 0)
-                {
+        <table id="dataTable" dir="rtl" class="text-md-center table table-striped border table-responsive">
 
-                    int j = 0;
-
-                    foreach (var i in Model.InG)
+            @*<table dir="rtl" id="dataTable" class="  text-md-center table table-striped border  table-responsive-lg table-responsive-md table-responsive-sm">*@
+                <thead>
+                    <tr>
+                        @*<th>
+            @Html.DisplayNameFor(a => Model.InG[0].ProdInfo.ProdCode)
+        </th>
+        <th>
+            @Html.DisplayNameFor(a => Model.InG[0].Qty)
+        </th>
+        <th>
+            @Html.DisplayNameFor(a => Model.InG[0].Note)
+        </th>*@
+                        <th>
+                            @Html.DisplayNameFor(a => Model.NewProd[0].ProdCode)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(a => Model.NewProd[0].ProdName)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(a => Model.NewProd[0].CostPrice)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(a => Model.NewProd[0].WholePrice)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(a => Model.NewProd[0].RetailPrice)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(a => Model.InG[0].Qty)
+                        </th>
+                        <th><a title="اضافة" href="#" id="addNew">   <i class="fas fa-plus"></i></a></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.InG != null && Model.InG.Count > 0)
                     {
 
+                        int j = 0;
 
-                        <tr>
-                            @*float a= (float)((ArrayList)paredes[i])[0];*@
-                            @*<td>@Html.TextBoxFor(a => a[j].ContactName)</td>*@
+                        foreach (var i in Model.InG)
+                        {
 
-                            <td onclick="bindAutocomplete(this)">@Html.TextBoxFor(a => Model.InG[j].ProdInfo.ProdCode) </td>
-                            <td>@Html.TextBoxFor(a => Model.InG[j].Qty)</td>
-                            <td>@Html.TextBoxFor(a => Model.InG[j].Note)</td>
-                            <td>
-                                @if (j > 0)
-                                {
 
-                                    // <input type="button" value="Delete" onclick="deleteRow(this)">
-                                    <a href="#" id="removeThis" class="remove">Remove</a>
+                            <tr>
+                                @*float a= (float)((ArrayList)paredes[i])[0];*@
+                                @*<td>@Html.TextBoxFor(a => a[j].ContactName)</td>*@
 
-                                }
-                            </td>
-                            <span asp-validation-for="@Model.InG[j].ProdInfo.ProdCode" class="text-danger"></span>
-                            <span asp-validation-for="@Model.InG[j].Qty" class="text-danger"></span>
-                        </tr>
-                        j++;
+                                @*<td onclick="bindAutocomplete(this)">@Html.TextBoxFor(a => Model.InG[j].ProdInfo.ProdCode) </td>*@
+                                <td oninput="setProdCode(this)">@Html.TextBoxFor(a => Model.NewProd[j].ProdCode) </td>
+                                <td>@Html.TextBoxFor(a => Model.NewProd[j].ProdName) </td>
+                                <td>@Html.TextBoxFor(a => Model.NewProd[j].CostPrice) </td>
+                                <td>@Html.TextBoxFor(a => Model.NewProd[j].WholePrice) </td>
+                                <td>@Html.TextBoxFor(a => Model.NewProd[j].RetailPrice) </td>
+
+                                @*for incoming good table*@
+                                <td hidden="hidden">@Html.TextBoxFor(a => Model.InG[j].ProdInfo.ProdCode) </td>
+                                <td>@Html.TextBoxFor(a => Model.InG[j].Qty)</td>
+                                <td>
+                                    @if (j > 0)
+                                    {
+
+                                        // <input type="button" value="Delete" onclick="deleteRow(this)">
+                                        <a href="#" id="removeThis" class="remove">Remove</a>
+
+                                    }
+                                </td>
+                                <span asp-validation-for="@Model.InG[j].ProdInfo.ProdCode" class="text-danger"></span>
+                                <span asp-validation-for="@Model.InG[j].Qty" class="text-danger"></span>
+                            </tr>
+                            j++;
+
+                        }
 
                     }
+                </tbody>
+            </table>
 
-                }
-            </tbody>
-        </table>
+            <div class=" form-group row">
 
-        <div class=" form-group row">
+                <div class="col-md-7 offset-md-5">
+                    <div class="row">
+                        <div class="col-md-6">
+                            @*<input type="submit" class="btn btn-info form-control" value="حفظ" />*@
+                            <input asp-route-culture="@Request.RouteValues["culture"]" type="submit" class="btn btn-info form-control" value="@localizer.Get("اضافة")" />
 
-            <div class="col-md-7 offset-md-5">
-                <div class="row">
-                    <div class="col-md-6">
-                        @*<input type="submit" class="btn btn-info form-control" value="حفظ" />*@
-                        <input asp-route-culture="@Request.RouteValues["culture"]" type="submit" class="btn btn-info form-control" value="@localizer.Get("اضافة")" />
+                        </div>
+                        <div class="col-md-6">
+                            @*<a asp-page="Index" class="btn btn-success form-control">الرجوع</a>*@
 
-                    </div>
-                    <div class="col-md-6">
-                        @*<a asp-page="Index" class="btn btn-success form-control">الرجوع</a>*@
+                            <a asp-page="Index" asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-secondary form-control">
+                                @localizer.Get("رجوع")
+                            </a>
 
-                        <a asp-page="Index" asp-route-culture="@Request.RouteValues["culture"]" class="btn btn-secondary form-control">
-                            @localizer.Get("رجوع")
-                        </a>
+                        </div>
 
                     </div>
 
                 </div>
-
             </div>
-        </div>
     </form>
 </div>
 
@@ -275,40 +302,18 @@
                 });
 
             });
+            function setProdCode(t) {
+                    const val = t.children[0].value
+                    t.parentElement.children[5].children[0].value =  val
+                }
 
-
-            function bindAutocomplete(t) {
+            @*function bindAutocomplete(t) {
                 $(t.children[0]).autocomplete({
 
                         source: '@Url.Page("Create", "SearchNow")'
                     });
 
-            }
-
-                  async function bindPrice(t) {
-                      if (document.getElementById("PriceType").value == 1) {
-                          const obj = await fetch(`${window.location.href}?handler=ProdUnitPriceWhole&term=${t.children[0].value}`)
-                          const json = await obj.json()
-                           t.parentElement.children[2].children[0].value = json[0]
-                      }
-                      else {
-                                                     const obj = await fetch(`${window.location.href}?handler=ProdUnitPriceRetail&term=${t.children[0].value}`)
-                          const json = await obj.json()
-                           t.parentElement.children[2].children[0].value = json[0]
-                      }
-
-
-                       console.log(document.getElementById("PriceType").value)
-
-                }
-
-                function bindTotal(t) {
-                    const val = t.children[0].value
-                    const price = t.parentElement.children[2].children[0].value
-
-                    t.parentElement.children[3].children[0].value = val * price
-        }
-
+            }*@
 
     </script>
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
