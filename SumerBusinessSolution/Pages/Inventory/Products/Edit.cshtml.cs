@@ -119,7 +119,7 @@ namespace SumerBusinessSolution.Pages.Products
             ProductFromDB.ProdCategory = ProdInfo.ProdCategory;
             ProductFromDB.ProdDescription = ProdInfo.ProdDescription;
             ProductFromDB.CreatedById = ProdInfo.CreatedById;
-            ProductFromDB.CreatedDateTime = ProdInfo.CreatedDateTime;
+           // ProductFromDB.CreatedDateTime = ProdInfo.CreatedDateTime;
             // ProductFromDB.ImgFile = img.FileName.ToString(); // ProdInfo.ImgFile;
             ProductFromDB.CostPrice = ProdInfo.CostPrice;
             ProductFromDB.RetailPrice = ProdInfo.RetailPrice;

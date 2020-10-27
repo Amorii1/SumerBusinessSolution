@@ -102,7 +102,10 @@ namespace SumerBusinessSolution.Transactions
 
                 foreach (var Prod in NewProd)
                 {
-
+                    if(Prod.ProdName == null)
+                    {
+                        Prod.ProdName = "غير محدد";
+                    }
                     ProdInfo ProdInfo = new ProdInfo
                     {
                         ProdCode = Prod.ProdCode,

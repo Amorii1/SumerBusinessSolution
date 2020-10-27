@@ -25,8 +25,13 @@ namespace SumerBusinessSolution.Pages.Inventory.Products
         [BindProperty]
         public ProdInfo ProdInfo { get; set; }
 
+        public List<InvTransaction> invTransactionList { get; set; }
+        public List<IncomingGood> IncomingGoodList { get; set; }
+
+        //public List<InvStockQty> InvStockQtyList { get; set; }
         [TempData]
         public string StatusMessage { get; set; }
+
         public async Task<IActionResult> OnGet(int? ID)
         {
             if (ID == null)
@@ -51,13 +56,18 @@ namespace SumerBusinessSolution.Pages.Inventory.Products
         {
             try
             {
+                invTransactionList = _db.InvTransaction.Where(it => it.ProdId == ProdInfo.Id).ToList();
+                _db.InvTransaction.RemoveRange(invTransactionList);
+
+                IncomingGoodList = _db.IncomingGood.Where(it => it.ProdId == ProdInfo.Id).ToList();
+                _db.IncomingGood.RemoveRange(IncomingGoodList);
                 _db.ProdInfo.Remove(ProdInfo);
                 await _db.SaveChangesAsync();
                 StatusMessage = "تم حذف المادة";
             }
-            catch
+            catch(Exception ex)
             {
-                StatusMessage = "Error! لا يمكن حذف المادة. لوجود حركات تجارية متعلقة بهذه المادة";
+                StatusMessage =  "Error! لا يمكن حذف المادة. لوجود حركات تجارية متعلقة بهذه المادة";
             }
        
             return RedirectToPage("Index");

@@ -105,6 +105,8 @@ namespace SumerBusinessSolution.Pages.Inventory.Products
 
         public async Task<IActionResult> OnPostProduct(ProdInfo prodInfo)
         {
+            DateTime InDateTime = DateTime.Now;
+            string sqlFormattedDate = InDateTime.ToString("yyyy-MM-dd HH:mm:ss");
             bool check = _InveTrans.CheckProdCodeExist(prodInfo.ProdCode).GetAwaiter().GetResult();
 
             if (check == false)
@@ -155,7 +157,7 @@ namespace SumerBusinessSolution.Pages.Inventory.Products
                 }
             }
 
-            prodInfo.CreatedDateTime = DateTime.Now;
+          //  prodInfo.CreatedDateTime = DateTime.Now;
             var Information = new ProdInfo
             {
                 CreatedById = UserId,
@@ -166,7 +168,7 @@ namespace SumerBusinessSolution.Pages.Inventory.Products
                 CostPrice = prodInfo.CostPrice,
                 RetailPrice = prodInfo.RetailPrice,
                 WholePrice = prodInfo.WholePrice,
-                CreatedDateTime = prodInfo.CreatedDateTime,
+                CreatedDateTime = InDateTime,
 
                 ImgFile = newfileName
 

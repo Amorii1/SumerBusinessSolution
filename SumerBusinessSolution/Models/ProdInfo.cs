@@ -16,7 +16,7 @@ namespace SumerBusinessSolution.Models
 
         public string ProdCode { get; set; }
         [Required]
-      [Display(Name = "اسم المنتج")]
+        [Display(Name = "اسم المنتج")]
 
         public string ProdName { set; get; }
       [Display(Name = "وصف المنتج")]
